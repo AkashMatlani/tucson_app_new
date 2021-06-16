@@ -10,7 +10,11 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(),
+      body: Container(
+        child: Center(
+          child: Text("Tucson App"),
+        ),
+      ),
     );
   }
 }
