@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:simple_animations/simple_animations.dart';
 
 class ToastMessageAnimation extends StatelessWidget {
   final Widget child;
@@ -8,7 +7,8 @@ class ToastMessageAnimation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final tween = MultiTrackTween([
+    return Container();
+    /*final tween = MultiTrackTween([
       Track("translateY").add(
           Duration(milliseconds: 250),
           Tween(begin: -100.0, end: 0.0),
@@ -26,18 +26,16 @@ class ToastMessageAnimation extends StatelessWidget {
           .add(Duration(milliseconds: 500),
           Tween(begin: 1.0, end: 0.0)),
     ]);
-
-    // ignore: deprecated_member_use
     return ControlledAnimation(
       duration: tween.duration,
       tween: tween,
       child: child,
-      /*builderWithChild: (context, child, animation) => Opacity(
-        opacity: animation['opacity'],
+      builderWithChild: (context, child, animation) => Opacity(
+        opacity: animation["opacity"]!,
         child: Transform.translate(
-            offset: Offset(0, animation['translateY']),
+            offset: Offset(0, animation["translateY"]),
             child: child),
-      ),*/
-    );
+      ),
+    );*/
   }
 }
