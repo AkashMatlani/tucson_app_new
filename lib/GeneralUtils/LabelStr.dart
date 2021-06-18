@@ -111,7 +111,6 @@ class LabelStr {
   static const enterComment = "Please enter comment";
   static const invalidComment = "Comment must have more than 2 characters or less than 250 characters";
   static const enterSignatureDate = "Please enter signature date";
-  static const lblLogout = "Logout";
   static const lblPatient = "Patient";
   static const lblPatientOrPlan = "Patient Name/Care Plan: ";
   static const lblNurseName = "Nurse Name: ";
@@ -136,4 +135,14 @@ class LabelStr {
   static const lblState = "State";
   static const lblZipcode = "Zipcode";
   static const lblContactNo = "Contact No.";
+
+  static const lblCoolStuff = "Cool Stuff";
+  static const lblStudentBlogs = "Student Blogs";
+  static const lblScholerShipInfo = "Scholarship Info";
+  static const lblMentalHealthSupport = "Mental Health Support";
+  static const lblJobOpnings = "Job Openings";
+  static const lblEvents = "Events";
+  static const lblVolunteerOpportunites= "Volunteer Opportunities";
+  static const lblAwarity = "Awarity";
+  static const lblLogout = "Logout";
 }

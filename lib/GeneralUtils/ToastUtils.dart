@@ -6,17 +6,17 @@ import 'package:flutter/material.dart';
 import 'ToastMessageAnimation.dart';
 
 class ToastUtils {
-  static Timer toastTimer;
-  static OverlayEntry _overlayEntry;
+  static Timer? toastTimer=null;
+  static OverlayEntry? _overlayEntry=null;
 
   static void showToast(BuildContext context, String message, Color bgColor) {
 
-    if (toastTimer == null || !toastTimer.isActive) {
+    if (toastTimer == null || !toastTimer!.isActive) {
       _overlayEntry = createOverlayEntry(context, message, bgColor);
-      Overlay.of(context)!.insert(_overlayEntry);
+      Overlay.of(context)!.insert(_overlayEntry!);
       toastTimer = Timer(Duration(seconds: 2), () {
         if (_overlayEntry != null) {
-          _overlayEntry.remove();
+          _overlayEntry!.remove();
         }
       });
     }

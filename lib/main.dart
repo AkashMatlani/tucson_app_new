@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:tucson_app/ParentGuardianDashBoard.dart';
 import 'package:tucson_app/SignupScreen.dart';
-import 'SplashScreen.dart';
 
 void main() {
   runApp(MyApp());
@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: SignupScreen(),
+      home: ParentDashBoardScreen(),
     );
   }
 }
