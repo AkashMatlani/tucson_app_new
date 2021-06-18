@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'ToastMessageAnimation.dart';
 
 class ToastUtils {
-  static Timer toastTimer;
+  /*static Timer toastTimer;
   static OverlayEntry _overlayEntry;
 
   static void showToast(BuildContext context, String message, Color bgColor) {
@@ -51,6 +51,6 @@ class ToastUtils {
           ),
         )
     );
-  }
+  }*/
 }
 

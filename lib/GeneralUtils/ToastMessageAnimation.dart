@@ -7,7 +7,8 @@ class ToastMessageAnimation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final tween = MultiTrackTween([
+    return Container();
+    /*final tween = MultiTrackTween([
       Track("translateY").add(
           Duration(milliseconds: 250),
           Tween(begin: -100.0, end: 0.0),
@@ -25,7 +26,6 @@ class ToastMessageAnimation extends StatelessWidget {
           .add(Duration(milliseconds: 500),
           Tween(begin: 1.0, end: 0.0)),
     ]);
-
     return ControlledAnimation(
       duration: tween.duration,
       tween: tween,
@@ -36,6 +36,6 @@ class ToastMessageAnimation extends StatelessWidget {
             offset: Offset(0, animation["translateY"]),
             child: child),
       ),
-    );
+    );*/
   }
 }

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_svg/svg.dart';
 import 'ColorExtension.dart';
 import 'Constant.dart';
 
@@ -33,7 +32,7 @@ Widget textFieldFor(String hint,
       controller: controller,
       textInputAction: textInputAction,
       keyboardType: keyboardType,
-      style: AppTheme.regularSFTextStyle(),
+      //style: AppTheme.regularSFTextStyle(),
       decoration: InputDecoration(
         filled: true,
         contentPadding: textFieldPadding(),
@@ -41,7 +40,7 @@ Widget textFieldFor(String hint,
         hintText: hint,
         suffixIcon: suffixIcon,
         fillColor: Colors.white,
-        hintStyle: AppTheme.textFieldHintTextStyle(),
+        //hintStyle: AppTheme.textFieldHintTextStyle(),
         border: OutlineInputBorder(
           borderSide: BorderSide(width: 1, color: MyColor.textFieldBorderColor()),
         ),
@@ -84,14 +83,14 @@ Widget multilineTextFieldFor(String hint, TextEditingController controller, doub
       obscureText: obscure,
       controller: controller,
       keyboardType: keyboardType,
-      style: AppTheme.regularSFTextStyle(),
+      //style: AppTheme.regularSFTextStyle(),
       decoration: InputDecoration(
         filled: true,
         contentPadding: textFieldPadding(),
         prefixIcon: perfixIcon,
         hintText: hint,
         fillColor: Colors.white,
-        hintStyle: AppTheme.textFieldHintTextStyle(),
+        //hintStyle: AppTheme.textFieldHintTextStyle(),
         border: OutlineInputBorder(
           borderSide: BorderSide(width: 1, color: MyColor.textFieldBorderColor()),
         ),
@@ -105,22 +104,6 @@ Widget multilineTextFieldFor(String hint, TextEditingController controller, doub
       inputFormatters: [LengthLimitingTextInputFormatter(maxLength)],
       onTap: onTap,
       onSubmitted: onSubmit,
-    ),
-  );
-}
-
-Widget defaultUserProfile(){
-  return Container(
-    decoration: BoxDecoration(
-      /*gradient: LinearGradient(colors: [HexColor("#1785e9"), HexColor("#83cff2")]),*/
-        color: HexColor("#556080"),
-        borderRadius: BorderRadius.all(Radius.circular(10))),
-    height: 80,
-    width: 80,
-    child: Container(
-      padding: EdgeInsets.all(15),
-      alignment: Alignment.center,
-      child: SvgPicture.asset(MyImage.defaultProfile),
     ),
   );
 }
