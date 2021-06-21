@@ -1,7 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:tucson_app/Education.dart';
+import 'package:tucson_app/GeneralUtils/ColorExtension.dart';
+import 'package:tucson_app/GeneralUtils/Constant.dart';
 import 'package:tucson_app/GeneralUtils/LabelStr.dart';
+import 'package:tucson_app/GeneralUtils/Utils.dart';
 
 class ParentDashBoardScreen extends StatefulWidget {
   @override
@@ -110,12 +114,46 @@ class _ParentDashBoardScreenState extends State<ParentDashBoardScreen> {
                   shrinkWrap: true,
                     gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
                         maxCrossAxisExtent: 200,
-                        childAspectRatio: 3 / 2,
+                        childAspectRatio: 2 / 2,
                         crossAxisSpacing: 20,
                         mainAxisSpacing: 20),
                     itemCount: menuItems.length,
                     itemBuilder: (BuildContext ctx, index) {
-                      return Container(
+                      return GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              // ontap of each card, set the defined int to the grid view index
+                              if(index==0)
+                                {
+                                  Utils.navigateToScreen(context, Education());
+                                }
+                            });
+                          },
+
+                        child:Card(
+                        shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15.0),
+                      ), color: HexColor.cardBackground,
+                      elevation: 5,
+                      clipBehavior: Clip.antiAlias,   child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Padding( padding: EdgeInsets.fromLTRB(16.0, 12.0, 16.0, 8.0),child: SvgPicture.asset(menuItems[index].svgPicture)),
+                            Padding(
+                              padding: EdgeInsets.fromLTRB(16.0, 12.0, 16.0, 8.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                children: <Widget>[
+                                  Text(menuItems[index].name,style: AppTheme.regularTextStyle().copyWith(color:Colors.black ),),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ))
+                        /*  child:
+                       Container(
                           width: MediaQuery.of(context).size.width,
                           height: MediaQuery.of(context).size.height*50,
                           child: Card(
@@ -136,7 +174,7 @@ class _ParentDashBoardScreenState extends State<ParentDashBoardScreen> {
 
                           ]
                         ),
-                      ));
+                      ))*/);
                     }),
             )
         ],

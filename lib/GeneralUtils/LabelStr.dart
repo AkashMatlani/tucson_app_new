@@ -43,4 +43,19 @@ class LabelStr {
   static const lblLogout = "Logout";
   static const lblNoData = "No Data Found";
   static const lblNoFile = "File not found";
+
+
+  static const lblCoolStuff = "Cool Stuff";
+  static const lblStudentBlogs = "Student Blogs";
+  static const lblScholerShipInfo = "Scholarship Info";
+  static const lblMentalHealthSupport = "Mental Health Support";
+  static const lblJobOpnings = "Job Openings";
+  static const lblAwarity ="Awartiy";
+  static const lblVolunteerOpportunites = "Volunteer Opportunities";
+  static const lblEvents = "Events";
+  static const lblEducationWebstite = "Educational Website";
+  static const lblVideos = "Videos";
+  static const lblActivites = "Activites";
+  static const lblArticles = "Articles";
+  static const lblBlogs = "Blogs";
 }
