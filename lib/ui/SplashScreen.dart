@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:tucson_app/GeneralUtils/Constant.dart';
 import 'package:tucson_app/GeneralUtils/Utils.dart';
+import 'package:tucson_app/ui/DonationScreen.dart';
 import 'package:tucson_app/ui/SignInScreen.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -18,7 +19,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    Timer(Duration(seconds: 2), () => Utils.navigateReplaceToScreen(context, SignInScreen()));
+    Timer(Duration(seconds: 2), () => Utils.navigateReplaceToScreen(context, DonationScreen()));
   }
 
   @override
