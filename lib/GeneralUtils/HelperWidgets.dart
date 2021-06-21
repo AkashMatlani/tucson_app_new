@@ -32,16 +32,16 @@ Widget textFieldFor(String hint,
       controller: controller,
       textInputAction: textInputAction,
       keyboardType: keyboardType,
-      //style: AppTheme.regularSFTextStyle(),
+      style: AppTheme.regularTextStyle(),
       decoration: InputDecoration(
         filled: true,
         contentPadding: textFieldPadding(),
         prefixIcon: perfixIcon,
         hintText: hint,
         suffixIcon: suffixIcon,
-        fillColor: Colors.white,
-        //hintStyle: AppTheme.textFieldHintTextStyle(),
-        border: OutlineInputBorder(
+        fillColor: HexColor("#FAFAFA"),
+        hintStyle: AppTheme.hintTextStyle(),
+        /*border: OutlineInputBorder(
           borderSide: BorderSide(width: 1, color: MyColor.textFieldBorderColor()),
         ),
         enabledBorder: OutlineInputBorder(
@@ -49,7 +49,7 @@ Widget textFieldFor(String hint,
         ),
         focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(width: 1, color: MyColor.textFieldBorderColor()),
-        ),
+        ),*/
       ),
       inputFormatters: inputFormatter,
       onTap: onTap,
@@ -83,15 +83,15 @@ Widget multilineTextFieldFor(String hint, TextEditingController controller, doub
       obscureText: obscure,
       controller: controller,
       keyboardType: keyboardType,
-      //style: AppTheme.regularSFTextStyle(),
+      style: AppTheme.regularTextStyle(),
       decoration: InputDecoration(
         filled: true,
         contentPadding: textFieldPadding(),
         prefixIcon: perfixIcon,
         hintText: hint,
-        fillColor: Colors.white,
-        //hintStyle: AppTheme.textFieldHintTextStyle(),
-        border: OutlineInputBorder(
+        fillColor: HexColor("#FAFAFA"),
+        hintStyle: AppTheme.hintTextStyle(),
+        /*border: OutlineInputBorder(
           borderSide: BorderSide(width: 1, color: MyColor.textFieldBorderColor()),
         ),
         enabledBorder: OutlineInputBorder(
@@ -99,7 +99,7 @@ Widget multilineTextFieldFor(String hint, TextEditingController controller, doub
         ),
         focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(width: 1, color: MyColor.textFieldBorderColor()),
-        ),
+        ),*/
       ),
       inputFormatters: [LengthLimitingTextInputFormatter(maxLength)],
       onTap: onTap,
@@ -109,5 +109,5 @@ Widget multilineTextFieldFor(String hint, TextEditingController controller, doub
 }
 
 EdgeInsets textFieldPadding() {
-  return EdgeInsets.fromLTRB(10.0, 15.0, 10.0, 10.0);
+  return EdgeInsets.fromLTRB(0.0, 15.0, 10.0, 10.0);
 }

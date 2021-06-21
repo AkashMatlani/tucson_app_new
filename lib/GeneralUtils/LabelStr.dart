@@ -5,7 +5,22 @@ class LabelStr {
   static const lblSelectLanguage = "Select Language";
   static const lblForgotPwd = "Forgot Password?";
   static const lblNoAcc = "If  you don’t have an account ?";
-  static const lblSignUp = "Sign UP";
+  static const lblAccExist = "If you already have an account ?";
+  static const lblSignUp = "Sign Up";
+  static const lblDonation = "Giving/Donation";
+  static const lblSkip = "Skip";
+  static const lblStudentOpt = "Student Interface";
+  static const lblParentOpt = "Parent-Guardian Interface";
+  static const lblCommunityOpt = "Community Interface";
+
+  static const lblSignUpAs = "Sign Up As";
+  static const lblStudent = "Student";
+  static const lblParent = "Parent-Guardian";
+  static const lblCommunity = "Community";
+  static const lblFname = "First Name";
+  static const lblLname = "LastName";
+  static const lbldob = "Date Of Birth";
+  static const lblSchoolName = "School Name";
 
   static const lblResetPwd = "Reset Password";
   static const lblReset = "Reset";
