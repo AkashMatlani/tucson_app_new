@@ -20,42 +20,30 @@ class _ParentDashBoardScreenState extends State<ParentDashBoardScreen> {
     ),
     GridListItems(
         name: LabelStr.lblStudentBlogs,
-        svgPicture: 'assets/images/student_blog.svg'
-    ),
+        svgPicture: 'assets/images/student_blog.svg'),
     GridListItems(
         name: LabelStr.lblScholerShipInfo,
-        svgPicture: 'assets/images/scholarship _Info.svg'
-    ),
+        svgPicture: 'assets/images/scholarship _Info.svg'),
     GridListItems(
         name: LabelStr.lblMentalHealthSupport,
-        svgPicture: 'assets/images/mental_health _support.svg'
-    ),
+        svgPicture: 'assets/images/mental_health _support.svg'),
     GridListItems(
         name: LabelStr.lblJobOpnings,
-        svgPicture: 'assets/images/job_opnings.svg'
-    ),
+        svgPicture: 'assets/images/job_opnings.svg'),
     GridListItems(
-        name: LabelStr.lblEvents,
-        svgPicture: 'assets/images/events.svg'
-    ),
+        name: LabelStr.lblEvents, svgPicture: 'assets/images/events.svg'),
     GridListItems(
         name: LabelStr.lblVolunteerOpportunites,
-        svgPicture: 'assets/images/volunteer_opportunities.svg'
-    ),
+        svgPicture: 'assets/images/volunteer_opportunities.svg'),
     GridListItems(
-        name: LabelStr.lblAwarity,
-        svgPicture: 'assets/images/awarity.svg'
-    ),
+        name: LabelStr.lblAwarity, svgPicture: 'assets/images/awarity.svg'),
     GridListItems(
-        name: LabelStr.lblLogout,
-        svgPicture: 'assets/images/logout.svg'
-    ),
+        name: LabelStr.lblLogout, svgPicture: 'assets/images/logout.svg'),
   ];
-
 
   @override
   Widget build(BuildContext context) {
-   return Scaffold(
+    return Scaffold(
       body: Stack(
         children: [
           Container(
@@ -63,14 +51,15 @@ class _ParentDashBoardScreenState extends State<ParentDashBoardScreen> {
             child: Column(
               children: [
                 Container(
-                  height: 200,
+                  height: MediaQuery.of(context).size.height * 0.25,
                   child: Row(
                     children: [
                       Expanded(
                         flex: 3,
                         child: Padding(
                           padding: EdgeInsets.only(left: 10),
-                          child: Text("John Dave", style: TextStyle(fontSize: 25)),
+                          child:
+                              Text("John Dave", style: TextStyle(fontSize: 25)),
                         ),
                       ),
                       Expanded(
@@ -92,10 +81,8 @@ class _ParentDashBoardScreenState extends State<ParentDashBoardScreen> {
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.only(
                             topLeft: Radius.circular(50.0),
-                            topRight: Radius.circular(50.0)
-                        ),
-                        color: Colors.white
-                    ),
+                            topRight: Radius.circular(50.0)),
+                        color: Colors.white),
                     height: MediaQuery.of(context).size.height,
                     width: MediaQuery.of(context).size.width,
                     padding: EdgeInsets.all(20),
@@ -105,13 +92,16 @@ class _ParentDashBoardScreenState extends State<ParentDashBoardScreen> {
             ),
           ),
           Positioned(
-            top: 150,
-            left: 50,
-            right: 50,
-            child:
-                GridView.builder(
-                 physics: ScrollPhysics(),
-                  shrinkWrap: true,
+            top: MediaQuery.of(context).size.height * 0.2,
+            left: MediaQuery.of(context).size.width * 0.08,
+            right: MediaQuery.of(context).size.width * 0.08,
+            child: Container(
+              height: MediaQuery.of(context).size.height * 0.8,
+              child: SingleChildScrollView(
+                child: GridView.builder(
+                    physics: ScrollPhysics(),
+                    shrinkWrap: true,
+                    padding: EdgeInsets.only(bottom: 20),
                     gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
                         maxCrossAxisExtent: 200,
                         childAspectRatio: 2 / 2,
@@ -123,36 +113,48 @@ class _ParentDashBoardScreenState extends State<ParentDashBoardScreen> {
                           onTap: () {
                             setState(() {
                               // ontap of each card, set the defined int to the grid view index
-                              if(index==0)
-                                {
-                                  Utils.navigateToScreen(context, Education());
-                                }
+                              if (index == 0) {
+                                Utils.navigateToScreen(context, Education());
+                              }
                             });
                           },
-
-                        child:Card(
-                        shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15.0),
-                      ), color: HexColor.cardBackground,
-                      elevation: 5,
-                      clipBehavior: Clip.antiAlias,   child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Padding( padding: EdgeInsets.fromLTRB(16.0, 12.0, 16.0, 8.0),child: SvgPicture.asset(menuItems[index].svgPicture)),
-                            Padding(
-                              padding: EdgeInsets.fromLTRB(16.0, 12.0, 16.0, 8.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                children: <Widget>[
-                                  Text(menuItems[index].name,style: AppTheme.regularTextStyle().copyWith(color:Colors.black ),),
-                                ],
+                          child: Card(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15.0),
                               ),
-                            ),
-                          ],
-                        ))
-                        /*  child:
+                              color: HexColor.cardBackground,
+                              elevation: 5,
+                              clipBehavior: Clip.antiAlias,
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Padding(
+                                      padding: EdgeInsets.fromLTRB(
+                                          16.0, 12.0, 16.0, 8.0),
+                                      child: SvgPicture.asset(
+                                          menuItems[index].svgPicture)),
+                                  Padding(
+                                    padding: EdgeInsets.fromLTRB(
+                                        16.0, 12.0, 16.0, 8.0),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceAround,
+                                      children: <Widget>[
+                                        Text(
+                                          menuItems[index].name,
+                                          style: AppTheme.regularTextStyle()
+                                              .copyWith(color: Colors.black),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ))
+                          /*  child:
                        Container(
                           width: MediaQuery.of(context).size.width,
                           height: MediaQuery.of(context).size.height*50,
@@ -174,9 +176,12 @@ class _ParentDashBoardScreenState extends State<ParentDashBoardScreen> {
 
                           ]
                         ),
-                      ))*/);
+                      ))*/
+                          );
                     }),
-            )
+              ),
+            ),
+          )
         ],
       ),
     );
@@ -192,4 +197,3 @@ class GridListItems {
     required this.svgPicture,
   });
 }
-

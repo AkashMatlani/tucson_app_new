@@ -6,7 +6,9 @@ import 'package:tucson_app/GeneralUtils/Constant.dart';
 import 'package:tucson_app/GeneralUtils/HelperWidgets.dart';
 import 'package:tucson_app/GeneralUtils/LabelStr.dart';
 import 'package:tucson_app/GeneralUtils/Utils.dart';
+import 'package:tucson_app/ParentGuardianDashBoard.dart';
 import 'package:tucson_app/ui/ForgotPwdScreen.dart';
+import 'package:tucson_app/ui/StudentHomeScreen.dart';
 
 import 'SignUpScreen.dart';
 
@@ -143,7 +145,7 @@ class _SignInScreenState extends State<SignInScreen> {
                         child: TextButton(
                           child: Text(LabelStr.lblSignIn.toUpperCase(), style: AppTheme.customTextStyle(MyFont.SSPro_bold, 16.0, Colors.white)),
                           onPressed: (){
-                            print("SignIn");
+                            Utils.navigateReplaceToScreen(context, ParentDashBoardScreen());
                           },
                         ),
                       ),

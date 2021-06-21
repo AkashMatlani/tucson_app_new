@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:tucson_app/ParentGuardianDashBoard.dart';
 import 'package:tucson_app/SignupScreen.dart';
+import 'package:tucson_app/ui/SplashScreen.dart';
 
 void main() {
   runApp(MyApp());

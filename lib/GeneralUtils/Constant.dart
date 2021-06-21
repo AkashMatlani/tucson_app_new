@@ -41,6 +41,15 @@ class MyImage {
   static const donationImg = "assets/images/bg_images/donation_img.svg";
 
   static const viewPwdIcon = "assets/images/icons/ic_visible.svg";
+  static const awarityIcon = "assets/images/icons/ic_awarity.svg";
+  static const coolStuffIcon = "assets/images/icons/ic_cool_stuff.svg";
+  static const eventIcon = "assets/images/icons/ic_event.svg";
+  static const jobsIcon = "assets/images/icons/ic_jobs.svg";
+  static const logoutIcon = "assets/images/icons/ic_logout.svg";
+  static const mentalHealthIcon = "assets/images/icons/ic_mental_health.svg";
+  static const scholarshipIcon = "assets/images/icons/ic_scholarship.svg";
+  static const studentIcon = "assets/images/icons/ic_student.svg";
+  static const volunteerIcon = "assets/images/icons/ic_volunteer.svg";
 }
 
 class MyColor {
