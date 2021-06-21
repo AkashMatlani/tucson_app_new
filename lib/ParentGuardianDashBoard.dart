@@ -2,10 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:tucson_app/Education.dart';
+import 'package:tucson_app/Event.dart';
 import 'package:tucson_app/GeneralUtils/ColorExtension.dart';
 import 'package:tucson_app/GeneralUtils/Constant.dart';
 import 'package:tucson_app/GeneralUtils/LabelStr.dart';
 import 'package:tucson_app/GeneralUtils/Utils.dart';
+import 'package:tucson_app/Resuorces.dart';
 
 class ParentDashBoardScreen extends StatefulWidget {
   @override
@@ -20,42 +22,30 @@ class _ParentDashBoardScreenState extends State<ParentDashBoardScreen> {
     ),
     GridListItems(
         name: LabelStr.lblStudentBlogs,
-        svgPicture: 'assets/images/student_blog.svg'
-    ),
+        svgPicture: 'assets/images/student_blog.svg'),
     GridListItems(
         name: LabelStr.lblScholerShipInfo,
-        svgPicture: 'assets/images/scholarship _Info.svg'
-    ),
+        svgPicture: 'assets/images/scholarship _Info.svg'),
     GridListItems(
         name: LabelStr.lblMentalHealthSupport,
-        svgPicture: 'assets/images/mental_health _support.svg'
-    ),
+        svgPicture: 'assets/images/mental_health _support.svg'),
     GridListItems(
         name: LabelStr.lblJobOpnings,
-        svgPicture: 'assets/images/job_opnings.svg'
-    ),
+        svgPicture: 'assets/images/job_opnings.svg'),
     GridListItems(
-        name: LabelStr.lblEvents,
-        svgPicture: 'assets/images/events.svg'
-    ),
+        name: LabelStr.lblEvents, svgPicture: 'assets/images/events.svg'),
     GridListItems(
         name: LabelStr.lblVolunteerOpportunites,
-        svgPicture: 'assets/images/volunteer_opportunities.svg'
-    ),
+        svgPicture: 'assets/images/volunteer_opportunities.svg'),
     GridListItems(
-        name: LabelStr.lblAwarity,
-        svgPicture: 'assets/images/awarity.svg'
-    ),
+        name: LabelStr.lblAwarity, svgPicture: 'assets/images/awarity.svg'),
     GridListItems(
-        name: LabelStr.lblLogout,
-        svgPicture: 'assets/images/logout.svg'
-    ),
+        name: LabelStr.lblLogout, svgPicture: 'assets/images/logout.svg'),
   ];
-
 
   @override
   Widget build(BuildContext context) {
-   return Scaffold(
+    return Scaffold(
       body: Stack(
         children: [
           Container(
@@ -70,7 +60,8 @@ class _ParentDashBoardScreenState extends State<ParentDashBoardScreen> {
                         flex: 3,
                         child: Padding(
                           padding: EdgeInsets.only(left: 10),
-                          child: Text("John Dave", style: TextStyle(fontSize: 25)),
+                          child:
+                              Text("John Dave", style: TextStyle(fontSize: 25)),
                         ),
                       ),
                       Expanded(
@@ -92,10 +83,8 @@ class _ParentDashBoardScreenState extends State<ParentDashBoardScreen> {
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.only(
                             topLeft: Radius.circular(50.0),
-                            topRight: Radius.circular(50.0)
-                        ),
-                        color: Colors.white
-                    ),
+                            topRight: Radius.circular(50.0)),
+                        color: Colors.white),
                     height: MediaQuery.of(context).size.height,
                     width: MediaQuery.of(context).size.width,
                     padding: EdgeInsets.all(20),
@@ -108,51 +97,64 @@ class _ParentDashBoardScreenState extends State<ParentDashBoardScreen> {
             top: 150,
             left: 50,
             right: 50,
-            child:
-                GridView.builder(
-                 physics: ScrollPhysics(),
-                  shrinkWrap: true,
-                    gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                        maxCrossAxisExtent: 200,
-                        childAspectRatio: 2 / 2,
-                        crossAxisSpacing: 20,
-                        mainAxisSpacing: 20),
-                    itemCount: menuItems.length,
-                    itemBuilder: (BuildContext ctx, index) {
-                      return GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              // ontap of each card, set the defined int to the grid view index
-                              if(index==0)
-                                {
-                                  Utils.navigateToScreen(context, Education());
-                                }
-                            });
-                          },
-
-                        child:Card(
-                        shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15.0),
-                      ), color: HexColor.cardBackground,
-                      elevation: 5,
-                      clipBehavior: Clip.antiAlias,   child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Padding( padding: EdgeInsets.fromLTRB(16.0, 12.0, 16.0, 8.0),child: SvgPicture.asset(menuItems[index].svgPicture)),
-                            Padding(
-                              padding: EdgeInsets.fromLTRB(16.0, 12.0, 16.0, 8.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                children: <Widget>[
-                                  Text(menuItems[index].name,style: AppTheme.regularTextStyle().copyWith(color:Colors.black ),),
-                                ],
+            child: GridView.builder(
+                physics: ScrollPhysics(),
+                shrinkWrap: true,
+                gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                    maxCrossAxisExtent: 200,
+                    childAspectRatio: 2 / 2,
+                    crossAxisSpacing: 20,
+                    mainAxisSpacing: 20),
+                itemCount: menuItems.length,
+                itemBuilder: (BuildContext ctx, index) {
+                  return GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          // ontap of each card, set the defined int to the grid view index
+                          if (index == 0) {
+                            Utils.navigateToScreen(context, Education());
+                          } else if (index == 1) {
+                            Utils.navigateToScreen(context, Event());
+                          } else if (index == 2) {
+                            Utils.navigateToScreen(context, Resources());
+                          }
+                        });
+                      },
+                      child: Card(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15.0),
+                          ),
+                          color: HexColor.cardBackground,
+                          elevation: 5,
+                          clipBehavior: Clip.antiAlias,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Padding(
+                                  padding: EdgeInsets.fromLTRB(
+                                      16.0, 12.0, 16.0, 8.0),
+                                  child: SvgPicture.asset(
+                                      menuItems[index].svgPicture)),
+                              Padding(
+                                padding:
+                                    EdgeInsets.fromLTRB(16.0, 12.0, 16.0, 8.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: <Widget>[
+                                    Text(
+                                      menuItems[index].name,
+                                      style: AppTheme.regularTextStyle()
+                                          .copyWith(color: Colors.black),
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
-                          ],
-                        ))
-                        /*  child:
+                            ],
+                          ))
+                      /*  child:
                        Container(
                           width: MediaQuery.of(context).size.width,
                           height: MediaQuery.of(context).size.height*50,
@@ -174,9 +176,10 @@ class _ParentDashBoardScreenState extends State<ParentDashBoardScreen> {
 
                           ]
                         ),
-                      ))*/);
-                    }),
-            )
+                      ))*/
+                      );
+                }),
+          )
         ],
       ),
     );
@@ -192,4 +195,3 @@ class GridListItems {
     required this.svgPicture,
   });
 }
-
