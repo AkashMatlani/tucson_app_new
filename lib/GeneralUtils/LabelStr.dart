@@ -73,4 +73,15 @@ class LabelStr {
   static const lblActivites = "Activites";
   static const lblArticles = "Articles";
   static const lblBlogs = "Blogs";
+  static const lblTusdCalendar = "TUSD Calendar";
+  static const lblFrcSchedule = "FRC Schedule";
+  static const lblParentUniversity = "Parent University";
+  static const lblEducation = "Education";
+  static const lblCommunityFoodBank = "Community Food Bank";
+  static const lblAutisumSocitey = "Autisum Society";
+  static const lblUACoopertiveExtension = "UA Cooperative Extension";
+  static const lblScholarship = "Scholarship";
+  static const lblFamilyResourcesCenters = "Family Resources Centers";
+  static const lblClothingBank = "Clothing Bank";
+  static const lblResources = "Resources";
 }

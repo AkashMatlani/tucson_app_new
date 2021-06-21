@@ -1,29 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:tucson_app/GeneralUtils/ColorExtension.dart';
 import 'package:tucson_app/GeneralUtils/Constant.dart';
+import 'package:tucson_app/GeneralUtils/LabelStr.dart';
 
-import 'GeneralUtils/LabelStr.dart';
-
-class Education extends StatefulWidget {
+class Event extends StatefulWidget {
   @override
-  _EducationScreenState createState() => _EducationScreenState();
+  _EventScreenState createState() => _EventScreenState();
 }
 
-class _EducationScreenState extends State<Education> {
+class _EventScreenState extends State<Event> {
   List<GridListItems> menuItems = [
     GridListItems(
-      name: LabelStr.lblEducationWebstite,
-      svgPicture: 'assets/images/educational_website.svg',
-    ),
+        name: LabelStr.lblTusdCalendar,
+        svgPicture: 'assets/images/calender.svg'),
     GridListItems(
-        name: LabelStr.lblVideos, svgPicture: 'assets/images/videos.svg'),
+        name: LabelStr.lblFrcSchedule,
+        svgPicture: 'assets/images/calender.svg'),
     GridListItems(
-        name: LabelStr.lblActivites, svgPicture: 'assets/images/activites.svg'),
-    GridListItems(
-        name: LabelStr.lblArticles, svgPicture: 'assets/images/articles.svg'),
-    GridListItems(
-        name: LabelStr.lblBlogs, svgPicture: 'assets/images/blogs.svg'),
+        name: LabelStr.lblParentUniversity,
+        svgPicture: 'assets/images/parent_university.svg'),
   ];
 
   @override
@@ -45,7 +41,7 @@ class _EducationScreenState extends State<Education> {
                           onPressed: () {
                             Navigator.of(context).pop();
                           }),
-                      Text(LabelStr.lblEducation,
+                      Text(LabelStr.lblEvents,
                           style: AppTheme.regularTextStyle()
                               .copyWith(fontSize: 18, color: Colors.white))
                     ],
@@ -75,7 +71,7 @@ class _EducationScreenState extends State<Education> {
                 shrinkWrap: true,
                 gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
                     maxCrossAxisExtent: 340,
-                    childAspectRatio: 1 / 0.9,
+                    childAspectRatio: 1 / 0.7,
                     crossAxisSpacing: 20,
                     mainAxisSpacing: 20),
                 itemCount: menuItems.length,
@@ -93,7 +89,7 @@ class _EducationScreenState extends State<Education> {
                         children: <Widget>[
                           Padding(
                               padding:
-                                  EdgeInsets.fromLTRB(16.0, 12.0, 16.0, 8.0),
+                                  EdgeInsets.fromLTRB(16.0, 10.0, 16.0, 8.0),
                               child: SvgPicture.asset(
                                   menuItems[index].svgPicture)),
                           Padding(
