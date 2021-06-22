@@ -109,9 +109,16 @@ class _ParentDashBoardScreenState extends State<ParentDashBoardScreen> {
                       return GestureDetector(
                           onTap: () {
                             setState(() {
-                              // ontap of each card, set the defined int to the grid view index
                               if (index == 0) {
                                 Utils.navigateToScreen(context, Education());
+                              } else if (index == 1) {
+                                Utils.navigateToScreen(context, Event());
+                              } else if (index == 2) {
+                                Utils.navigateToScreen(context, Resources());
+                              } else if (index == 4) {
+                                Utils.navigateToScreen(context, SchoolPrograms());
+                              } else if (index == 4) {
+                                Utils.navigateToScreen(context, RequestForServiceScreen());
                               } else if (index == 1) {
                                 Utils.navigateToScreen(context, Event());
                               } else if (index == 2) {
@@ -162,7 +169,31 @@ class _ParentDashBoardScreenState extends State<ParentDashBoardScreen> {
                                     ),
                                   ),
                                 ],
-                              )));
+                              ))
+                          /*  child:
+                       Container(
+                          width: MediaQuery.of(context).size.width,
+                          height: MediaQuery.of(context).size.height*50,
+                          child: Card(
+                          shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15.0),
+                      ),
+                        color: Colors.amberAccent,
+                        child: Column(
+                          children:[
+                            SvgPicture.asset(menuItems[index].svgPicture),
+                            SizedBox(height: 10,),
+                            Container(
+                              child: Text(menuItems[index].name),
+                              decoration: BoxDecoration(
+                                  color: Colors.amber,
+                                  borderRadius: BorderRadius.circular(15)),
+                            ),
+
+                          ]
+                        ),
+                      ))*/
+                          );
                     }),
               ),
             ),

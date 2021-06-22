@@ -7,6 +7,8 @@ import 'package:flutter_svg/svg.dart';
 import 'package:tucson_app/GeneralUtils/Constant.dart';
 import 'package:tucson_app/GeneralUtils/Utils.dart';
 import 'package:tucson_app/ui/DonationScreen.dart';
+import 'package:tucson_app/ui/MentalHealthSupportScreen.dart';
+import 'package:tucson_app/ui/ScholarshipInfoScreen.dart';
 import 'package:tucson_app/ui/SignInScreen.dart';
 import 'package:tucson_app/ui/student/StudentHomeScreen.dart';
 
@@ -22,7 +24,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    Timer(Duration(seconds: 2), () => Utils.navigateReplaceToScreen(context, ParentDashBoardScreen()));
+    Timer(Duration(seconds: 2), () => Utils.navigateReplaceToScreen(context, MentalHealthSupportScreen()));
   }
 
   @override
