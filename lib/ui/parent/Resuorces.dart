@@ -93,7 +93,7 @@ class _ResourcesScreenState extends State<Resources> {
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(15.0),
                           ),
-                          color: HexColor.cardBackground,
+                          color:  Color.fromRGBO(245, 246, 252, 1),
                           elevation: 5,
                           clipBehavior: Clip.antiAlias,
                           child: Column(
