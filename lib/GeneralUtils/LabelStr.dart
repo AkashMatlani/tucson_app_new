@@ -65,6 +65,7 @@ class LabelStr {
   static const lblCoolStuff = "Cool Stuff";
   static const lblStudentBlogs = "Student Blogs";
   static const lblScholerShipInfo = "Scholarship Info";
+  static const lblScholerShipInformation = "Scholarship Information";
   static const lblMentalHealthSupport = "Mental Health Support";
   static const lblJobOpnings = "Job Openings";
   static const lblAwarity ="Awartiy";
@@ -101,5 +102,10 @@ class LabelStr {
   static const lblHealthServices = "Health Services";
   static const lblTranslationServices = "Translation Services";
   static const lblTransporation = "Transportation";
-  static const lblRe = "Resources";
+
+  static const lblTalkSpace = "Talk Space";
+  static const lblBehaviorialHealth = "Palo Verde Behaviorial Health";
+  static const lblSuicideLifeline = "National Suicide Prevention Lifeline";
+  static const lblSuicideLifelineNo = "1-800-273-8255";
+
 }

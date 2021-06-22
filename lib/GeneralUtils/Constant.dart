@@ -25,6 +25,8 @@ class AppTheme {
         fontSize: size,
         color: color);
   }
+
+  static List<Color> headerColors = [HexColor("#6462AA"), HexColor("#EFBE61"), HexColor("#20C09E"), HexColor("#6462AA"), HexColor("#46747F"), HexColor("#EF6763"), HexColor("#4CA7DA")];
 }
 
 class MyFont {
@@ -76,6 +78,13 @@ class MyImage {
   static const healthServiceIcon="assets/images/icons/ic_health_service.svg";
   static const translationServiceIcon="assets/images/icons/ic_translation_service.svg";
   static const transportationIcon="assets/images/icons/ic_transportation.svg";
+
+  static const listForwordIcon="assets/images/icons/ic_list_forword.svg";
+  static const dummyIcon="assets/images/icons/ic_dummy.svg";
+  static const callIcon="assets/images/icons/ic_call.svg";
+  static const messageIcon="assets/images/icons/ic_message.svg";
+  static const healthSupportIcon="assets/images/icons/ic_health_support.svg";
+  static const userChatIcon="assets/images/icons/ic_user_chat.svg";
 }
 
 class MyColor {
