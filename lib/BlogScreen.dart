@@ -5,6 +5,8 @@ import 'package:tucson_app/GeneralUtils/ColorExtension.dart';
 import 'package:tucson_app/GeneralUtils/Constant.dart';
 import 'package:tucson_app/GeneralUtils/LabelStr.dart';
 
+import 'Model/GridListItems.dart';
+
 class BlogScreen extends StatefulWidget
 {
   @override
@@ -86,12 +88,3 @@ class _BlogScreenState extends State<BlogScreen> {
   }
 }
 
-class GridListItems {
-  String name;
-  String svgPicture;
-
-  GridListItems({
-    required this.name,
-    required this.svgPicture,
-  });
-}

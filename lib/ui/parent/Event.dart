@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:tucson_app/GeneralUtils/ColorExtension.dart';
 import 'package:tucson_app/GeneralUtils/Constant.dart';
 import 'package:tucson_app/GeneralUtils/LabelStr.dart';
+import 'package:tucson_app/Model/GridListItems.dart';
 
 class Event extends StatefulWidget {
   @override
@@ -114,14 +115,4 @@ class _EventScreenState extends State<Event> {
       ),
     );
   }
-}
-
-class GridListItems {
-  String name;
-  String svgPicture;
-
-  GridListItems({
-    required this.name,
-    required this.svgPicture,
-  });
 }

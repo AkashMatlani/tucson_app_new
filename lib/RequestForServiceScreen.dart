@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:tucson_app/GeneralUtils/ColorExtension.dart';
 import 'package:tucson_app/GeneralUtils/Constant.dart';
+import 'package:tucson_app/Model/GridListItems.dart';
 
 import 'GeneralUtils/LabelStr.dart';
 
@@ -124,14 +125,4 @@ class _RequestForServiceScreenState extends State<RequestForServiceScreen> {
       ),
     );
   }
-}
-
-class GridListItems {
-  String name;
-  String svgPicture;
-
-  GridListItems({
-    required this.name,
-    required this.svgPicture,
-  });
 }

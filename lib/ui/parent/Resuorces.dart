@@ -3,7 +3,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:tucson_app/GeneralUtils/ColorExtension.dart';
 import 'package:tucson_app/GeneralUtils/Constant.dart';
 
-import 'GeneralUtils/LabelStr.dart';
+import '../../GeneralUtils/LabelStr.dart';
+import 'package:tucson_app/Model/GridListItems.dart';
+
 
 class Resources extends StatefulWidget {
   @override
@@ -133,12 +135,3 @@ class _ResourcesScreenState extends State<Resources> {
   }
 }
 
-class GridListItems {
-  String name;
-  String svgPicture;
-
-  GridListItems({
-    required this.name,
-    required this.svgPicture,
-  });
-}

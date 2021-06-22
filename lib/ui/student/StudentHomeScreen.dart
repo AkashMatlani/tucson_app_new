@@ -1,50 +1,50 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:tucson_app/BlogScreen.dart';
-import 'package:tucson_app/Education.dart';
 import 'package:tucson_app/GeneralUtils/ColorExtension.dart';
 import 'package:tucson_app/GeneralUtils/Constant.dart';
 import 'package:tucson_app/GeneralUtils/LabelStr.dart';
 import 'package:tucson_app/GeneralUtils/Utils.dart';
-import 'package:tucson_app/RequestForServiceScreen.dart';
-import 'package:tucson_app/Resuorces.dart';
-import 'package:tucson_app/SchoolPrograms.dart';
+import 'package:tucson_app/Model/GridListItems.dart';
+import 'package:tucson_app/ui/parent/Education.dart';
 
-import 'Event.dart';
 
-class ParentDashBoardScreen extends StatefulWidget {
+class StudentHomeScreen extends StatefulWidget {
   @override
-  _ParentDashBoardScreenState createState() => _ParentDashBoardScreenState();
+  _StudentHomeScreenState createState() => _StudentHomeScreenState();
 }
 
-class _ParentDashBoardScreenState extends State<ParentDashBoardScreen> {
+class _StudentHomeScreenState extends State<StudentHomeScreen> {
+
   List<GridListItems> menuItems = [
     GridListItems(
       name: LabelStr.lblCoolStuff,
-      svgPicture: 'assets/images/cool_stuff.svg',
+      svgPicture: MyImage.coolStuffIcon,
     ),
     GridListItems(
         name: LabelStr.lblStudentBlogs,
-        svgPicture: 'assets/images/student_blog.svg'),
+        svgPicture: MyImage.studentIcon),
     GridListItems(
         name: LabelStr.lblScholerShipInfo,
-        svgPicture: 'assets/images/scholarship_info.svg'),
+        svgPicture: MyImage.scholarshipIcon),
     GridListItems(
         name: LabelStr.lblMentalHealthSupport,
-        svgPicture: 'assets/images/mental_health _support.svg'),
+        svgPicture: MyImage.mentalHealthIcon),
     GridListItems(
         name: LabelStr.lblJobOpnings,
-        svgPicture: 'assets/images/job_opnings.svg'),
+        svgPicture: MyImage.jobsIcon),
     GridListItems(
-        name: LabelStr.lblEvents, svgPicture: 'assets/images/events.svg'),
+        name: LabelStr.lblEvents,
+        svgPicture: MyImage.eventIcon),
     GridListItems(
         name: LabelStr.lblVolunteerOpportunites,
-        svgPicture: 'assets/images/volunteer_opportunities.svg'),
+        svgPicture: MyImage.volunteerIcon),
     GridListItems(
-        name: LabelStr.lblAwarity, svgPicture: 'assets/images/awarity.svg'),
+        name: LabelStr.lblAwarity,
+        svgPicture: MyImage.awarityIcon),
     GridListItems(
-        name: LabelStr.lblLogout, svgPicture: 'assets/images/logout.svg'),
+        name: LabelStr.lblLogout,
+        svgPicture: MyImage.logoutIcon),
   ];
 
   @override
@@ -57,15 +57,14 @@ class _ParentDashBoardScreenState extends State<ParentDashBoardScreen> {
             child: Column(
               children: [
                 Container(
-                  height: MediaQuery.of(context).size.height * 0.25,
+                  height: MediaQuery.of(context).size.height*0.25,
                   child: Row(
                     children: [
                       Expanded(
                         flex: 3,
                         child: Padding(
                           padding: EdgeInsets.only(left: 10),
-                          child:
-                              Text("John Dave", style: TextStyle(fontSize: 25)),
+                          child: Text("John Dave", style: TextStyle(fontSize: 25)),
                         ),
                       ),
                       Expanded(
@@ -87,8 +86,10 @@ class _ParentDashBoardScreenState extends State<ParentDashBoardScreen> {
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.only(
                             topLeft: Radius.circular(50.0),
-                            topRight: Radius.circular(50.0)),
-                        color: Colors.white),
+                            topRight: Radius.circular(50.0)
+                        ),
+                        color: Colors.white
+                    ),
                     height: MediaQuery.of(context).size.height,
                     width: MediaQuery.of(context).size.width,
                     padding: EdgeInsets.all(20),
@@ -98,11 +99,11 @@ class _ParentDashBoardScreenState extends State<ParentDashBoardScreen> {
             ),
           ),
           Positioned(
-            top: MediaQuery.of(context).size.height * 0.2,
-            left: MediaQuery.of(context).size.width * 0.08,
-            right: MediaQuery.of(context).size.width * 0.08,
+            top: MediaQuery.of(context).size.height*0.2,
+            left: MediaQuery.of(context).size.width*0.08,
+            right: MediaQuery.of(context).size.width*0.08,
             child: Container(
-              height: MediaQuery.of(context).size.height * 0.8,
+              height: MediaQuery.of(context).size.height*0.8,
               child: SingleChildScrollView(
                 child: GridView.builder(
                     physics: ScrollPhysics(),
@@ -121,18 +122,6 @@ class _ParentDashBoardScreenState extends State<ParentDashBoardScreen> {
                               // ontap of each card, set the defined int to the grid view index
                               if (index == 0) {
                                 Utils.navigateToScreen(context, Education());
-                              } else if (index == 1) {
-                                Utils.navigateToScreen(context, Event());
-                              } else if (index == 2) {
-                                Utils.navigateToScreen(context, Resources());
-                              } else if (index == 3) {
-                                Utils.navigateToScreen(
-                                    context, SchoolPrograms());
-                              } else if (index == 4) {
-                                Utils.navigateToScreen(
-                                    context, RequestForServiceScreen());
-                              } else if (index == 5) {
-                                Utils.navigateToScreen(context, BlogScreen());
                               }
                             });
                           },
@@ -145,7 +134,7 @@ class _ParentDashBoardScreenState extends State<ParentDashBoardScreen> {
                               clipBehavior: Clip.antiAlias,
                               child: Column(
                                 mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
+                                MainAxisAlignment.spaceAround,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
                                   Padding(
@@ -158,9 +147,9 @@ class _ParentDashBoardScreenState extends State<ParentDashBoardScreen> {
                                         16.0, 12.0, 16.0, 8.0),
                                     child: Column(
                                       crossAxisAlignment:
-                                          CrossAxisAlignment.center,
+                                      CrossAxisAlignment.center,
                                       mainAxisAlignment:
-                                          MainAxisAlignment.spaceAround,
+                                      MainAxisAlignment.spaceAround,
                                       children: <Widget>[
                                         Text(
                                           menuItems[index].name,
@@ -171,31 +160,9 @@ class _ParentDashBoardScreenState extends State<ParentDashBoardScreen> {
                                     ),
                                   ),
                                 ],
-                              ))
-                          /*  child:
-                       Container(
-                          width: MediaQuery.of(context).size.width,
-                          height: MediaQuery.of(context).size.height*50,
-                          child: Card(
-                          shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15.0),
-                      ),
-                        color: Colors.amberAccent,
-                        child: Column(
-                          children:[
-                            SvgPicture.asset(menuItems[index].svgPicture),
-                            SizedBox(height: 10,),
-                            Container(
-                              child: Text(menuItems[index].name),
-                              decoration: BoxDecoration(
-                                  color: Colors.amber,
-                                  borderRadius: BorderRadius.circular(15)),
-                            ),
-
-                          ]
-                        ),
-                      ))*/
-                          );
+                              )
+                          )
+                      );
                     }),
               ),
             ),
@@ -204,14 +171,4 @@ class _ParentDashBoardScreenState extends State<ParentDashBoardScreen> {
       ),
     );
   }
-}
-
-class GridListItems {
-  String name;
-  String svgPicture;
-
-  GridListItems({
-    required this.name,
-    required this.svgPicture,
-  });
 }
