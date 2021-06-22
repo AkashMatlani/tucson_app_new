@@ -101,4 +101,5 @@ class LabelStr {
   static const lblHealthServices = "Health Services";
   static const lblTranslationServices = "Translation Services";
   static const lblTransporation = "Transportation";
+  static const lblRe = "Resources";
 }
