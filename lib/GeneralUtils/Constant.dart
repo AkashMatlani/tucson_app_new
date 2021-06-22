@@ -98,6 +98,7 @@ class MyColor {
   static Color backgroundColor() {
     return HexColor("#F8F8F7");
   }
+  static List<Color> headerColors = [HexColor("#6462AA"), HexColor("#EFBE61"), HexColor("#20C09E"), HexColor("#6462AA"), HexColor("#46747F"), HexColor("#EF6763"), HexColor("#4CA7DA")];
 }
 
 Future<bool> checkConnection() async {

@@ -47,7 +47,7 @@ class _ResourcesScreenState extends State<Resources> {
                   child: Row(
                     children: [
                       IconButton(
-                          icon: Icon(Icons.arrow_back, color: Colors.black),
+                          icon: Icon(Icons.arrow_back_ios, color: Colors.white),
                           onPressed: () {
                             Navigator.of(context).pop();
                           }),

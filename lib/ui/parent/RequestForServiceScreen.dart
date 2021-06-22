@@ -8,21 +8,32 @@ import '../../GeneralUtils/LabelStr.dart';
 
 class RequestForServiceScreen extends StatefulWidget {
   @override
-  _RequestForServiceScreenState createState() => _RequestForServiceScreenState();
+  _RequestForServiceScreenState createState() =>
+      _RequestForServiceScreenState();
 }
 
 class _RequestForServiceScreenState extends State<RequestForServiceScreen> {
   List<GridListItems> menuItems = [
     GridListItems(
       name: LabelStr.lblMentalHealthSupport,
-      svgPicture: 'assets/images/mental_health _support.svg',
+      svgPicture: MyImage.mentalHealthIcon,
     ),
-    GridListItems(name: LabelStr.lblStudentServices, svgPicture: MyImage.studentServicesIcon),
-    GridListItems(name: LabelStr.lblTakeItOut, svgPicture: 'assets/images/mental_health _support.svg'),
-    GridListItems(name: LabelStr.lblDroupOutPrevention, svgPicture: MyImage.dropOutIcon),
-    GridListItems(name: LabelStr.lblHealthServices, svgPicture: MyImage.healthServiceIcon),
-    GridListItems(name: LabelStr.lblTranslationServices, svgPicture: MyImage.translationServiceIcon),
-    GridListItems(name: LabelStr.lblTransporation, svgPicture: MyImage.transportationIcon),
+    GridListItems(
+        name: LabelStr.lblStudentServices,
+        svgPicture: MyImage.studentServicesIcon),
+    GridListItems(
+        name: LabelStr.lblTakeItOut, svgPicture: MyImage.mentalHealthIcon),
+    GridListItems(
+        name: LabelStr.lblDroupOutPrevention, svgPicture: MyImage.dropOutIcon),
+    GridListItems(
+        name: LabelStr.lblHealthServices,
+        svgPicture: MyImage.healthServiceIcon),
+    GridListItems(
+        name: LabelStr.lblTranslationServices,
+        svgPicture: MyImage.translationServiceIcon),
+    GridListItems(
+        name: LabelStr.lblTransporation,
+        svgPicture: MyImage.transportationIcon),
   ];
 
   @override
@@ -39,11 +50,11 @@ class _RequestForServiceScreenState extends State<RequestForServiceScreen> {
                   child: Row(
                     children: [
                       IconButton(
-                          icon: Icon(Icons.arrow_back, color: Colors.black),
+                          icon: Icon(Icons.arrow_back_ios, color: Colors.white),
                           onPressed: () {
                             Navigator.of(context).pop();
                           }),
-                      Text(LabelStr.lblSchoolsPrograms,
+                      Text(LabelStr.lblRqForService,
                           style: AppTheme.regularTextStyle()
                               .copyWith(fontSize: 18, color: Colors.white))
                     ],
@@ -99,18 +110,18 @@ class _RequestForServiceScreenState extends State<RequestForServiceScreen> {
                                       menuItems[index].svgPicture)),
                               Padding(
                                 padding:
-                                EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 8.0),
+                                    EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 8.0),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   mainAxisAlignment:
-                                  MainAxisAlignment.spaceAround,
+                                      MainAxisAlignment.spaceAround,
                                   children: <Widget>[
                                     Text(
                                       menuItems[index].name,
                                       style: AppTheme.regularTextStyle()
                                           .copyWith(
-                                          color: Colors.black,
-                                          fontSize: 18),
+                                              color: Colors.black,
+                                              fontSize: 18),
                                     ),
                                   ],
                                 ),

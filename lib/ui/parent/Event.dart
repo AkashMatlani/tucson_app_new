@@ -38,7 +38,7 @@ class _EventScreenState extends State<Event> {
                   child: Row(
                     children: [
                       IconButton(
-                          icon: Icon(Icons.arrow_back, color: Colors.black),
+                          icon: Icon(Icons.arrow_back_ios, color: Colors.white),
                           onPressed: () {
                             Navigator.of(context).pop();
                           }),

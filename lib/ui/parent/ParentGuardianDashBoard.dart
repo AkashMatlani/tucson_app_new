@@ -1,7 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:tucson_app/BlogScreen.dart';
 import 'package:tucson_app/Model/GridListItems.dart';
+import 'package:tucson_app/ui/parent/Event.dart';
+import 'package:tucson_app/ui/parent/RequestForServiceScreen.dart';
+import 'package:tucson_app/ui/parent/Resuorces.dart';
+import 'package:tucson_app/ui/parent/SchoolPrograms.dart';
 import 'Education.dart';
 import 'package:tucson_app/GeneralUtils/ColorExtension.dart';
 import 'package:tucson_app/GeneralUtils/Constant.dart';
@@ -19,27 +24,18 @@ class _ParentDashBoardScreenState extends State<ParentDashBoardScreen> {
       name: LabelStr.lblEducation,
       svgPicture: MyImage.educationIcon,
     ),
+    GridListItems(name: LabelStr.lblEvents, svgPicture: MyImage.eventIcon),
     GridListItems(
-        name: LabelStr.lblEvents,
-        svgPicture: MyImage.eventIcon),
+        name: LabelStr.lblResources, svgPicture: MyImage.resourceIcon),
     GridListItems(
-        name: LabelStr.lblResources,
-        svgPicture: MyImage.resourceIcon),
-    GridListItems(
-        name: LabelStr.lblSmartChoice,
-        svgPicture: MyImage.smartChoiceIcon),
+        name: LabelStr.lblSmartChoice, svgPicture: MyImage.smartChoiceIcon),
     GridListItems(
         name: LabelStr.lblSchoolPrograms,
         svgPicture: MyImage.schoolProgramsIcon),
     GridListItems(
-        name: LabelStr.lblRqForService,
-        svgPicture: MyImage.requestServiceIcon),
-    GridListItems(
-        name: LabelStr.lblAwarity,
-        svgPicture: MyImage.awarityIcon),
-    GridListItems(
-        name: LabelStr.lblLogout,
-        svgPicture: MyImage.logoutIcon)
+        name: LabelStr.lblRqForService, svgPicture: MyImage.requestServiceIcon),
+    GridListItems(name: LabelStr.lblAwarity, svgPicture: MyImage.awarityIcon),
+    GridListItems(name: LabelStr.lblLogout, svgPicture: MyImage.logoutIcon)
   ];
 
   @override
@@ -116,6 +112,18 @@ class _ParentDashBoardScreenState extends State<ParentDashBoardScreen> {
                               // ontap of each card, set the defined int to the grid view index
                               if (index == 0) {
                                 Utils.navigateToScreen(context, Education());
+                              } else if (index == 1) {
+                                Utils.navigateToScreen(context, Event());
+                              } else if (index == 2) {
+                                Utils.navigateToScreen(context, Resources());
+                              } else if (index == 3) {
+                                Utils.navigateToScreen(
+                                    context, SchoolPrograms());
+                              } else if (index == 4) {
+                                Utils.navigateToScreen(
+                                    context, RequestForServiceScreen());
+                              } else if (index == 5) {
+                                Utils.navigateToScreen(context, BlogScreen());
                               }
                             });
                           },
@@ -154,31 +162,7 @@ class _ParentDashBoardScreenState extends State<ParentDashBoardScreen> {
                                     ),
                                   ),
                                 ],
-                              ))
-                          /*  child:
-                       Container(
-                          width: MediaQuery.of(context).size.width,
-                          height: MediaQuery.of(context).size.height*50,
-                          child: Card(
-                          shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15.0),
-                      ),
-                        color: Colors.amberAccent,
-                        child: Column(
-                          children:[
-                            SvgPicture.asset(menuItems[index].svgPicture),
-                            SizedBox(height: 10,),
-                            Container(
-                              child: Text(menuItems[index].name),
-                              decoration: BoxDecoration(
-                                  color: Colors.amber,
-                                  borderRadius: BorderRadius.circular(15)),
-                            ),
-
-                          ]
-                        ),
-                      ))*/
-                          );
+                              )));
                     }),
               ),
             ),
