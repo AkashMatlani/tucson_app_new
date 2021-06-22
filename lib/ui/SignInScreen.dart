@@ -6,9 +6,9 @@ import 'package:tucson_app/GeneralUtils/Constant.dart';
 import 'package:tucson_app/GeneralUtils/HelperWidgets.dart';
 import 'package:tucson_app/GeneralUtils/LabelStr.dart';
 import 'package:tucson_app/GeneralUtils/Utils.dart';
-import 'package:tucson_app/ParentGuardianDashBoard.dart';
+import 'parent/ParentGuardianDashBoard.dart';
 import 'package:tucson_app/ui/ForgotPwdScreen.dart';
-import 'package:tucson_app/ui/StudentHomeScreen.dart';
+import 'student/StudentHomeScreen.dart';
 
 import 'SignUpScreen.dart';
 

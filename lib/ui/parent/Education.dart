@@ -3,34 +3,27 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:tucson_app/GeneralUtils/ColorExtension.dart';
 import 'package:tucson_app/GeneralUtils/Constant.dart';
 
-import 'GeneralUtils/LabelStr.dart';
+import '../../GeneralUtils/LabelStr.dart';
 
-class Resources extends StatefulWidget {
+class Education extends StatefulWidget {
   @override
-  _ResourcesScreenState createState() => _ResourcesScreenState();
+  _EducationScreenState createState() => _EducationScreenState();
 }
 
-class _ResourcesScreenState extends State<Resources> {
+class _EducationScreenState extends State<Education> {
   List<GridListItems> menuItems = [
     GridListItems(
-      name: LabelStr.lblCommunityFoodBank,
-      svgPicture: 'assets/images/community_food _bank.svg',
+      name: LabelStr.lblEducationWebstite,
+      svgPicture: 'assets/images/educational_website.svg',
     ),
     GridListItems(
-        name: LabelStr.lblAutisumSocitey,
-        svgPicture: 'assets/images/autisum_society.svg'),
+        name: LabelStr.lblVideos, svgPicture: 'assets/images/videos.svg'),
     GridListItems(
-        name: LabelStr.lblUACoopertiveExtension,
-        svgPicture: 'assets/images/ua_cooperative.svg'),
+        name: LabelStr.lblActivites, svgPicture: 'assets/images/activites.svg'),
     GridListItems(
-        name: LabelStr.lblScholarship,
-        svgPicture: 'assets/images/scholarship _Info.svg'),
+        name: LabelStr.lblArticles, svgPicture: 'assets/images/articles.svg'),
     GridListItems(
-        name: LabelStr.lblFamilyResourcesCenters,
-        svgPicture: 'assets/images/family_resources.svg'),
-    GridListItems(
-        name: LabelStr.lblClothingBank,
-        svgPicture: 'assets/images/clothing_bank.svg'),
+        name: LabelStr.lblBlogs, svgPicture: 'assets/images/blogs.svg'),
   ];
 
   @override
@@ -52,7 +45,7 @@ class _ResourcesScreenState extends State<Resources> {
                           onPressed: () {
                             Navigator.of(context).pop();
                           }),
-                      Text(LabelStr.lblResources,
+                      Text(LabelStr.lblEducation,
                           style: AppTheme.regularTextStyle()
                               .copyWith(fontSize: 18, color: Colors.white))
                     ],

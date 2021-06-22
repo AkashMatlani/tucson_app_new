@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:tucson_app/Education.dart';
+import 'Education.dart';
 import 'package:tucson_app/GeneralUtils/ColorExtension.dart';
 import 'package:tucson_app/GeneralUtils/Constant.dart';
 import 'package:tucson_app/GeneralUtils/LabelStr.dart';
@@ -186,14 +186,4 @@ class _ParentDashBoardScreenState extends State<ParentDashBoardScreen> {
       ),
     );
   }
-}
-
-class GridListItems {
-  String name;
-  String svgPicture;
-
-  GridListItems({
-    required this.name,
-    required this.svgPicture,
-  });
 }
