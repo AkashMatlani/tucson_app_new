@@ -4,7 +4,7 @@ import 'package:tucson_app/GeneralUtils/ColorExtension.dart';
 import 'package:tucson_app/GeneralUtils/Constant.dart';
 import 'package:tucson_app/Model/GridListItems.dart';
 
-import 'GeneralUtils/LabelStr.dart';
+import '../../GeneralUtils/LabelStr.dart';
 
 class RequestForServiceScreen extends StatefulWidget {
   @override

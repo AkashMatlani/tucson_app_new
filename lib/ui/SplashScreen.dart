@@ -8,6 +8,9 @@ import 'package:tucson_app/GeneralUtils/Constant.dart';
 import 'package:tucson_app/GeneralUtils/Utils.dart';
 import 'package:tucson_app/ui/DonationScreen.dart';
 import 'package:tucson_app/ui/SignInScreen.dart';
+import 'package:tucson_app/ui/student/StudentHomeScreen.dart';
+
+import 'parent/ParentGuardianDashBoard.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -19,7 +22,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    Timer(Duration(seconds: 2), () => Utils.navigateReplaceToScreen(context, DonationScreen()));
+    Timer(Duration(seconds: 2), () => Utils.navigateReplaceToScreen(context, ParentDashBoardScreen()));
   }
 
   @override

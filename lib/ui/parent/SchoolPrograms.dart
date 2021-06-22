@@ -3,8 +3,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:tucson_app/GeneralUtils/ColorExtension.dart';
 import 'package:tucson_app/GeneralUtils/Constant.dart';
 
-import 'GeneralUtils/LabelStr.dart';
-import 'Model/GridListItems.dart';
+import '../../GeneralUtils/LabelStr.dart';
+import '../../Model/GridListItems.dart';
 
 class SchoolPrograms extends StatefulWidget {
   @override

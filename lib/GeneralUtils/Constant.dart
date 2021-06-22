@@ -50,6 +50,13 @@ class MyImage {
   static const scholarshipIcon = "assets/images/icons/ic_scholarship.svg";
   static const studentIcon = "assets/images/icons/ic_student.svg";
   static const volunteerIcon = "assets/images/icons/ic_volunteer.svg";
+
+  static const educationIcon = "assets/images/icons/ic_educational.svg";
+  static const requestServiceIcon = "assets/images/icons/ic_request_service.svg";
+  static const resourceIcon = "assets/images/icons/ic_resource.svg";
+  static const schoolProgramsIcon = "assets/images/icons/ic_school_program.svg";
+  static const smartChoiceIcon = "assets/images/icons/ic_smart_choice.svg";
+
   static const educationalWebsiteIcon="assets/images/icons/educational_website.svg";
   static const videosIcon ="assets/images/icons/videos.svg";
   static const activitesIcon="assets/images/icons/activites.svg";
@@ -69,7 +76,6 @@ class MyImage {
   static const healthServiceIcon="assets/images/icons/ic_health_service.svg";
   static const translationServiceIcon="assets/images/icons/ic_translation_service.svg";
   static const transportationIcon="assets/images/icons/ic_transportation.svg";
-
 }
 
 class MyColor {

@@ -6,8 +6,7 @@ import 'package:tucson_app/GeneralUtils/Constant.dart';
 import 'package:tucson_app/GeneralUtils/LabelStr.dart';
 import 'package:tucson_app/GeneralUtils/Utils.dart';
 import 'package:tucson_app/Model/GridListItems.dart';
-import 'package:tucson_app/ui/parent/Education.dart';
-
+import '../parent/Education.dart';
 
 class StudentHomeScreen extends StatefulWidget {
   @override
@@ -16,7 +15,7 @@ class StudentHomeScreen extends StatefulWidget {
 
 class _StudentHomeScreenState extends State<StudentHomeScreen> {
 
-  List<GridListItems> menuItems = [
+  late List<GridListItems> menuItems = [
     GridListItems(
       name: LabelStr.lblCoolStuff,
       svgPicture: MyImage.coolStuffIcon,

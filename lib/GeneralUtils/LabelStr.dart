@@ -21,6 +21,8 @@ class LabelStr {
   static const lblLname = "LastName";
   static const lbldob = "Date Of Birth";
   static const lblSchoolName = "School Name";
+  static const lblSchoolPrograms = "Schools & Programs";
+  static const lblRqForService = "Request for Services";
 
   static const lblResetPwd = "Reset Password";
   static const lblReset = "Reset";
@@ -68,6 +70,7 @@ class LabelStr {
   static const lblAwarity ="Awartiy";
   static const lblVolunteerOpportunites = "Volunteer Opportunities";
   static const lblEvents = "Events";
+  static const lblSmartChoice = "Smart Choice/Parent View";
   static const lblEducationWebstite = "Educational Website";
   static const lblVideos = "Videos";
   static const lblActivites = "Activites";
