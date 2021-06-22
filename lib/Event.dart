@@ -13,13 +13,13 @@ class _EventScreenState extends State<Event> {
   List<GridListItems> menuItems = [
     GridListItems(
         name: LabelStr.lblTusdCalendar,
-        svgPicture: 'assets/images/calender.svg'),
+        svgPicture: MyImage.calenderIcon),
     GridListItems(
         name: LabelStr.lblFrcSchedule,
-        svgPicture: 'assets/images/calender.svg'),
+        svgPicture: MyImage.calenderIcon),
     GridListItems(
         name: LabelStr.lblParentUniversity,
-        svgPicture: 'assets/images/parent_university.svg'),
+        svgPicture: MyImage.universityIcon),
   ];
 
   @override

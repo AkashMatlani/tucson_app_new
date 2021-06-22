@@ -50,6 +50,26 @@ class MyImage {
   static const scholarshipIcon = "assets/images/icons/ic_scholarship.svg";
   static const studentIcon = "assets/images/icons/ic_student.svg";
   static const volunteerIcon = "assets/images/icons/ic_volunteer.svg";
+  static const educationalWebsiteIcon="assets/images/icons/educational_website.svg";
+  static const videosIcon ="assets/images/icons/videos.svg";
+  static const activitesIcon="assets/images/icons/activites.svg";
+  static const  articlesIcon= "assets/images/icons/articles.svg";
+  static const  blogsIcon="assets/images/icons/blogs.svg";
+  static const  calenderIcon="assets/images/icons/calender.svg";
+  static const  universityIcon="assets/images/icons/parent_university.svg";
+  static const  communityFoodBankIcon="assets/images/icons/community_food_bank.svg";
+  static const autisumSocietyIcon="assets/images/icons/autisum_society.svg";
+  static const uaCooperativeIcon="assets/images/icons/ua_cooperative.svg";
+  static const scholarshipInfoIcon="assets/images/icons/scholarship_info.svg";
+  static const familyResourcesCentersIcon="assets/images/icons/family_resources.svg";
+  static const clothingBankIcon="assets/images/icons/clothing_bank.svg";
+  static const websiteIcon="assets/images/icons/website.svg";
+  static const studentServicesIcon="assets/images/icons/student_services.svg";
+  static const dropOutIcon="assets/images/icons/ic_dropout.svg";
+  static const healthServiceIcon="assets/images/icons/ic_health_service.svg";
+  static const translationServiceIcon="assets/images/icons/ic_translation_service.svg";
+  static const transportationIcon="assets/images/icons/ic_transportation.svg";
+
 }
 
 class MyColor {

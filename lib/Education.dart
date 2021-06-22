@@ -14,16 +14,16 @@ class _EducationScreenState extends State<Education> {
   List<GridListItems> menuItems = [
     GridListItems(
       name: LabelStr.lblEducationWebstite,
-      svgPicture: 'assets/images/educational_website.svg',
+      svgPicture: MyImage.educationalWebsiteIcon,
     ),
     GridListItems(
-        name: LabelStr.lblVideos, svgPicture: 'assets/images/videos.svg'),
+        name: LabelStr.lblVideos, svgPicture: MyImage.videosIcon),
     GridListItems(
-        name: LabelStr.lblActivites, svgPicture: 'assets/images/activites.svg'),
+        name: LabelStr.lblActivites, svgPicture: MyImage.activitesIcon),
     GridListItems(
-        name: LabelStr.lblArticles, svgPicture: 'assets/images/articles.svg'),
+        name: LabelStr.lblArticles, svgPicture: MyImage.articlesIcon),
     GridListItems(
-        name: LabelStr.lblBlogs, svgPicture: 'assets/images/blogs.svg'),
+        name: LabelStr.lblBlogs, svgPicture: MyImage.blogsIcon),
   ];
 
   @override

@@ -84,4 +84,18 @@ class LabelStr {
   static const lblFamilyResourcesCenters = "Family Resources Centers";
   static const lblClothingBank = "Clothing Bank";
   static const lblResources = "Resources";
+  static const lblSchoolsPrograms = "Schools and Programs";
+  static const lblCatlogOfSchools = "Catalog of Schools";
+  static const lblMassd = "MASSD";
+  static const lblAassd = "AASSD";
+  static const lblNassd = "NASSD";
+  static const lblRssd = "RSSD";
+  static const lblApssd = "APSSD";
+  static const lblFace = "Face";
+  static const lblStudentServices = "Student Services";
+  static const lblTakeItOut = "Talk It Out";
+  static const lblDroupOutPrevention = "Dropout Prevention";
+  static const lblHealthServices = "Health Services";
+  static const lblTranslationServices = "Translation Services";
+  static const lblTransporation = "Transportation";
 }

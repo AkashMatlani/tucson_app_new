@@ -1,11 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:tucson_app/BlogScreen.dart';
 import 'package:tucson_app/Education.dart';
 import 'package:tucson_app/GeneralUtils/ColorExtension.dart';
 import 'package:tucson_app/GeneralUtils/Constant.dart';
 import 'package:tucson_app/GeneralUtils/LabelStr.dart';
 import 'package:tucson_app/GeneralUtils/Utils.dart';
+import 'package:tucson_app/RequestForServiceScreen.dart';
+import 'package:tucson_app/Resuorces.dart';
+import 'package:tucson_app/SchoolPrograms.dart';
+
+import 'Event.dart';
 
 class ParentDashBoardScreen extends StatefulWidget {
   @override
@@ -23,7 +29,7 @@ class _ParentDashBoardScreenState extends State<ParentDashBoardScreen> {
         svgPicture: 'assets/images/student_blog.svg'),
     GridListItems(
         name: LabelStr.lblScholerShipInfo,
-        svgPicture: 'assets/images/scholarship _Info.svg'),
+        svgPicture: 'assets/images/scholarship_info.svg'),
     GridListItems(
         name: LabelStr.lblMentalHealthSupport,
         svgPicture: 'assets/images/mental_health _support.svg'),
@@ -115,6 +121,18 @@ class _ParentDashBoardScreenState extends State<ParentDashBoardScreen> {
                               // ontap of each card, set the defined int to the grid view index
                               if (index == 0) {
                                 Utils.navigateToScreen(context, Education());
+                              } else if (index == 1) {
+                                Utils.navigateToScreen(context, Event());
+                              } else if (index == 2) {
+                                Utils.navigateToScreen(context, Resources());
+                              } else if (index == 3) {
+                                Utils.navigateToScreen(
+                                    context, SchoolPrograms());
+                              } else if (index == 4) {
+                                Utils.navigateToScreen(
+                                    context, RequestForServiceScreen());
+                              } else if (index == 5) {
+                                Utils.navigateToScreen(context, BlogScreen());
                               }
                             });
                           },

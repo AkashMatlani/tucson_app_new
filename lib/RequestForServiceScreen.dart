@@ -5,30 +5,23 @@ import 'package:tucson_app/GeneralUtils/Constant.dart';
 
 import 'GeneralUtils/LabelStr.dart';
 
-class Resources extends StatefulWidget {
+class RequestForServiceScreen extends StatefulWidget {
   @override
-  _ResourcesScreenState createState() => _ResourcesScreenState();
+  _RequestForServiceScreenState createState() => _RequestForServiceScreenState();
 }
 
-class _ResourcesScreenState extends State<Resources> {
+class _RequestForServiceScreenState extends State<RequestForServiceScreen> {
   List<GridListItems> menuItems = [
     GridListItems(
-      name: LabelStr.lblCommunityFoodBank,
-      svgPicture: MyImage.communityFoodBankIcon,
+      name: LabelStr.lblMentalHealthSupport,
+      svgPicture: 'assets/images/mental_health _support.svg',
     ),
-    GridListItems(
-        name: LabelStr.lblAutisumSocitey,
-        svgPicture: MyImage.autisumSocietyIcon),
-    GridListItems(
-        name: LabelStr.lblUACoopertiveExtension,
-        svgPicture: MyImage.uaCooperativeIcon),
-    GridListItems(
-        name: LabelStr.lblScholarship, svgPicture: MyImage.scholarshipInfoIcon),
-    GridListItems(
-        name: LabelStr.lblFamilyResourcesCenters,
-        svgPicture: MyImage.familyResourcesCentersIcon),
-    GridListItems(
-        name: LabelStr.lblClothingBank, svgPicture: MyImage.clothingBankIcon),
+    GridListItems(name: LabelStr.lblStudentServices, svgPicture: MyImage.studentServicesIcon),
+    GridListItems(name: LabelStr.lblTakeItOut, svgPicture: 'assets/images/mental_health _support.svg'),
+    GridListItems(name: LabelStr.lblDroupOutPrevention, svgPicture: MyImage.dropOutIcon),
+    GridListItems(name: LabelStr.lblHealthServices, svgPicture: MyImage.healthServiceIcon),
+    GridListItems(name: LabelStr.lblTranslationServices, svgPicture: MyImage.translationServiceIcon),
+    GridListItems(name: LabelStr.lblTransporation, svgPicture: MyImage.transportationIcon),
   ];
 
   @override
@@ -49,7 +42,7 @@ class _ResourcesScreenState extends State<Resources> {
                           onPressed: () {
                             Navigator.of(context).pop();
                           }),
-                      Text(LabelStr.lblResources,
+                      Text(LabelStr.lblSchoolsPrograms,
                           style: AppTheme.regularTextStyle()
                               .copyWith(fontSize: 18, color: Colors.white))
                     ],
@@ -105,18 +98,18 @@ class _ResourcesScreenState extends State<Resources> {
                                       menuItems[index].svgPicture)),
                               Padding(
                                 padding:
-                                    EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 8.0),
+                                EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 8.0),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
+                                  MainAxisAlignment.spaceAround,
                                   children: <Widget>[
                                     Text(
                                       menuItems[index].name,
                                       style: AppTheme.regularTextStyle()
                                           .copyWith(
-                                              color: Colors.black,
-                                              fontSize: 18),
+                                          color: Colors.black,
+                                          fontSize: 18),
                                     ),
                                   ],
                                 ),

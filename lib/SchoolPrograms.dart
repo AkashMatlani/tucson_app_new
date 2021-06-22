@@ -5,30 +5,23 @@ import 'package:tucson_app/GeneralUtils/Constant.dart';
 
 import 'GeneralUtils/LabelStr.dart';
 
-class Resources extends StatefulWidget {
+class SchoolPrograms extends StatefulWidget {
   @override
-  _ResourcesScreenState createState() => _ResourcesScreenState();
+  _SchoolProgramScreenState createState() => _SchoolProgramScreenState();
 }
 
-class _ResourcesScreenState extends State<Resources> {
+class _SchoolProgramScreenState extends State<SchoolPrograms> {
   List<GridListItems> menuItems = [
     GridListItems(
-      name: LabelStr.lblCommunityFoodBank,
-      svgPicture: MyImage.communityFoodBankIcon,
+      name: LabelStr.lblCatlogOfSchools,
+      svgPicture: MyImage.websiteIcon,
     ),
-    GridListItems(
-        name: LabelStr.lblAutisumSocitey,
-        svgPicture: MyImage.autisumSocietyIcon),
-    GridListItems(
-        name: LabelStr.lblUACoopertiveExtension,
-        svgPicture: MyImage.uaCooperativeIcon),
-    GridListItems(
-        name: LabelStr.lblScholarship, svgPicture: MyImage.scholarshipInfoIcon),
-    GridListItems(
-        name: LabelStr.lblFamilyResourcesCenters,
-        svgPicture: MyImage.familyResourcesCentersIcon),
-    GridListItems(
-        name: LabelStr.lblClothingBank, svgPicture: MyImage.clothingBankIcon),
+    GridListItems(name: LabelStr.lblMassd, svgPicture: MyImage.websiteIcon),
+    GridListItems(name: LabelStr.lblAassd, svgPicture: MyImage.websiteIcon),
+    GridListItems(name: LabelStr.lblNassd, svgPicture: MyImage.websiteIcon),
+    GridListItems(name: LabelStr.lblRssd, svgPicture: MyImage.websiteIcon),
+    GridListItems(name: LabelStr.lblApssd, svgPicture: MyImage.websiteIcon),
+    GridListItems(name: LabelStr.lblFace, svgPicture: MyImage.websiteIcon),
   ];
 
   @override
@@ -49,7 +42,7 @@ class _ResourcesScreenState extends State<Resources> {
                           onPressed: () {
                             Navigator.of(context).pop();
                           }),
-                      Text(LabelStr.lblResources,
+                      Text(LabelStr.lblSchoolsPrograms,
                           style: AppTheme.regularTextStyle()
                               .copyWith(fontSize: 18, color: Colors.white))
                     ],
