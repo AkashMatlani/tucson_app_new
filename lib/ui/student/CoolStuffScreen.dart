@@ -1,39 +1,26 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:tucson_app/GeneralUtils/ColorExtension.dart';
 import 'package:tucson_app/GeneralUtils/Constant.dart';
+import 'package:tucson_app/GeneralUtils/LabelStr.dart';
 import 'package:tucson_app/Model/GridListItems.dart';
 
-import '../../GeneralUtils/LabelStr.dart';
-
-class RequestForServiceScreen extends StatefulWidget {
+class CoolStuffScreen extends StatefulWidget {
   @override
-  _RequestForServiceScreenState createState() =>
-      _RequestForServiceScreenState();
+  _CoolStuffScreenScreenState createState() => _CoolStuffScreenScreenState();
 }
 
-class _RequestForServiceScreenState extends State<RequestForServiceScreen> {
+class _CoolStuffScreenScreenState extends State<CoolStuffScreen> {
   List<GridListItems> menuItems = [
     GridListItems(
-      name: LabelStr.lblMentalHealthSupport,
-      svgPicture: MyImage.mentalHealthIcon,
-    ),
+        name: LabelStr.lblVideos,
+        svgPicture: MyImage.videosIcon),
     GridListItems(
-        name: LabelStr.lblStudentServices,
-        svgPicture: MyImage.studentServicesIcon),
+        name: LabelStr.lblArticles,
+        svgPicture: MyImage.calenderIcon),
     GridListItems(
-        name: LabelStr.lblTakeItOut, svgPicture: MyImage.mentalHealthIcon),
-    GridListItems(
-        name: LabelStr.lblDroupOutPrevention, svgPicture: MyImage.dropOutIcon),
-    GridListItems(
-        name: LabelStr.lblHealthServices,
-        svgPicture: MyImage.healthServiceIcon),
-    GridListItems(
-        name: LabelStr.lblTranslationServices,
-        svgPicture: MyImage.translationServiceIcon),
-    GridListItems(
-        name: LabelStr.lblTransporation,
-        svgPicture: MyImage.transportationIcon),
+        name: LabelStr.lblStories,
+        svgPicture: MyImage.universityIcon),
   ];
 
   @override
@@ -55,7 +42,7 @@ class _RequestForServiceScreenState extends State<RequestForServiceScreen> {
                           onPressed: () {
                             Navigator.of(context).pop();
                           }),
-                      Text(LabelStr.lblRqForService,
+                      Text(LabelStr.lblCoolStuff,
                           style: AppTheme.regularTextStyle()
                               .copyWith(fontSize: 18, color: Colors.white))
                     ],

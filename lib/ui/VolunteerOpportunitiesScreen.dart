@@ -5,12 +5,12 @@ import 'package:tucson_app/GeneralUtils/ColorExtension.dart';
 import 'package:tucson_app/GeneralUtils/Constant.dart';
 import 'package:tucson_app/GeneralUtils/LabelStr.dart';
 
-class ScholarshipInfoScreen extends StatefulWidget {
+class VolunteerOpportunitiesScreen extends StatefulWidget {
   @override
-  _ScholarshipInfoScreenState createState() => _ScholarshipInfoScreenState();
+  _VolunteerOpportunitiesScreenState createState() => _VolunteerOpportunitiesScreenState();
 }
 
-class _ScholarshipInfoScreenState extends State<ScholarshipInfoScreen> {
+class _VolunteerOpportunitiesScreenState extends State<VolunteerOpportunitiesScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,7 +35,7 @@ class _ScholarshipInfoScreenState extends State<ScholarshipInfoScreen> {
                       ),
                       Container(
                         margin: EdgeInsets.only(top: 10),
-                        child: Text(LabelStr.lblScholerShipInformation,
+                        child: Text(LabelStr.lblVolunteerOpportunites,
                             style: AppTheme.regularTextStyle()
                                 .copyWith(fontSize: 18, color: Colors.white)),
                       )

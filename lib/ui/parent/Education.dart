@@ -34,7 +34,7 @@ class _EducationScreenState extends State<Education> {
         fit: StackFit.expand,
         children: [
           Container(
-            color: Colors.blue,
+            color: HexColor("#6462AA"),
             child: Column(
               children: [
                 Container(
@@ -71,50 +71,64 @@ class _EducationScreenState extends State<Education> {
             top: MediaQuery.of(context).size.height*0.20,
             left: MediaQuery.of(context).size.height*0.03,
             right: MediaQuery.of(context).size.height*0.03,
-            child: SingleChildScrollView(
-              child: GridView.builder(
-                  physics: ScrollPhysics(),
-                  shrinkWrap: true,
-                  gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                      maxCrossAxisExtent: MediaQuery.of(context).size.width*0.40,
-                      childAspectRatio: 2 / 1.7,
-                      crossAxisSpacing: 20,
-                      mainAxisSpacing: 20),
-                  itemCount: menuItems.length,
-                  itemBuilder: (BuildContext ctx, index) {
-                    return Card(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(MediaQuery.of(context).size.height*0.01),
-                        ),
-                        color: HexColor.cardBackground,
-                        elevation: 5,
-                        clipBehavior: Clip.antiAlias,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Padding(
-                                padding:
-                                EdgeInsets.fromLTRB(16.0, 12.0, 16.0, 8.0),
-                                child: SvgPicture.asset(
-                                    menuItems[index].svgPicture)),
-                            Padding(
-                              padding: EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 8.0),
+            child: Container(
+              height: MediaQuery.of(context).size.height*0.8,
+              child: SingleChildScrollView(
+                child: GridView.builder(
+                    physics: ScrollPhysics(),
+                    shrinkWrap: true,
+                    padding: EdgeInsets.only(bottom: 20),
+                    gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                        maxCrossAxisExtent: 200,
+                        childAspectRatio: 2 / 2,
+                        crossAxisSpacing: 20,
+                        mainAxisSpacing: 20),
+                    itemCount: menuItems.length,
+                    itemBuilder: (BuildContext ctx, index) {
+                      return GestureDetector(
+                          onTap: () {
+                            print("Clicked");
+                          },
+                          child: Card(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15.0),
+                              ),
+                              color: Color.fromRGBO(245, 246, 252, 1),
+                              elevation: 5,
+                              clipBehavior: Clip.antiAlias,
                               child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                mainAxisAlignment:
+                                MainAxisAlignment.spaceAround,
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
-                                  Text(
-                                    menuItems[index].name,
-                                    style: AppTheme.regularTextStyle()
-                                        .copyWith(color: Colors.black,fontSize: 18),
+                                  Padding(
+                                      padding: EdgeInsets.fromLTRB(
+                                          16.0, 12.0, 16.0, 8.0),
+                                      child: SvgPicture.asset(
+                                          menuItems[index].svgPicture)),
+                                  Padding(
+                                    padding: EdgeInsets.fromLTRB(
+                                        16.0, 12.0, 16.0, 8.0),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                      CrossAxisAlignment.center,
+                                      mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                      children: <Widget>[
+                                        Text(
+                                          menuItems[index].name,
+                                          style: AppTheme.regularTextStyle()
+                                              .copyWith(color: Colors.black),
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ],
-                              ),
-                            ),
-                          ],
-                        ));
-                  }),
+                              )
+                          )
+                      );
+                    }),
+              ),
             ),
           )
         ],
