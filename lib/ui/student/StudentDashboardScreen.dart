@@ -1,11 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:tucson_app/BlogScreen.dart';
 import 'package:tucson_app/GeneralUtils/ColorExtension.dart';
 import 'package:tucson_app/GeneralUtils/Constant.dart';
 import 'package:tucson_app/GeneralUtils/LabelStr.dart';
 import 'package:tucson_app/GeneralUtils/Utils.dart';
 import 'package:tucson_app/Model/GridListItems.dart';
+import 'package:tucson_app/ui/JobOpeningScreen.dart';
+import 'package:tucson_app/ui/MentalHealthSupportScreen.dart';
+import 'package:tucson_app/ui/ScholarshipInfoScreen.dart';
+import 'package:tucson_app/ui/VolunteerOpportunitiesScreen.dart';
+import 'package:tucson_app/ui/student/CoolStuffScreen.dart';
 
 import '../parent/Education.dart';
 
@@ -138,7 +144,21 @@ class _StudentDashboardScreenState extends State<StudentDashboardScreen> {
                             setState(() {
                               // ontap of each card, set the defined int to the grid view index
                               if (index == 0) {
-                                Utils.navigateToScreen(context, Education());
+                                Utils.navigateToScreen(context, CoolStuffScreen());
+                              } else if (index == 1) {
+                                Utils.navigateToScreen(context, BlogScreen());
+                              } else if (index == 2) {
+                                Utils.navigateToScreen(context, ScholarshipInfoScreen());
+                              } else if (index == 3) {
+                                Utils.navigateToScreen(context, MentalHealthSupportScreen());
+                              } else if (index == 4) {
+                                Utils.navigateToScreen(context, JobOpeningScreen());
+                              } else if (index == 5) {
+                                Utils.navigateToScreen(context, JobOpeningScreen());
+                              } else if (index == 6) {
+                                Utils.navigateToScreen(context, VolunteerOpportunitiesScreen());
+                              } else if (index == 6) {
+                                Utils.navigateToScreen(context, JobOpeningScreen());
                               }
                             });
                           },

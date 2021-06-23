@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:tucson_app/BlogScreen.dart';
+import 'package:tucson_app/CommunityResources.dart';
 import 'package:tucson_app/Model/GridListItems.dart';
 import 'package:tucson_app/ui/parent/Event.dart';
 import 'package:tucson_app/ui/parent/RequestForServiceScreen.dart';
@@ -144,23 +145,11 @@ class _ParentDashBoardScreenState extends State<ParentDashBoardScreen> {
                               } else if (index == 1) {
                                 Utils.navigateToScreen(context, Event());
                               } else if (index == 2) {
-                                Utils.navigateToScreen(context, Resources());
+                                Utils.navigateToScreen(context, CommunityResources());
                               } else if (index == 4) {
                                 Utils.navigateToScreen(context, SchoolPrograms());
-                              } else if (index == 4) {
+                              } else if (index == 6) {
                                 Utils.navigateToScreen(context, RequestForServiceScreen());
-                              } else if (index == 1) {
-                                Utils.navigateToScreen(context, Event());
-                              } else if (index == 2) {
-                                Utils.navigateToScreen(context, Resources());
-                              } else if (index == 3) {
-                                Utils.navigateToScreen(
-                                    context, SchoolPrograms());
-                              } else if (index == 4) {
-                                Utils.navigateToScreen(
-                                    context, RequestForServiceScreen());
-                              } else if (index == 5) {
-                                Utils.navigateToScreen(context, BlogScreen());
                               }
                             });
                           },

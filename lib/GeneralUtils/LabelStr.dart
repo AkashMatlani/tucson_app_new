@@ -77,6 +77,7 @@ class LabelStr {
   static const lblVideos = "Videos";
   static const lblActivites = "Activites";
   static const lblArticles = "Articles";
+  static const lblStories = "Stories";
   static const lblBlogs = "Blogs";
   static const lblTusdCalendar = "TUSD Calendar";
   static const lblFrcSchedule = "FRC Schedule";

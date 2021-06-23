@@ -30,7 +30,7 @@ class _DropoutPreventionScreenState extends State<DropoutPreventionScreen> {
                           onPressed: () {
                             Navigator.of(context).pop();
                           }),
-                      Text(LabelStr.lblMentalHealthSupport,
+                      Text(LabelStr.lblDroupOutPrevention,
                           style: AppTheme.regularTextStyle()
                               .copyWith(fontSize: 18, color: Colors.white))
                     ],
