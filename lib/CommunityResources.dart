@@ -14,17 +14,23 @@ class CommunityResources extends StatefulWidget {
 class _CommunityResourcesScreenState extends State<CommunityResources> {
   List<GridListItems> menuItems = [
     GridListItems(
-      name: LabelStr.lblEducationWebstite,
+      name: LabelStr.lblCommunityFoodBank,
       svgPicture: MyImage.educationalWebsiteIcon,
     ),
     GridListItems(
-        name: LabelStr.lblVideos, svgPicture: MyImage.videosIcon),
+        name: LabelStr.lblAutisumSocitey, svgPicture: MyImage.videosIcon),
     GridListItems(
-        name: LabelStr.lblActivites, svgPicture: MyImage.activitesIcon),
+        name: LabelStr.lblUACoopertiveExtension, svgPicture: MyImage.activitesIcon),
     GridListItems(
-        name: LabelStr.lblArticles, svgPicture: MyImage.articlesIcon),
+        name: LabelStr.lblScholarship, svgPicture: MyImage.articlesIcon),
     GridListItems(
-        name: LabelStr.lblBlogs, svgPicture: MyImage.blogsIcon),
+        name: LabelStr.lblFamilyResourcesCenters, svgPicture: MyImage.blogsIcon),
+    GridListItems(
+        name: LabelStr.lblClothingBank, svgPicture: MyImage.blogsIcon),
+    GridListItems(
+        name: LabelStr.lbltusdCounselling, svgPicture: MyImage.blogsIcon),
+    GridListItems(
+        name: LabelStr.lblMckinneyVento, svgPicture: MyImage.blogsIcon),
   ];
 
   @override
@@ -34,7 +40,7 @@ class _CommunityResourcesScreenState extends State<CommunityResources> {
         fit: StackFit.expand,
         children: [
           Container(
-            color: Colors.blue,
+            color: HexColor("#6462AA"),
             child: Column(
               children: [
                 Container(
@@ -46,7 +52,7 @@ class _CommunityResourcesScreenState extends State<CommunityResources> {
                           onPressed: () {
                             Navigator.of(context).pop();
                           }),
-                      Text(LabelStr.lblEducation,
+                      Text(LabelStr.lblResources,
                           style: AppTheme.regularTextStyle()
                               .copyWith(fontSize: 18, color: Colors.white))
                     ],
@@ -71,50 +77,64 @@ class _CommunityResourcesScreenState extends State<CommunityResources> {
             top: MediaQuery.of(context).size.height*0.20,
             left: MediaQuery.of(context).size.height*0.03,
             right: MediaQuery.of(context).size.height*0.03,
-            child: SingleChildScrollView(
-              child: GridView.builder(
-                  physics: ScrollPhysics(),
-                  shrinkWrap: true,
-                  gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                      maxCrossAxisExtent: 340,
-                      childAspectRatio: 1 / 0.9,
-                      crossAxisSpacing: 20,
-                      mainAxisSpacing: 20),
-                  itemCount: menuItems.length,
-                  itemBuilder: (BuildContext ctx, index) {
-                    return Card(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(MediaQuery.of(context).size.height*0.01),
-                        ),
-                        color: HexColor.cardBackground,
-                        elevation: 5,
-                        clipBehavior: Clip.antiAlias,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Padding(
-                                padding:
-                                EdgeInsets.fromLTRB(16.0, 12.0, 16.0, 8.0),
-                                child: SvgPicture.asset(
-                                    menuItems[index].svgPicture)),
-                            Padding(
-                              padding: EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 8.0),
+            child: Container(
+              height: MediaQuery.of(context).size.height*0.8,
+              child: SingleChildScrollView(
+                child: GridView.builder(
+                    physics: ScrollPhysics(),
+                    shrinkWrap: true,
+                    padding: EdgeInsets.only(bottom: 20),
+                    gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                        maxCrossAxisExtent: 200,
+                        childAspectRatio: 2 / 2,
+                        crossAxisSpacing: 20,
+                        mainAxisSpacing: 20),
+                    itemCount: menuItems.length,
+                    itemBuilder: (BuildContext ctx, index) {
+                      return GestureDetector(
+                          onTap: () {
+                            print("Clicked");
+                          },
+                          child: Card(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15.0),
+                              ),
+                              color: Color.fromRGBO(245, 246, 252, 1),
+                              elevation: 5,
+                              clipBehavior: Clip.antiAlias,
                               child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                mainAxisAlignment:
+                                MainAxisAlignment.spaceAround,
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
-                                  Text(
-                                    menuItems[index].name,
-                                    style: AppTheme.regularTextStyle()
-                                        .copyWith(color: Colors.black,fontSize: 18),
+                                  Padding(
+                                      padding: EdgeInsets.fromLTRB(
+                                          16.0, 12.0, 16.0, 8.0),
+                                      child: SvgPicture.asset(
+                                          menuItems[index].svgPicture)),
+                                  Padding(
+                                    padding: EdgeInsets.fromLTRB(
+                                        16.0, 12.0, 16.0, 8.0),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                      CrossAxisAlignment.center,
+                                      mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                      children: <Widget>[
+                                        Text(
+                                          menuItems[index].name,
+                                          style: AppTheme.regularTextStyle()
+                                              .copyWith(color: Colors.black),
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ],
-                              ),
-                            ),
-                          ],
-                        ));
-                  }),
+                              )
+                          )
+                      );
+                    }),
+              ),
             ),
           )
         ],

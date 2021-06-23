@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:tucson_app/CommunityResources.dart';
 import 'package:tucson_app/GeneralUtils/Constant.dart';
 import 'package:tucson_app/GeneralUtils/Utils.dart';
 import 'package:tucson_app/ui/DonationScreen.dart';
@@ -16,7 +17,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    Timer(Duration(seconds: 2), () => Utils.navigateReplaceToScreen(context, DonationScreen()));
+    Timer(Duration(seconds: 2), () => Utils.navigateReplaceToScreen(context, CommunityResources()));
   }
 
   @override
