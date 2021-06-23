@@ -6,38 +6,35 @@ import 'package:tucson_app/GeneralUtils/Constant.dart';
 import 'package:tucson_app/GeneralUtils/LabelStr.dart';
 import 'package:tucson_app/GeneralUtils/Utils.dart';
 import 'package:tucson_app/Model/GridListItems.dart';
+
 import '../parent/Education.dart';
 
-class StudentHomeScreen extends StatefulWidget {
+class CommunityDashboardScreen extends StatefulWidget {
   @override
-  _StudentHomeScreenState createState() => _StudentHomeScreenState();
+  _CommunityDashboardScreenState createState() => _CommunityDashboardScreenState();
 }
 
-class _StudentHomeScreenState extends State<StudentHomeScreen> {
+class _CommunityDashboardScreenState extends State<CommunityDashboardScreen> {
 
   late List<GridListItems> menuItems = [
     GridListItems(
-      name: LabelStr.lblCoolStuff,
-      svgPicture: MyImage.coolStuffIcon,
-    ),
-    GridListItems(
-        name: LabelStr.lblStudentBlogs,
+        name: LabelStr.lblTusdCalendar,
         svgPicture: MyImage.studentIcon),
     GridListItems(
-        name: LabelStr.lblScholerShipInfo,
+        name: LabelStr.lblPostJob,
         svgPicture: MyImage.scholarshipIcon),
     GridListItems(
-        name: LabelStr.lblMentalHealthSupport,
+        name: LabelStr.lblCommmunityEvents,
         svgPicture: MyImage.mentalHealthIcon),
     GridListItems(
-        name: LabelStr.lblJobOpnings,
+        name: LabelStr.lblVolunteerOpportunites,
         svgPicture: MyImage.jobsIcon),
     GridListItems(
-        name: LabelStr.lblEvents,
+        name: LabelStr.lblGivingDonation,
         svgPicture: MyImage.eventIcon),
     GridListItems(
-        name: LabelStr.lblVolunteerOpportunites,
-        svgPicture: MyImage.volunteerIcon),
+        name: LabelStr.lblResources,
+        svgPicture: MyImage.resourceIcon),
     GridListItems(
         name: LabelStr.lblAwarity,
         svgPicture: MyImage.awarityIcon),
@@ -52,7 +49,8 @@ class _StudentHomeScreenState extends State<StudentHomeScreen> {
       body: Stack(
         children: [
           Container(
-            color: Colors.blue,
+            color: HexColor("#6462AA"),
+            alignment: Alignment.center,
             child: Column(
               children: [
                 Container(
@@ -63,18 +61,34 @@ class _StudentHomeScreenState extends State<StudentHomeScreen> {
                         flex: 3,
                         child: Padding(
                           padding: EdgeInsets.only(left: 10),
-                          child: Text("John Dave", style: TextStyle(fontSize: 25)),
+                          child: Text("John Dave", style: AppTheme.customTextStyle(MyFont.SSPro_semibold, 25.0, Colors.white)),
                         ),
                       ),
-                      Expanded(
-                        flex: 1,
-                        child: Padding(
-                          padding: EdgeInsets.only(right: 10),
-                          child: Icon(
-                            Icons.favorite,
-                            color: Colors.pink,
-                            size: 60.0,
-                          ),
+                      Container(
+                        padding: EdgeInsets.only(right: 10),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.account_circle,
+                              color: Colors.white,
+                              size: 60.0,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  Icons.circle,
+                                  color: Colors.limeAccent,
+                                  size: 25.0,
+                                ),
+                                SizedBox(width: 5),
+                                Text("Spanish", style: AppTheme.regularTextStyle().copyWith(color: Colors.white))
+                              ],
+                            )
+                          ],
                         ),
                       )
                     ],

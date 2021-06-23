@@ -81,14 +81,64 @@ class _DropoutPreventionScreenState extends State<DropoutPreventionScreen> {
                     height: 50,
                     width: MediaQuery.of(context).size.width,
                     child: TextButton(
-                      child: Text(LabelStr.lblContactSpecialist, style: AppTheme.customTextStyle(MyFont.SSPro_regular, 16.0, Colors.white)),
+                      child: Row(
+                        children: [
+                          Expanded(child: Container(margin:EdgeInsets.only(left: 5), child: Text(LabelStr.lblContactSpecialist, style: AppTheme.customTextStyle(MyFont.SSPro_semibold, 16.0, Colors.white)))),
+                          Container(margin:EdgeInsets.only(right: 5),child: Icon(Icons.keyboard_arrow_up, color: Colors.white, size: 30))
+                        ],
+                      ),
                       onPressed: (){
                         print("Call me");
                       },
                     ),
                   ),
                   SizedBox(height: 15),
-                  Text(LabelStr.lblNameAndEmail, style: AppTheme.regularTextStyle().copyWith(fontSize: 20)),
+                  Card(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10)
+                    ),
+                    child: Container(
+                      padding: EdgeInsets.all(10),
+                      child: Column(
+                        children: [
+                          Row(
+                            children: [
+                              Expanded(flex:4, child: Text("Talitha Byarse", style: AppTheme.regularTextStyle().copyWith(fontFamily: MyFont.SSPro_semibold))),
+                              Expanded(flex:6, child: Text("talitha.byarse@tusd1.org", style: AppTheme.regularTextStyle().copyWith(color: Colors.blueAccent)))
+                            ],
+                          ),
+                          SizedBox(height: 5),
+                          Row(
+                            children: [
+                              Expanded(flex:4, child: Text("Talitha Byarse", style: AppTheme.regularTextStyle().copyWith(fontFamily: MyFont.SSPro_semibold))),
+                              Expanded(flex:6, child: Text("talitha.byarse@tusd1.org", style: AppTheme.regularTextStyle().copyWith(color: Colors.blueAccent)))
+                            ],
+                          ),
+                          SizedBox(height: 5),
+                          Row(
+                            children: [
+                              Expanded(flex:4, child: Text("Talitha Byarse", style: AppTheme.regularTextStyle().copyWith(fontFamily: MyFont.SSPro_semibold))),
+                              Expanded(flex:6, child: Text("talitha.byarse@tusd1.org", style: AppTheme.regularTextStyle().copyWith(color: Colors.blueAccent)))
+                            ],
+                          ),
+                          SizedBox(height: 5),
+                          Row(
+                            children: [
+                              Expanded(flex:4, child: Text("Talitha Byarse", style: AppTheme.regularTextStyle().copyWith(fontFamily: MyFont.SSPro_semibold))),
+                              Expanded(flex:6, child: Text("talitha.byarse@tusd1.org", style: AppTheme.regularTextStyle().copyWith(color: Colors.blueAccent)))
+                            ],
+                          ),
+                          SizedBox(height: 5),
+                          Row(
+                            children: [
+                              Expanded(flex:4, child: Text("Talitha Byarse", style: AppTheme.regularTextStyle().copyWith(fontFamily: MyFont.SSPro_semibold))),
+                              Expanded(flex:6, child: Text("talitha.byarse@tusd1.org", style: AppTheme.regularTextStyle().copyWith(color: Colors.blueAccent)))
+                            ],
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
                   SizedBox(height: 20),
                   Container(
                     decoration: BoxDecoration(

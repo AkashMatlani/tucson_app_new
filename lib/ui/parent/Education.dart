@@ -76,8 +76,8 @@ class _EducationScreenState extends State<Education> {
                   physics: ScrollPhysics(),
                   shrinkWrap: true,
                   gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                      maxCrossAxisExtent: 340,
-                      childAspectRatio: 1 / 0.9,
+                      maxCrossAxisExtent: MediaQuery.of(context).size.width*0.40,
+                      childAspectRatio: 2 / 1.7,
                       crossAxisSpacing: 20,
                       mainAxisSpacing: 20),
                   itemCount: menuItems.length,
@@ -95,7 +95,7 @@ class _EducationScreenState extends State<Education> {
                           children: <Widget>[
                             Padding(
                                 padding:
-                                    EdgeInsets.fromLTRB(16.0, 12.0, 16.0, 8.0),
+                                EdgeInsets.fromLTRB(16.0, 12.0, 16.0, 8.0),
                                 child: SvgPicture.asset(
                                     menuItems[index].svgPicture)),
                             Padding(

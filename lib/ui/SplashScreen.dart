@@ -1,20 +1,10 @@
 import 'dart:async';
-import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:tucson_app/GeneralUtils/Constant.dart';
 import 'package:tucson_app/GeneralUtils/Utils.dart';
-import 'package:tucson_app/ui/BlogDetailsScreen.dart';
 import 'package:tucson_app/ui/DonationScreen.dart';
-import 'package:tucson_app/ui/DropoutPreventionScreen.dart';
-import 'package:tucson_app/ui/MentalHealthSupportScreen.dart';
-import 'package:tucson_app/ui/ScholarshipInfoScreen.dart';
-import 'package:tucson_app/ui/SignInScreen.dart';
-import 'package:tucson_app/ui/student/StudentHomeScreen.dart';
-
-import 'parent/ParentGuardianDashBoard.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -26,7 +16,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    Timer(Duration(seconds: 2), () => Utils.navigateReplaceToScreen(context, DropoutPreventionScreen()));
+    Timer(Duration(seconds: 2), () => Utils.navigateReplaceToScreen(context, DonationScreen()));
   }
 
   @override

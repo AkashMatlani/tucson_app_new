@@ -71,7 +71,8 @@ class LabelStr {
   static const lblAwarity ="Awartiy";
   static const lblVolunteerOpportunites = "Volunteer Opportunities";
   static const lblEvents = "Events";
-  static const lblSmartChoice = "Smart Choice/Parent View";
+  static const lblSmartChoice = "Smart Choice";
+  static const lblParentVUE = "ParentVUE";
   static const lblEducationWebstite = "Educational Website";
   static const lblVideos = "Videos";
   static const lblActivites = "Activites";
@@ -111,4 +112,8 @@ class LabelStr {
   static const lblNameAndEmail = "Name and Email Address";
   static const lblEnroll = "Enroll";
 
+  static const lblPostJob = "Post Jobs";
+  static const lblCommmunityEvents = "Commmunity Events";
+  static const lblVolunteerOpportunities = "Volunteer Opportunities";
+  static const lblGivingDonation = "Giving/Donation";
 }
