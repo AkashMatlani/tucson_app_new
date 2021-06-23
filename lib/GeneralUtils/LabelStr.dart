@@ -118,4 +118,6 @@ class LabelStr {
   static const lblCommmunityEvents = "Commmunity Events";
   static const lblVolunteerOpportunities = "Volunteer Opportunities";
   static const lblGivingDonation = "Giving/Donation";
+  static const lblAgree = "Agree";
+  static const lblEventDetail = "Date & Time:\n16/05/2021\nEvent Details:\nK-5 GATE Summer Enrichment ProgramIn this FREE summer program GATE students will explore hands-on and minds-on lessons that integrate intellectual challenge along with critical and creative thinking.\nJune 2-30; Monday-Friday; 8 a.m.- 12 p.m.Lineweaver Location - GATE Qualifying Students OnlyTully Location - Open Access GATE (All Students Eligible)";
 }

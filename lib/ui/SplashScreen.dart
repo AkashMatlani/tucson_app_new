@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:tucson_app/GeneralUtils/Constant.dart';
 import 'package:tucson_app/GeneralUtils/Utils.dart';
 import 'package:tucson_app/ui/DonationScreen.dart';
+import 'package:tucson_app/ui/DropoutPreventionScreen.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -16,7 +17,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    Timer(Duration(seconds: 2), () => Utils.navigateReplaceToScreen(context, DonationScreen()));
+    Timer(Duration(seconds: 2), () => Utils.navigateReplaceToScreen(context, DropoutPreventionScreen()));
   }
 
   @override
