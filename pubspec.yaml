@@ -36,6 +36,7 @@ dependencies:
   simple_animations: ^2.0.0
   shared_preferences: ^2.0.6
   cached_network_image: ^2.5.1
+  flutter_calendar_carousel: ^1.5.3
 
 
 dev_dependencies:

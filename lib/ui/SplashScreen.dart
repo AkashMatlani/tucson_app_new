@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:tucson_app/CommunityResources.dart';
 import 'package:tucson_app/GeneralUtils/Constant.dart';
 import 'package:tucson_app/GeneralUtils/Utils.dart';
+import 'package:tucson_app/ui/CalenderEvent.dart';
 import 'package:tucson_app/ui/DonationScreen.dart';
 import 'package:tucson_app/ui/DropoutPreventionScreen.dart';
 
@@ -18,7 +19,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    Timer(Duration(seconds: 2), () => Utils.navigateReplaceToScreen(context, CommunityResources()));
+    Timer(Duration(seconds: 2), () => Utils.navigateReplaceToScreen(context, DropoutPreventionScreen()));
   }
 
   @override

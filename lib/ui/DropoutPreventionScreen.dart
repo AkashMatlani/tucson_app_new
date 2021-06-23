@@ -211,8 +211,7 @@ class _DropoutPreventionScreenState extends State<DropoutPreventionScreen> {
                               MyFont.SSPro_regular, 16.0, Colors.black)),
                       onPressed: () {
                         print("Call me");
-                       // bottomPopup();
-                        bottomMenu();
+                        bottomPopup();
                       },
                     ),
                   )
@@ -225,7 +224,7 @@ class _DropoutPreventionScreenState extends State<DropoutPreventionScreen> {
     );
   }
 
- /* void bottomPopup() {
+  void bottomPopup() {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -287,6 +286,7 @@ class _DropoutPreventionScreenState extends State<DropoutPreventionScreen> {
                                 16.0, Color.fromRGBO(255, 255, 255, 1))),
                         onPressed: () {
                           print("Call me");
+                          Navigator.of(context).pop();
                         },
                       ),
                     ),
@@ -313,72 +313,8 @@ class _DropoutPreventionScreenState extends State<DropoutPreventionScreen> {
         ),
       ),
     );
-  }*/
+  }
 
-void bottomMenu()
-{
-  showModalBottomSheet(
-    context: context,
-    isScrollControlled: true,
-    backgroundColor: Colors.transparent,
-    builder: (context) => Container(
-      height: MediaQuery.of(context).size.height * 0.60,
-      decoration: new BoxDecoration(
-        color: Colors.white,
-        borderRadius: new BorderRadius.only(
-          topLeft: const Radius.circular(40.0),
-          topRight: const Radius.circular(40.0),
-        ),
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.fromLTRB(20.0, 40, 10, 10),
-            child: Text("K-5 Gate Summer Enrichment Program Starts",
-                style: AppTheme.customTextStyle(
-                    MyFont.SSPro_semibold, 18.0, Color.fromRGBO(0, 0, 0, 1))),
-          ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(20.0, 20, 10, 10),
-            child: Text(
-              LabelStr.lblEventDetail,
-              style: AppTheme.regularTextStyle()
-                  .copyWith(fontSize: 16, color: Color.fromRGBO(0, 0, 0, 1)),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 16),
-            child: Divider(
-                thickness: 1, color: Color.fromRGBO(223, 223, 223, 4)),
-          ),
 
-                Padding(
-                  padding: const EdgeInsets.only(right: 8),
-                  child: Align(
-                    alignment: Alignment.topRight,
-                    child: Container(
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: Color.fromRGBO(204, 204, 204, 1)),
-                      height: 50,
-                      width: MediaQuery.of(context).size.width * 0.35,
-                      child: TextButton(
-                        child: Text(LabelStr.lblCancel,
-                            style: AppTheme.customTextStyle(MyFont.SSPro_bold,
-                                16.0, Color.fromRGBO(255, 255, 255, 1))),
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-      ),
-    ),
-  );
-}
 
 }
