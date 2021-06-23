@@ -11,6 +11,10 @@ import 'package:tucson_app/GeneralUtils/Utils.dart';
 import 'package:tucson_app/ui/SignInScreen.dart';
 
 class ForgotPwdScreen extends StatefulWidget {
+
+  ForgotPwdScreen(this.loginType);
+  String  loginType;
+
   @override
   _ForgotPwdScreenState createState() => _ForgotPwdScreenState();
 }
@@ -82,7 +86,7 @@ class _ForgotPwdScreenState extends State<ForgotPwdScreen> {
                         child: TextButton(
                           child: Text(LabelStr.lblSubmit, style: AppTheme.customTextStyle(MyFont.SSPro_bold, 16.0, Colors.white)),
                           onPressed: (){
-                            Utils.navigateReplaceToScreen(context, SignInScreen());
+                            Utils.navigateReplaceToScreen(context, SignInScreen(widget.loginType));
                           },
                         ),
                       )

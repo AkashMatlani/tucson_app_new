@@ -11,6 +11,10 @@ import 'package:tucson_app/ui/SignInScreen.dart';
 
 
 class SignUpScreen extends StatefulWidget {
+
+  SignUpScreen(this.loginType);
+  String  loginType;
+
   @override
   _SignUpScreenState createState() => _SignUpScreenState();
 }
@@ -198,7 +202,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           child: TextButton(
                             child: Text(LabelStr.lblSignUp.toUpperCase(), style: AppTheme.customTextStyle(MyFont.SSPro_bold, 16.0, Colors.white)),
                             onPressed: (){
-                              Utils.navigateReplaceToScreen(context, SignInScreen());
+                              Utils.navigateReplaceToScreen(context, SignInScreen(widget.loginType));
                             },
                           ),
                         ),
@@ -213,7 +217,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               SizedBox(width: 2),
                               InkWell(
                                   onTap: (){
-                                    Utils.navigateReplaceToScreen(context, SignInScreen());
+                                    Utils.navigateReplaceToScreen(context, SignInScreen(widget.loginType));
                                   },
                                   child: Text(LabelStr.lblSignIn.toUpperCase(), style: AppTheme.customTextStyle(MyFont.SSPro_semibold, 16.0, HexColor("#5772A8")))
                               )

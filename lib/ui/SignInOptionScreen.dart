@@ -7,7 +7,7 @@ import 'package:tucson_app/GeneralUtils/LabelStr.dart';
 import 'package:tucson_app/GeneralUtils/Utils.dart';
 import 'package:tucson_app/ui/SignInScreen.dart';
 import 'package:tucson_app/ui/parent/ParentGuardianDashBoard.dart';
-import 'package:tucson_app/ui/student/StudentHomeScreen.dart';
+import 'package:tucson_app/ui/student/StudentDashboardScreen.dart';
 
 class SignInOptionScreen extends StatefulWidget {
   @override
@@ -41,7 +41,7 @@ class _SignInOptionScreenState extends State<SignInOptionScreen> {
               child: TextButton(
                 child: Text(LabelStr.lblStudentOpt, style: AppTheme.customTextStyle(MyFont.SSPro_bold, 20.0, Colors.white)),
                 onPressed: (){
-                  Utils.navigateReplaceToScreen(context, StudentHomeScreen());
+                  Utils.navigateReplaceToScreen(context, SignInScreen("Student"));
                 },
               ),
             ),
@@ -62,7 +62,7 @@ class _SignInOptionScreenState extends State<SignInOptionScreen> {
               child: TextButton(
                 child: Text(LabelStr.lblParentOpt, style: AppTheme.customTextStyle(MyFont.SSPro_bold, 20.0, Colors.white)),
                 onPressed: (){
-                  Utils.navigateReplaceToScreen(context, ParentDashBoardScreen());
+                  Utils.navigateReplaceToScreen(context, SignInScreen("Parent"));
                 },
               ),
             ),
@@ -83,7 +83,7 @@ class _SignInOptionScreenState extends State<SignInOptionScreen> {
               child: TextButton(
                 child: Text(LabelStr.lblCommunityOpt, style: AppTheme.customTextStyle(MyFont.SSPro_bold, 20.0, Colors.white)),
                 onPressed: (){
-                  Utils.navigateReplaceToScreen(context, SignInScreen());
+                  Utils.navigateReplaceToScreen(context, SignInScreen("Community"));
                 },
               ),
             ),

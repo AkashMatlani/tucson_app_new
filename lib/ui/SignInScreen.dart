@@ -6,14 +6,19 @@ import 'package:tucson_app/GeneralUtils/Constant.dart';
 import 'package:tucson_app/GeneralUtils/HelperWidgets.dart';
 import 'package:tucson_app/GeneralUtils/LabelStr.dart';
 import 'package:tucson_app/GeneralUtils/Utils.dart';
+import 'package:tucson_app/ui/community/CommunityDashboardScreen.dart';
 import 'parent/ParentGuardianDashBoard.dart';
 import 'package:tucson_app/ui/ForgotPwdScreen.dart';
-import 'student/StudentHomeScreen.dart';
+import 'student/StudentDashboardScreen.dart';
 
 import 'SignUpScreen.dart';
 
 
 class SignInScreen extends StatefulWidget {
+
+  SignInScreen(this.loginType);
+  String  loginType;
+
   @override
   _SignInScreenState createState() => _SignInScreenState();
 }
@@ -145,14 +150,20 @@ class _SignInScreenState extends State<SignInScreen> {
                         child: TextButton(
                           child: Text(LabelStr.lblSignIn.toUpperCase(), style: AppTheme.customTextStyle(MyFont.SSPro_bold, 16.0, Colors.white)),
                           onPressed: (){
-                            Utils.navigateReplaceToScreen(context, ParentDashBoardScreen());
+                            if(widget.loginType.compareTo("Student") == 0){
+                              Utils.navigateReplaceToScreen(context, StudentDashboardScreen());
+                            } else if(widget.loginType.compareTo("Parent") == 0){
+                              Utils.navigateReplaceToScreen(context, ParentDashBoardScreen());
+                            } else {
+                              Utils.navigateReplaceToScreen(context, CommunityDashboardScreen());
+                            }
                           },
                         ),
                       ),
                       SizedBox(height: 5),
                       InkWell(
                         onTap: (){
-                          Utils.navigateToScreen(context, ForgotPwdScreen());
+                          Utils.navigateToScreen(context, ForgotPwdScreen(widget.loginType));
                         },
                         child: Container(
                           alignment: Alignment.centerRight,
@@ -171,7 +182,7 @@ class _SignInScreenState extends State<SignInScreen> {
                               SizedBox(width: 2),
                               InkWell(
                                   onTap: (){
-                                    Utils.navigateToScreen(context, SignUpScreen());
+                                    Utils.navigateToScreen(context, SignUpScreen(widget.loginType));
                                   },
                                   child: Text(LabelStr.lblSignUp.toUpperCase(), style: AppTheme.customTextStyle(MyFont.SSPro_semibold, 16.0, HexColor("#5772A8")))
                               )
