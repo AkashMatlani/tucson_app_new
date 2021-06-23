@@ -88,6 +88,8 @@ class LabelStr {
   static const lblScholarship = "Scholarship";
   static const lblFamilyResourcesCenters = "Family Resources Centers";
   static const lblClothingBank = "Clothing Bank";
+  static const lbltusdCounselling = "TUSD Counselling";
+  static const lblMckinneyVento = "Mckinney Vento";
   static const lblResources = "Resources";
   static const lblSchoolsPrograms = "Schools and Programs";
   static const lblCatlogOfSchools = "Catalog of Schools";
