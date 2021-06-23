@@ -107,5 +107,8 @@ class LabelStr {
   static const lblBehaviorialHealth = "Palo Verde Behaviorial Health";
   static const lblSuicideLifeline = "National Suicide Prevention Lifeline";
   static const lblSuicideLifelineNo = "1-800-273-8255";
+  static const lblContactSpecialist = "Contact Your Specialist";
+  static const lblNameAndEmail = "Name and Email Address";
+  static const lblEnroll = "Enroll";
 
 }
