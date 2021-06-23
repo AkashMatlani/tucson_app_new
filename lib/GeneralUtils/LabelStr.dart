@@ -110,5 +110,7 @@ class LabelStr {
   static const lblContactSpecialist = "Contact Your Specialist";
   static const lblNameAndEmail = "Name and Email Address";
   static const lblEnroll = "Enroll";
+  static const lblHippaStatement = "HIPPA Statement";
+  static const dummyContentMentalHealth = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In scelerisque urna sed arcu tincidunt cursus. Proin ac neque malesuada, luctus orci non, pellentesque justo. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla egestas metus in sapien porttitor, at vestibulum dui porta. Nullam volutpat libero a purus maximus, sed pretium nulla volutpat. Nullam lobortis elit vel tortor condimentum, at fringilla sapien mollis. Phasellus ultricies malesuada nisl ut ornare. Donec in nulla neque. Aliquam vitae tincidunt arcu, fringilla convallis dui. Ut consequat ligula tellus, sit amet blandit mi rhoncus eu.\n\nSuspendisse sagittis consequat eros vitae elementum. Aliquam vitae mauris ornare, bibendum neque non, lacinia turpis. Suspendisse ac ullamcorper ante. Donec ";
 
 }

@@ -7,7 +7,8 @@ import 'package:tucson_app/GeneralUtils/LabelStr.dart';
 
 class DropoutPreventionScreen extends StatefulWidget {
   @override
-  _DropoutPreventionScreenState createState() => _DropoutPreventionScreenState();
+  _DropoutPreventionScreenState createState() =>
+      _DropoutPreventionScreenState();
 }
 
 class _DropoutPreventionScreenState extends State<DropoutPreventionScreen> {
@@ -52,7 +53,7 @@ class _DropoutPreventionScreenState extends State<DropoutPreventionScreen> {
             ),
           ),
           Positioned(
-            top: MediaQuery.of(context).size.height*0.15,
+            top: MediaQuery.of(context).size.height * 0.15,
             left: 15,
             right: 15,
             child: Container(
@@ -60,11 +61,10 @@ class _DropoutPreventionScreenState extends State<DropoutPreventionScreen> {
               child: Column(
                 children: [
                   Container(
-                    height: MediaQuery.of(context).size.height*0.3,
+                    height: MediaQuery.of(context).size.height * 0.3,
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      color: Colors.blue
-                    ),
+                        borderRadius: BorderRadius.circular(20),
+                        color: Colors.blue),
                   ),
                   SizedBox(height: 30),
                   Container(
@@ -81,34 +81,108 @@ class _DropoutPreventionScreenState extends State<DropoutPreventionScreen> {
                     height: 50,
                     width: MediaQuery.of(context).size.width,
                     child: TextButton(
-                      child: Text(LabelStr.lblContactSpecialist, style: AppTheme.customTextStyle(MyFont.SSPro_regular, 16.0, Colors.white)),
-                      onPressed: (){
+                      child: Text(LabelStr.lblContactSpecialist,
+                          style: AppTheme.customTextStyle(
+                              MyFont.SSPro_regular, 16.0, Colors.white)),
+                      onPressed: () {
                         print("Call me");
                       },
                     ),
                   ),
                   SizedBox(height: 15),
-                  Text(LabelStr.lblNameAndEmail, style: AppTheme.regularTextStyle().copyWith(fontSize: 20)),
+                  Text(LabelStr.lblNameAndEmail,
+                      style:
+                          AppTheme.regularTextStyle().copyWith(fontSize: 20)),
                   SizedBox(height: 20),
                   Container(
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      border: Border.all(color: Colors.black45, width: 1)
-                    ),
+                        borderRadius: BorderRadius.circular(10),
+                        border: Border.all(color: Colors.black45, width: 1)),
                     height: 50,
                     width: MediaQuery.of(context).size.width,
                     child: TextButton(
-                      child: Text(LabelStr.lblEnroll, style: AppTheme.customTextStyle(MyFont.SSPro_regular, 16.0, Colors.black)),
-                      onPressed: (){
+                      child: Text(LabelStr.lblEnroll,
+                          style: AppTheme.customTextStyle(
+                              MyFont.SSPro_regular, 16.0, Colors.black)),
+                      onPressed: () {
                         print("Call me");
+                        bottaMenu();
                       },
                     ),
                   )
                 ],
               ),
             ),
-          )
+          ),
         ],
+      ),
+    );
+  }
+
+  void bottaMenu() {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (context) => Container(
+        height: MediaQuery.of(context).size.height * 0.75,
+        decoration: new BoxDecoration(
+          color: Colors.white,
+          borderRadius: new BorderRadius.all(
+            Radius.circular(30),
+          ),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(20.0, 40, 10, 10),
+              child: Text(LabelStr.lblHippaStatement,
+                  style: AppTheme.customTextStyle(
+                      MyFont.SSPro_semibold, 18.0, Color.fromRGBO(0, 0, 0, 1))),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(LabelStr.dummyContentMentalHealth,style: AppTheme.regularTextStyle().copyWith(fontSize: 16,color: Color.fromRGBO(0, 0, 0, 1)),),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 16),
+              child: Divider(
+                thickness: 1,
+                  color: Color.fromRGBO(223, 223, 223, 4)
+              ),
+            ),
+
+            Row(
+              children: [
+
+                Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    gradient: LinearGradient(
+                      colors: [
+                        HexColor("#6462AA"),
+                        HexColor("#4CA7DA"),
+                        HexColor("#20B69E"),
+                      ],
+                    ),
+                  ),
+                  height: 50,
+                  width: MediaQuery.of(context).size.width*0.5,
+                  child: TextButton(
+                    child: Text(LabelStr.lblContactSpecialist,
+                        style: AppTheme.customTextStyle(
+                            MyFont.SSPro_regular, 16.0, Colors.white)),
+                    onPressed: () {
+                      print("Call me");
+                    },
+                  ),
+                ),
+              ],
+            )
+          ],
+        ),
       ),
     );
   }
