@@ -2,7 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:tucson_app/GeneralUtils/ColorExtension.dart';
 import 'package:tucson_app/GeneralUtils/Constant.dart';
+import 'package:tucson_app/GeneralUtils/Utils.dart';
 import 'package:tucson_app/Model/GridListItems.dart';
+import 'package:tucson_app/ui/ArticlesScreen.dart';
+import 'package:tucson_app/ui/EducationalWebsiteScreen.dart';
+import 'package:tucson_app/ui/student/ActivitesScreen.dart';
+import 'package:tucson_app/ui/student/BlogScreen.dart';
 
 import '../../GeneralUtils/LabelStr.dart';
 
@@ -17,14 +22,11 @@ class _EducationScreenState extends State<Education> {
       name: LabelStr.lblEducationWebstite,
       svgPicture: MyImage.educationalWebsiteIcon,
     ),
-    GridListItems(
-        name: LabelStr.lblVideos, svgPicture: MyImage.videosIcon),
+    GridListItems(name: LabelStr.lblVideos, svgPicture: MyImage.videosIcon),
     GridListItems(
         name: LabelStr.lblActivites, svgPicture: MyImage.activitesIcon),
-    GridListItems(
-        name: LabelStr.lblArticles, svgPicture: MyImage.articlesIcon),
-    GridListItems(
-        name: LabelStr.lblBlogs, svgPicture: MyImage.blogsIcon),
+    GridListItems(name: LabelStr.lblArticles, svgPicture: MyImage.articlesIcon),
+    GridListItems(name: LabelStr.lblBlogs, svgPicture: MyImage.blogsIcon),
   ];
 
   @override
@@ -38,13 +40,18 @@ class _EducationScreenState extends State<Education> {
             child: Column(
               children: [
                 Container(
-                  margin: EdgeInsets.fromLTRB(0, MediaQuery.of(context).size.height*0.03, 0, MediaQuery.of(context).size.height*0.03),
+                  margin: EdgeInsets.fromLTRB(
+                      0,
+                      MediaQuery.of(context).size.height * 0.03,
+                      0,
+                      MediaQuery.of(context).size.height * 0.03),
                   child: Row(
                     children: [
                       Container(
                         margin: EdgeInsets.only(top: 10),
                         child: IconButton(
-                            icon: Icon(Icons.arrow_back_ios, color: Colors.white),
+                            icon:
+                                Icon(Icons.arrow_back_ios, color: Colors.white),
                             onPressed: () {
                               Navigator.of(context).pop();
                             }),
@@ -74,11 +81,11 @@ class _EducationScreenState extends State<Education> {
             ),
           ),
           Positioned(
-            top: MediaQuery.of(context).size.height*0.20,
-            left: MediaQuery.of(context).size.height*0.03,
-            right: MediaQuery.of(context).size.height*0.03,
+            top: MediaQuery.of(context).size.height * 0.20,
+            left: MediaQuery.of(context).size.height * 0.03,
+            right: MediaQuery.of(context).size.height * 0.03,
             child: Container(
-              height: MediaQuery.of(context).size.height*0.8,
+              height: MediaQuery.of(context).size.height * 0.8,
               child: SingleChildScrollView(
                 child: GridView.builder(
                     physics: ScrollPhysics(),
@@ -94,6 +101,21 @@ class _EducationScreenState extends State<Education> {
                       return GestureDetector(
                           onTap: () {
                             print("Clicked");
+                            if (index == 0) {
+                              Utils.navigateToScreen(
+                                  context, EducationalWebsiteScreen());
+                            } else if (index == 2) {
+                              Utils.navigateToScreen(
+                                  context, ActivitesScreen());
+                            }
+                            else if (index == 3) {
+                              Utils.navigateToScreen(
+                                  context, ArticlesScreen());
+                            }
+                            else if (index == 4) {
+                              Utils.navigateToScreen(
+                                  context, BlogScreen());
+                            }
                           },
                           child: Card(
                               shape: RoundedRectangleBorder(
@@ -104,7 +126,7 @@ class _EducationScreenState extends State<Education> {
                               clipBehavior: Clip.antiAlias,
                               child: Column(
                                 mainAxisAlignment:
-                                MainAxisAlignment.spaceAround,
+                                    MainAxisAlignment.spaceAround,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
                                   Padding(
@@ -117,9 +139,9 @@ class _EducationScreenState extends State<Education> {
                                         16.0, 12.0, 16.0, 8.0),
                                     child: Column(
                                       crossAxisAlignment:
-                                      CrossAxisAlignment.center,
+                                          CrossAxisAlignment.center,
                                       mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
+                                          MainAxisAlignment.spaceAround,
                                       children: <Widget>[
                                         Text(
                                           menuItems[index].name,
@@ -130,9 +152,7 @@ class _EducationScreenState extends State<Education> {
                                     ),
                                   ),
                                 ],
-                              )
-                          )
-                      );
+                              )));
                     }),
               ),
             ),

@@ -207,14 +207,21 @@ class _DropoutPreventionScreenState extends State<DropoutPreventionScreen> {
                   SizedBox(height: 20),
                   Container(
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        border: Border.all(color: Colors.black45, width: 1)),
+                      borderRadius: BorderRadius.circular(10),
+                      gradient: LinearGradient(
+                        colors: [
+                          HexColor("#6462AA"),
+                          HexColor("#4CA7DA"),
+                          HexColor("#20B69E"),
+                        ],
+                      ),
+                    ),
                     height: 50,
                     width: MediaQuery.of(context).size.width,
                     child: TextButton(
                       child: Text(LabelStr.lblEnroll,
                           style: AppTheme.customTextStyle(
-                              MyFont.SSPro_regular, 16.0, Colors.black)),
+                              MyFont.SSPro_regular, 16.0, Colors.white)),
                       onPressed: () {
                         print("Call me");
                         bottomPopup();

@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:tucson_app/GeneralUtils/ColorExtension.dart';
 import 'package:tucson_app/GeneralUtils/Constant.dart';
+import 'package:tucson_app/GeneralUtils/Utils.dart';
 import 'package:tucson_app/Model/GridListItems.dart';
+import 'package:tucson_app/ui/DropoutPreventionScreen.dart';
 
 import '../../GeneralUtils/LabelStr.dart';
 
@@ -47,13 +49,18 @@ class _RequestForServiceScreenState extends State<RequestForServiceScreen> {
             child: Column(
               children: [
                 Container(
-                  margin: EdgeInsets.fromLTRB(0, MediaQuery.of(context).size.height*0.03, 0, MediaQuery.of(context).size.height*0.03),
+                  margin: EdgeInsets.fromLTRB(
+                      0,
+                      MediaQuery.of(context).size.height * 0.03,
+                      0,
+                      MediaQuery.of(context).size.height * 0.03),
                   child: Row(
                     children: [
                       Container(
                         margin: EdgeInsets.only(top: 10),
                         child: IconButton(
-                            icon: Icon(Icons.arrow_back_ios, color: Colors.white),
+                            icon:
+                                Icon(Icons.arrow_back_ios, color: Colors.white),
                             onPressed: () {
                               Navigator.of(context).pop();
                             }),
@@ -83,11 +90,11 @@ class _RequestForServiceScreenState extends State<RequestForServiceScreen> {
             ),
           ),
           Positioned(
-            top: MediaQuery.of(context).size.height*0.20,
-            left: MediaQuery.of(context).size.height*0.03,
-            right: MediaQuery.of(context).size.height*0.03,
+            top: MediaQuery.of(context).size.height * 0.20,
+            left: MediaQuery.of(context).size.height * 0.03,
+            right: MediaQuery.of(context).size.height * 0.03,
             child: Container(
-              height: MediaQuery.of(context).size.height*0.8,
+              height: MediaQuery.of(context).size.height * 0.8,
               child: SingleChildScrollView(
                 child: GridView.builder(
                     physics: ScrollPhysics(),
@@ -103,6 +110,10 @@ class _RequestForServiceScreenState extends State<RequestForServiceScreen> {
                       return GestureDetector(
                           onTap: () {
                             print("Clicked");
+                            if (index == 3) {
+                              Utils.navigateToScreen(
+                                  context, DropoutPreventionScreen());
+                            }
                           },
                           child: Card(
                               shape: RoundedRectangleBorder(
@@ -113,7 +124,7 @@ class _RequestForServiceScreenState extends State<RequestForServiceScreen> {
                               clipBehavior: Clip.antiAlias,
                               child: Column(
                                 mainAxisAlignment:
-                                MainAxisAlignment.spaceAround,
+                                    MainAxisAlignment.spaceAround,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
                                   Padding(
@@ -126,9 +137,9 @@ class _RequestForServiceScreenState extends State<RequestForServiceScreen> {
                                         16.0, 12.0, 16.0, 8.0),
                                     child: Column(
                                       crossAxisAlignment:
-                                      CrossAxisAlignment.center,
+                                          CrossAxisAlignment.center,
                                       mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
+                                          MainAxisAlignment.spaceAround,
                                       children: <Widget>[
                                         Text(
                                           menuItems[index].name,
@@ -139,9 +150,7 @@ class _RequestForServiceScreenState extends State<RequestForServiceScreen> {
                                     ),
                                   ),
                                 ],
-                              )
-                          )
-                      );
+                              )));
                     }),
               ),
             ),

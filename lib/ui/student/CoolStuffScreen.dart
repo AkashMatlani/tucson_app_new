@@ -74,7 +74,7 @@ class _CoolStuffScreenScreenState extends State<CoolStuffScreen> with SingleTick
                             topLeft: Radius.circular(30.0),
                             topRight: Radius.circular(30.0)),
                         color: HexColor("FAFAFA")),
-                    height: MediaQuery.of(context).size.height,
+                    height: double.infinity,
                     width: MediaQuery.of(context).size.width,
                     padding: EdgeInsets.all(10),
                   ),
@@ -87,7 +87,7 @@ class _CoolStuffScreenScreenState extends State<CoolStuffScreen> with SingleTick
             left: MediaQuery.of(context).size.height*0.015,
             right: MediaQuery.of(context).size.height*0.015,
             child: Container(
-              height: MediaQuery.of(context).size.width*0.8,
+              height:500,
               width: MediaQuery.of(context).size.width,
               margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
               child: Column(
@@ -95,12 +95,15 @@ class _CoolStuffScreenScreenState extends State<CoolStuffScreen> with SingleTick
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
                   TabBar(
+                    indicatorWeight: 10,
+                    indicatorSize: TabBarIndicatorSize.label,
                     indicatorColor: Colors.transparent,
                     isScrollable: false,
                     tabs: [
                       Tab(
                         child: Container(
-                            height: tabHeight,
+                            height: 100,
+                            width: MediaQuery.of(context).size.width*50,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.only(
                                 topLeft: Radius.circular(10),
@@ -124,6 +127,7 @@ class _CoolStuffScreenScreenState extends State<CoolStuffScreen> with SingleTick
                       Tab(
                         child: Container(
                             height: tabHeight,
+                            width: MediaQuery.of(context).size.width*0.5,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.only(
                                     topLeft: Radius.zero,
