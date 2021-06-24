@@ -114,11 +114,13 @@ class LabelStr {
   static const lblContactSpecialist = "Contact Your Specialist";
   static const lblNameAndEmail = "Name and Email Address";
   static const lblEnroll = "Enroll";
+  static const lblHippaStatement = "HIPPA Statement";
+  static const dummyContentMentalHealth = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In scelerisque urna sed arcu tincidunt cursus. Proin ac neque malesuada, luctus orci non, pellentesque justo. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla egestas metus in sapien porttitor, at vestibulum dui porta. Nullam volutpat libero a purus maximus, sed pretium nulla volutpat. Nullam lobortis elit vel tortor condimentum, at fringilla sapien mollis. Phasellus ultricies malesuada nisl ut ornare. Donec in nulla neque. Aliquam vitae tincidunt arcu, fringilla convallis dui. Ut consequat ligula tellus, sit amet blandit mi rhoncus eu.\n\nSuspendisse sagittis consequat eros vitae elementum. Aliquam vitae mauris ornare, bibendum neque non, lacinia turpis. Suspendisse ac ullamcorper ante. Donec ";
 
   static const lblPostJob = "Post Jobs";
   static const lblCommmunityEvents = "Commmunity Events";
   static const lblVolunteerOpportunities = "Volunteer Opportunities";
   static const lblGivingDonation = "Giving/Donation";
-  static const lblElementary = "Elementary";
-  static const lblMiddleHigh = "Middle/High";
+  static const lblAgree = "Agree";
+  static const lblEventDetail = "Date & Time:\n16/05/2021\nEvent Details:\nK-5 GATE Summer Enrichment ProgramIn this FREE summer program GATE students will explore hands-on and minds-on lessons that integrate intellectual challenge along with critical and creative thinking.\nJune 2-30; Monday-Friday; 8 a.m.- 12 p.m.Lineweaver Location - GATE Qualifying Students OnlyTully Location - Open Access GATE (All Students Eligible)";
 }

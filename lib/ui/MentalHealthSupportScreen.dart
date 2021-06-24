@@ -60,6 +60,7 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
               child: Column(
                 children: [
                   Container(
+                    margin: EdgeInsets.only(top: 20),
                     height: MediaQuery.of(context).size.height*0.3,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
@@ -181,6 +182,7 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
                       ),
                       onPressed: (){
                         print("Call me");
+                        bottomPopup();
                       },
                     ),
                   ),
@@ -208,6 +210,7 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
                         ],
                       ),
                       onPressed: (){
+                        bottomPopup();
                         print("Call me");
                       },
                     ),
@@ -217,6 +220,96 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
             ),
           )
         ],
+      ),
+    );
+  }
+  void bottomPopup() {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (context) => Container(
+        height: MediaQuery.of(context).size.height * 0.75,
+        decoration: new BoxDecoration(
+          color: Colors.white,
+          borderRadius: new BorderRadius.only(
+            topLeft: const Radius.circular(40.0),
+            topRight: const Radius.circular(40.0),
+          ),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(20.0, 40, 10, 10),
+              child: Text(LabelStr.lblHippaStatement,
+                  style: AppTheme.customTextStyle(
+                      MyFont.SSPro_semibold, 18.0, Color.fromRGBO(0, 0, 0, 1))),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(20.0, 20, 10, 10),
+              child: Text(
+                LabelStr.dummyContentMentalHealth,
+                style: AppTheme.regularTextStyle()
+                    .copyWith(fontSize: 16, color: Color.fromRGBO(0, 0, 0, 1)),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 16),
+              child: Divider(
+                  thickness: 1, color: Color.fromRGBO(223, 223, 223, 4)),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(8.0, 2, 2, 0),
+              child: Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        gradient: LinearGradient(
+                          colors: [
+                            HexColor("#6462AA"),
+                            HexColor("#4CA7DA"),
+                            HexColor("#20B69E"),
+                          ],
+                        ),
+                      ),
+                      height: 50,
+                      width: MediaQuery.of(context).size.width * 0.4,
+                      child: TextButton(
+                        child: Text(LabelStr.lblAgree,
+                            style: AppTheme.customTextStyle(MyFont.SSPro_bold,
+                                16.0, Color.fromRGBO(255, 255, 255, 1))),
+                        onPressed: () {
+                          print("Call me");
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                    ),
+                  ),
+                  Container(
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Color.fromRGBO(204, 204, 204, 1)),
+                    height: 50,
+                    width: MediaQuery.of(context).size.width * 0.4,
+                    child: TextButton(
+                      child: Text(LabelStr.lblCancel,
+                          style: AppTheme.customTextStyle(MyFont.SSPro_bold,
+                              16.0, Color.fromRGBO(255, 255, 255, 1))),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

@@ -146,7 +146,7 @@ class _ParentDashBoardScreenState extends State<ParentDashBoardScreen> {
                                 Utils.navigateToScreen(context, Event());
                               } else if (index == 2) {
                                 Utils.navigateToScreen(context, CommunityResources());
-                              } else if (index == 4) {
+                              } else if (index == 5) {
                                 Utils.navigateToScreen(context, SchoolPrograms());
                               } else if (index == 6) {
                                 Utils.navigateToScreen(context, RequestForServiceScreen());

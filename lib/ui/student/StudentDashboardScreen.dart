@@ -7,6 +7,7 @@ import 'package:tucson_app/GeneralUtils/Constant.dart';
 import 'package:tucson_app/GeneralUtils/LabelStr.dart';
 import 'package:tucson_app/GeneralUtils/Utils.dart';
 import 'package:tucson_app/Model/GridListItems.dart';
+import 'package:tucson_app/ui/CalenderEvent.dart';
 import 'package:tucson_app/ui/JobOpeningScreen.dart';
 import 'package:tucson_app/ui/MentalHealthSupportScreen.dart';
 import 'package:tucson_app/ui/ScholarshipInfoScreen.dart';
@@ -154,11 +155,9 @@ class _StudentDashboardScreenState extends State<StudentDashboardScreen> {
                               } else if (index == 4) {
                                 Utils.navigateToScreen(context, JobOpeningScreen());
                               } else if (index == 5) {
-                                Utils.navigateToScreen(context, JobOpeningScreen());
+                                Utils.navigateToScreen(context, CalendarEvent());
                               } else if (index == 6) {
                                 Utils.navigateToScreen(context, VolunteerOpportunitiesScreen());
-                              } else if (index == 6) {
-                                Utils.navigateToScreen(context, JobOpeningScreen());
                               }
                             });
                           },
