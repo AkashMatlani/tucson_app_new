@@ -151,11 +151,11 @@ class _SignInScreenState extends State<SignInScreen> {
                           child: Text(LabelStr.lblSignIn.toUpperCase(), style: AppTheme.customTextStyle(MyFont.SSPro_bold, 16.0, Colors.white)),
                           onPressed: (){
                             if(widget.loginType.compareTo("Student") == 0){
-                              Utils.navigateReplaceToScreen(context, StudentDashboardScreen());
+                              Utils.navigateToScreen(context, StudentDashboardScreen());
                             } else if(widget.loginType.compareTo("Parent") == 0){
-                              Utils.navigateReplaceToScreen(context, ParentDashBoardScreen());
+                              Utils.navigateToScreen(context, ParentDashBoardScreen());
                             } else {
-                              Utils.navigateReplaceToScreen(context, CommunityDashboardScreen());
+                              Utils.navigateToScreen(context, CommunityDashboardScreen());
                             }
                           },
                         ),

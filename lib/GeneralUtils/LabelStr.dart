@@ -119,4 +119,6 @@ class LabelStr {
   static const lblCommmunityEvents = "Commmunity Events";
   static const lblVolunteerOpportunities = "Volunteer Opportunities";
   static const lblGivingDonation = "Giving/Donation";
+  static const lblElementary = "Elementary";
+  static const lblMiddleHigh = "Middle/High";
 }
