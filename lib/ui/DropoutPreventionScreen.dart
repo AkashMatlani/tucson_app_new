@@ -23,17 +23,23 @@ class _DropoutPreventionScreenState extends State<DropoutPreventionScreen> {
             child: Column(
               children: [
                 Container(
-                  margin: EdgeInsets.fromLTRB(0, 45, 0, 25),
+                  margin: EdgeInsets.fromLTRB(0, MediaQuery.of(context).size.height*0.03, 0, MediaQuery.of(context).size.height*0.03),
                   child: Row(
                     children: [
-                      IconButton(
-                          icon: Icon(Icons.arrow_back_ios, color: Colors.white),
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          }),
-                      Text(LabelStr.lblDroupOutPrevention,
-                          style: AppTheme.regularTextStyle()
-                              .copyWith(fontSize: 18, color: Colors.white))
+                      Container(
+                        margin: EdgeInsets.only(top: 10),
+                        child: IconButton(
+                            icon: Icon(Icons.arrow_back_ios, color: Colors.white),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            }),
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(top: 10),
+                        child: Text(LabelStr.lblDroupOutPrevention,
+                            style: AppTheme.regularTextStyle()
+                                .copyWith(fontSize: 18, color: Colors.white)),
+                      )
                     ],
                   ),
                 ),

@@ -1,17 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:tucson_app/BlogScreen.dart';
+import 'BlogScreen.dart';
 import 'package:tucson_app/GeneralUtils/ColorExtension.dart';
 import 'package:tucson_app/GeneralUtils/Constant.dart';
 import 'package:tucson_app/GeneralUtils/LabelStr.dart';
 import 'package:tucson_app/GeneralUtils/Utils.dart';
 import 'package:tucson_app/Model/GridListItems.dart';
-import 'package:tucson_app/ui/CalenderEvent.dart';
-import 'package:tucson_app/ui/JobOpeningScreen.dart';
-import 'package:tucson_app/ui/MentalHealthSupportScreen.dart';
-import 'package:tucson_app/ui/ScholarshipInfoScreen.dart';
-import 'package:tucson_app/ui/VolunteerOpportunitiesScreen.dart';
+import 'CalenderEvent.dart';
+import 'JobOpeningScreen.dart';
+import 'MentalHealthSupportScreen.dart';
+import 'ScholarshipInfoScreen.dart';
+import 'VolunteerOpportunitiesScreen.dart';
 import 'package:tucson_app/ui/student/CoolStuffScreen.dart';
 
 import '../parent/Education.dart';
