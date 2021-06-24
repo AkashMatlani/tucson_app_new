@@ -4,27 +4,41 @@ import 'package:tucson_app/GeneralUtils/ColorExtension.dart';
 import 'package:tucson_app/GeneralUtils/Constant.dart';
 import 'package:tucson_app/GeneralUtils/LabelStr.dart';
 import 'package:tucson_app/Model/GridListItems.dart';
+import 'package:tucson_app/ui/student/ElementaryStuff.dart';
+import 'package:tucson_app/ui/student/MiddleHighStuff.dart';
 
 class CoolStuffScreen extends StatefulWidget {
   @override
   _CoolStuffScreenScreenState createState() => _CoolStuffScreenScreenState();
 }
 
-class _CoolStuffScreenScreenState extends State<CoolStuffScreen> {
-  List<GridListItems> menuItems = [
-    GridListItems(
-        name: LabelStr.lblVideos,
-        svgPicture: MyImage.videosIcon),
-    GridListItems(
-        name: LabelStr.lblArticles,
-        svgPicture: MyImage.calenderIcon),
-    GridListItems(
-        name: LabelStr.lblStories,
-        svgPicture: MyImage.universityIcon),
-  ];
+class _CoolStuffScreenScreenState extends State<CoolStuffScreen> with SingleTickerProviderStateMixin {
+
+  late TabController _tabController;
+  int activeTabIndex = 0;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _tabController = TabController(
+      length: 3,
+      initialIndex: 1,
+      vsync: this,
+    );
+    _tabController.addListener(() {
+      setState(() {
+        activeTabIndex = _tabController.index;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
+
+    var tabWidth = (MediaQuery.of(context).size.width-80) / 2;
+    var tabHeight = MediaQuery.of(context).size.height * 0.1;
+
     return Scaffold(
       body: Stack(
         fit: StackFit.expand,
@@ -68,62 +82,64 @@ class _CoolStuffScreenScreenState extends State<CoolStuffScreen> {
             left: MediaQuery.of(context).size.height*0.03,
             right: MediaQuery.of(context).size.height*0.03,
             child: Container(
-              height: MediaQuery.of(context).size.height*0.8,
-              child: SingleChildScrollView(
-                child: GridView.builder(
-                    physics: ScrollPhysics(),
-                    shrinkWrap: true,
-                    padding: EdgeInsets.only(bottom: 20),
-                    gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                        maxCrossAxisExtent: 200,
-                        childAspectRatio: 2 / 2,
-                        crossAxisSpacing: 20,
-                        mainAxisSpacing: 20),
-                    itemCount: menuItems.length,
-                    itemBuilder: (BuildContext ctx, index) {
-                      return GestureDetector(
-                          onTap: () {
-                            print("Clicked");
-                          },
-                          child: Card(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(15.0),
-                              ),
-                              color: Color.fromRGBO(245, 246, 252, 1),
-                              elevation: 5,
-                              clipBehavior: Clip.antiAlias,
-                              child: Column(
-                                mainAxisAlignment:
-                                MainAxisAlignment.spaceAround,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  Padding(
-                                      padding: EdgeInsets.fromLTRB(
-                                          16.0, 12.0, 16.0, 8.0),
-                                      child: SvgPicture.asset(
-                                          menuItems[index].svgPicture)),
-                                  Padding(
-                                    padding: EdgeInsets.fromLTRB(
-                                        16.0, 12.0, 16.0, 8.0),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                      CrossAxisAlignment.center,
-                                      mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
-                                      children: <Widget>[
-                                        Text(
-                                          menuItems[index].name,
-                                          style: AppTheme.regularTextStyle()
-                                              .copyWith(color: Colors.black),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
+              child: Column(
+                children: <Widget>[
+                  TabBar(
+                    indicatorColor: Colors.transparent,
+                    isScrollable: true,
+                    tabs: [
+                      Tab(
+                        child: Container(
+                            width: tabWidth,
+                            height: tabHeight,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              border: Border.all(width: activeTabIndex==0?1:0, color: activeTabIndex==0?Colors.white:Colors.black26),
+                              gradient: activeTabIndex == 0 ? LinearGradient(
+                                colors: [
+                                  HexColor("#6462AA"),
+                                  HexColor("#4CA7DA"),
+                                  HexColor("#20B69E"),
                                 ],
-                              )
-                          )
-                      );
-                    }),
+                              ) : LinearGradient(colors: []),
+                            ),
+                            child: Text(LabelStr.lblElementary, style: AppTheme.regularTextStyle().copyWith(color: activeTabIndex==0 ? Colors.white : MyColor.hintTextColor()))
+                        )
+                      ),
+                      Tab(
+                        child: Container(
+                            width: tabWidth,
+                            height: tabHeight,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              border: Border.all(width: activeTabIndex==1?1:0, color: activeTabIndex==0?Colors.white:Colors.black26),
+                              gradient: activeTabIndex == 1 ? LinearGradient(
+                                colors: [
+                                  HexColor("#6462AA"),
+                                  HexColor("#4CA7DA"),
+                                  HexColor("#20B69E"),
+                                ],
+                              ) : LinearGradient(colors: []),
+                            ),
+                            child:Text(LabelStr.lblMiddleHigh, style: AppTheme.regularTextStyle().copyWith(color: activeTabIndex==1 ? Colors.white : MyColor.hintTextColor()))
+                        )
+                      ),
+                    ],
+                    controller: _tabController,
+                  ),
+                  Expanded(
+                    child: Container(
+                      child: TabBarView(
+                        physics: NeverScrollableScrollPhysics(),
+                        controller: _tabController,
+                        children: <Widget>[
+                          ElementaryStuff(),
+                          MiddleHighStuff()
+                        ],
+                      ),
+                    ),
+                  )
+                ],
               ),
             ),
           )

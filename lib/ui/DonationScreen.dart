@@ -51,7 +51,7 @@ class _DonationScreenState extends State<DonationScreen> {
             ),
             InkWell(
               onTap: (){
-                Utils.navigateReplaceToScreen(context, SignInOptionScreen());
+                Utils.navigateToScreen(context, SignInOptionScreen());
               },
               child: Container(
                 padding: EdgeInsets.all(10),
