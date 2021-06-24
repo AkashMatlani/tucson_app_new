@@ -22,8 +22,8 @@ class _CoolStuffScreenScreenState extends State<CoolStuffScreen> with SingleTick
     super.initState();
 
     _tabController = TabController(
-      length: 3,
-      initialIndex: 1,
+      length: 2,
+      initialIndex: 0,
       vsync: this,
     );
     _tabController.addListener(() {
@@ -36,7 +36,6 @@ class _CoolStuffScreenScreenState extends State<CoolStuffScreen> with SingleTick
   @override
   Widget build(BuildContext context) {
 
-    var tabWidth = (MediaQuery.of(context).size.width-80) / 2;
     var tabHeight = MediaQuery.of(context).size.height * 0.1;
 
     return Scaffold(
@@ -48,17 +47,23 @@ class _CoolStuffScreenScreenState extends State<CoolStuffScreen> with SingleTick
             child: Column(
               children: [
                 Container(
-                  margin: EdgeInsets.fromLTRB(0, MediaQuery.of(context).size.height*0.08, 0, MediaQuery.of(context).size.height*0.04),
+                  margin: EdgeInsets.fromLTRB(0, MediaQuery.of(context).size.height*0.03, 0, MediaQuery.of(context).size.height*0.03),
                   child: Row(
                     children: [
-                      IconButton(
-                          icon: Icon(Icons.arrow_back_ios, color: Colors.white),
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          }),
-                      Text(LabelStr.lblCoolStuff,
-                          style: AppTheme.regularTextStyle()
-                              .copyWith(fontSize: 18, color: Colors.white))
+                      Container(
+                        margin: EdgeInsets.only(top: 10),
+                        child: IconButton(
+                            icon: Icon(Icons.arrow_back_ios, color: Colors.white),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            }),
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(top: 10),
+                        child: Text(LabelStr.lblCoolStuff,
+                            style: AppTheme.regularTextStyle()
+                                .copyWith(fontSize: 18, color: Colors.white)),
+                      )
                     ],
                   ),
                 ),
@@ -66,12 +71,12 @@ class _CoolStuffScreenScreenState extends State<CoolStuffScreen> with SingleTick
                   child: Container(
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(MediaQuery.of(context).size.height*0.08),
-                            topRight: Radius.circular(MediaQuery.of(context).size.height*0.08)),
-                        color: Colors.white),
+                            topLeft: Radius.circular(30.0),
+                            topRight: Radius.circular(30.0)),
+                        color: HexColor("FAFAFA")),
                     height: MediaQuery.of(context).size.height,
                     width: MediaQuery.of(context).size.width,
-                    padding: EdgeInsets.all(20),
+                    padding: EdgeInsets.all(10),
                   ),
                 )
               ],
@@ -79,66 +84,79 @@ class _CoolStuffScreenScreenState extends State<CoolStuffScreen> with SingleTick
           ),
           Positioned(
             top: MediaQuery.of(context).size.height*0.20,
-            left: MediaQuery.of(context).size.height*0.03,
-            right: MediaQuery.of(context).size.height*0.03,
+            left: MediaQuery.of(context).size.height*0.015,
+            right: MediaQuery.of(context).size.height*0.015,
             child: Container(
+              height: MediaQuery.of(context).size.width*0.8,
+              width: MediaQuery.of(context).size.width,
+              margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
                   TabBar(
                     indicatorColor: Colors.transparent,
-                    isScrollable: true,
+                    isScrollable: false,
                     tabs: [
                       Tab(
                         child: Container(
-                            width: tabWidth,
                             height: tabHeight,
                             decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              border: Border.all(width: activeTabIndex==0?1:0, color: activeTabIndex==0?Colors.white:Colors.black26),
+                              borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(10),
+                                bottomLeft: Radius.circular(10),
+                                topRight: Radius.zero,
+                                bottomRight: Radius.zero
+                              ),
+                              border: Border.all(width: 1, color: activeTabIndex==0?Colors.white:Colors.black54),
                               gradient: activeTabIndex == 0 ? LinearGradient(
                                 colors: [
                                   HexColor("#6462AA"),
                                   HexColor("#4CA7DA"),
                                   HexColor("#20B69E"),
                                 ],
-                              ) : LinearGradient(colors: []),
+                              ) : LinearGradient(colors: [Colors.white, Colors.white, Colors.white]),
                             ),
-                            child: Text(LabelStr.lblElementary, style: AppTheme.regularTextStyle().copyWith(color: activeTabIndex==0 ? Colors.white : MyColor.hintTextColor()))
+                            alignment: Alignment.center,
+                            child: Text(LabelStr.lblElementary, style: AppTheme.regularTextStyle().copyWith(color: activeTabIndex == 0 ? Colors.white : Colors.black54))
                         )
                       ),
                       Tab(
                         child: Container(
-                            width: tabWidth,
                             height: tabHeight,
                             decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              border: Border.all(width: activeTabIndex==1?1:0, color: activeTabIndex==0?Colors.white:Colors.black26),
+                              borderRadius: BorderRadius.only(
+                                    topLeft: Radius.zero,
+                                    bottomLeft: Radius.zero,
+                                    topRight: Radius.circular(10),
+                                    bottomRight: Radius.circular(10)
+                                ),
+                              border: Border.all(width: 1, color: activeTabIndex==1?Colors.white:Colors.black54),
                               gradient: activeTabIndex == 1 ? LinearGradient(
                                 colors: [
                                   HexColor("#6462AA"),
                                   HexColor("#4CA7DA"),
                                   HexColor("#20B69E"),
                                 ],
-                              ) : LinearGradient(colors: []),
+                              ) : LinearGradient(colors: [Colors.white, Colors.white, Colors.white]),
                             ),
-                            child:Text(LabelStr.lblMiddleHigh, style: AppTheme.regularTextStyle().copyWith(color: activeTabIndex==1 ? Colors.white : MyColor.hintTextColor()))
+                            alignment: Alignment.center,
+                            child:Text(LabelStr.lblMiddleHigh, style: AppTheme.regularTextStyle().copyWith(color: activeTabIndex == 1 ? Colors.white : Colors.black54))
                         )
                       ),
                     ],
                     controller: _tabController,
                   ),
-                  Expanded(
-                    child: Container(
-                      child: TabBarView(
-                        physics: NeverScrollableScrollPhysics(),
-                        controller: _tabController,
-                        children: <Widget>[
-                          ElementaryStuff(),
-                          MiddleHighStuff()
-                        ],
-                      ),
+                  SizedBox(height:20),
+                  Expanded(child: Container(
+                    child: TabBarView(
+                      controller: _tabController,
+                      children: <Widget>[
+                        ElementaryStuff(),
+                        MiddleHighStuff()
+                      ],
                     ),
-                  )
+                  ))
                 ],
               ),
             ),

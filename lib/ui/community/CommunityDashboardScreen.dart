@@ -1,15 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:tucson_app/CommunityResources.dart';
+import '../parent/CommunityResources.dart';
 import 'package:tucson_app/GeneralUtils/ColorExtension.dart';
 import 'package:tucson_app/GeneralUtils/Constant.dart';
 import 'package:tucson_app/GeneralUtils/LabelStr.dart';
 import 'package:tucson_app/GeneralUtils/Utils.dart';
 import 'package:tucson_app/Model/GridListItems.dart';
 import 'package:tucson_app/PostJobsScreen.dart';
-import 'package:tucson_app/ui/CommunityEventScreen.dart';
-import 'package:tucson_app/ui/VolunteerOpportunitiesScreen.dart';
+import 'CommunityEventScreen.dart';
+import '../student/VolunteerOpportunitiesScreen.dart';
 import 'package:tucson_app/ui/parent/Event.dart';
 
 import '../parent/Education.dart';

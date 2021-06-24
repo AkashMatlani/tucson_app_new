@@ -1,12 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:tucson_app/BlogScreen.dart';
-import 'package:tucson_app/CommunityResources.dart';
+import '../student/BlogScreen.dart';
+import 'CommunityResources.dart';
 import 'package:tucson_app/Model/GridListItems.dart';
 import 'package:tucson_app/ui/parent/Event.dart';
 import 'package:tucson_app/ui/parent/RequestForServiceScreen.dart';
-import 'package:tucson_app/ui/parent/Resuorces.dart';
+import '../Resuorces.dart';
 import 'package:tucson_app/ui/parent/SchoolPrograms.dart';
 import 'Education.dart';
 import 'package:tucson_app/GeneralUtils/ColorExtension.dart';

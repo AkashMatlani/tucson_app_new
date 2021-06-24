@@ -47,17 +47,23 @@ class _RequestForServiceScreenState extends State<RequestForServiceScreen> {
             child: Column(
               children: [
                 Container(
-                  margin: EdgeInsets.fromLTRB(0, MediaQuery.of(context).size.height*0.08, 0, MediaQuery.of(context).size.height*0.04),
+                  margin: EdgeInsets.fromLTRB(0, MediaQuery.of(context).size.height*0.03, 0, MediaQuery.of(context).size.height*0.03),
                   child: Row(
                     children: [
-                      IconButton(
-                          icon: Icon(Icons.arrow_back_ios, color: Colors.white),
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          }),
-                      Text(LabelStr.lblRqForService,
-                          style: AppTheme.regularTextStyle()
-                              .copyWith(fontSize: 18, color: Colors.white))
+                      Container(
+                        margin: EdgeInsets.only(top: 10),
+                        child: IconButton(
+                            icon: Icon(Icons.arrow_back_ios, color: Colors.white),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            }),
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(top: 10),
+                        child: Text(LabelStr.lblRqForService,
+                            style: AppTheme.regularTextStyle()
+                                .copyWith(fontSize: 18, color: Colors.white)),
+                      )
                     ],
                   ),
                 ),
@@ -65,12 +71,12 @@ class _RequestForServiceScreenState extends State<RequestForServiceScreen> {
                   child: Container(
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(MediaQuery.of(context).size.height*0.08),
-                            topRight: Radius.circular(MediaQuery.of(context).size.height*0.08)),
-                        color: Colors.white),
+                            topLeft: Radius.circular(30.0),
+                            topRight: Radius.circular(30.0)),
+                        color: HexColor("FAFAFA")),
                     height: MediaQuery.of(context).size.height,
                     width: MediaQuery.of(context).size.width,
-                    padding: EdgeInsets.all(20),
+                    padding: EdgeInsets.all(10),
                   ),
                 )
               ],
