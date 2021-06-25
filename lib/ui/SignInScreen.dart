@@ -1,24 +1,19 @@
-import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tucson_app/GeneralUtils/ColorExtension.dart';
 import 'package:tucson_app/GeneralUtils/Constant.dart';
 import 'package:tucson_app/GeneralUtils/HelperWidgets.dart';
 import 'package:tucson_app/GeneralUtils/LabelStr.dart';
-import 'package:tucson_app/GeneralUtils/PrefsUtils.dart';
 import 'package:tucson_app/GeneralUtils/Utils.dart';
 import 'package:tucson_app/Model/AuthViewModel.dart';
-import 'package:tucson_app/WebService/WebService.dart';
-import 'package:tucson_app/ui/community/CommunityDashboardScreen.dart';
-import 'parent/ParentGuardianDashBoard.dart';
 import 'package:tucson_app/ui/ForgotPwdScreen.dart';
-import 'student/StudentDashboardScreen.dart';
+import 'package:tucson_app/ui/community/CommunityDashboardScreen.dart';
 
 import 'SignUpScreen.dart';
-import 'package:http/http.dart' as http;
+import 'parent/ParentGuardianDashBoard.dart';
+import 'student/StudentDashboardScreen.dart';
 
 
 class SignInScreen extends StatefulWidget {
@@ -44,7 +39,7 @@ class _SignInScreenState extends State<SignInScreen> {
     super.initState();
     setState(() {
       _emailController.text = "vinay@gmail.com";
-      _pwdController.text = "Dash@007";
+      _pwdController.text = "Dash@0071";
     });
   }
 

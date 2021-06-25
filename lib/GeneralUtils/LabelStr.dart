@@ -36,6 +36,15 @@ class LabelStr {
   static const lblProfile = " Profile";
   static const lblAboutUs = "About Us";
   static const lblMyProfile = "My Profile";
+  static const lblPhone= "Phone";
+  static const lblUpdate= "Update";
+  static const lblSubmit= "Submit";
+  static const lblCancel= "Cancel";
+  static const lblDone = "Done";
+  static const lblLogout = "Logout";
+  static const lblNoData = "No Data Found";
+  static const lblNoFile = "File not found";
+
   static const enterUserEmail = "Please enter email";
   static const enterValidEmail = "Please enter valid email";
   static const enterUserPwd = "Please enter password";
@@ -45,22 +54,13 @@ class LabelStr {
   //static const enterValidPwd = "Passwords must contain at least six characters including letters, numbers and special characters";
   static const enterValidPwd = "Passwords must contain at least six characters including letters, numbers";
   static const invalidPassword = "Passwords must contain at least six characters";
-  static const lblPhone= "Phone";
-  static const lblUpdate= "Update";
-  static const lblSubmit= "Submit";
-  static const lblCancel= "Cancel";
-  static const checkMailLink = "Please check your email box";
+  static const checkMailLink = "Please check your email box. link sent your register email";
   static const selectFileError = "Please select file from storage";
   static const connectionError = "Please check you internet connectivity, Try again";
   static const serverError = "Server not responding, Try again";
   static const emptyFieldError = "Please fill required details";
-  static const lblDone = "Done";
   static const enterPhoneNumber = "Please enter phone number";
   static const enterValidPhoneNumber = "Please enter valid phone number";
-  static const lblLogout = "Logout";
-  static const lblNoData = "No Data Found";
-  static const lblNoFile = "File not found";
-
 
   static const lblCoolStuff = "Cool Stuff";
   static const lblStudentBlogs = "Student Blogs";
