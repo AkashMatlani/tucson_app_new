@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tucson_app/GeneralUtils/Constant.dart';
 import 'package:tucson_app/GeneralUtils/Utils.dart';
+import 'package:tucson_app/ui/DonationScreen.dart';
 import 'package:tucson_app/ui/student/CoolStuffScreen.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -16,7 +17,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    Timer(Duration(seconds: 2), () => Utils.navigateReplaceToScreen(context, CoolStuffScreen()));
+    Timer(Duration(seconds: 2), () => Utils.navigateReplaceToScreen(context, DonationScreen()));
   }
 
   @override

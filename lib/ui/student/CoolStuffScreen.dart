@@ -96,36 +96,45 @@ class _CoolStuffScreenScreenState extends State<CoolStuffScreen> with SingleTick
                     children: [
                       Container(
                         height: tabHeight,
-                        decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
-                        child: TabBar(
-                          controller: _tabController,
-                          indicator: BoxDecoration(
-                            gradient: LinearGradient(
-                              colors: [
-                                HexColor("#6462AA"),
-                                HexColor("#4CA7DA"),
-                                HexColor("#20B69E"),
-                              ],
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            border: Border.all(width: 1, color: Colors.black54)
+                        ),
+                      ),
+                      Positioned(
+                        child: Container(
+                          height: tabHeight,
+                          decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
+                          child: TabBar(
+                            controller: _tabController,
+                            indicator: BoxDecoration(
+                              gradient: LinearGradient(
+                                colors: [
+                                  HexColor("#6462AA"),
+                                  HexColor("#4CA7DA"),
+                                  HexColor("#20B69E"),
+                                ],
+                              ),
+                              borderRadius: activeTabIndex==0 ? BorderRadius.only(
+                                  topLeft: Radius.circular(10),
+                                  bottomLeft: Radius.circular(10),
+                                  topRight: Radius.zero,
+                                  bottomRight: Radius.zero
+                              ) : BorderRadius.only(
+                                  topLeft: Radius.zero,
+                                  bottomLeft: Radius.zero,
+                                  topRight: Radius.circular(10),
+                                  bottomRight: Radius.circular(10)
+                              ),
                             ),
-                            borderRadius: activeTabIndex==0 ? BorderRadius.only(
-                                topLeft: Radius.circular(10),
-                                bottomLeft: Radius.circular(10),
-                                topRight: Radius.zero,
-                                bottomRight: Radius.zero
-                            ) : BorderRadius.only(
-                                topLeft: Radius.zero,
-                                bottomLeft: Radius.zero,
-                                topRight: Radius.circular(10),
-                                bottomRight: Radius.circular(10)
-                            ),
+                            labelColor: Colors.white,
+                            unselectedLabelColor: Colors.black54,
+                            labelStyle: AppTheme.regularTextStyle(),
+                            tabs: [
+                              Tab(text: LabelStr.lblElementary),
+                              Tab(text: LabelStr.lblMiddleHigh),
+                            ],
                           ),
-                          labelColor: Colors.white,
-                          unselectedLabelColor: Colors.black54,
-                          labelStyle: AppTheme.regularTextStyle(),
-                          tabs: [
-                            Tab(text: LabelStr.lblElementary),
-                            Tab(text: LabelStr.lblMiddleHigh),
-                          ],
                         ),
                       )
                     ],

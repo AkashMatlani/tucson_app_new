@@ -11,7 +11,7 @@ class WebService {
 
   static const userLogin = "User/Login";
   static const changePassword = "User/ChangePassword";
-  static const fesetPassword = "User/ResetPassword";
+  static const resetPassword = "User/ResetPassword";
   static const forgotPassword = "User/ForgotPassword";
 
 
@@ -69,16 +69,13 @@ class WebService {
     var headers = {
       "Content-Type": 'application/json'
     };
-    http.post(postUri, body: jsonEncode(params), headers: headers)
-        .then((response) {
+    http.post(postUri, body: jsonEncode(params), headers: headers).then((response) {
       print(response.body);
-
       var jsValue = json.decode(response.body);
       var serverResponseObj = ServerResponse.withJson(jsValue);
       completer.complete(serverResponseObj);
     }).catchError((error) {
       var response = ServerResponse();
-
       switch (error.runtimeType) {
         case SocketException:
           print("socekt exception");
@@ -128,18 +125,19 @@ class ServerResponse {
   ServerResponse();
 
   ServerResponse.withJson(Map<String, dynamic> jsonObj) {
-    print("parsing response");
-    bool status = jsonObj["success"];
-    //this.message = jsonObj["message"];
-    if (jsonObj["output"] != null)
-      this.body = jsonObj["output"];
-    else
-      this.body = jsonObj;
-    if(status == true){
+    if(jsonObj.containsKey("success")){
       this.statusCode = 1;
+      if (jsonObj["output"] != null)
+        this.body = jsonObj["output"];
+      else
+        this.body = jsonObj;
+
+      this.message = "Success";
     } else {
       this.statusCode = 0;
+      this.message = jsonObj[0]["errorMessage"];
+      print("========= ${this.message}  =========");
     }
-    print("parsing response done");
+    print("********************* parsing response done **************************");
   }
 }

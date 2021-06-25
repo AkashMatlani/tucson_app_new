@@ -1,4 +1,5 @@
-import 'dart:math';
+
+import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +9,7 @@ import 'package:tucson_app/GeneralUtils/Constant.dart';
 import 'package:tucson_app/GeneralUtils/HelperWidgets.dart';
 import 'package:tucson_app/GeneralUtils/LabelStr.dart';
 import 'package:tucson_app/GeneralUtils/Utils.dart';
+import 'package:tucson_app/Model/AuthViewModel.dart';
 import 'package:tucson_app/ui/SignInScreen.dart';
 
 class ForgotPwdScreen extends StatefulWidget {
@@ -22,6 +24,7 @@ class ForgotPwdScreen extends StatefulWidget {
 class _ForgotPwdScreenState extends State<ForgotPwdScreen> {
 
   var _emailController = TextEditingController();
+  AuthViewModel _authViewModel = AuthViewModel();
 
   @override
   void initState() {
@@ -86,7 +89,7 @@ class _ForgotPwdScreenState extends State<ForgotPwdScreen> {
                         child: TextButton(
                           child: Text(LabelStr.lblSubmit, style: AppTheme.customTextStyle(MyFont.SSPro_bold, 16.0, Colors.white)),
                           onPressed: (){
-                            Utils.navigateReplaceToScreen(context, SignInScreen(widget.loginType));
+                            _forgotPassword(context);
                           },
                         ),
                       )
@@ -99,5 +102,19 @@ class _ForgotPwdScreenState extends State<ForgotPwdScreen> {
         ),
       ),
     );
+  }
+
+  _forgotPassword(BuildContext context){
+    String email = _emailController.text.toString();
+    _authViewModel.forgotPwdResult(email, (isSuccess, message) {
+      if(isSuccess){
+        print(message);
+        Timer(Duration(seconds: 1), (){
+          Utils.navigateReplaceToScreen(context, SignInScreen(widget.loginType));
+        });
+      } else {
+        print(message);
+      }
+    });
   }
 }
