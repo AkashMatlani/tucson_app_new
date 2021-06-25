@@ -1,20 +1,14 @@
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tucson_app/Model/LoginResponse.dart';
 
 class PrefUtils {
   static const String isLoggedIn = "com.TucsonApp.isLoggedIn";
-  static const String nurseId = "com.TucsonApp.userId";
-  static const String password = "com.TucsonApp.password";
-  static const String email = "com.TucsonApp.email";
-  static const String firstName = "com.TucsonApp.firstName";
-  static const String MiddleName = "com.TucsonApp.middleName";
-  static const String lastName = "com.TucsonApp.lastname";
-  static const String fullName = "com.TucsonApp.fullname";
-  static const String NurseImage = "com.TucsonApp.userImage";
-  static const String Gender = "com.TucsonApp.gender";
-  static const String DateOfBirth = "com.TucsonApp.dateOfBirth";
-  static const String phoneNumber = "com.TucsonApp.phoneNumber";
-  static const String zipCode = "com.TucsonApp.zipCode";
-  static const String isFirstTimeLogin = "com.TucsonApp.isFirstTimeLogin";
+  static const String userId = "com.TucsonApp.userId";
+  static const String userRole = "com.TucsonApp.userRole";
+  static const String userEmail = "com.TucsonApp.userEmail";
+  static const String userFirstName = "com.TucsonApp.userFirstName";
+  static const String userLastName = "com.TucsonApp.userLastName";
+  static const String userToken = "com.TucsonApp.userToken";
 
 
   static setStringValue(String key, String defaultValue) async {
@@ -43,56 +37,24 @@ class PrefUtils {
     prefs.clear();
   }
 
-  /*static void saveNurseDataToPref(NurseResponse nurseDetails, String from) {
-    PrefUtils.setIntValue(PrefUtils.nurseId, nurseDetails.nurseid);
-    PrefUtils.setStringValue(PrefUtils.email, nurseDetails.email);
-    PrefUtils.setStringValue(PrefUtils.firstName, nurseDetails.firstName);
-    PrefUtils.setStringValue(PrefUtils.MiddleName, nurseDetails.middleName);
-    PrefUtils.setStringValue(PrefUtils.lastName, nurseDetails.lastName);
-
-    String nurseName = nurseDetails.firstName + " "+nurseDetails.lastName;
-    PrefUtils.setStringValue(PrefUtils.fullName, nurseName);
-
-    if(nurseDetails.nurseImage.split('/').last.isNotEmpty){
-      PrefUtils.setStringValue(PrefUtils.NurseImage, nurseDetails.nurseImage);
-    }else{
-      PrefUtils.setStringValue(PrefUtils.NurseImage, "");
-    }
-
-    PrefUtils.setStringValue(PrefUtils.Gender, nurseDetails.gender);
-    PrefUtils.setStringValue(PrefUtils.DateOfBirth, nurseDetails.dateOfBirth);
-    PrefUtils.setStringValue(PrefUtils.displayAddress, nurseDetails.displayAddress);
-    PrefUtils.setStringValue(PrefUtils.addressLineOne, nurseDetails.address1);
-    PrefUtils.setStringValue(PrefUtils.addressLineTwo, nurseDetails.address2);
-    PrefUtils.setStringValue(PrefUtils.phoneNumber, nurseDetails.phoneNumber);
-    PrefUtils.setStringValue(PrefUtils.zipCode, nurseDetails.zipCode);
-    PrefUtils.setStringValue(PrefUtils.cityName, nurseDetails.cityName);
-    PrefUtils.setStringValue(PrefUtils.stateName, nurseDetails.stateName);
-    if(from.compareTo("FromLogin") == 0){
-      PrefUtils.setBoolValue(PrefUtils.isFirstTimeLogin, nurseDetails.isFirstTimeLogin);
-      PrefUtils.setIntValue(PrefUtils.visitId, 0);
-      PrefUtils.setBoolValue(PrefUtils.isLoggedIn, true);
-    }
+  static void saveUserDataToPref(LoginResponse userDetails) {
+    PrefUtils.setIntValue(PrefUtils.userId, userDetails.id);
+    PrefUtils.setStringValue(PrefUtils.userRole, userDetails.role);
+    PrefUtils.setStringValue(PrefUtils.userEmail, userDetails.email);
+    PrefUtils.setStringValue(PrefUtils.userFirstName, userDetails.firstName);
+    PrefUtils.setStringValue(PrefUtils.userLastName, userDetails.lastName);
+    PrefUtils.setStringValue(PrefUtils.userToken, userDetails.accessToken);
   }
 
   static void getNurseDataFromPref() async {
-    await getValueFor(PrefUtils.nurseId);
+    await getValueFor(PrefUtils.userToken);
     await getValueFor(PrefUtils.isLoggedIn);
-    await getValueFor(PrefUtils.isFirstTimeLogin);
-    await getValueFor(PrefUtils.email);
-    await getValueFor(PrefUtils.firstName);
-    await getValueFor(PrefUtils.lastName);
-    await getValueFor(PrefUtils.MiddleName);
-    await getValueFor(PrefUtils.addressLineOne);
-    await getValueFor(PrefUtils.addressLineTwo);
-    await getValueFor(PrefUtils.zipCode);
-    await getValueFor(PrefUtils.Gender);
-    await getValueFor(PrefUtils.phoneNumber);
-    await getValueFor(PrefUtils.DateOfBirth);
-    await getValueFor(PrefUtils.NurseImage);
-    await getValueFor(PrefUtils.stateName);
-    await getValueFor(PrefUtils.cityName);
-  }*/
+    await getValueFor(PrefUtils.userId);
+    await getValueFor(PrefUtils.userRole);
+    await getValueFor(PrefUtils.userEmail);
+    await getValueFor(PrefUtils.userFirstName);
+    await getValueFor(PrefUtils.userLastName);
+  }
 
   static Future getValueFor(String key) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();

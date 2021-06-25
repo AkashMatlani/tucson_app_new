@@ -1,8 +1,14 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.tucson_app">
+
+    <uses-permission android:name="android.permission.INTERNET"/>
+
    <application
         android:label="tucson_app"
-        android:icon="@mipmap/ic_launcher">
+       android:usesCleartextTraffic="true"
+        android:icon="@mipmap/ic_launcher"
+       tools:targetApi="m">
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"

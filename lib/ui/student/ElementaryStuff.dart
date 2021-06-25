@@ -24,12 +24,11 @@ class _ElementaryStuffState extends State<ElementaryStuff> {
         svgPicture: MyImage.universityIcon),
   ];
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        height: MediaQuery.of(context).size.height*0.8,
+        height: MediaQuery.of(context).size.height,
         child: SingleChildScrollView(
           child: GridView.builder(
               physics: ScrollPhysics(),

@@ -1,17 +1,24 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tucson_app/GeneralUtils/ColorExtension.dart';
 import 'package:tucson_app/GeneralUtils/Constant.dart';
 import 'package:tucson_app/GeneralUtils/HelperWidgets.dart';
 import 'package:tucson_app/GeneralUtils/LabelStr.dart';
+import 'package:tucson_app/GeneralUtils/PrefsUtils.dart';
 import 'package:tucson_app/GeneralUtils/Utils.dart';
+import 'package:tucson_app/Model/AuthViewModel.dart';
+import 'package:tucson_app/WebService/WebService.dart';
 import 'package:tucson_app/ui/community/CommunityDashboardScreen.dart';
 import 'parent/ParentGuardianDashBoard.dart';
 import 'package:tucson_app/ui/ForgotPwdScreen.dart';
 import 'student/StudentDashboardScreen.dart';
 
 import 'SignUpScreen.dart';
+import 'package:http/http.dart' as http;
 
 
 class SignInScreen extends StatefulWidget {
@@ -28,14 +35,16 @@ class _SignInScreenState extends State<SignInScreen> {
   var _emailController = TextEditingController();
   var _pwdController = TextEditingController();
   String _outputLanguage = 'en';
-  bool _showPwd = false;
+  bool _showPwd = true;
+
+  AuthViewModel _authViewModel = AuthViewModel();
 
   @override
   void initState() {
     super.initState();
     setState(() {
-      _emailController.text = "john@gmail.com";
-      _pwdController.text = "12345678";
+      _emailController.text = "vinay@gmail.com";
+      _pwdController.text = "Dash@007";
     });
   }
 
@@ -150,13 +159,7 @@ class _SignInScreenState extends State<SignInScreen> {
                         child: TextButton(
                           child: Text(LabelStr.lblSignIn.toUpperCase(), style: AppTheme.customTextStyle(MyFont.SSPro_bold, 16.0, Colors.white)),
                           onPressed: (){
-                            if(widget.loginType.compareTo("Student") == 0){
-                              Utils.navigateToScreen(context, StudentDashboardScreen());
-                            } else if(widget.loginType.compareTo("Parent") == 0){
-                              Utils.navigateToScreen(context, ParentDashBoardScreen());
-                            } else {
-                              Utils.navigateToScreen(context, CommunityDashboardScreen());
-                            }
+                            _signIn(context);
                           },
                         ),
                       ),
@@ -199,5 +202,26 @@ class _SignInScreenState extends State<SignInScreen> {
         ),
       ),
     );
+  }
+
+  _signIn(BuildContext context) async {
+    var _email = _emailController.text.trim();
+    var _password = _pwdController.text.trim();
+    Utils.showLoader(true, context);
+    _authViewModel.logInResult(_email, _password, (isValid, message) {
+      Utils.showLoader(false, context);
+      if(isValid){
+        print("*************** Login Successful *****************");
+        if(widget.loginType.compareTo("Student") == 0){
+          Utils.navigateToScreen(context, StudentDashboardScreen());
+        } else if(widget.loginType.compareTo("Parent") == 0){
+          Utils.navigateToScreen(context, ParentDashBoardScreen());
+        } else {
+          Utils.navigateToScreen(context, CommunityDashboardScreen());
+        }
+      } else {
+        print("*************** Login Failed *****************");
+      }
+    });
   }
 }
