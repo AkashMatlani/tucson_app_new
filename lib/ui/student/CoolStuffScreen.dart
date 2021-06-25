@@ -38,7 +38,7 @@ class _CoolStuffScreenScreenState extends State<CoolStuffScreen> with SingleTick
 
     var tabHeight = MediaQuery.of(context).size.height * 0.1;
 
-    return Scaffold(
+    /*return Scaffold(
       body: Stack(
         fit: StackFit.expand,
         children: [
@@ -166,6 +166,31 @@ class _CoolStuffScreenScreenState extends State<CoolStuffScreen> with SingleTick
             ),
           )
         ],
+      ),
+    );*/
+
+    return  MaterialApp(
+      home: DefaultTabController(
+        length: 3,
+        child: Scaffold(
+          appBar: AppBar(
+            bottom: TabBar(
+              tabs: [
+                Tab(icon: Icon(Icons.directions_car)),
+                Tab(icon: Icon(Icons.directions_transit)),
+                Tab(icon: Icon(Icons.directions_bike)),
+              ],
+            ),
+            title: Text('Tabs Demo'),
+          ),
+          body: TabBarView(
+            children: [
+              Icon(Icons.directions_car),
+              Icon(Icons.directions_transit),
+              Icon(Icons.directions_bike),
+            ],
+          ),
+        ),
       ),
     );
   }
