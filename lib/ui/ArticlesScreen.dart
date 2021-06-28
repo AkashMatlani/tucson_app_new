@@ -1,9 +1,16 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:tucson_app/GeneralUtils/ColorExtension.dart';
 import 'package:tucson_app/GeneralUtils/Constant.dart';
 import 'package:tucson_app/GeneralUtils/LabelStr.dart';
+import 'package:tucson_app/GeneralUtils/ToastUtils.dart';
+import 'package:tucson_app/GeneralUtils/Utils.dart';
+import 'package:tucson_app/Model/ArticleResponse.dart';
+import 'package:tucson_app/Model/AuthViewModel.dart';
+import 'package:tucson_app/Model/ContentTransactionTypeJoin.dart';
 
 class ArticlesScreen extends StatefulWidget {
   @override
@@ -11,6 +18,8 @@ class ArticlesScreen extends StatefulWidget {
 }
 
 class _ArticlesScreenState extends State<ArticlesScreen> {
+  AuthViewModel _authViewModel = AuthViewModel();
+  late List<ContentTransactionTypeJoin> articleList=[];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -93,7 +102,7 @@ class _ArticlesScreenState extends State<ArticlesScreen> {
               child: Padding(padding:EdgeInsets.all(10),child: SvgPicture.asset(MyImage.dummyIcon)),
             ),
             Expanded(
-              child: Text("Lorem Ipsum is simply dummy  the printing and typesetting.", style: AppTheme.regularTextStyle()),
+              child: Text(articleList[0].contentTitle, style: AppTheme.regularTextStyle()),
             ),
             Container(
               height: 50,
@@ -106,5 +115,27 @@ class _ArticlesScreenState extends State<ArticlesScreen> {
         ),
       ),
     );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    Timer(Duration(milliseconds: 100), () => _getFilterItemList());
+
+  }
+
+  void _getFilterItemList() {
+    Utils.showLoader(true, context);
+    _authViewModel.getArticlesFromEducationParent("1","Article", (isSuccess, message){
+      Utils.showLoader(false, context);
+      if(isSuccess){
+        setState(() {
+          articleList = _authViewModel.articleList.;
+          print("schoool Id"+articleList[0].schoolId.toString());
+        });
+      } else {
+        ToastUtils.showToast(context, message, Colors.red);
+      }
+    });
   }
 }

@@ -18,6 +18,7 @@ class WebService {
   static const employeeSignUp = "Employee/Create";
   static const communitySignUp = "Community/Create";
   static const parentSignUp = "ParentGuardian/Create";
+  static const parentArtiles = "ContentMaster/GetContentByType";
 
 
   static Future<ServerResponse> getAPICall(String apiName, Map<String, dynamic> params) async {

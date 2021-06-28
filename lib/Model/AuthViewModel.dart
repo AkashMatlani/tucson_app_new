@@ -2,11 +2,13 @@ import 'package:tucson_app/GeneralUtils/Constant.dart';
 import 'package:tucson_app/GeneralUtils/LabelStr.dart';
 import 'package:tucson_app/GeneralUtils/PrefsUtils.dart';
 import 'package:tucson_app/GeneralUtils/Utils.dart';
+import 'package:tucson_app/Model/ArticleResponse.dart';
+import 'package:tucson_app/Model/ContentTransactionTypeJoin.dart';
 import 'package:tucson_app/Model/LoginResponse.dart';
 import 'package:tucson_app/WebService/WebService.dart';
 
-
 class AuthViewModel {
+  List<ContentTransactionTypeJoin> articleList = [];
 
   ValidationResult validateLogIn(String email, String password) {
     if (email.isEmpty) {
@@ -59,7 +61,7 @@ class AuthViewModel {
     return ValidationResult(true, "success");
   }
 
-  void forgotPwdResult(String email,  ResponseCallback callback) {
+  void forgotPwdResult(String email, ResponseCallback callback) {
     var params = {"Email": email};
 
     var validateResult = validateForgotPwd(email);
@@ -79,8 +81,8 @@ class AuthViewModel {
     }
   }
 
-  ValidationResult validateSignUp(String fname, String lname, String email, String password, String confirmPwd) {
-
+  ValidationResult validateSignUp(String fname, String lname, String email,
+      String password, String confirmPwd) {
     if (fname.isEmpty) {
       return ValidationResult(false, LabelStr.enterFname);
     } else if (!fname.contains(RegExp(r'^[a-zA-Z]')) && fname.length < 3) {
@@ -115,7 +117,16 @@ class AuthViewModel {
     return ValidationResult(true, "success");
   }
 
-  void signUpResult(String userType, String fname, String lname, String dob, String email, String password, String confirmPwd, int schoolId, ResponseCallback callback) {
+  void signUpResult(
+      String userType,
+      String fname,
+      String lname,
+      String dob,
+      String email,
+      String password,
+      String confirmPwd,
+      int schoolId,
+      ResponseCallback callback) {
     var params = {
       "password": password,
       "firstName": fname,
@@ -124,20 +135,20 @@ class AuthViewModel {
       "email": email,
       "phoneNumber": "",
       "profileImageURL": "",
-      if(userType.compareTo("Student") == 0)
-        "schoolId": schoolId,
+      if (userType.compareTo("Student") == 0) "schoolId": schoolId,
       "role": userType
     };
 
-    String apiMethod="";
-    if(userType.compareTo("Student") == 0){
+    String apiMethod = "";
+    if (userType.compareTo("Student") == 0) {
       apiMethod = WebService.studentSignUp;
-    } else if(userType.compareTo("Community") == 0){
+    } else if (userType.compareTo("Community") == 0) {
       apiMethod = WebService.communitySignUp;
-    } else{
+    } else {
       apiMethod = WebService.parentSignUp;
     }
-    var validateResult = validateSignUp(fname, lname, email, password, confirmPwd);
+    var validateResult =
+        validateSignUp(fname, lname, email, password, confirmPwd);
     if (validateResult.isValid) {
       WebService.postAPICall(apiMethod, params).then((response) {
         if (response.statusCode == 1) {
@@ -154,13 +165,33 @@ class AuthViewModel {
     }
   }
 
-  void getDonationAPICall( ResponseCallback callback) {
+  void getDonationAPICall(ResponseCallback callback) {
     WebService.getAPICallWithoutParmas(WebService.donationURL).then((response) {
       if (response.statusCode == 1) {
         if (response.body != null) {
           callback(true, response.body);
         }
+      } else {
+        callback(false, response.message);
+      }
+    }).catchError((error) {
+      print(error);
+      callback(false, LabelStr.serverError);
+    });
+  }
 
+  void getArticlesFromEducationParent(
+      String schoolId, String contentTypeName, ResponseCallback callback) {
+    var params = {"schoolId": schoolId, "contentTypeName": contentTypeName};
+    WebService.postAPICall(WebService.parentArtiles, params).then((response) {
+      if (response.statusCode == 1) {
+        if (response.body != null) {
+          articleList = [];
+          for (var data in response.body) {
+            articleList.add(ArticleResponse.fromJson(data));
+          }
+          callback(true, "");
+        }
       } else {
         callback(false, response.message);
       }

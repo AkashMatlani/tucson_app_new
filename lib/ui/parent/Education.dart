@@ -1,7 +1,10 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:tucson_app/GeneralUtils/ColorExtension.dart';
 import 'package:tucson_app/GeneralUtils/Constant.dart';
+import 'package:tucson_app/GeneralUtils/PrefsUtils.dart';
 import 'package:tucson_app/GeneralUtils/Utils.dart';
 import 'package:tucson_app/Model/GridListItems.dart';
 import 'package:tucson_app/ui/ArticlesScreen.dart';
@@ -17,6 +20,7 @@ class Education extends StatefulWidget {
 }
 
 class _EducationScreenState extends State<Education> {
+   String schoolId="0";
   List<GridListItems> menuItems = [
     GridListItems(
       name: LabelStr.lblEducationWebstite,
@@ -28,6 +32,18 @@ class _EducationScreenState extends State<Education> {
     GridListItems(name: LabelStr.lblArticles, svgPicture: MyImage.articlesIcon),
     GridListItems(name: LabelStr.lblBlogs, svgPicture: MyImage.blogsIcon),
   ];
+
+
+  @override
+  void initState() {
+    super.initState();
+
+    Timer(Duration(milliseconds: 100), () async {
+     // schoolId=PrefUtils.getValueFor(PrefUtils.schoolId) as String;
+      print("schoolId-"+PrefUtils.getValueFor(PrefUtils.schoolId).toString());
+    });
+
+  }
 
   @override
   Widget build(BuildContext context) {
