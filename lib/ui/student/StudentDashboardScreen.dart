@@ -1,6 +1,9 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tucson_app/GeneralUtils/PrefsUtils.dart';
 import 'package:tucson_app/ui/SignInScreen.dart';
 import 'BlogScreen.dart';
@@ -56,6 +59,23 @@ class _StudentDashboardScreenState extends State<StudentDashboardScreen> {
         svgPicture: MyImage.logoutIcon),
   ];
 
+  String language="";
+  String userName="";
+
+  @override
+  void initState() {
+    super.initState();
+    Timer(Duration(milliseconds: 200), (){
+      SharedPreferences.getInstance().then((prefs) async {
+        PrefUtils.getUserDataFromPref();
+        setState(() {
+          language = prefs.getString(PrefUtils.yourLanguage)!;
+          userName = prefs.getString(PrefUtils.userFirstName)!;
+        });
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -74,7 +94,14 @@ class _StudentDashboardScreenState extends State<StudentDashboardScreen> {
                         flex: 3,
                         child: Padding(
                           padding: EdgeInsets.only(left: 10),
-                          child: Text("John Dave", style: AppTheme.customTextStyle(MyFont.SSPro_semibold, 25.0, Colors.white)),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Text(LabelStr.lblHi, style: AppTheme.customTextStyle(MyFont.SSPro_regular, 25.0, Colors.white)),
+                              SizedBox(width: 5),
+                              Text(userName, style: AppTheme.customTextStyle(MyFont.SSPro_semibold, 25.0, Colors.white))
+                            ],
+                          ),
                         ),
                       ),
                       Container(
@@ -98,7 +125,7 @@ class _StudentDashboardScreenState extends State<StudentDashboardScreen> {
                                   size: 25.0,
                                 ),
                                 SizedBox(width: 5),
-                                Text("Spanish", style: AppTheme.regularTextStyle().copyWith(color: Colors.white))
+                                Text(language, style: AppTheme.regularTextStyle().copyWith(color: Colors.white))
                               ],
                             )
                           ],
@@ -161,7 +188,9 @@ class _StudentDashboardScreenState extends State<StudentDashboardScreen> {
                               } else if (index == 6) {
                                 Utils.navigateToScreen(context, VolunteerOpportunitiesScreen());
                               } else if (index == 8) {
+                                Utils.showLoader(true, context);
                                 PrefUtils.clearPref();
+                                Utils.showLoader(false, context);
                                 Utils.navigateWithClearState(context, SignInScreen("Student"));
                               }
                             });

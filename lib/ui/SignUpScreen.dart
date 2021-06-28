@@ -158,7 +158,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         SizedBox(height: 10),
                         Text(LabelStr.lblSchoolName, style: AppTheme.regularTextStyle().copyWith(fontSize: 14)),
                         _schoolList.length > 0 ? DropdownButton<SchoolListResponse>(
-                          value: _schoolList[0],
+                          value: _selectedSchool,
                           isExpanded: true,
                           itemHeight: 50,
                           underline: Container(
@@ -249,15 +249,18 @@ class _SignUpScreenState extends State<SignUpScreen> {
             for(var data in response.body){
               _schoolList.add(SchoolListResponse.fromJson(data));
             }
+            _selectedSchool = _schoolList[0];
           });
         }
         Utils.showLoader(false, context);
       } else {
         Utils.showLoader(false, context);
+        Utils.showToast(context, response.message, Colors.red);
         print("******************** ${response.message} ************************");
       }
     }).catchError((error) {
       print(error);
+      Utils.showToast(context, LabelStr.serverError, Colors.red);
       print("******************** ${LabelStr.serverError} ************************");
     });
   }
@@ -277,6 +280,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         print("*************** User registered *****************");
         Utils.navigateReplaceToScreen(context, SignInScreen(widget.loginType));
       } else {
+        Utils.showToast(context, message, Colors.red);
         print("*************** $message *****************");
       }
     });

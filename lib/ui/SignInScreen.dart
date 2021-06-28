@@ -6,6 +6,7 @@ import 'package:tucson_app/GeneralUtils/ColorExtension.dart';
 import 'package:tucson_app/GeneralUtils/Constant.dart';
 import 'package:tucson_app/GeneralUtils/HelperWidgets.dart';
 import 'package:tucson_app/GeneralUtils/LabelStr.dart';
+import 'package:tucson_app/GeneralUtils/PrefsUtils.dart';
 import 'package:tucson_app/GeneralUtils/ToastMessageAnimation.dart';
 import 'package:tucson_app/GeneralUtils/Utils.dart';
 import 'package:tucson_app/Model/AuthViewModel.dart';
@@ -39,8 +40,8 @@ class _SignInScreenState extends State<SignInScreen> {
   void initState() {
     super.initState();
     setState(() {
-      _emailController.text = "vinay@gmail.com";
-      _pwdController.text = "Dash@0071";
+      _emailController.text = "sadanand.r@dashtechinc.com";
+      _pwdController.text = "Dash@123";
     });
   }
 
@@ -208,16 +209,22 @@ class _SignInScreenState extends State<SignInScreen> {
       Utils.showLoader(false, context);
       if(isValid){
         print("*************** Login Successful *****************");
-        if(widget.loginType.compareTo("Student") == 0){
-          Utils.navigateToScreen(context, StudentDashboardScreen());
-        } else if(widget.loginType.compareTo("Parent") == 0){
-          Utils.navigateToScreen(context, ParentDashBoardScreen());
-        } else {
-          Utils.navigateToScreen(context, CommunityDashboardScreen());
-        }
+        _getUserType();
       } else {
+        Utils.showToast(context, message, Colors.red);
         print("*************** $message *****************");
       }
     });
+  }
+
+  _getUserType() async{
+    String role = await PrefUtils.getValueFor(PrefUtils.userRole);
+    if(role.compareTo("Student") == 0){
+      Utils.navigateToScreen(context, StudentDashboardScreen());
+    } else if(role.compareTo("ParentGuardian") == 0){
+      Utils.navigateToScreen(context, ParentDashBoardScreen());
+    } else {
+      Utils.navigateToScreen(context, CommunityDashboardScreen());
+    }
   }
 }

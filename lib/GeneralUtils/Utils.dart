@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 
 
@@ -84,6 +85,18 @@ class Utils {
           now.year, now.month, now.day, releaseTime.hour, releaseTime.minute);
       return DateFormat("hh:mm a").format(dt);
     }
+  }
+
+  static void showToast(BuildContext context, String message, Color colorName){
+    Fluttertoast.showToast(
+        msg: message,
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+        timeInSecForIosWeb: 1,
+        backgroundColor: colorName,
+        textColor: Colors.white,
+        fontSize: 16.0,
+    );
   }
 }
 
