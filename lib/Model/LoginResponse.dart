@@ -1,11 +1,12 @@
 /// id : 23
 /// role : "Student"
-/// accessToken : "eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTUxMiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIyMyIsInJvbGUiOiJTdHVkZW50IiwiZXhwIjoxNjI0NTU0MzE2LCJpc3MiOiJUdWNvbkFQSSIsImF1ZCI6IlR1Y29uQVBJIn0.p_TyQYV7kasc1hm3Nf2Ut9h24NE28GcmxsbohkSEYZtCSXIYmVN3xiepZgkTzWztYPCMvQLIJE6iSA2BQvF8YQ"
+/// accessToken : "eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTUxMiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIyMyIsInJvbGUiOiJTdHVkZW50IiwiZXhwIjoxNjI0ODgwMTU1LCJpc3MiOiJUdWNvbkFQSSIsImF1ZCI6IlR1Y29uQVBJIn0.p6Px6fVw1wFtOT8y-SZebvq2_ueIZHqPiDrrjWGpFcCHl_8C2EitBIWTMevaLaM9MzorlWLvRJ36aEA_bdgE5g"
 /// email : "vinay@gmail.com"
 /// firstName : "vinay"
 /// lastName : "thakkar"
 /// image : null
 /// blob : null
+/// schoolId : 1
 
 class LoginResponse {
   late int _id;
@@ -14,8 +15,9 @@ class LoginResponse {
   late String _email;
   late String _firstName;
   late String _lastName;
-  late dynamic _image;
-  late dynamic _blob;
+  dynamic _image;
+  dynamic _blob;
+  late int _schoolId;
 
   int get id => _id;
   String get role => _role;
@@ -25,16 +27,18 @@ class LoginResponse {
   String get lastName => _lastName;
   dynamic get image => _image;
   dynamic get blob => _blob;
+  int get schoolId => _schoolId;
 
   LoginResponse({
-    required int id,
-    required String role,
-    required String accessToken,
-    required String email,
-    required String firstName,
-    required String lastName,
+      required int id,
+      required String role,
+      required String accessToken,
+      required String email,
+      required String firstName,
+      required String lastName,
       dynamic image, 
-      dynamic blob}){
+      dynamic blob,
+      required int schoolId}){
     _id = id;
     _role = role;
     _accessToken = accessToken;
@@ -43,6 +47,7 @@ class LoginResponse {
     _lastName = lastName;
     _image = image;
     _blob = blob;
+    _schoolId = schoolId;
 }
 
   LoginResponse.fromJson(dynamic json) {
@@ -54,6 +59,7 @@ class LoginResponse {
     _lastName = json["lastName"];
     _image = json["image"];
     _blob = json["blob"];
+    _schoolId = json["schoolId"];
   }
 
   Map<String, dynamic> toJson() {
@@ -66,6 +72,7 @@ class LoginResponse {
     map["lastName"] = _lastName;
     map["image"] = _image;
     map["blob"] = _blob;
+    map["schoolId"] = _schoolId;
     return map;
   }
 

@@ -45,16 +45,21 @@ class LabelStr {
   static const lblNoData = "No Data Found";
   static const lblNoFile = "File not found";
 
-  static const enterUserEmail = "Please enter email";
+  static const enterUserEmail = "Please enter your email id";
   static const enterValidEmail = "Please enter valid email";
+  static const enterRegisterEmail = "Please enter registered email";
   static const enterUserPwd = "Please enter password";
   static const enterNewPwd = "Please enter new password";
   static const enterConfirmPwd = "Please enter confirm password";
-  static const pwdNotMatchError = "New password and confirm password should be same";
+  static const enterFname = "Please enter first name";
+  static const enterValidFname = "Please enter valid first name";
+  static const enterLname = "Please enter last name";
+  static const enterValidLname = "Please enter valid last name";
+  static const pwdNotMatchError = "New password and confirm password did not match";
   //static const enterValidPwd = "Passwords must contain at least six characters including letters, numbers and special characters";
-  static const enterValidPwd = "Passwords must contain at least six characters including letters, numbers";
-  static const invalidPassword = "Passwords must contain at least six characters";
-  static const checkMailLink = "Please check your email box. link sent your register email";
+  //static const enterValidPwd = "Passwords must contain at least six characters including letters, numbers";
+  static const invalidPassword = "Password must be at least 8 characters long";
+  static const checkMailLink = "Please check your email for reset password link";
   static const selectFileError = "Please select file from storage";
   static const connectionError = "Please check you internet connectivity, Try again";
   static const serverError = "Server not responding, Try again";

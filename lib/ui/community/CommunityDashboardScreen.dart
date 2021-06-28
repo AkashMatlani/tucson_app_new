@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:tucson_app/GeneralUtils/PrefsUtils.dart';
+import 'package:tucson_app/ui/SignInScreen.dart';
 import '../parent/CommunityResources.dart';
 import 'package:tucson_app/GeneralUtils/ColorExtension.dart';
 import 'package:tucson_app/GeneralUtils/Constant.dart';
@@ -148,6 +150,9 @@ class _CommunityDashboardScreenState extends State<CommunityDashboardScreen> {
                                 Utils.navigateToScreen(context, VolunteerOpportunitiesScreen());
                               } else if (index == 5) {
                                 Utils.navigateToScreen(context, CommunityResources());
+                              } else if (index == 7) {
+                                PrefUtils.clearPref();
+                                Utils.navigateWithClearState(context, SignInScreen("Community"));
                               }
                             });
                           },

@@ -17,8 +17,8 @@ class _ResetPwdScreenState extends State<ResetPwdScreen> {
   var _newPwdController = TextEditingController();
   var _confPwdController = TextEditingController();
 
-  bool _showNewPwd = false;
-  bool _showConfPwd = false;
+  bool _showNewPwd = true;
+  bool _showConfPwd = true;
 
   @override
   void initState() {
