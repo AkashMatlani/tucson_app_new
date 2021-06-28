@@ -77,4 +77,21 @@ class AuthViewModel {
       callback(false, validateResult.message);
     }
   }
+
+
+  void getDonationAPICall( ResponseCallback callback) {
+    WebService.getAPICallWithoutParmas(WebService.donationURL).then((response) {
+      if (response.statusCode == 1) {
+        if (response.body != null) {
+          callback(true, response.body);
+        }
+
+      } else {
+        callback(false, response.message);
+      }
+    }).catchError((error) {
+      print(error);
+      callback(false, LabelStr.serverError);
+    });
+  }
 }

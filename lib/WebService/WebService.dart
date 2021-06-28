@@ -8,12 +8,11 @@ import 'package:tucson_app/GeneralUtils/LabelStr.dart';
 class WebService {
 
   static const baseUrl = "http://35.231.45.54:99/api/";
-
   static const userLogin = "User/Login";
   static const changePassword = "User/ChangePassword";
   static const resetPassword = "User/ResetPassword";
   static const forgotPassword = "User/ForgotPassword";
-
+  static const donationURL = "TUSDConfiguration/GetDonationURL";
 
   static Future<ServerResponse> getAPICall(String apiName, Map<String, dynamic> params) async {
     var url = baseUrl + apiName;
@@ -121,6 +120,7 @@ class ServerResponse {
   var message = LabelStr.serverError;
   var body;
   var statusCode = 0;
+  var webUrl;
 
   ServerResponse();
 
@@ -131,7 +131,9 @@ class ServerResponse {
         this.body = jsonObj["output"];
       else
         this.body = jsonObj;
-
+      if(jsonObj.containsKey("success")){
+        webUrl=jsonObj["output"];
+      }
       this.message = "Success";
     } else {
       this.statusCode = 0;

@@ -7,6 +7,8 @@ import 'package:tucson_app/GeneralUtils/Utils.dart';
 import 'package:tucson_app/ui/DonationScreen.dart';
 import 'package:tucson_app/ui/student/CoolStuffScreen.dart';
 
+import 'parent/ParentGuardianDashBoard.dart';
+
 class SplashScreen extends StatefulWidget {
   @override
   _SplashScreenState createState() => _SplashScreenState();

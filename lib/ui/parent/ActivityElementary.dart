@@ -1,18 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:tucson_app/GeneralUtils/Constant.dart';
 import 'package:tucson_app/GeneralUtils/LabelStr.dart';
 import 'package:tucson_app/GeneralUtils/Utils.dart';
+import 'package:tucson_app/Model/GridListItems.dart';
 import 'package:tucson_app/ui/BlogDetailsScreen.dart';
-import '../../GeneralUtils/ColorExtension.dart';
-import '../../Model/GridListItems.dart';
 
-class BlogScreen extends StatefulWidget {
+class ActivityElementary extends StatefulWidget {
   @override
-  _BlogScreenState createState() => _BlogScreenState();
+  _ActivityElementaryState createState() => _ActivityElementaryState();
 }
 
-class _BlogScreenState extends State<BlogScreen> {
+class _ActivityElementaryState extends State<ActivityElementary> {
   List<GridListItems> menuItems = [
     GridListItems(
       name: LabelStr.lblMentalHealthSupport,
@@ -22,7 +22,8 @@ class _BlogScreenState extends State<BlogScreen> {
         name: LabelStr.lblStudentServices,
         svgPicture: MyImage.studentServicesIcon),
     GridListItems(
-        name: LabelStr.lblTakeItOut, svgPicture: MyImage.mentalHealthSupport),
+        name: LabelStr.lblTakeItOut,
+        svgPicture: MyImage.mentalHealthSupport),
     GridListItems(
         name: LabelStr.lblDroupOutPrevention, svgPicture: MyImage.dropOutIcon),
     GridListItems(
@@ -39,54 +40,9 @@ class _BlogScreenState extends State<BlogScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        children: [
-          Container(
-            color: HexColor("#6462AA"),
-            child: Column(
-              children: [
-                Container(
-                  margin: EdgeInsets.fromLTRB(
-                      0,
-                      MediaQuery.of(context).size.height * 0.03,
-                      0,
-                      MediaQuery.of(context).size.height * 0.03),
-                  child: Row(
-                    children: [
-                      Container(
-                        margin: EdgeInsets.only(top: 10),
-                        child: IconButton(
-                            icon:
-                                Icon(Icons.arrow_back_ios, color: Colors.white),
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            }),
-                      ),
-                      Container(
-                        margin: EdgeInsets.only(top: 10),
-                        child: Text(LabelStr.lblBlogs,
-                            style: AppTheme.regularTextStyle()
-                                .copyWith(fontSize: 18, color: Colors.white)),
-                      )
-                    ],
-                  ),
-                ),
-                Expanded(
-                  child: Container(
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(30.0),
-                            topRight: Radius.circular(30.0)),
-                        color: HexColor("FAFAFA")),
-                    height: MediaQuery.of(context).size.height,
-                    width: MediaQuery.of(context).size.width,
-                    padding: EdgeInsets.all(10),
-                  ),
-                )
-              ],
-            ),
-          ),
-          Positioned(
+      body: Container(
+          height: MediaQuery.of(context).size.height,
+          child: Positioned(
             top: 130,
             left: 25,
             right: 25,
@@ -134,9 +90,7 @@ class _BlogScreenState extends State<BlogScreen> {
                     );
                   }),
             ),
-          )
-        ],
-      ),
+          )),
     );
   }
 }

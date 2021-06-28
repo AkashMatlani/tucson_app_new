@@ -85,6 +85,8 @@ class MyImage {
   static const messageIcon="assets/images/icons/ic_message.svg";
   static const healthSupportIcon="assets/images/icons/ic_health_support.svg";
   static const userChatIcon="assets/images/icons/ic_user_chat.svg";
+  static const mentalHealthSupport="assets/images/icons/mental_health_support.svg";
+
 }
 
 class MyColor {

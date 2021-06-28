@@ -2,43 +2,36 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tucson_app/GeneralUtils/Constant.dart';
 import 'package:tucson_app/GeneralUtils/LabelStr.dart';
-import 'package:tucson_app/GeneralUtils/Utils.dart';
-import 'package:tucson_app/ui/BlogDetailsScreen.dart';
+import 'package:tucson_app/ui/parent/ActivityElementary.dart';
 import '../../GeneralUtils/ColorExtension.dart';
-import '../../Model/GridListItems.dart';
 
 class ActivitesScreen extends StatefulWidget {
   @override
   _ActivitesScreenState createState() => _ActivitesScreenState();
 }
 
-class _ActivitesScreenState extends State<ActivitesScreen> {
-  List<GridListItems> menuItems = [
-    GridListItems(
-      name: LabelStr.lblMentalHealthSupport,
-      svgPicture: 'assets/images/mental_health _support.svg',
-    ),
-    GridListItems(
-        name: LabelStr.lblStudentServices,
-        svgPicture: MyImage.studentServicesIcon),
-    GridListItems(
-        name: LabelStr.lblTakeItOut,
-        svgPicture: 'assets/images/mental_health _support.svg'),
-    GridListItems(
-        name: LabelStr.lblDroupOutPrevention, svgPicture: MyImage.dropOutIcon),
-    GridListItems(
-        name: LabelStr.lblHealthServices,
-        svgPicture: MyImage.healthServiceIcon),
-    GridListItems(
-        name: LabelStr.lblTranslationServices,
-        svgPicture: MyImage.translationServiceIcon),
-    GridListItems(
-        name: LabelStr.lblTransporation,
-        svgPicture: MyImage.transportationIcon),
-  ];
+class _ActivitesScreenState extends State<ActivitesScreen> with SingleTickerProviderStateMixin {
+  late TabController _tabController;
+  int activeTabIndex = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(
+      length: 2,
+      initialIndex: 0,
+      vsync: this,
+    );
+    _tabController.addListener(() {
+      setState(() {
+        activeTabIndex = _tabController.index;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
+    var tabHeight = MediaQuery.of(context).size.height * 0.06;
     return Scaffold(
       body: Stack(
         children: [
@@ -83,38 +76,75 @@ class _ActivitesScreenState extends State<ActivitesScreen> {
             ),
           ),
           Positioned(
-            top: 130,
-            left: 25,
-            right: 25,
+            top: MediaQuery.of(context).size.height*0.16,
+            left: MediaQuery.of(context).size.height*0.015,
+            right: MediaQuery.of(context).size.height*0.015,
             child: Container(
-              height: MediaQuery.of(context).size.height * 0.8,
-              child: new ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: menuItems.length,
-                  itemBuilder: (BuildContext ctxt, int index) {
-                    return InkWell(
-                      onTap: (){
-                        Utils.navigateToScreen(context, BlogDetailsScreen());
-                      },
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(30.0),
-                          child: Container(
-                            color: Colors.red,
-                            width: MediaQuery.of(context).size.height,
-                            height: MediaQuery.of(context).size.height*0.3,
+              height:MediaQuery.of(context).size.height*40,
+              width: MediaQuery.of(context).size.width,
+              margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
+              child: Column(
+                children: <Widget>[
+                  Stack(
+                    children: [
+                      Container(
+                        height: tabHeight,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            border: Border.all(width: 1, color: Colors.black54)
+                        ),
+                      ),
+                      Positioned(
+                        child: Container(
+                          height: tabHeight,
+                          decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
+                          child: TabBar(
+                            controller: _tabController,
+                            indicator: BoxDecoration(
+                              gradient: LinearGradient(
+                                colors: [
+                                  HexColor("#6462AA"),
+                                  HexColor("#4CA7DA"),
+                                  HexColor("#20B69E"),
+                                ],
+                              ),
+                              borderRadius: activeTabIndex==0 ? BorderRadius.only(
+                                  topLeft: Radius.circular(10),
+                                  bottomLeft: Radius.circular(10),
+                                  topRight: Radius.zero,
+                                  bottomRight: Radius.zero
+                              ) : BorderRadius.only(
+                                  topLeft: Radius.zero,
+                                  bottomLeft: Radius.zero,
+                                  topRight: Radius.circular(10),
+                                  bottomRight: Radius.circular(10)
+                              ),
+                            ),
+                            labelColor: Colors.white,
+                            unselectedLabelColor: Colors.black54,
+                            labelStyle: AppTheme.regularTextStyle(),
+                            tabs: [
+                              Tab(text: LabelStr.lblElementary),
+                              Tab(text: LabelStr.lblMiddleHigh),
+                            ],
                           ),
                         ),
-                        Padding(padding: EdgeInsets.only(left: 10,top: 10),
-                        child: Text('Mar 23, 2021',style: AppTheme.regularTextStyle().copyWith(fontSize: 14,color: Color.fromRGBO(111, 111, 111, 1)),)),
-                      Padding(padding: EdgeInsets.only(left: 10,top: 10,bottom: 20),
-                       child: Text('TUSD1 Desire Wheeler Interscholastics Director',style: AppTheme.customTextStyle(MyFont.SSPro_bold, 20.0, Color.fromRGBO(0, 0, 0, 1))))
-                      ]),
-                    );
-                  }),
+                      )
+                    ],
+                  ),
+                  Expanded(
+                      child: Container(
+                        child: TabBarView(
+                          controller: _tabController,
+                          children: <Widget>[
+                            ActivityElementary(),
+                            ActivityElementary()
+                          ],
+                        ),
+                      )
+                  )
+                ],
+              ),
             ),
           )
         ],
