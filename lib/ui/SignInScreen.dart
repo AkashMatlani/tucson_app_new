@@ -39,8 +39,8 @@ class _SignInScreenState extends State<SignInScreen> {
   void initState() {
     super.initState();
     setState(() {
-      _emailController.text = "vinay@gmail.com";
-      _pwdController.text = "Dash@0071";
+      _emailController.text = "sadanand.r@dashtechinc.com";
+      _pwdController.text = "Dash@123";
     });
   }
 
@@ -216,6 +216,7 @@ class _SignInScreenState extends State<SignInScreen> {
           Utils.navigateToScreen(context, CommunityDashboardScreen());
         }
       } else {
+        Utils.showToast(context, message, Colors.red);
         print("*************** $message *****************");
       }
     });

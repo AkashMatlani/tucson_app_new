@@ -15,7 +15,7 @@ class LabelStr {
 
   static const lblSignUpAs = "Sign Up As";
   static const lblStudent = "Student";
-  static const lblParent = "Parent-Guardian";
+  static const lblParent = "ParentGuardian";
   static const lblCommunity = "Community";
   static const lblFname = "First Name";
   static const lblLname = "LastName";
@@ -30,6 +30,7 @@ class LabelStr {
   static const lblConfirmPwd = "Confirm Password";
   static const lblUpdatePwd = "Update Password";
   static const lblChangePwd = "Change Password";
+  static const lblHi = "Hi";
   static const lblOk = "Ok";
   static const lblNo = "No";
   static const lblNotification = "Notification";

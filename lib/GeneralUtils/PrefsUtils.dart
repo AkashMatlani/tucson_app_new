@@ -10,6 +10,7 @@ class PrefUtils {
   static const String userLastName = "com.TucsonApp.userLastName";
   static const String userToken = "com.TucsonApp.userToken";
   static const String schoolId = "com.TucsonApp.schoolId";
+  static const String yourLanguage = "com.TucsonApp.yourLanguage";
 
 
   static setStringValue(String key, String defaultValue) async {
@@ -47,6 +48,7 @@ class PrefUtils {
     PrefUtils.setStringValue(PrefUtils.userLastName, userDetails.lastName);
     PrefUtils.setStringValue(PrefUtils.userToken, userDetails.accessToken);
     PrefUtils.setIntValue(PrefUtils.schoolId, userDetails.schoolId);
+    PrefUtils.setStringValue(PrefUtils.yourLanguage, "English");
   }
 
   static void getUserDataFromPref() async {
@@ -58,6 +60,7 @@ class PrefUtils {
     await getValueFor(PrefUtils.userFirstName);
     await getValueFor(PrefUtils.userLastName);
     await getValueFor(PrefUtils.schoolId);
+    await getValueFor(PrefUtils.yourLanguage);
   }
 
   static Future getValueFor(String key) async {
