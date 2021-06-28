@@ -9,6 +9,7 @@ class PrefUtils {
   static const String userFirstName = "com.TucsonApp.userFirstName";
   static const String userLastName = "com.TucsonApp.userLastName";
   static const String userToken = "com.TucsonApp.userToken";
+  static const String schoolId = "com.TucsonApp.schoolId";
 
 
   static setStringValue(String key, String defaultValue) async {
@@ -38,15 +39,17 @@ class PrefUtils {
   }
 
   static void saveUserDataToPref(LoginResponse userDetails) {
+    PrefUtils.setBoolValue(PrefUtils.isLoggedIn, true);
     PrefUtils.setIntValue(PrefUtils.userId, userDetails.id);
     PrefUtils.setStringValue(PrefUtils.userRole, userDetails.role);
     PrefUtils.setStringValue(PrefUtils.userEmail, userDetails.email);
     PrefUtils.setStringValue(PrefUtils.userFirstName, userDetails.firstName);
     PrefUtils.setStringValue(PrefUtils.userLastName, userDetails.lastName);
     PrefUtils.setStringValue(PrefUtils.userToken, userDetails.accessToken);
+    PrefUtils.setIntValue(PrefUtils.schoolId, userDetails.schoolId);
   }
 
-  static void getNurseDataFromPref() async {
+  static void getUserDataFromPref() async {
     await getValueFor(PrefUtils.userToken);
     await getValueFor(PrefUtils.isLoggedIn);
     await getValueFor(PrefUtils.userId);
@@ -54,6 +57,7 @@ class PrefUtils {
     await getValueFor(PrefUtils.userEmail);
     await getValueFor(PrefUtils.userFirstName);
     await getValueFor(PrefUtils.userLastName);
+    await getValueFor(PrefUtils.schoolId);
   }
 
   static Future getValueFor(String key) async {

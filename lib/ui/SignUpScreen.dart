@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -7,6 +9,9 @@ import 'package:tucson_app/GeneralUtils/Constant.dart';
 import 'package:tucson_app/GeneralUtils/HelperWidgets.dart';
 import 'package:tucson_app/GeneralUtils/LabelStr.dart';
 import 'package:tucson_app/GeneralUtils/Utils.dart';
+import 'package:tucson_app/Model/AuthViewModel.dart';
+import 'package:tucson_app/Model/SchoolListResponse.dart';
+import 'package:tucson_app/WebService/WebService.dart';
 import 'package:tucson_app/ui/SignInScreen.dart';
 
 
@@ -21,6 +26,8 @@ class SignUpScreen extends StatefulWidget {
 
 class _SignUpScreenState extends State<SignUpScreen> {
 
+  AuthViewModel _authViewModel = AuthViewModel();
+
   var _fnameController = TextEditingController();
   var _lnameController = TextEditingController();
   var _dobController = TextEditingController();
@@ -28,11 +35,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
   var _pwdController = TextEditingController();
   var _confPwdController = TextEditingController();
   String _userType = 'Student';
-  String _schoolName = '1';
+  String _formattedDob = "";
   DateTime currentDate = DateTime.now();
 
-  bool _showPwd = false;
-  bool _showConfPwd = false;
+  bool _showPwd = true;
+  bool _showConfPwd = true;
+
+  List<SchoolListResponse> _schoolList = [];
+  late SchoolListResponse _selectedSchool;
 
   @override
   void initState() {
@@ -43,9 +53,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
       _emailController.text = "john@gmail.com";
       _pwdController.text = "12345678";
       _confPwdController.text = "12345678";
-      String formattedDate = DateFormat("yyyy-MM-dd'T'hh:mm:ss").format(currentDate);
-      _dobController.text = Utils.convertDate(formattedDate, DateFormat("MM-dd-yyyy"));
+      _formattedDob = DateFormat("yyyy-MM-dd'T'hh:mm:ss").format(currentDate);
+      _dobController.text = Utils.convertDate(_formattedDob, DateFormat("MM-dd-yyyy"));
     });
+    Timer(Duration(milliseconds: 100), () => _getSchoolList());
   }
 
   void _togglePwd() {
@@ -146,8 +157,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         textFieldFor(LabelStr.lblEmail, _emailController, textInputAction: TextInputAction.next, keyboardType: TextInputType.emailAddress),
                         SizedBox(height: 10),
                         Text(LabelStr.lblSchoolName, style: AppTheme.regularTextStyle().copyWith(fontSize: 14)),
-                        DropdownButton<String>(
-                          value: _schoolName,
+                        _schoolList.length > 0 ? DropdownButton<SchoolListResponse>(
+                          value: _schoolList[0],
                           isExpanded: true,
                           itemHeight: 50,
                           underline: Container(
@@ -159,26 +170,18 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             Icons.keyboard_arrow_down,
                             color: HexColor("#CCCCCC"),// Add this
                           ),
-                          items: <DropdownMenuItem<String>>[
-                            DropdownMenuItem(
-                              child: Text(LabelStr.lblStudent),
-                              value: "1",
-                            ),
-                            DropdownMenuItem(
-                                child: Text(LabelStr.lblParent),
-                                value: "2"
-                            ),
-                            DropdownMenuItem(
-                                child: Text(LabelStr.lblCommunity),
-                                value: "3"
-                            )
-                          ],
+                          items: _schoolList.map<DropdownMenuItem<SchoolListResponse>>((SchoolListResponse schoolDetails){
+                            return DropdownMenuItem(
+                                child: Text(schoolDetails.name),
+                                value: schoolDetails
+                            );
+                          }).toList(),
                           onChanged: (value){
                             setState(() {
-                              _schoolName = value.toString();
+                              _selectedSchool = value!;
                             });
                           },
-                        ),
+                        ) : Container(),
                         SizedBox(height: 10),
                         Text(LabelStr.lblPassword, style: AppTheme.regularTextStyle().copyWith(fontSize: 14)),
                         textFieldFor(LabelStr.lblPassword, _pwdController, textInputAction: TextInputAction.next, keyboardType: TextInputType.text, obscure:_showPwd, suffixIcon: InkWell(onTap:(){_togglePwd();},child: Padding(padding: EdgeInsets.fromLTRB(10, 15, 0, 15), child: SvgPicture.asset(MyImage.viewPwdIcon)))),
@@ -202,7 +205,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           child: TextButton(
                             child: Text(LabelStr.lblSignUp.toUpperCase(), style: AppTheme.customTextStyle(MyFont.SSPro_bold, 16.0, Colors.white)),
                             onPressed: (){
-                              Utils.navigateReplaceToScreen(context, SignInScreen(widget.loginType));
+                              _signUp(context);
                             },
                           ),
                         ),
@@ -236,6 +239,49 @@ class _SignUpScreenState extends State<SignUpScreen> {
     );
   }
 
+  _getSchoolList(){
+    Utils.showLoader(true, context);
+    WebService.getAPICall(WebService.schoolList, {}).then((response) {
+      if (response.statusCode == 1) {
+        if (response.body != null) {
+          _schoolList = [];
+          setState(() {
+            for(var data in response.body){
+              _schoolList.add(SchoolListResponse.fromJson(data));
+            }
+          });
+        }
+        Utils.showLoader(false, context);
+      } else {
+        Utils.showLoader(false, context);
+        print("******************** ${response.message} ************************");
+      }
+    }).catchError((error) {
+      print(error);
+      print("******************** ${LabelStr.serverError} ************************");
+    });
+  }
+
+  _signUp(BuildContext context){
+
+    String fname = _fnameController.text;
+    String lname = _lnameController.text;
+    String email = _emailController.text;
+    String password = _pwdController.text;
+    String confirmPwd = _confPwdController.text;
+
+    Utils.showLoader(true, context);
+    _authViewModel.signUpResult(_userType, fname, lname, _formattedDob, email, password, confirmPwd, _selectedSchool.id, (isSuccess, message) {
+      Utils.showLoader(false, context);
+      if(isSuccess){
+        print("*************** User registered *****************");
+        Utils.navigateReplaceToScreen(context, SignInScreen(widget.loginType));
+      } else {
+        print("*************** $message *****************");
+      }
+    });
+  }
+
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? pickedDate = await showDatePicker(
         context: context,
@@ -245,8 +291,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
     if (pickedDate != null && pickedDate != currentDate)
       setState(() {
         currentDate = pickedDate;
-        String formattedDate = DateFormat("yyyy-MM-dd'T'hh:mm:ss").format(currentDate);
-        _dobController.text = Utils.convertDate(formattedDate, DateFormat("MM-dd-yyyy"));
+        _formattedDob = DateFormat("yyyy-MM-dd'T'hh:mm:ss").format(currentDate);
+        _dobController.text = Utils.convertDate(_formattedDob, DateFormat("MM-dd-yyyy"));
       });
   }
 }

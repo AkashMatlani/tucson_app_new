@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:tucson_app/GeneralUtils/PrefsUtils.dart';
+import 'package:tucson_app/ui/SignInScreen.dart';
 import '../student/BlogScreen.dart';
 import 'CommunityResources.dart';
 import 'package:tucson_app/Model/GridListItems.dart';
@@ -150,6 +152,9 @@ class _ParentDashBoardScreenState extends State<ParentDashBoardScreen> {
                                 Utils.navigateToScreen(context, SchoolPrograms());
                               } else if (index == 6) {
                                 Utils.navigateToScreen(context, RequestForServiceScreen());
+                              } else if (index == 8) {
+                                PrefUtils.clearPref();
+                                Utils.navigateWithClearState(context, SignInScreen("Parent"));
                               }
                             });
                           },

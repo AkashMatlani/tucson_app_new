@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:tucson_app/GeneralUtils/PrefsUtils.dart';
+import 'package:tucson_app/ui/SignInScreen.dart';
 import 'BlogScreen.dart';
 import 'package:tucson_app/GeneralUtils/ColorExtension.dart';
 import 'package:tucson_app/GeneralUtils/Constant.dart';
@@ -158,6 +160,9 @@ class _StudentDashboardScreenState extends State<StudentDashboardScreen> {
                                 Utils.navigateToScreen(context, CalendarEvent());
                               } else if (index == 6) {
                                 Utils.navigateToScreen(context, VolunteerOpportunitiesScreen());
+                              } else if (index == 8) {
+                                PrefUtils.clearPref();
+                                Utils.navigateWithClearState(context, SignInScreen("Student"));
                               }
                             });
                           },

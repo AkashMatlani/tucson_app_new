@@ -14,6 +14,12 @@ class WebService {
   static const resetPassword = "User/ResetPassword";
   static const forgotPassword = "User/ForgotPassword";
 
+  static const schoolList = "School/GetAll";
+  static const studentSignUp = "Student/Create";
+  static const employeeSignUp = "Employee/Create";
+  static const communitySignUp = "Community/Create";
+  static const parentSignUp = "ParentGuardian/Create";
+
 
   static Future<ServerResponse> getAPICall(String apiName, Map<String, dynamic> params) async {
     var url = baseUrl + apiName;
@@ -70,8 +76,14 @@ class WebService {
       "Content-Type": 'application/json'
     };
     http.post(postUri, body: jsonEncode(params), headers: headers).then((response) {
-      print(response.body);
-      var jsValue = json.decode(response.body);
+
+      var result = response.body;
+      if(response.body[0].contains("[")){
+        result = response.body.substring(1, response.body.length-1);
+      } else {
+        result = response.body;
+      }
+      var jsValue = json.decode(result);
       var serverResponseObj = ServerResponse.withJson(jsValue);
       completer.complete(serverResponseObj);
     }).catchError((error) {
@@ -135,8 +147,7 @@ class ServerResponse {
       this.message = "Success";
     } else {
       this.statusCode = 0;
-      this.message = jsonObj[0]["errorMessage"];
-      print("========= ${this.message}  =========");
+      this.message = jsonObj["errorMessage"];
     }
     print("********************* parsing response done **************************");
   }

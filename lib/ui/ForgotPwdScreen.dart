@@ -106,14 +106,16 @@ class _ForgotPwdScreenState extends State<ForgotPwdScreen> {
 
   _forgotPassword(BuildContext context){
     String email = _emailController.text.toString();
+    Utils.showLoader(true, context);
     _authViewModel.forgotPwdResult(email, (isSuccess, message) {
+      Utils.showLoader(false, context);
       if(isSuccess){
         print(message);
         Timer(Duration(seconds: 1), (){
           Utils.navigateReplaceToScreen(context, SignInScreen(widget.loginType));
         });
       } else {
-        print(message);
+        print("*************** $message *****************");
       }
     });
   }

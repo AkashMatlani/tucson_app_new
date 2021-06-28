@@ -215,7 +215,7 @@ class _SignInScreenState extends State<SignInScreen> {
           Utils.navigateToScreen(context, CommunityDashboardScreen());
         }
       } else {
-        print("*************** Login Failed *****************");
+        print("*************** $message *****************");
       }
     });
   }
