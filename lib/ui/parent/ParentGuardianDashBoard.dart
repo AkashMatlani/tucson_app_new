@@ -4,20 +4,21 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:tucson_app/GeneralUtils/PrefsUtils.dart';
-import 'package:tucson_app/ui/SignInScreen.dart';
-import '../student/BlogScreen.dart';
-import 'CommunityResources.dart';
-import 'package:tucson_app/Model/GridListItems.dart';
-import 'package:tucson_app/ui/parent/Event.dart';
-import 'package:tucson_app/ui/parent/RequestForServiceScreen.dart';
-import '../Resuorces.dart';
-import 'package:tucson_app/ui/parent/SchoolPrograms.dart';
-import 'Education.dart';
 import 'package:tucson_app/GeneralUtils/ColorExtension.dart';
 import 'package:tucson_app/GeneralUtils/Constant.dart';
 import 'package:tucson_app/GeneralUtils/LabelStr.dart';
+import 'package:tucson_app/GeneralUtils/PrefsUtils.dart';
 import 'package:tucson_app/GeneralUtils/Utils.dart';
+import 'package:tucson_app/Model/GridListItems.dart';
+import 'package:tucson_app/WebService/WebService.dart';
+import 'package:tucson_app/ui/SignInScreen.dart';
+import 'package:tucson_app/ui/parent/Event.dart';
+import 'package:tucson_app/ui/parent/RequestForServiceScreen.dart';
+import 'package:tucson_app/ui/parent/SchoolPrograms.dart';
+
+import '../DisplayWebview.dart';
+import 'CommunityResources.dart';
+import 'Education.dart';
 
 
 class ParentDashBoardScreen extends StatefulWidget {
@@ -59,6 +60,7 @@ class _ParentDashBoardScreenState extends State<ParentDashBoardScreen> {
 
   String language="";
   String userName="";
+  int schoolId=0;
 
   @override
   void initState() {
@@ -69,6 +71,7 @@ class _ParentDashBoardScreenState extends State<ParentDashBoardScreen> {
         setState(() {
           language = prefs.getString(PrefUtils.yourLanguage)!;
           userName = prefs.getString(PrefUtils.userFirstName)!;
+          schoolId = prefs.getInt(PrefUtils.schoolId)!;
         });
       });
     });
@@ -175,10 +178,28 @@ class _ParentDashBoardScreenState extends State<ParentDashBoardScreen> {
                                 Utils.navigateToScreen(context, Event());
                               } else if (index == 2) {
                                 Utils.navigateToScreen(context, CommunityResources());
+                              } else if (index == 3) {
+                                var params={
+                                  "schoolId": schoolId,
+                                  "contentTypeName":"SmartChoice"
+                                };
+                                getWebApiFromUrl(context, params);
+                              } else if (index == 4) {
+                                var params={
+                                  "schoolId": schoolId,
+                                  "contentTypeName":"ParentVUE"
+                                };
+                                getWebApiFromUrl(context, params);
                               } else if (index == 5) {
                                 Utils.navigateToScreen(context, SchoolPrograms());
                               } else if (index == 6) {
                                 Utils.navigateToScreen(context, RequestForServiceScreen());
+                              } else if (index == 7) {
+                                var params={
+                                  "schoolId": schoolId,
+                                  "contentTypeName":"Awareity"
+                                };
+                                getWebApiFromUrl(context, params);
                               } else if (index == 8) {
                                 Utils.showLoader(true, context);
                                 PrefUtils.clearPref();
@@ -223,29 +244,6 @@ class _ParentDashBoardScreenState extends State<ParentDashBoardScreen> {
                                   ),
                                 ],
                               ))
-                          /*  child:
-                       Container(
-                          width: MediaQuery.of(context).size.width,
-                          height: MediaQuery.of(context).size.height*50,
-                          child: Card(
-                          shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15.0),
-                      ),
-                        color: Colors.amberAccent,
-                        child: Column(
-                          children:[
-                            SvgPicture.asset(menuItems[index].svgPicture),
-                            SizedBox(height: 10,),
-                            Container(
-                              child: Text(menuItems[index].name),
-                              decoration: BoxDecoration(
-                                  color: Colors.amber,
-                                  borderRadius: BorderRadius.circular(15)),
-                            ),
-
-                          ]
-                        ),
-                      ))*/
                           );
                     }),
               ),
@@ -254,5 +252,24 @@ class _ParentDashBoardScreenState extends State<ParentDashBoardScreen> {
         ],
       ),
     );
+  }
+
+  getWebApiFromUrl(BuildContext context, Map<String, Object> params) {
+    Utils.showLoader(true, context);
+    WebService.getAPICall(WebService.contentByType, params).then((response) {
+      Utils.showLoader(false, context);
+      if (response.statusCode == 1) {
+        if(response.body != null){
+          String webUrl = response.body["contentTransactionTypeJoin"][0]["objectPath"];
+          Utils.showToast(context, webUrl, Colors.green);
+        }
+        //Utils.navigateToScreen(context, DisplayWebview(response.body.toString()));
+      } else {
+        Utils.showToast(context, response.message, Colors.red);
+      }
+    }).catchError((error) {
+      Utils.showLoader(false, context);
+      Utils.showToast(context, LabelStr.serverError, Colors.red);
+    });
   }
 }

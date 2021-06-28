@@ -8,7 +8,8 @@ import 'package:tucson_app/GeneralUtils/Constant.dart';
 import 'package:tucson_app/GeneralUtils/LabelStr.dart';
 import 'package:tucson_app/GeneralUtils/Utils.dart';
 import 'package:tucson_app/Model/AuthViewModel.dart';
-import 'package:tucson_app/ui/DonationWebview.dart';
+import 'package:tucson_app/WebService/WebService.dart';
+import 'package:tucson_app/ui/DisplayWebview.dart';
 import 'package:tucson_app/ui/SignInOptionScreen.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
@@ -64,10 +65,7 @@ class _DonationScreenState extends State<DonationScreen> {
                     style: AppTheme.customTextStyle(
                         MyFont.SSPro_bold, 16.0, Colors.white)),
                 onPressed: () {
-                  print("Donate");
-                  _authViewModel.getDonationAPICall((success,
-                      response) =>
-                 Utils.navigateToScreen(context, DonationWebview(response.toString())));
+                  getDonationAPICall();
                 },
               ),
             ),
@@ -87,4 +85,18 @@ class _DonationScreenState extends State<DonationScreen> {
       ),
     );
   }
+
+  void getDonationAPICall() {
+    WebService.getAPICallWithoutParmas(WebService.donationURL).then((response) {
+      if (response.statusCode == 1) {
+        Utils.navigateToScreen(context, DisplayWebview(response.body.toString()));
+      } else {
+        Utils.showToast(context, response.message, Colors.red);
+      }
+    }).catchError((error) {
+      print(error);
+      Utils.showToast(context, LabelStr.serverError, Colors.red);
+    });
+  }
+
 }

@@ -19,6 +19,8 @@ class WebService {
   static const communitySignUp = "Community/Create";
   static const parentSignUp = "ParentGuardian/Create";
 
+  static const contentByType = "ContentMaster/GetContentByType";
+
 
   static Future<ServerResponse> getAPICall(String apiName, Map<String, dynamic> params) async {
     var url = baseUrl + apiName;
@@ -132,7 +134,6 @@ class ServerResponse {
   var message = LabelStr.serverError;
   var body;
   var statusCode = 0;
-  var webUrl;
 
   ServerResponse();
 
@@ -143,9 +144,6 @@ class ServerResponse {
         this.body = jsonObj["output"];
       else
         this.body = jsonObj;
-      if(jsonObj.containsKey("success")){
-        webUrl=jsonObj["output"];
-      }
       this.message = "Success";
     } else {
       this.statusCode = 0;

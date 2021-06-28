@@ -241,7 +241,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   _getSchoolList(){
     Utils.showLoader(true, context);
-    WebService.getAPICall(WebService.schoolList, {}).then((response) {
+    WebService.getAPICallWithoutParmas(WebService.schoolList).then((response) {
       if (response.statusCode == 1) {
         if (response.body != null) {
           _schoolList = [];
