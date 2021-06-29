@@ -7,6 +7,7 @@
    <application
         android:label="tucson_app"
        android:usesCleartextTraffic="true"
+       tools:ignore="GoogleAppIndexingWarning"
         android:icon="@mipmap/ic_launcher"
        tools:targetApi="m">
         <activity

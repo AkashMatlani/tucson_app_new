@@ -4,11 +4,13 @@ import 'package:tucson_app/GeneralUtils/PrefsUtils.dart';
 import 'package:tucson_app/GeneralUtils/Utils.dart';
 import 'package:tucson_app/Model/ArticleResponse.dart';
 import 'package:tucson_app/Model/ContentTransactionTypeJoin.dart';
+import 'package:tucson_app/Model/EventForMobileResponse.dart';
 import 'package:tucson_app/Model/LoginResponse.dart';
 import 'package:tucson_app/WebService/WebService.dart';
 
 class AuthViewModel {
   List<ContentTransactionTypeJoin> articleList = [];
+  List<EventForMobileResponse> eventForMobileList = [];
 
   ValidationResult validateLogIn(String email, String password) {
     if (email.isEmpty) {
@@ -180,7 +182,7 @@ class AuthViewModel {
     });
   }
 
-  void getArticlesFromEducationParent(
+ /* void getArticlesFromEducationParent(
       String schoolId, String contentTypeName, ResponseCallback callback) {
     var params = {"schoolId": schoolId, "contentTypeName": contentTypeName};
     WebService.postAPICall(WebService.parentArtiles, params).then((response) {
@@ -199,5 +201,25 @@ class AuthViewModel {
       print(error);
       callback(false, LabelStr.serverError);
     });
-  }
+  }*/
+
+  void getAllEventForMobile(String schoolId, ResponseCallback callback) {
+    var params = {"SchoolId": schoolId};
+      WebService.getAPICall(WebService.parentGetAllEventForMobile, params).then((response) {
+        if (response.statusCode == 1) {
+          if (response.body != null) {
+            eventForMobileList = [];
+            for (var data in response.body) {
+              eventForMobileList.add(EventForMobileResponse.fromJson(data));
+            }
+            callback(true, "");
+          }
+        } else {
+          callback(false, response.message);
+        }
+      }).catchError((error) {
+        print(error);
+        callback(false, LabelStr.serverError);
+      });
+    }
 }

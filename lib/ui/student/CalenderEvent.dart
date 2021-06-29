@@ -1,12 +1,15 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_calendar_carousel/classes/event.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
-import 'package:tucson_app/GeneralUtils/ColorExtension.dart';
 import 'package:tucson_app/GeneralUtils/Constant.dart';
 import 'package:tucson_app/GeneralUtils/LabelStr.dart';
+import 'package:tucson_app/GeneralUtils/ToastUtils.dart';
+import 'package:tucson_app/GeneralUtils/Utils.dart';
+import 'package:tucson_app/Model/AuthViewModel.dart';
+import 'package:tucson_app/Model/EventForMobileResponse.dart';
 import 'package:tucson_app/Model/GridListItems.dart';
-import 'package:flutter/material.dart';
 
 import 'package:flutter_calendar_carousel/flutter_calendar_carousel.dart'
     show CalendarCarousel;
@@ -19,11 +22,13 @@ class CalendarEvent extends StatefulWidget {
 }
 
 class _CalendarEventState extends State<CalendarEvent> {
-  String _currentMonth = DateFormat.yMMM().format(DateTime(2019, 2, 3));
-  DateTime _targetDateTime = DateTime(2019, 2, 3);
-  DateTime _currentDate = DateTime(2019, 2, 3);
-  DateTime _currentDate2 = DateTime(2019, 2, 3);
+  String _currentMonth = DateFormat.yMMM().format(DateTime(2021, 6, 3));
+  DateTime _targetDateTime = DateTime(2021, 6, 3);
+  DateTime _currentDate = DateTime(2021, 6, 3);
+  DateTime _currentDate2 = DateTime(2021, 6, 3);
 
+  AuthViewModel _authViewModel = AuthViewModel();
+  late List<EventForMobileResponse> eventist = [];
   List<GridListItems> menuItems = [
     GridListItems(
       name: LabelStr.lblEducationWebstite,
@@ -46,9 +51,10 @@ class _CalendarEventState extends State<CalendarEvent> {
       color: Colors.amber,
     ),
   );
+
   EventList<Event> _markedDateMap = new EventList<Event>(
     events: {
-      new DateTime(2019, 2, 10): [
+      /*  new DateTime(2019, 2, 10): [
         new Event(
           date: new DateTime(2019, 2, 10),
           title: 'Event 1',
@@ -70,14 +76,16 @@ class _CalendarEventState extends State<CalendarEvent> {
           title: 'Event 3',
           icon: _eventIcon,
         ),
-      ],
+      ],*/
     },
   );
 
   @override
   void initState() {
+    Timer(Duration(milliseconds: 100), () => _getEventDetail());
+
     /// Add more events to _markedDateMap EventList
-    _markedDateMap.add(
+/*    _markedDateMap.add(
         new DateTime(2019, 2, 25),
         new Event(
           date: new DateTime(2019, 2, 25),
@@ -109,7 +117,7 @@ class _CalendarEventState extends State<CalendarEvent> {
         title: 'Event 3',
         icon: _eventIcon,
       ),
-    ]);
+    ]);*/
     super.initState();
   }
 
@@ -243,7 +251,8 @@ class _CalendarEventState extends State<CalendarEvent> {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: <Widget>[
                                 IconButton(
-                                  icon: Icon(Icons.arrow_back_ios, color: Colors.black),
+                                  icon: Icon(Icons.arrow_back_ios,
+                                      color: Colors.black),
                                   onPressed: () {
                                     setState(() {
                                       _targetDateTime = DateTime(
@@ -267,7 +276,8 @@ class _CalendarEventState extends State<CalendarEvent> {
                                       )),
                                 ),
                                 IconButton(
-                                  icon: Icon(Icons.arrow_forward_ios, color: Colors.black),
+                                  icon: Icon(Icons.arrow_forward_ios,
+                                      color: Colors.black),
                                   onPressed: () {
                                     setState(() {
                                       _targetDateTime = DateTime(
@@ -293,8 +303,12 @@ class _CalendarEventState extends State<CalendarEvent> {
                       },
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Text("Upcoming Event",style: AppTheme.regularTextStyle()
-                            .copyWith(fontSize: 16, color: Color.fromRGBO(11, 11, 11, 1)),),
+                        child: Text(
+                          "Upcoming Event",
+                          style: AppTheme.regularTextStyle().copyWith(
+                              fontSize: 16,
+                              color: Color.fromRGBO(11, 11, 11, 1)),
+                        ),
                       ),
                     )
                     //
@@ -368,5 +382,40 @@ class _CalendarEventState extends State<CalendarEvent> {
         ),
       ),
     );
+  }
+
+  void _getEventDetail() {
+    Utils.showLoader(true, context);
+    _authViewModel.getAllEventForMobile("1", (isSuccess, message) {
+      Utils.showLoader(false, context);
+      if (isSuccess) {
+        setState(() {
+          eventist = _authViewModel.eventForMobileList;
+          for (int i = 0; i < eventist.length; i++) {
+            String date = Utils.convertDate(
+                eventist[i].fromDateTime, DateFormat('MM/dd/yyyy'));
+            print(date);
+            var dateInFormatText = date.split("/");
+            setState(() {
+              _markedDateMap.add(
+                  new DateTime(
+                      int.parse(dateInFormatText[2]),
+                      int.parse(dateInFormatText[0]),
+                      int.parse(dateInFormatText[1])),
+                  new Event(
+                    date: new DateTime(
+                        int.parse(dateInFormatText[2]),
+                        int.parse(dateInFormatText[0]),
+                        int.parse(dateInFormatText[1])),
+                    title: 'Event 5',
+                    icon: _eventIcon,
+                  ));
+            });
+          }
+        });
+      } else {
+        ToastUtils.showToast(context, message, Colors.red);
+      }
+    });
   }
 }

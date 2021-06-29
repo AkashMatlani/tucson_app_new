@@ -19,16 +19,18 @@ class _DonationWebviewState extends State<DonationWebview> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ProgressHUD(
-        child: WebView(
-            initialUrl: widget.webViewUrl,
-            javascriptMode: JavascriptMode.unrestricted,
-            onPageFinished: pageFinishedLoading
+      body: SafeArea(
+        child: ProgressHUD(
+          child: WebView(
+              initialUrl: widget.webViewUrl,
+              javascriptMode: JavascriptMode.unrestricted,
+              onPageFinished: pageFinishedLoading
+          ),
+          inAsyncCall: _isLoading,
+          opacity: 0.0,
+          key: _scaffoldKey,
+          valueColor: new AlwaysStoppedAnimation<Color>(Colors.blue),
         ),
-        inAsyncCall: _isLoading,
-        opacity: 0.0,
-        key: _scaffoldKey,
-        valueColor: new AlwaysStoppedAnimation<Color>(Colors.blue),
       ),
     );
   }

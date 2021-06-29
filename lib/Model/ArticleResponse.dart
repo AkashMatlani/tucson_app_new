@@ -1,7 +1,7 @@
 import 'package:tucson_app/Model/ContentTransactionTypeJoin.dart';
 
 class ArticleResponse {
-    late int contentMasterId;
+  /*  late int contentMasterId;
     late String contentTitle;
     late List<ContentTransactionTypeJoin> contentTransactionTypeJoin;
     late int contentTypeId;
@@ -37,5 +37,5 @@ class ArticleResponse {
             data['contents'] = this.contents.toJson();
         }
         return data;
-    }
+    }*/
 }

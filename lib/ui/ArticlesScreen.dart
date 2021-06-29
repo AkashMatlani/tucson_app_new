@@ -19,7 +19,7 @@ class ArticlesScreen extends StatefulWidget {
 
 class _ArticlesScreenState extends State<ArticlesScreen> {
   AuthViewModel _authViewModel = AuthViewModel();
-  late List<ContentTransactionTypeJoin> articleList=[];
+  //late List<ContentTransactionTypeJoin> articleList=[];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -102,7 +102,7 @@ class _ArticlesScreenState extends State<ArticlesScreen> {
               child: Padding(padding:EdgeInsets.all(10),child: SvgPicture.asset(MyImage.dummyIcon)),
             ),
             Expanded(
-              child: Text(articleList[0].contentTitle, style: AppTheme.regularTextStyle()),
+              child: Text("abcd", style: AppTheme.regularTextStyle()),
             ),
             Container(
               height: 50,
@@ -120,11 +120,11 @@ class _ArticlesScreenState extends State<ArticlesScreen> {
   @override
   void initState() {
     super.initState();
-    Timer(Duration(milliseconds: 100), () => _getFilterItemList());
+   // Timer(Duration(milliseconds: 100), () => _getFilterItemList());
 
   }
 
-  void _getFilterItemList() {
+ /* void _getFilterItemList() {
     Utils.showLoader(true, context);
     _authViewModel.getArticlesFromEducationParent("1","Article", (isSuccess, message){
       Utils.showLoader(false, context);
@@ -137,5 +137,5 @@ class _ArticlesScreenState extends State<ArticlesScreen> {
         ToastUtils.showToast(context, message, Colors.red);
       }
     });
-  }
+  }*/
 }
