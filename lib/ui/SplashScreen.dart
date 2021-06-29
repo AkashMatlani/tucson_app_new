@@ -9,7 +9,6 @@ import 'package:tucson_app/GeneralUtils/Utils.dart';
 import 'package:tucson_app/ui/DonationScreen.dart';
 import 'package:tucson_app/ui/community/CommunityDashboardScreen.dart';
 import 'package:tucson_app/ui/parent/ParentGuardianDashBoard.dart';
-import 'package:tucson_app/ui/student/CoolStuffScreen.dart';
 import 'package:tucson_app/ui/student/StudentDashboardScreen.dart';
 
 import 'parent/ParentGuardianDashBoard.dart';

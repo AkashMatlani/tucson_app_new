@@ -35,8 +35,9 @@ class PrefUtils {
 
   static clearPref() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    PrefUtils.setBoolValue(PrefUtils.isLoggedIn, false);
-    prefs.clear();
+    //PrefUtils.setBoolValue(PrefUtils.isLoggedIn, false);
+    //PrefUtils.setIntValue(PrefUtils.userId, 0);
+    await prefs.clear();
   }
 
   static void saveUserDataToPref(LoginResponse userDetails) {
@@ -47,7 +48,11 @@ class PrefUtils {
     PrefUtils.setStringValue(PrefUtils.userFirstName, userDetails.firstName);
     PrefUtils.setStringValue(PrefUtils.userLastName, userDetails.lastName);
     PrefUtils.setStringValue(PrefUtils.userToken, userDetails.accessToken);
-    PrefUtils.setIntValue(PrefUtils.schoolId, userDetails.schoolId);
+    if(userDetails.schoolId == null){
+      PrefUtils.setIntValue(PrefUtils.schoolId, 0);
+    } else {
+      PrefUtils.setIntValue(PrefUtils.schoolId, userDetails.schoolId);
+    }
     PrefUtils.setStringValue(PrefUtils.yourLanguage, "English");
   }
 

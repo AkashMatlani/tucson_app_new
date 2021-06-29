@@ -11,6 +11,7 @@ import 'package:tucson_app/Model/AuthViewModel.dart';
 import 'package:tucson_app/WebService/WebService.dart';
 import 'package:tucson_app/ui/DisplayWebview.dart';
 import 'package:tucson_app/ui/SignInOptionScreen.dart';
+import 'package:tucson_app/ui/SignInScreen.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class DonationScreen extends StatefulWidget {
@@ -71,7 +72,7 @@ class _DonationScreenState extends State<DonationScreen> {
             ),
             InkWell(
               onTap: () {
-                Utils.navigateToScreen(context, SignInOptionScreen());
+                Utils.navigateToScreen(context, SignInScreen());
               },
               child: Container(
                 padding: EdgeInsets.all(10),

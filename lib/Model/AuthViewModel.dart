@@ -19,8 +19,10 @@ class AuthViewModel {
 
     if (password.isEmpty) {
       return ValidationResult(false, LabelStr.enterUserPwd);
-    } else if (password.length < 6) {
+    } else if (password.length < 8) {
       return ValidationResult(false, LabelStr.invalidPassword);
+    } else if (password.length > 15) {
+      return ValidationResult(false, LabelStr.invalidPasswordMax);
     }
     return ValidationResult(true, "success");
   }
@@ -103,14 +105,18 @@ class AuthViewModel {
 
     if (password.isEmpty) {
       return ValidationResult(false, LabelStr.enterUserPwd);
-    } else if (password.length < 6) {
+    } else if (password.length < 8) {
       return ValidationResult(false, LabelStr.invalidPassword);
+    } else if (password.length > 15) {
+      return ValidationResult(false, LabelStr.invalidPasswordMax);
     }
 
     if (confirmPwd.isEmpty) {
       return ValidationResult(false, LabelStr.enterConfirmPwd);
     } else if (password.compareTo(confirmPwd) != 0) {
       return ValidationResult(false, LabelStr.pwdNotMatchError);
+    } else if (password.length > 15) {
+      return ValidationResult(false, LabelStr.invalidPasswordMax);
     }
     return ValidationResult(true, "success");
   }

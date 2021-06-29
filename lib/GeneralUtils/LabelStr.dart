@@ -60,6 +60,7 @@ class LabelStr {
   //static const enterValidPwd = "Passwords must contain at least six characters including letters, numbers and special characters";
   //static const enterValidPwd = "Passwords must contain at least six characters including letters, numbers";
   static const invalidPassword = "Password must be at least 8 characters long";
+  static const invalidPasswordMax = "Password should not be greater than 15 characters";
   static const checkMailLink = "Please check your email for reset password link";
   static const selectFileError = "Please select file from storage";
   static const connectionError = "Please check you internet connectivity, Try again";

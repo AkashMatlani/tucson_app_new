@@ -15,8 +15,6 @@ import 'package:tucson_app/ui/SignInScreen.dart';
 import 'package:tucson_app/ui/parent/Event.dart';
 import 'package:tucson_app/ui/parent/RequestForServiceScreen.dart';
 import 'package:tucson_app/ui/parent/SchoolPrograms.dart';
-
-import '../DisplayWebview.dart';
 import 'CommunityResources.dart';
 import 'Education.dart';
 
@@ -60,7 +58,7 @@ class _ParentDashBoardScreenState extends State<ParentDashBoardScreen> {
 
   String language="";
   String userName="";
-  int schoolId=0;
+  late int schoolId;
 
   @override
   void initState() {
@@ -72,6 +70,9 @@ class _ParentDashBoardScreenState extends State<ParentDashBoardScreen> {
           language = prefs.getString(PrefUtils.yourLanguage)!;
           userName = prefs.getString(PrefUtils.userFirstName)!;
           schoolId = prefs.getInt(PrefUtils.schoolId)!;
+          if(schoolId == null){
+           schoolId = 0;
+          }
         });
       });
     });
@@ -204,7 +205,7 @@ class _ParentDashBoardScreenState extends State<ParentDashBoardScreen> {
                                 Utils.showLoader(true, context);
                                 PrefUtils.clearPref();
                                 Utils.showLoader(false, context);
-                                Utils.navigateWithClearState(context, SignInScreen("Parent"));
+                                Utils.navigateWithClearState(context, SignInScreen());
                               }
                             });
                           },

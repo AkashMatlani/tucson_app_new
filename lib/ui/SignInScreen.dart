@@ -20,9 +20,6 @@ import 'student/StudentDashboardScreen.dart';
 
 class SignInScreen extends StatefulWidget {
 
-  SignInScreen(this.loginType);
-  String  loginType;
-
   @override
   _SignInScreenState createState() => _SignInScreenState();
 }
@@ -39,10 +36,10 @@ class _SignInScreenState extends State<SignInScreen> {
   @override
   void initState() {
     super.initState();
-    setState(() {
+    /*setState(() {
       _emailController.text = "sadanand.r@dashtechinc.com";
       _pwdController.text = "Dash@123";
-    });
+    });*/
   }
 
   void _togglePwd() {
@@ -156,6 +153,7 @@ class _SignInScreenState extends State<SignInScreen> {
                         child: TextButton(
                           child: Text(LabelStr.lblSignIn.toUpperCase(), style: AppTheme.customTextStyle(MyFont.SSPro_bold, 16.0, Colors.white)),
                           onPressed: (){
+                            FocusScope.of(context).requestFocus(FocusNode());
                             _signIn(context);
                           },
                         ),
@@ -163,7 +161,8 @@ class _SignInScreenState extends State<SignInScreen> {
                       SizedBox(height: 5),
                       InkWell(
                         onTap: (){
-                          Utils.navigateToScreen(context, ForgotPwdScreen(widget.loginType));
+                          FocusScope.of(context).requestFocus(FocusNode());
+                          Utils.navigateToScreen(context, ForgotPwdScreen());
                         },
                         child: Container(
                           alignment: Alignment.centerRight,
@@ -182,7 +181,8 @@ class _SignInScreenState extends State<SignInScreen> {
                               SizedBox(width: 2),
                               InkWell(
                                   onTap: (){
-                                    Utils.navigateToScreen(context, SignUpScreen(widget.loginType));
+                                    FocusScope.of(context).requestFocus(FocusNode());
+                                    Utils.navigateToScreen(context, SignUpScreen());
                                   },
                                   child: Text(LabelStr.lblSignUp.toUpperCase(), style: AppTheme.customTextStyle(MyFont.SSPro_semibold, 16.0, HexColor("#5772A8")))
                               )
