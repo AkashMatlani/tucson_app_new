@@ -7,7 +7,6 @@ import 'package:tucson_app/GeneralUtils/Constant.dart';
 import 'package:tucson_app/GeneralUtils/HelperWidgets.dart';
 import 'package:tucson_app/GeneralUtils/LabelStr.dart';
 import 'package:tucson_app/GeneralUtils/PrefsUtils.dart';
-import 'package:tucson_app/GeneralUtils/ToastMessageAnimation.dart';
 import 'package:tucson_app/GeneralUtils/Utils.dart';
 import 'package:tucson_app/Model/AuthViewModel.dart';
 import 'package:tucson_app/ui/ForgotPwdScreen.dart';
@@ -33,14 +32,6 @@ class _SignInScreenState extends State<SignInScreen> {
 
   AuthViewModel _authViewModel = AuthViewModel();
 
-  @override
-  void initState() {
-    super.initState();
-    /*setState(() {
-      _emailController.text = "sadanand.r@dashtechinc.com";
-      _pwdController.text = "Dash@123";
-    });*/
-  }
 
   void _togglePwd() {
     setState(() {
@@ -51,7 +42,6 @@ class _SignInScreenState extends State<SignInScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
       body: Container(
         decoration: BoxDecoration(
             image: DecorationImage(image: AssetImage(MyImage.splashBg), fit: BoxFit.fill)
@@ -77,101 +67,102 @@ class _SignInScreenState extends State<SignInScreen> {
                 ),
                 margin: EdgeInsets.only(top: 20),
                 padding: EdgeInsets.all(30),
-                child: Container(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Text(LabelStr.lblSignIn, style: AppTheme.customTextStyle(MyFont.SSPro_bold, 30.0, MyColor.darkLblTextColor())),
-                      SizedBox(height: 20),
-                      Text(LabelStr.lblEmail, style: AppTheme.regularTextStyle().copyWith(fontSize: 14)),
-                      textFieldFor(LabelStr.lblEmail, _emailController, textInputAction: TextInputAction.next, keyboardType: TextInputType.emailAddress),
-                      SizedBox(height: 10),
-                      Text(LabelStr.lblPassword, style: AppTheme.regularTextStyle().copyWith(fontSize: 14)),
-                      textFieldFor(LabelStr.lblPassword, _pwdController, textInputAction: TextInputAction.done, keyboardType: TextInputType.text, obscure:_showPwd, suffixIcon: InkWell(onTap:(){_togglePwd();},child: Padding(padding: EdgeInsets.fromLTRB(10, 15, 0, 15), child: SvgPicture.asset(MyImage.viewPwdIcon)))),
-                      SizedBox(height: 10),
-                      Text(LabelStr.lblSelectLanguage, style: AppTheme.regularTextStyle().copyWith(fontSize: 14)),
-                      DropdownButton<String>(
-                        value: _outputLanguage,
-                        isExpanded: true,
-                        itemHeight: 50,
-                        underline: Container(
-                          height: 1.3,
-                          color: Colors.black45,
-                        ),
-                        style: AppTheme.regularTextStyle(),
-                        icon: Icon(                // Add this
-                          Icons.keyboard_arrow_down,
-                          color: HexColor("#CCCCCC"),// Add this
-                        ),
-                        items: <DropdownMenuItem<String>>[
-                          DropdownMenuItem(
-                            child: Text('English'),
-                            value: 'en',
+                child: SingleChildScrollView(
+                  child: Container(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text(LabelStr.lblSignIn, style: AppTheme.customTextStyle(MyFont.SSPro_bold, 30.0, MyColor.darkLblTextColor())),
+                        SizedBox(height: 20),
+                        Text(LabelStr.lblEmail, style: AppTheme.regularTextStyle().copyWith(fontSize: 14)),
+                        textFieldFor(LabelStr.lblEmail, _emailController, textInputAction: TextInputAction.next, keyboardType: TextInputType.emailAddress),
+                        SizedBox(height: 10),
+                        Text(LabelStr.lblPassword, style: AppTheme.regularTextStyle().copyWith(fontSize: 14)),
+                        textFieldFor(LabelStr.lblPassword, _pwdController, textInputAction: TextInputAction.done, keyboardType: TextInputType.text, obscure:_showPwd, suffixIcon: InkWell(onTap:(){_togglePwd();},child: Padding(padding: EdgeInsets.fromLTRB(10, 15, 0, 15), child: SvgPicture.asset(MyImage.viewPwdIcon)))),
+                        SizedBox(height: 10),
+                        Text(LabelStr.lblSelectLanguage, style: AppTheme.regularTextStyle().copyWith(fontSize: 14)),
+                        DropdownButton<String>(
+                          value: _outputLanguage,
+                          isExpanded: true,
+                          itemHeight: 50,
+                          underline: Container(
+                            height: 1.3,
+                            color: Colors.black45,
                           ),
-                          DropdownMenuItem(
-                              child: Text('Arabic'),
-                              value: 'ar'
+                          style: AppTheme.regularTextStyle(),
+                          icon: Icon(                // Add this
+                            Icons.keyboard_arrow_down,
+                            color: HexColor("#CCCCCC"),// Add this
                           ),
-                          DropdownMenuItem(
-                              child: Text('Somali'),
-                              value: 'so'
-                          ),
-                          DropdownMenuItem(
-                              child: Text('Spanish'),
-                              value: 'es'
-                          ),
-                          DropdownMenuItem(
-                              child: Text('Swahili'),
-                              value: 'sw'
-                          ),
-                          DropdownMenuItem(
-                              child: Text('Vietnamese'),
-                              value: 'vi'
-                          )
-                        ],
-                        onChanged: (value){
-                          setState(() {
-                            _outputLanguage = value.toString();
-                          });
-                        },
-                      ),
-                      SizedBox(height: 20),
-                      Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          gradient: LinearGradient(
-                            colors: [
-                              HexColor("#6462AA"),
-                              HexColor("#4CA7DA"),
-                              HexColor("#20B69E"),
-                            ],
-                          ),
-                        ),
-                        height: 50,
-                        width: MediaQuery.of(context).size.width,
-                        child: TextButton(
-                          child: Text(LabelStr.lblSignIn.toUpperCase(), style: AppTheme.customTextStyle(MyFont.SSPro_bold, 16.0, Colors.white)),
-                          onPressed: (){
-                            FocusScope.of(context).requestFocus(FocusNode());
-                            _signIn(context);
+                          items: <DropdownMenuItem<String>>[
+                            DropdownMenuItem(
+                              child: Text('English'),
+                              value: 'en',
+                            ),
+                            DropdownMenuItem(
+                                child: Text('Arabic'),
+                                value: 'ar'
+                            ),
+                            DropdownMenuItem(
+                                child: Text('Somali'),
+                                value: 'so'
+                            ),
+                            DropdownMenuItem(
+                                child: Text('Spanish'),
+                                value: 'es'
+                            ),
+                            DropdownMenuItem(
+                                child: Text('Swahili'),
+                                value: 'sw'
+                            ),
+                            DropdownMenuItem(
+                                child: Text('Vietnamese'),
+                                value: 'vi'
+                            )
+                          ],
+                          onChanged: (value){
+                            setState(() {
+                              _outputLanguage = value.toString();
+                            });
                           },
                         ),
-                      ),
-                      SizedBox(height: 5),
-                      InkWell(
-                        onTap: (){
-                          FocusScope.of(context).requestFocus(FocusNode());
-                          Utils.navigateToScreen(context, ForgotPwdScreen());
-                        },
-                        child: Container(
-                          alignment: Alignment.centerRight,
-                          padding: EdgeInsets.fromLTRB(0, 5, 0, 5),
-                          child: Text(LabelStr.lblForgotPwd.toUpperCase(), style: AppTheme.customTextStyle(MyFont.SSPro_semibold, 16.0, HexColor("#5772A8"))),
+                        SizedBox(height: 30),
+                        Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            gradient: LinearGradient(
+                              colors: [
+                                HexColor("#6462AA"),
+                                HexColor("#4CA7DA"),
+                                HexColor("#20B69E"),
+                              ],
+                            ),
+                          ),
+                          height: 50,
+                          width: MediaQuery.of(context).size.width,
+                          child: TextButton(
+                            child: Text(LabelStr.lblSignIn.toUpperCase(), style: AppTheme.customTextStyle(MyFont.SSPro_bold, 16.0, Colors.white)),
+                            onPressed: (){
+                              FocusScope.of(context).requestFocus(FocusNode());
+                              _signIn(context);
+                            },
+                          ),
                         ),
-                      ),
-                      Expanded(
-                        child: Container(
+                        SizedBox(height: 5),
+                        InkWell(
+                          onTap: (){
+                            FocusScope.of(context).requestFocus(FocusNode());
+                            Utils.navigateToScreen(context, ForgotPwdScreen());
+                          },
+                          child: Container(
+                            alignment: Alignment.centerRight,
+                            padding: EdgeInsets.fromLTRB(0, 5, 0, 5),
+                            child: Text(LabelStr.lblForgotPwd.toUpperCase(), style: AppTheme.customTextStyle(MyFont.SSPro_semibold, 16.0, HexColor("#5772A8"))),
+                          ),
+                        ),
+                        SizedBox(height: MediaQuery.of(context).size.height*0.15),
+                        Container(
                           alignment: Alignment.bottomCenter,
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
@@ -188,9 +179,9 @@ class _SignInScreenState extends State<SignInScreen> {
                               )
                             ],
                           ),
-                        ),
-                      )
-                    ],
+                        )
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -220,11 +211,11 @@ class _SignInScreenState extends State<SignInScreen> {
   _getUserType() async{
     String role = await PrefUtils.getValueFor(PrefUtils.userRole);
     if(role.compareTo("Student") == 0){
-      Utils.navigateToScreen(context, StudentDashboardScreen());
+      Utils.navigateReplaceToScreen(context, StudentDashboardScreen());
     } else if(role.compareTo("ParentGuardian") == 0){
-      Utils.navigateToScreen(context, ParentDashBoardScreen());
+      Utils.navigateReplaceToScreen(context, ParentDashBoardScreen());
     } else {
-      Utils.navigateToScreen(context, CommunityDashboardScreen());
+      Utils.navigateReplaceToScreen(context, CommunityDashboardScreen());
     }
   }
 }
