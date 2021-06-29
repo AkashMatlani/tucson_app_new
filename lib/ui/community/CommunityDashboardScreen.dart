@@ -181,7 +181,7 @@ class _CommunityDashboardScreenState extends State<CommunityDashboardScreen> {
                                 Utils.showLoader(true, context);
                                 PrefUtils.clearPref();
                                 Utils.showLoader(false, context);
-                                Utils.navigateWithClearState(context, SignInScreen("Community"));
+                                Utils.navigateWithClearState(context, SignInScreen());
                               }
                             });
                           },

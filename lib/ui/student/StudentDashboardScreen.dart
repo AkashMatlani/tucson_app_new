@@ -191,7 +191,7 @@ class _StudentDashboardScreenState extends State<StudentDashboardScreen> {
                                 Utils.showLoader(true, context);
                                 PrefUtils.clearPref();
                                 Utils.showLoader(false, context);
-                                Utils.navigateWithClearState(context, SignInScreen("Student"));
+                                Utils.navigateWithClearState(context, SignInScreen());
                               }
                             });
                           },

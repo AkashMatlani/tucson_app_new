@@ -41,7 +41,7 @@ class _SignInOptionScreenState extends State<SignInOptionScreen> {
               child: TextButton(
                 child: Text(LabelStr.lblStudentOpt, style: AppTheme.customTextStyle(MyFont.SSPro_bold, 20.0, Colors.white)),
                 onPressed: (){
-                  Utils.navigateToScreen(context, SignInScreen("Student"));
+                  Utils.navigateToScreen(context, SignInScreen());
                 },
               ),
             ),
@@ -62,7 +62,7 @@ class _SignInOptionScreenState extends State<SignInOptionScreen> {
               child: TextButton(
                 child: Text(LabelStr.lblParentOpt, style: AppTheme.customTextStyle(MyFont.SSPro_bold, 20.0, Colors.white)),
                 onPressed: (){
-                  Utils.navigateToScreen(context, SignInScreen("Parent"));
+                  Utils.navigateToScreen(context, SignInScreen());
                 },
               ),
             ),
@@ -83,7 +83,7 @@ class _SignInOptionScreenState extends State<SignInOptionScreen> {
               child: TextButton(
                 child: Text(LabelStr.lblCommunityOpt, style: AppTheme.customTextStyle(MyFont.SSPro_bold, 20.0, Colors.white)),
                 onPressed: (){
-                  Utils.navigateToScreen(context, SignInScreen("Community"));
+                  Utils.navigateToScreen(context, SignInScreen());
                 },
               ),
             ),

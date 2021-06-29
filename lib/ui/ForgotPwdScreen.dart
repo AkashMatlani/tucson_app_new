@@ -14,9 +14,6 @@ import 'package:tucson_app/ui/SignInScreen.dart';
 
 class ForgotPwdScreen extends StatefulWidget {
 
-  ForgotPwdScreen(this.loginType);
-  String  loginType;
-
   @override
   _ForgotPwdScreenState createState() => _ForgotPwdScreenState();
 }
@@ -26,13 +23,13 @@ class _ForgotPwdScreenState extends State<ForgotPwdScreen> {
   var _emailController = TextEditingController();
   AuthViewModel _authViewModel = AuthViewModel();
 
-  @override
+  /*@override
   void initState() {
     super.initState();
     setState(() {
       _emailController.text = "john@gmail.com";
     });
-  }
+  }*/
 
   @override
   Widget build(BuildContext context) {
@@ -89,6 +86,7 @@ class _ForgotPwdScreenState extends State<ForgotPwdScreen> {
                         child: TextButton(
                           child: Text(LabelStr.lblSubmit, style: AppTheme.customTextStyle(MyFont.SSPro_bold, 16.0, Colors.white)),
                           onPressed: (){
+                            FocusScope.of(context).requestFocus(FocusNode());
                             _forgotPassword(context);
                           },
                         ),
@@ -112,7 +110,7 @@ class _ForgotPwdScreenState extends State<ForgotPwdScreen> {
       if(isSuccess){
         Utils.showToast(context, message, Colors.green);
         Timer(Duration(seconds: 2), (){
-          Utils.navigateReplaceToScreen(context, SignInScreen(widget.loginType));
+          Utils.navigateReplaceToScreen(context, SignInScreen());
         });
       } else {
         Utils.showToast(context, message, Colors.red);

@@ -17,9 +17,6 @@ import 'package:tucson_app/ui/SignInScreen.dart';
 
 class SignUpScreen extends StatefulWidget {
 
-  SignUpScreen(this.loginType);
-  String  loginType;
-
   @override
   _SignUpScreenState createState() => _SignUpScreenState();
 }
@@ -48,11 +45,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
   void initState() {
     super.initState();
     setState(() {
-      _fnameController.text = "john";
+      /*_fnameController.text = "john";
       _lnameController.text = "smith";
       _emailController.text = "john@gmail.com";
       _pwdController.text = "12345678";
-      _confPwdController.text = "12345678";
+      _confPwdController.text = "12345678";*/
       _formattedDob = DateFormat("yyyy-MM-dd'T'hh:mm:ss").format(currentDate);
       _dobController.text = Utils.convertDate(_formattedDob, DateFormat("MM-dd-yyyy"));
     });
@@ -205,6 +202,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           child: TextButton(
                             child: Text(LabelStr.lblSignUp.toUpperCase(), style: AppTheme.customTextStyle(MyFont.SSPro_bold, 16.0, Colors.white)),
                             onPressed: (){
+                              FocusScope.of(context).requestFocus(FocusNode());
                               _signUp(context);
                             },
                           ),
@@ -220,7 +218,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               SizedBox(width: 2),
                               InkWell(
                                   onTap: (){
-                                    Utils.navigateReplaceToScreen(context, SignInScreen(widget.loginType));
+                                    FocusScope.of(context).requestFocus(FocusNode());
+                                    Utils.navigateReplaceToScreen(context, SignInScreen());
                                   },
                                   child: Text(LabelStr.lblSignIn.toUpperCase(), style: AppTheme.customTextStyle(MyFont.SSPro_semibold, 16.0, HexColor("#5772A8")))
                               )
@@ -241,7 +240,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   _getSchoolList(){
     Utils.showLoader(true, context);
-    WebService.getAPICall(WebService.schoolList, {}).then((response) {
+    WebService.getAPICallWithoutParmas(WebService.schoolList).then((response) {
       if (response.statusCode == 1) {
         if (response.body != null) {
           _schoolList = [];
@@ -278,7 +277,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       Utils.showLoader(false, context);
       if(isSuccess){
         print("*************** User registered *****************");
-        Utils.navigateReplaceToScreen(context, SignInScreen(widget.loginType));
+        Utils.navigateReplaceToScreen(context, SignInScreen());
       } else {
         Utils.showToast(context, message, Colors.red);
         print("*************** $message *****************");
