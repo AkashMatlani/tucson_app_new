@@ -108,7 +108,7 @@ class _PostJobsScreenState extends State<PostJobsScreen> {
                          value: 'Student',
                        ),
                        DropdownMenuItem(
-                           child: Text(LabelStr.lblParent),
+                           child: Text(LabelStr.lblParentGuardian),
                            value: 'Parent'
                        ),
                        DropdownMenuItem(

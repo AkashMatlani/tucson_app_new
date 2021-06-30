@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
+import 'package:toast/toast.dart';
 
 
 class Utils {
@@ -87,16 +87,8 @@ class Utils {
     }
   }
 
-  static void showToast(BuildContext context, String message, Color colorName){
-    Fluttertoast.showToast(
-        msg: message,
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.TOP,
-        timeInSecForIosWeb: 1,
-        backgroundColor: colorName,
-        textColor: Colors.white,
-        fontSize: 16.0,
-    );
+  static void showToast(BuildContext context, String message, Color bgColor){
+    ToastView.createView(message, context, Toast.LENGTH_SHORT, Toast.TOP, bgColor, Colors.white, 10.0, Border.all(color: bgColor));
   }
 }
 

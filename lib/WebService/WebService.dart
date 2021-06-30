@@ -42,7 +42,13 @@ class WebService {
     } else {
       response = await http.get(postUri, headers: headers);
     }
-    var jsValue = json.decode(response.body);
+    var result = response.body;
+    if(response.body[0].contains("[")){
+      result = response.body.substring(1, response.body.length-1);
+    } else {
+      result = response.body;
+    }
+    var jsValue = json.decode(result);
     ServerResponse serverResponse = ServerResponse.withJson(jsValue);
     return serverResponse;
   }
@@ -58,7 +64,13 @@ class WebService {
     };
     var response = await http.get(postUri, headers: headers);
 
-    var jsValue = json.decode(response.body);
+    var result = response.body;
+    if(response.body[0].contains("[")){
+      result = response.body.substring(1, response.body.length-1);
+    } else {
+      result = response.body;
+    }
+    var jsValue = json.decode(result);
     ServerResponse serverResponse = ServerResponse.withJson(jsValue);
     return serverResponse;
   }

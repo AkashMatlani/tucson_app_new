@@ -33,12 +33,12 @@ dependencies:
   flutter_svg: ^0.22.0
   connectivity_plus: ^1.0.4
   flutter_spinkit: ^5.0.0
-  simple_animations: ^3.1.1
   shared_preferences: ^2.0.6
   cached_network_image: ^3.0.0
   flutter_calendar_carousel: ^2.0.1
   webview_flutter: ^2.0.9
-  fluttertoast: ^8.0.7
+  toast: ^0.1.5
+  double_back_to_close: ^2.0.0
 
 dev_dependencies:
   flutter_test:

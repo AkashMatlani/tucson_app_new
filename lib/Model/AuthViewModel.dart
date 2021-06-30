@@ -151,7 +151,7 @@ class AuthViewModel {
     if (validateResult.isValid) {
       WebService.postAPICall(apiMethod, params).then((response) {
         if (response.statusCode == 1) {
-          callback(true, "");
+          callback(true, LabelStr.lblRegistered);
         } else {
           callback(false, response.message);
         }

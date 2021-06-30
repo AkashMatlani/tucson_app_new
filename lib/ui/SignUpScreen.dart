@@ -71,7 +71,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
       body: Container(
         decoration: BoxDecoration(
             image: DecorationImage(image: AssetImage(MyImage.splashBg), fit: BoxFit.fill)
@@ -126,8 +125,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               value: LabelStr.lblStudent,
                             ),
                             DropdownMenuItem(
-                                child: Text(LabelStr.lblParent),
-                                value: LabelStr.lblParent
+                                child: Text(LabelStr.lblParentGuardian),
+                                value: LabelStr.lblParentGuardian
                             ),
                             DropdownMenuItem(
                                 child: Text(LabelStr.lblCommunity),
@@ -181,7 +180,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         ) : Container(),
                         SizedBox(height: 10),
                         Text(LabelStr.lblPassword, style: AppTheme.regularTextStyle().copyWith(fontSize: 14)),
-                        textFieldFor(LabelStr.lblPassword, _pwdController, textInputAction: TextInputAction.next, keyboardType: TextInputType.text, obscure:_showPwd, suffixIcon: InkWell(onTap:(){_togglePwd();},child: Padding(padding: EdgeInsets.fromLTRB(10, 15, 0, 15), child: SvgPicture.asset(MyImage.viewPwdIcon)))),
+                        textFieldFor(LabelStr.lblPassword, _pwdController, textInputAction: TextInputAction.done, keyboardType: TextInputType.text, obscure:_showPwd, suffixIcon: InkWell(onTap:(){_togglePwd();},child: Padding(padding: EdgeInsets.fromLTRB(10, 15, 0, 15), child: SvgPicture.asset(MyImage.viewPwdIcon)))),
                         SizedBox(height: 10),
                         Text(LabelStr.lblConfirmPwd, style: AppTheme.regularTextStyle().copyWith(fontSize: 14)),
                         textFieldFor(LabelStr.lblConfirmPwd, _confPwdController, textInputAction: TextInputAction.done, keyboardType: TextInputType.text, obscure:_showConfPwd, suffixIcon: InkWell(onTap:(){_toggleConfPwd();},child: Padding(padding: EdgeInsets.fromLTRB(10, 15, 0, 15), child: SvgPicture.asset(MyImage.viewPwdIcon)))),
@@ -207,7 +206,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             },
                           ),
                         ),
-                        SizedBox(height: 50),
+                        SizedBox(height: MediaQuery.of(context).size.height*0.15),
                         Container(
                           alignment: Alignment.bottomCenter,
                           child: Row(
@@ -276,8 +275,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
     _authViewModel.signUpResult(_userType, fname, lname, _formattedDob, email, password, confirmPwd, _selectedSchool.id, (isSuccess, message) {
       Utils.showLoader(false, context);
       if(isSuccess){
-        print("*************** User registered *****************");
-        Utils.navigateReplaceToScreen(context, SignInScreen());
+        if(_userType.compareTo("Student") == 0){
+          Utils.showToast(context, LabelStr.lblStudent+" "+message, Colors.green);
+        } else if(_userType.compareTo("ParentGuardian") == 0){
+          Utils.showToast(context, LabelStr.lblParent+" "+message, Colors.green);
+        } else{
+          Utils.showToast(context, LabelStr.lblCommunity+" "+message, Colors.green);
+        }
+        Timer(Duration(seconds: 2), (){
+          Utils.navigateReplaceToScreen(context, SignInScreen());
+        });
       } else {
         Utils.showToast(context, message, Colors.red);
         print("*************** $message *****************");
