@@ -14,6 +14,22 @@ import 'package:tucson_app/ui/SplashScreen.dart';
 
 import 'ui/student/StudentDashboardScreen.dart';
 
+// @dart=2.9
+import 'package:double_back_to_close/double_back_to_close.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tucson_app/GeneralUtils/PrefsUtils.dart';
+import 'package:tucson_app/GeneralUtils/Utils.dart';
+import 'package:tucson_app/ui/SignInScreen.dart';
+import 'ui/DonationScreen.dart';
+import 'ui/community/CommunityDashboardScreen.dart';
+import 'ui/parent/ParentGuardianDashBoard.dart';
+import 'package:tucson_app/PostJobsScreen.dart';
+import 'package:tucson_app/ui/SplashScreen.dart';
+
+import 'ui/student/StudentDashboardScreen.dart';
+
 void main() async {
   String role;
   WidgetsFlutterBinding.ensureInitialized();
@@ -25,14 +41,14 @@ void main() async {
   });
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]).then((_) {
-    runApp(new MyApp());
+    runApp(new MyApp(role));
   });
 }
 
 class MyApp extends StatelessWidget {
- /* String role;
+  String role;
 
-  MyApp(this.role);*/
+  MyApp(this.role);
 
   @override
   Widget build(BuildContext context) {
@@ -42,13 +58,12 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home:SplashScreen();
-    /*(role == null)
+        home: (role == null)
             ? DonationScreen()
             : role.compareTo("Student") == 0
-                ? StudentDashboardScreen()
-                : role.compareTo("Community") == 0
-                    ? CommunityDashboardScreen
-                    : ParentDashBoardScreen());*/
-
+            ? StudentDashboardScreen()
+            : role.compareTo("Community") == 0
+            ? CommunityDashboardScreen
+            : ParentDashBoardScreen());
+  }
 }

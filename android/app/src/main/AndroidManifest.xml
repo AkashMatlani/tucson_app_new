@@ -10,7 +10,6 @@
        tools:ignore="GoogleAppIndexingWarning"
         android:icon="@mipmap/ic_launcher"
         android:roundIcon="@mipmap/ic_launcher_rounded"
-        android:usesCleartextTraffic="true"
         tools:targetApi="m">
         <activity
             android:name=".MainActivity"
