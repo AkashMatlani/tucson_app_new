@@ -19,7 +19,7 @@ class LabelStr {
   static const lblParent = "Parent";
   static const lblCommunity = "Community";
   static const lblFname = "First Name";
-  static const lblLname = "LastName";
+  static const lblLname = "Last Name";
   static const lbldob = "Date Of Birth";
   static const lblSchoolName = "School Name";
   static const lblSchoolPrograms = "Schools & Programs";
@@ -43,7 +43,7 @@ class LabelStr {
   static const lblSubmit= "Submit";
   static const lblCancel= "Cancel";
   static const lblDone = "Done";
-  static const lblLogout = "Logout";
+  static const lblLogout = "Sign Out";
   static const lblNoData = "No Data Found";
   static const lblNoFile = "File not found";
 
@@ -58,6 +58,7 @@ class LabelStr {
   static const enterLname = "Please enter last name";
   static const enterValidLname = "Please enter valid last name";
   static const pwdNotMatchError = "New password and confirm password did not match";
+  static const pwdNotMatchError1 = "Password and confirm password did not match";
   //static const enterValidPwd = "Passwords must contain at least six characters including letters, numbers and special characters";
   //static const enterValidPwd = "Passwords must contain at least six characters including letters, numbers";
   static const invalidPassword = "Password must be at least 8 characters long";

@@ -260,13 +260,11 @@ class _ParentDashBoardScreenState extends State<ParentDashBoardScreen> {
     Utils.showLoader(true, context);
     WebService.postAPICall(WebService.contentByType, params).then((response) {
       Utils.showLoader(false, context);
-      if (response.statusCode == 0) {
+      if (response.statusCode == 1) {
         if(response.body != null){
-          String webUrl = response.body["output"]["contentTransactionTypeJoin"][0]["objectPath"];
-          Utils.showToast(context, webUrl, Colors.green);
+          String webUrl = response.body[0]["contentTransactionTypeJoin"][0]["objectPath"];
           Utils.navigateToScreen(context, DisplayWebview(webUrl));
         }
-
       } else {
         Utils.showToast(context, response.message, Colors.red);
       }
