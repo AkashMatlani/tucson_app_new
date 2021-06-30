@@ -104,9 +104,13 @@ class _ForgotPwdScreenState extends State<ForgotPwdScreen> {
     _authViewModel.forgotPwdResult(email, (isSuccess, message) {
       Utils.showLoader(false, context);
       if(isSuccess){
-        Utils.showToast(context, message, Colors.green);
-        Timer(Duration(seconds: 2), (){
-          Utils.navigateWithClearState(context, SignInScreen());
+        setState(() {
+          _emailController.text = "";
+        });
+        Utils.showAlertDialog(context, message, (success, response){
+          if(success){
+            Utils.navigateWithClearState(context, SignInScreen());
+          }
         });
       } else {
         Utils.showToast(context, message, Colors.red);

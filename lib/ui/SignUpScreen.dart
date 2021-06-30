@@ -311,7 +311,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
           _emailController.text = "";
           _pwdController.text = "";
           _confPwdController.text = "";
-          _userType = 'Student';
           _selectedSchool = _schoolList[0];
           _formattedDob = DateFormat("yyyy-MM-dd'T'hh:mm:ss").format(DateTime.now());
           _dobController.text = Utils.convertDate(_formattedDob, DateFormat("MM-dd-yyyy"));
