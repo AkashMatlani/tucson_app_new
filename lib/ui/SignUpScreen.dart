@@ -41,6 +41,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   List<SchoolListResponse> _schoolList = [];
   late SchoolListResponse _selectedSchool;
+  FocusNode defaultField = FocusNode();
 
   @override
   void initState() {
@@ -153,7 +154,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         ),
                         SizedBox(height: 10),
                         Text(LabelStr.lblFname, style: AppTheme.regularTextStyle().copyWith(fontSize: 14)),
-                        textFieldFor(LabelStr.lblFname, _fnameController, textInputAction: TextInputAction.next, keyboardType: TextInputType.text),
+                        textFieldFor(LabelStr.lblFname, _fnameController, textInputAction: TextInputAction.next, keyboardType: TextInputType.text, focusNode: defaultField),
                         SizedBox(height: 10),
                         Text(LabelStr.lblLname, style: AppTheme.regularTextStyle().copyWith(fontSize: 14)),
                         textFieldFor(LabelStr.lblLname, _lnameController, textInputAction: TextInputAction.next, keyboardType: TextInputType.text),
@@ -207,10 +208,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         ) : Container(),
                         SizedBox(height: 10),
                         Text(LabelStr.lblPassword, style: AppTheme.regularTextStyle().copyWith(fontSize: 14)),
-                        textFieldFor(LabelStr.lblPassword, _pwdController, textInputAction: TextInputAction.done, keyboardType: TextInputType.text, obscure:_showPwd, suffixIcon: InkWell(onTap:(){_togglePwd();},child: Padding(padding: EdgeInsets.fromLTRB(10, 15, 0, 15), child: SvgPicture.asset(_showPwd ? MyImage.viewPwdIcon : MyImage.hidePwdIcon)))),
+                        textFieldFor(LabelStr.lblPassword, _pwdController, textInputAction: TextInputAction.done, keyboardType: TextInputType.text, obscure:_showPwd, suffixIcon: InkWell(onTap:(){_togglePwd();},child: Padding(padding: EdgeInsets.fromLTRB(10, 15, 0, 15), child: SvgPicture.asset(_showPwd ? MyImage.hidePwdIcon : MyImage.viewPwdIcon)))),
                         SizedBox(height: 10),
                         Text(LabelStr.lblConfirmPwd, style: AppTheme.regularTextStyle().copyWith(fontSize: 14)),
-                        textFieldFor(LabelStr.lblConfirmPwd, _confPwdController, textInputAction: TextInputAction.done, keyboardType: TextInputType.text, obscure:_showConfPwd, suffixIcon: InkWell(onTap:(){_toggleConfPwd();},child: Padding(padding: EdgeInsets.fromLTRB(10, 15, 0, 15), child: SvgPicture.asset(_showConfPwd ? MyImage.viewPwdIcon : MyImage.hidePwdIcon)))),
+                        textFieldFor(LabelStr.lblConfirmPwd, _confPwdController, textInputAction: TextInputAction.done, keyboardType: TextInputType.text, obscure:_showConfPwd, suffixIcon: InkWell(onTap:(){_toggleConfPwd();},child: Padding(padding: EdgeInsets.fromLTRB(10, 15, 0, 15), child: SvgPicture.asset(_showConfPwd ? MyImage.hidePwdIcon : MyImage.hidePwdIcon)))),
                         SizedBox(height: 30),
                         Container(
                           decoration: BoxDecoration(
@@ -241,13 +242,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(LabelStr.lblAccExist, style: AppTheme.customTextStyle(MyFont.SSPro_regular, 16.0, HexColor("#383838"))),
-                              SizedBox(width: 2),
                               InkWell(
                                   onTap: (){
                                     FocusScope.of(context).requestFocus(FocusNode());
                                     Utils.navigateReplaceToScreen(context, SignInScreen());
                                   },
-                                  child: Text(LabelStr.lblSignIn.toUpperCase(), style: AppTheme.customTextStyle(MyFont.SSPro_semibold, 16.0, HexColor("#5772A8")))
+                                  child: Padding(
+                                    padding: EdgeInsets.fromLTRB(2, 5, 5, 5),
+                                    child: Text(LabelStr.lblSignIn.toUpperCase(), style: AppTheme.customTextStyle(MyFont.SSPro_semibold, 16.0, HexColor("#5772A8"))),
+                                  )
                               )
                             ],
                           ),
@@ -302,15 +305,32 @@ class _SignUpScreenState extends State<SignUpScreen> {
     _authViewModel.signUpResult(_userType, fname, lname, _formattedDob, email, password, confirmPwd, _selectedSchool.id, (isSuccess, message) {
       Utils.showLoader(false, context);
       if(isSuccess){
-        if(_userType.compareTo("Student") == 0){
-          Utils.showToast(context, LabelStr.lblStudent+" "+message, Colors.green);
-        } else if(_userType.compareTo("ParentGuardian") == 0){
-          Utils.showToast(context, LabelStr.lblParent+" "+message, Colors.green);
-        } else{
-          Utils.showToast(context, LabelStr.lblCommunity+" "+message, Colors.green);
+        setState(() {
+          _fnameController.text = "";
+          _lnameController.text = "";
+          _emailController.text = "";
+          _pwdController.text = "";
+          _confPwdController.text = "";
+          _userType = 'Student';
+          _selectedSchool = _schoolList[0];
+          _formattedDob = DateFormat("yyyy-MM-dd'T'hh:mm:ss").format(DateTime.now());
+          _dobController.text = Utils.convertDate(_formattedDob, DateFormat("MM-dd-yyyy"));
+        });
+        FocusScope.of(context).requestFocus(defaultField);
+        if (_userType.compareTo("Student") == 0) {
+          //Utils.showToast(context, LabelStr.lblStudent + " " + message, Colors.green);
+          message = LabelStr.lblStudent + " " + message;
+        } else if (_userType.compareTo("ParentGuardian") == 0) {
+          //Utils.showToast(context, LabelStr.lblParent + " " + message, Colors.green);
+          message = LabelStr.lblParent + " " + message;
+        } else {
+          //Utils.showToast(context, LabelStr.lblCommunity + " " + message, Colors.green);
+          message = LabelStr.lblCommunity + " " + message;
         }
-        Timer(Duration(seconds: 2), (){
-          Utils.navigateReplaceToScreen(context, SignInScreen());
+        Utils.showAlertDialog(context, message, (success, response){
+          if(success) {
+            Utils.navigateReplaceToScreen(context, SignInScreen());
+          }
         });
       } else {
         Utils.showToast(context, message, Colors.red);

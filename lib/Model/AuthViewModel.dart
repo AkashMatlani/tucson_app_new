@@ -121,7 +121,7 @@ class AuthViewModel {
     if (confirmPwd.isEmpty) {
       return ValidationResult(false, LabelStr.enterConfirmPwd);
     } else if (password.compareTo(confirmPwd) != 0) {
-      return ValidationResult(false, LabelStr.pwdNotMatchError);
+      return ValidationResult(false, LabelStr.pwdNotMatchError1);
     } else if (password.length > 15) {
       return ValidationResult(false, LabelStr.invalidPasswordMax);
     }

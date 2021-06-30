@@ -79,7 +79,7 @@ class _SignInScreenState extends State<SignInScreen> {
                         textFieldFor(LabelStr.lblEmail, _emailController, textInputAction: TextInputAction.next, keyboardType: TextInputType.emailAddress),
                         SizedBox(height: 10),
                         Text(LabelStr.lblPassword, style: AppTheme.regularTextStyle().copyWith(fontSize: 14)),
-                        textFieldFor(LabelStr.lblPassword, _pwdController, textInputAction: TextInputAction.done, keyboardType: TextInputType.text, obscure:_showPwd, suffixIcon: InkWell(onTap:(){_togglePwd();},child: Padding(padding: EdgeInsets.fromLTRB(10, 15, 0, 15), child: SvgPicture.asset(_showPwd ? MyImage.viewPwdIcon : MyImage.hidePwdIcon)))),
+                        textFieldFor(LabelStr.lblPassword, _pwdController, textInputAction: TextInputAction.done, keyboardType: TextInputType.text, obscure:_showPwd, suffixIcon: InkWell(onTap:(){_togglePwd();},child: Padding(padding: EdgeInsets.fromLTRB(10, 15, 0, 15), child: SvgPicture.asset(_showPwd ? MyImage.hidePwdIcon : MyImage.viewPwdIcon)))),
                         SizedBox(height: 10),
                         Text(LabelStr.lblSelectLanguage, style: AppTheme.regularTextStyle().copyWith(fontSize: 14)),
                         SizedBox(height: 10),
@@ -180,13 +180,15 @@ class _SignInScreenState extends State<SignInScreen> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(LabelStr.lblNoAcc, style: AppTheme.customTextStyle(MyFont.SSPro_regular, 16.0, HexColor("#383838"))),
-                              SizedBox(width: 2),
                               InkWell(
                                   onTap: (){
                                     FocusScope.of(context).requestFocus(FocusNode());
                                     Utils.navigateToScreen(context, SignUpScreen());
                                   },
-                                  child: Text(LabelStr.lblSignUp.toUpperCase(), style: AppTheme.customTextStyle(MyFont.SSPro_semibold, 16.0, HexColor("#5772A8")))
+                                  child: Padding(
+                                    padding: EdgeInsets.fromLTRB(2, 5, 5, 5),
+                                    child: Text(LabelStr.lblSignUp.toUpperCase(), style: AppTheme.customTextStyle(MyFont.SSPro_semibold, 16.0, HexColor("#5772A8"))),
+                                  )
                               )
                             ],
                           ),

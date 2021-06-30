@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:intl/intl.dart';
 import 'package:toast/toast.dart';
+import 'package:tucson_app/GeneralUtils/Constant.dart';
+
+import 'LabelStr.dart';
 
 
 class Utils {
@@ -97,10 +100,46 @@ class Utils {
     }
   }
 
-  static void showToast(BuildContext context, String message, Color bgColor){
+  static void showToast(BuildContext context, String message, Color bgColor) {
     ToastView.dismiss();
-    ToastView.createView(message, context, Toast.LENGTH_SHORT, Toast.TOP, bgColor, Colors.white, 10.0, Border.all(color: bgColor));
+    ToastView.createView(
+        message,
+        context,
+        Toast.LENGTH_LONG,
+        Toast.TOP,
+        bgColor,
+        Colors.white,
+        10.0,
+        Border.all(color: bgColor));
   }
+
+  static showAlertDialog(BuildContext context, String message, ResponseCallback callback){
+    CupertinoAlertDialog alert = CupertinoAlertDialog(
+      content: Container(
+        child: Text(message, style: AppTheme.regularTextStyle()),
+      ),
+      actions: [
+        CupertinoDialogAction(
+          child: Text(LabelStr.lblOk.toUpperCase(),
+              style: AppTheme.customTextStyle(MyFont.SSPro_semibold, 22.0, Colors.green)),
+          onPressed: () {
+            Navigator.of(context, rootNavigator: true).pop("Discard");
+            callback(true, "");
+          },
+        )
+      ],
+    );
+    return showCupertinoDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context){
+          return Theme(
+              data: Theme.of(context).copyWith(dialogBackgroundColor: Colors.white),
+              child: alert
+          );
+        });
+  }
+
 }
 
 typedef ResponseCallback(bool success, dynamic response);
