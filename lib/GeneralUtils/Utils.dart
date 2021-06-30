@@ -52,6 +52,16 @@ class Utils {
     );
   }
 
+  static backWithNoTransition(BuildContext context, Widget screen){
+    Navigator.pushReplacement(
+      context,
+      PageRouteBuilder(
+          pageBuilder: (_,__, ___) => screen,
+          maintainState: true,
+          transitionDuration: Duration(milliseconds: 100)),
+    );
+  }
+
   //r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+"
   static bool isValidEmail(String email) {
     bool result = RegExp(r"^^[\w\.]+@([\w-]+\.)+[\w-]{2,4}$").hasMatch(email);

@@ -26,7 +26,7 @@ class _ForgotPwdScreenState extends State<ForgotPwdScreen> {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: () => Utils.navigateWithClearState(context, SignInScreen()),
+      onWillPop: () => Utils.backWithNoTransition(context, SignInScreen()),
       child: Scaffold(
         body: Container(
           decoration: BoxDecoration(
