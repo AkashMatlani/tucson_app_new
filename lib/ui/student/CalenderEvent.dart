@@ -41,83 +41,14 @@ class _CalendarEventState extends State<CalendarEvent> {
     GridListItems(name: LabelStr.lblBlogs, svgPicture: MyImage.blogsIcon),
   ];
 
-  static Widget _eventIcon = new Container(
-    decoration: new BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.all(Radius.circular(1000)),
-        border: Border.all(color: Colors.blue, width: 2.0)),
-    child: new Icon(
-      Icons.person,
-      color: Colors.amber,
-    ),
-  );
-
   EventList<Event> _markedDateMap = new EventList<Event>(
-    events: {
-      /*  new DateTime(2019, 2, 10): [
-        new Event(
-          date: new DateTime(2019, 2, 10),
-          title: 'Event 1',
-          icon: _eventIcon,
-          dot: Container(
-            margin: EdgeInsets.symmetric(horizontal: 1.0),
-            color: Colors.red,
-            height: 5.0,
-            width: 5.0,
-          ),
-        ),
-        new Event(
-          date: new DateTime(2019, 2, 10),
-          title: 'Event 2',
-          icon: _eventIcon,
-        ),
-        new Event(
-          date: new DateTime(2019, 2, 10),
-          title: 'Event 3',
-          icon: _eventIcon,
-        ),
-      ],*/
-    },
+    events: {},
   );
+  late String eventNameTitle = "";
 
   @override
   void initState() {
     Timer(Duration(milliseconds: 100), () => _getEventDetail());
-
-    /// Add more events to _markedDateMap EventList
-/*    _markedDateMap.add(
-        new DateTime(2019, 2, 25),
-        new Event(
-          date: new DateTime(2019, 2, 25),
-          title: 'Event 5',
-          icon: _eventIcon,
-        ));
-
-    _markedDateMap.add(
-        new DateTime(2019, 2, 10),
-        new Event(
-          date: new DateTime(2019, 2, 10),
-          title: 'Event 4',
-          icon: _eventIcon,
-        ));
-
-    _markedDateMap.addAll(new DateTime(2019, 2, 11), [
-      new Event(
-        date: new DateTime(2019, 2, 11),
-        title: 'Event 1',
-        icon: _eventIcon,
-      ),
-      new Event(
-        date: new DateTime(2019, 2, 11),
-        title: 'Event 2',
-        icon: _eventIcon,
-      ),
-      new Event(
-        date: new DateTime(2019, 2, 11),
-        title: 'Event 3',
-        icon: _eventIcon,
-      ),
-    ]);*/
     super.initState();
   }
 
@@ -127,7 +58,9 @@ class _CalendarEventState extends State<CalendarEvent> {
       todayBorderColor: Colors.green,
       onDayPressed: (date, events) {
         this.setState(() => _currentDate2 = date);
-        events.forEach((event) => print(event.title));
+        events.forEach((event) =>
+        event.title!=null?
+            bottomMenu(event.title!, _currentDate2, event.getIcon()):Container());
       },
       showOnlyCurrentMonthDate: false,
       weekendTextStyle: TextStyle(
@@ -265,15 +198,13 @@ class _CalendarEventState extends State<CalendarEvent> {
                                 ),
                                 Align(
                                   alignment: Alignment.center,
-                                  child: Expanded(
-                                      flex: 2,
-                                      child: Text(
-                                        _currentMonth,
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 24.0,
-                                        ),
-                                      )),
+                                  child: Text(
+                                    _currentMonth,
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 24.0,
+                                    ),
+                                  ),
                                 ),
                                 IconButton(
                                   icon: Icon(Icons.arrow_forward_ios,
@@ -299,7 +230,7 @@ class _CalendarEventState extends State<CalendarEvent> {
                     ),
                     InkWell(
                       onTap: () {
-                        bottomMenu();
+                        // bottomMenu();
                       },
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
@@ -320,7 +251,58 @@ class _CalendarEventState extends State<CalendarEvent> {
     );
   }
 
-  void bottomMenu() {
+  void _getEventDetail() {
+    Utils.showLoader(true, context);
+    _authViewModel.getAllEventForMobile("1", (isSuccess, message) {
+      Utils.showLoader(false, context);
+      if (isSuccess) {
+        setState(() {
+          eventist = _authViewModel.eventForMobileList;
+          for (int i = 0; i < eventist.length; i++) {
+            eventNameTitle = eventist[i].eventName;
+            String date = Utils.convertDate(
+                eventist[i].fromDateTime, DateFormat('MM/dd/yyyy'));
+
+            print(date);
+            var dateInFormatText = date.split("/");
+            _eventIcon;
+            setState(() {
+              _markedDateMap.add(
+                  new DateTime(
+                      int.parse(dateInFormatText[2]),
+                      int.parse(dateInFormatText[0]),
+                      int.parse(dateInFormatText[1])),
+                  new Event(
+                      date: new DateTime(
+                          int.parse(dateInFormatText[2]),
+                          int.parse(dateInFormatText[0]),
+                          int.parse(dateInFormatText[1])),
+                      title: eventist[i].eventName,
+                      icon: Padding(
+                        padding: const EdgeInsets.fromLTRB(20.0, 20, 10, 10),
+                        child: Container(
+                          child: Text("Event Details:"+"\n"+eventist[i].eventDetail,
+                              style: AppTheme.regularTextStyle().copyWith(
+                                  fontSize: 16,
+                                  color: Color.fromRGBO(0, 0, 0, 1))),
+                        ),
+                      )));
+            });
+          }
+        });
+      } else {
+        ToastUtils.showToast(context, message, Colors.red);
+      }
+    });
+  }
+
+  static Widget _eventIcon = new Container(
+    child: new Text("abcdpqrs"),
+  );
+
+  void bottomMenu(String eventist, DateTime currentDate2, Widget? abcd) {
+
+
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -340,18 +322,19 @@ class _CalendarEventState extends State<CalendarEvent> {
           children: [
             Padding(
               padding: const EdgeInsets.fromLTRB(20.0, 40, 10, 10),
-              child: Text("K-5 Gate Summer Enrichment Program Starts",
+              child: Text(eventist,
                   style: AppTheme.customTextStyle(
                       MyFont.SSPro_semibold, 18.0, Color.fromRGBO(0, 0, 0, 1))),
             ),
             Padding(
               padding: const EdgeInsets.fromLTRB(20.0, 20, 10, 10),
               child: Text(
-                LabelStr.lblEventDetail,
+                currentDate2.toString(),
                 style: AppTheme.regularTextStyle()
                     .copyWith(fontSize: 16, color: Color.fromRGBO(0, 0, 0, 1)),
               ),
             ),
+            abcd!,
             Padding(
               padding: const EdgeInsets.only(top: 16),
               child: Divider(
@@ -382,40 +365,5 @@ class _CalendarEventState extends State<CalendarEvent> {
         ),
       ),
     );
-  }
-
-  void _getEventDetail() {
-    Utils.showLoader(true, context);
-    _authViewModel.getAllEventForMobile("1", (isSuccess, message) {
-      Utils.showLoader(false, context);
-      if (isSuccess) {
-        setState(() {
-          eventist = _authViewModel.eventForMobileList;
-          for (int i = 0; i < eventist.length; i++) {
-            String date = Utils.convertDate(
-                eventist[i].fromDateTime, DateFormat('MM/dd/yyyy'));
-            print(date);
-            var dateInFormatText = date.split("/");
-            setState(() {
-              _markedDateMap.add(
-                  new DateTime(
-                      int.parse(dateInFormatText[2]),
-                      int.parse(dateInFormatText[0]),
-                      int.parse(dateInFormatText[1])),
-                  new Event(
-                    date: new DateTime(
-                        int.parse(dateInFormatText[2]),
-                        int.parse(dateInFormatText[0]),
-                        int.parse(dateInFormatText[1])),
-                    title: 'Event 5',
-                    icon: _eventIcon,
-                  ));
-            });
-          }
-        });
-      } else {
-        ToastUtils.showToast(context, message, Colors.red);
-      }
-    });
   }
 }

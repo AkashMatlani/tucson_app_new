@@ -163,4 +163,24 @@ class AuthViewModel {
       callback(false, validateResult.message);
     }
   }
+
+  void getAllEventForMobile(String schoolId, ResponseCallback callback) {
+    var params = {"SchoolId": schoolId};
+    WebService.getAPICall(WebService.parentGetAllEventForMobile, params).then((response) {
+      if (response.statusCode == 1) {
+        if (response.body != null) {
+          eventForMobileList = [];
+          for (var data in response.body) {
+            eventForMobileList.add(EventForMobileResponse.fromJson(data));
+          }
+          callback(true, "");
+        }
+      } else {
+        callback(false, response.message);
+      }
+    }).catchError((error) {
+      print(error);
+      callback(false, LabelStr.serverError);
+    });
+  }
 }
