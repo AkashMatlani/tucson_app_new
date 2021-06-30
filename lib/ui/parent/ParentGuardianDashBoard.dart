@@ -11,6 +11,7 @@ import 'package:tucson_app/GeneralUtils/PrefsUtils.dart';
 import 'package:tucson_app/GeneralUtils/Utils.dart';
 import 'package:tucson_app/Model/GridListItems.dart';
 import 'package:tucson_app/WebService/WebService.dart';
+import 'package:tucson_app/ui/DisplayWebview.dart';
 import 'package:tucson_app/ui/SignInScreen.dart';
 import 'package:tucson_app/ui/parent/Event.dart';
 import 'package:tucson_app/ui/parent/RequestForServiceScreen.dart';
@@ -257,14 +258,15 @@ class _ParentDashBoardScreenState extends State<ParentDashBoardScreen> {
 
   getWebApiFromUrl(BuildContext context, Map<String, Object> params) {
     Utils.showLoader(true, context);
-    WebService.getAPICall(WebService.contentByType, params).then((response) {
+    WebService.postAPICall(WebService.contentByType, params).then((response) {
       Utils.showLoader(false, context);
-      if (response.statusCode == 1) {
+      if (response.statusCode == 0) {
         if(response.body != null){
-          String webUrl = response.body["contentTransactionTypeJoin"][0]["objectPath"];
+          String webUrl = response.body["output"]["contentTransactionTypeJoin"][0]["objectPath"];
           Utils.showToast(context, webUrl, Colors.green);
+          Utils.navigateToScreen(context, DisplayWebview(webUrl));
         }
-        //Utils.navigateToScreen(context, DisplayWebview(response.body.toString()));
+
       } else {
         Utils.showToast(context, response.message, Colors.red);
       }

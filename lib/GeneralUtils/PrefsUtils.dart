@@ -3,6 +3,7 @@ import 'package:tucson_app/Model/LoginResponse.dart';
 
 class PrefUtils {
   static const String isLoggedIn = "com.TucsonApp.isLoggedIn";
+  static const String Token = "com.TucsonApp.token";
   static const String userId = "com.TucsonApp.userId";
   static const String userRole = "com.TucsonApp.userRole";
   static const String userEmail = "com.TucsonApp.userEmail";

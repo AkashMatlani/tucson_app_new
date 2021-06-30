@@ -33,12 +33,15 @@ class AuthViewModel {
 
   void logInResult(String email, String password, ResponseCallback callback) {
     var params = {"userName": email, "password": password};
-
+    var responseBody;
     var validateResult = validateLogIn(email, password);
     if (validateResult.isValid) {
+
       WebService.postAPICall(WebService.userLogin, params).then((response) {
+        responseBody= response.body;
         if (response.statusCode == 1) {
           if (response.body != null) {
+            PrefUtils.setStringValue(PrefUtils.Token,responseBody["accessToken"]);
             PrefUtils.saveUserDataToPref(LoginResponse.fromJson(response.body));
             callback(true, "");
           }

@@ -5,7 +5,6 @@ import 'package:flutter_calendar_carousel/classes/event.dart';
 import 'package:intl/intl.dart';
 import 'package:tucson_app/GeneralUtils/Constant.dart';
 import 'package:tucson_app/GeneralUtils/LabelStr.dart';
-import 'package:tucson_app/GeneralUtils/ToastUtils.dart';
 import 'package:tucson_app/GeneralUtils/Utils.dart';
 import 'package:tucson_app/Model/AuthViewModel.dart';
 import 'package:tucson_app/Model/EventForMobileResponse.dart';
@@ -291,7 +290,7 @@ class _CalendarEventState extends State<CalendarEvent> {
           }
         });
       } else {
-        ToastUtils.showToast(context, message, Colors.red);
+        Utils.showToast(context, message, Colors.red);
       }
     });
   }
