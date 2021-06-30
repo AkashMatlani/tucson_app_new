@@ -98,6 +98,7 @@ class Utils {
   }
 
   static void showToast(BuildContext context, String message, Color bgColor){
+    ToastView.dismiss();
     ToastView.createView(message, context, Toast.LENGTH_SHORT, Toast.TOP, bgColor, Colors.white, 10.0, Border.all(color: bgColor));
   }
 }
