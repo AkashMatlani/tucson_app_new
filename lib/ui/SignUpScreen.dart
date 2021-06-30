@@ -9,6 +9,7 @@ import 'package:tucson_app/GeneralUtils/Constant.dart';
 import 'package:tucson_app/GeneralUtils/HelperWidgets.dart';
 import 'package:tucson_app/GeneralUtils/LabelStr.dart';
 import 'package:tucson_app/GeneralUtils/Utils.dart';
+import 'package:tucson_app/GeneralUtils/_DropdownMenuPainter.dart';
 import 'package:tucson_app/Model/AuthViewModel.dart';
 import 'package:tucson_app/Model/SchoolListResponse.dart';
 import 'package:tucson_app/WebService/WebService.dart';
@@ -106,38 +107,49 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         Text(LabelStr.lblSignUp, style: AppTheme.customTextStyle(MyFont.SSPro_bold, 30.0, MyColor.darkLblTextColor())),
                         SizedBox(height: 20),
                         Text(LabelStr.lblSignUpAs, style: AppTheme.regularTextStyle().copyWith(fontSize: 14)),
-                        DropdownButton<String>(
-                          value: _userType,
-                          isExpanded: true,
-                          itemHeight: 50,
-                          underline: Container(
-                            height: 1.3,
-                            color: Colors.black45,
-                          ),
-                          style: AppTheme.regularTextStyle(),
-                          icon: Icon(                // Add this
-                            Icons.keyboard_arrow_down,
-                            color: HexColor("#CCCCCC"),// Add this
-                          ),
-                          items: <DropdownMenuItem<String>>[
-                            DropdownMenuItem(
-                              child: Text(LabelStr.lblStudent),
-                              value: LabelStr.lblStudent,
+                        SizedBox(height: 10),
+                        Container(
+                          margin: EdgeInsets.only(right: 8),
+                          child: DropdownButton<String>(
+                            value: _userType,
+                            isExpanded: true,
+                            itemHeight: 50,
+                            isDense: true,
+                            underline: Container(
+                              height: 0,
+                              color: Colors.black45,
                             ),
-                            DropdownMenuItem(
-                                child: Text(LabelStr.lblParentGuardian),
-                                value: LabelStr.lblParentGuardian
+                            style: AppTheme.regularTextStyle(),
+                            icon: Icon(                // Add this
+                              Icons.keyboard_arrow_down,
+                              color: HexColor("#CCCCCC"),// Add this
                             ),
-                            DropdownMenuItem(
-                                child: Text(LabelStr.lblCommunity),
-                                value: LabelStr.lblCommunity
-                            )
-                          ],
-                          onChanged: (value){
-                            setState(() {
-                              _userType = value.toString();
-                            });
-                          },
+                            items: <DropdownMenuItem<String>>[
+                              DropdownMenuItem(
+                                child: Text(LabelStr.lblStudent),
+                                value: LabelStr.lblStudent,
+                              ),
+                              DropdownMenuItem(
+                                  child: Text(LabelStr.lblParentGuardian),
+                                  value: LabelStr.lblParentGuardian
+                              ),
+                              DropdownMenuItem(
+                                  child: Text(LabelStr.lblCommunity),
+                                  value: LabelStr.lblCommunity
+                              )
+                            ],
+                            onChanged: (value){
+                              setState(() {
+                                _userType = value.toString();
+                              });
+                            },
+                          ),
+                        ),
+                        SizedBox(height: 10),
+                        Container(
+                          height:1.3,
+                          width: MediaQuery.of(context).size.width,
+                          color: Colors.black45,
                         ),
                         SizedBox(height: 10),
                         Text(LabelStr.lblFname, style: AppTheme.regularTextStyle().copyWith(fontSize: 14)),
@@ -153,37 +165,52 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         textFieldFor(LabelStr.lblEmail, _emailController, textInputAction: TextInputAction.next, keyboardType: TextInputType.emailAddress),
                         SizedBox(height: 10),
                         Text(LabelStr.lblSchoolName, style: AppTheme.regularTextStyle().copyWith(fontSize: 14)),
-                        _schoolList.length > 0 ? DropdownButton<SchoolListResponse>(
-                          value: _selectedSchool,
-                          isExpanded: true,
-                          itemHeight: 50,
-                          underline: Container(
-                            height: 1.3,
-                            color: Colors.black45,
-                          ),
-                          style: AppTheme.regularTextStyle(),
-                          icon: Icon(                // Add this
-                            Icons.keyboard_arrow_down,
-                            color: HexColor("#CCCCCC"),// Add this
-                          ),
-                          items: _schoolList.map<DropdownMenuItem<SchoolListResponse>>((SchoolListResponse schoolDetails){
-                            return DropdownMenuItem(
-                                child: Text(schoolDetails.name),
-                                value: schoolDetails
-                            );
-                          }).toList(),
-                          onChanged: (value){
-                            setState(() {
-                              _selectedSchool = value!;
-                            });
-                          },
+                        _schoolList.length > 0 ? Column(
+                          children: [
+                            SizedBox(height: 10),
+                            Container(
+                              margin: EdgeInsets.only(right: 8),
+                              child: DropdownButton<SchoolListResponse>(
+                                value: _selectedSchool,
+                                isExpanded: true,
+                                itemHeight: 50,
+                                isDense: true,
+                                underline: Container(
+                                  height: 0,
+                                  color: Colors.white,
+                                ),
+                                style: AppTheme.regularTextStyle(),
+                                icon: Icon(                // Add this
+                                  Icons.keyboard_arrow_down,
+                                  color: HexColor("#CCCCCC"),// Add this
+                                ),
+                                items: _schoolList.map<DropdownMenuItem<SchoolListResponse>>((SchoolListResponse schoolDetails){
+                                  return DropdownMenuItem(
+                                      child: Text(schoolDetails.name),
+                                      value: schoolDetails
+                                  );
+                                }).toList(),
+                                onChanged: (value){
+                                  setState(() {
+                                    _selectedSchool = value!;
+                                  });
+                                },
+                              ),
+                            ),
+                            SizedBox(height: 10),
+                            Container(
+                              height:1.3,
+                              width: MediaQuery.of(context).size.width,
+                              color: Colors.black45,
+                            ),
+                          ],
                         ) : Container(),
                         SizedBox(height: 10),
                         Text(LabelStr.lblPassword, style: AppTheme.regularTextStyle().copyWith(fontSize: 14)),
-                        textFieldFor(LabelStr.lblPassword, _pwdController, textInputAction: TextInputAction.done, keyboardType: TextInputType.text, obscure:_showPwd, suffixIcon: InkWell(onTap:(){_togglePwd();},child: Padding(padding: EdgeInsets.fromLTRB(10, 15, 0, 15), child: SvgPicture.asset(MyImage.viewPwdIcon)))),
+                        textFieldFor(LabelStr.lblPassword, _pwdController, textInputAction: TextInputAction.done, keyboardType: TextInputType.text, obscure:_showPwd, suffixIcon: InkWell(onTap:(){_togglePwd();},child: Padding(padding: EdgeInsets.fromLTRB(10, 15, 0, 15), child: SvgPicture.asset(_showPwd ? MyImage.viewPwdIcon : MyImage.hidePwdIcon)))),
                         SizedBox(height: 10),
                         Text(LabelStr.lblConfirmPwd, style: AppTheme.regularTextStyle().copyWith(fontSize: 14)),
-                        textFieldFor(LabelStr.lblConfirmPwd, _confPwdController, textInputAction: TextInputAction.done, keyboardType: TextInputType.text, obscure:_showConfPwd, suffixIcon: InkWell(onTap:(){_toggleConfPwd();},child: Padding(padding: EdgeInsets.fromLTRB(10, 15, 0, 15), child: SvgPicture.asset(MyImage.viewPwdIcon)))),
+                        textFieldFor(LabelStr.lblConfirmPwd, _confPwdController, textInputAction: TextInputAction.done, keyboardType: TextInputType.text, obscure:_showConfPwd, suffixIcon: InkWell(onTap:(){_toggleConfPwd();},child: Padding(padding: EdgeInsets.fromLTRB(10, 15, 0, 15), child: SvgPicture.asset(_showConfPwd ? MyImage.viewPwdIcon : MyImage.hidePwdIcon)))),
                         SizedBox(height: 30),
                         Container(
                           decoration: BoxDecoration(
@@ -206,7 +233,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             },
                           ),
                         ),
-                        SizedBox(height: MediaQuery.of(context).size.height*0.15),
+                        SizedBox(height: MediaQuery.of(context).size.height*0.1),
                         Container(
                           alignment: Alignment.bottomCenter,
                           child: Row(

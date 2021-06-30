@@ -43,6 +43,7 @@ class MyImage {
   static const donationImg = "assets/images/bg_images/donation_img.svg";
 
   static const viewPwdIcon = "assets/images/icons/ic_visible.svg";
+  static const hidePwdIcon = "assets/images/icons/ic_hide.svg";
   static const awarityIcon = "assets/images/icons/ic_awarity.svg";
   static const coolStuffIcon = "assets/images/icons/ic_cool_stuff.svg";
   static const eventIcon = "assets/images/icons/ic_event.svg";
