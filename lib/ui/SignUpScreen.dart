@@ -185,7 +185,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 isExpanded: true,
                                 itemHeight: 50,
                                 isDense: true,
-                                hint: Text("Select School", style: AppTheme.regularTextStyle()),
                                 underline: Container(
                                   height: 0,
                                   color: Colors.white,
@@ -284,6 +283,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         if (response.body != null) {
           _schoolList = [];
           setState(() {
+            _schoolList.add(SchoolListResponse(id: 0, name: LabelStr.lblSelectSchool, schoolCategoryId: 0, schoolCategoryName: "",  createdBy: 0,  createdOn: "",  updatedBy: 0,  updatedOn: ""));
             for(var data in response.body){
               _schoolList.add(SchoolListResponse.fromJson(data));
             }
