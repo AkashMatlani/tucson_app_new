@@ -12,6 +12,7 @@ class WebService {
   static const changePassword = "User/ChangePassword";
   static const resetPassword = "User/ResetPassword";
   static const forgotPassword = "User/ForgotPassword";
+  static const getUserStatus = "User/GetUserStatus";
   static const donationURL = "TUSDConfiguration/GetDonationURL";
   static const schoolList = "School/GetAll";
   static const studentSignUp = "Student/Create";

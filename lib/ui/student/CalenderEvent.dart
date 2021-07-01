@@ -178,7 +178,7 @@ class _CalendarEventState extends State<CalendarEvent> {
                     Container(
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
-                          border: Border.all(color: Colors.black, width: 1)),
+                          border: Border.all(color: Colors.black12, width: 1)),
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
@@ -190,9 +190,9 @@ class _CalendarEventState extends State<CalendarEvent> {
                               children: <Widget>[
                                 IconButton(
                                   icon: Padding(
-                                    padding: EdgeInsets.all(5),
+                                    padding: EdgeInsets.all(10),
                                     child: Icon(Icons.arrow_back_ios,
-                                        color: Colors.black),
+                                        color: HexColor("#6462AA"), size: 16),
                                   ),
                                   onPressed: () {
                                     setState(() {
@@ -204,21 +204,18 @@ class _CalendarEventState extends State<CalendarEvent> {
                                     });
                                   },
                                 ),
-                                Align(
-                                  alignment: Alignment.center,
+                                Expanded(
                                   child: Text(
                                     _currentMonth,
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 24.0,
-                                    ),
+                                    style: AppTheme.regularTextStyle().copyWith(color: HexColor("#6462AA")),
+                                    textAlign: TextAlign.center,
                                   ),
                                 ),
                                 IconButton(
                                   icon: Padding(
-                                    padding: EdgeInsets.all(5),
+                                    padding: EdgeInsets.all(10),
                                     child: Icon(Icons.arrow_forward_ios,
-                                        color: Colors.black),
+                                        color: HexColor("#6462AA"), size: 16),
                                   ),
                                   onPressed: () {
                                     setState(() {
@@ -232,6 +229,11 @@ class _CalendarEventState extends State<CalendarEvent> {
                                 )
                               ],
                             ),
+                          ),
+                          Container(
+                            height: 1,
+                            color: Colors.black12,
+                            width: MediaQuery.of(context).size.width,
                           ),
                           SizedBox(height: 10),
                           Container(
