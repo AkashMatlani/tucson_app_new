@@ -38,7 +38,7 @@ class _ForgotPwdScreenState extends State<ForgotPwdScreen> {
               Container(
                 height: MediaQuery.of(context).size.height*0.38,
                 alignment: Alignment.topCenter,
-                child: SvgPicture.asset(MyImage.userGroupImg),
+                child: Image.asset(MyImage.forgotPassword),
               ),
               Positioned.fill(
                 top: MediaQuery.of(context).size.height*0.28,

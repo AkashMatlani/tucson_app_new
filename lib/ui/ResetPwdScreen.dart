@@ -55,7 +55,7 @@ class _ResetPwdScreenState extends State<ResetPwdScreen> {
             Container(
               height: MediaQuery.of(context).size.height*0.38,
               alignment: Alignment.topCenter,
-              child: SvgPicture.asset(MyImage.userGroupImg),
+              child: SvgPicture.asset(MyImage.passwordReset),
             ),
             Positioned.fill(
               top: MediaQuery.of(context).size.height*0.28,

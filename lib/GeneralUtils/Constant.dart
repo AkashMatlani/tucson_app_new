@@ -40,6 +40,10 @@ class MyImage {
   static const splashLogoImg = "assets/images/bg_images/splash_logo.png";
   static const splashBottomImg = "assets/images/bg_images/splash_bottom_img.png";
   static const userGroupImg = "assets/images/bg_images/user_group.svg";
+  static const passwordReset = "assets/images/bg_images/ic_password_reset.jpg";
+  static const signup = "assets/images/bg_images/icon_signup.jpg";
+  static const signIn = "assets/images/bg_images/ic_sign_in.jpg";
+  static const forgotPassword = "assets/images/bg_images/ic_forgot_password.jpg";
   static const donationImg = "assets/images/bg_images/donation_img.svg";
 
   static const viewPwdIcon = "assets/images/icons/ic_visible.svg";

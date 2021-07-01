@@ -83,7 +83,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             Container(
               height: MediaQuery.of(context).size.height*0.38,
               alignment: Alignment.topCenter,
-              child: SvgPicture.asset(MyImage.userGroupImg),
+              child: Image.asset(MyImage.signup),
             ),
             Positioned.fill(
               top: MediaQuery.of(context).size.height*0.28,

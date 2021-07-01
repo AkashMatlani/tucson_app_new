@@ -52,7 +52,7 @@ class _SignInScreenState extends State<SignInScreen> {
             Container(
               height: MediaQuery.of(context).size.height*0.38,
               alignment: Alignment.topCenter,
-              child: SvgPicture.asset(MyImage.userGroupImg),
+              child: Image.asset(MyImage.signIn),
             ),
             Positioned.fill(
               top: MediaQuery.of(context).size.height*0.28,
