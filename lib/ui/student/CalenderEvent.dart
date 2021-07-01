@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_calendar_carousel/classes/event.dart';
 import 'package:intl/intl.dart';
+import 'package:tucson_app/GeneralUtils/ColorExtension.dart';
 import 'package:tucson_app/GeneralUtils/Constant.dart';
 import 'package:tucson_app/GeneralUtils/LabelStr.dart';
 import 'package:tucson_app/GeneralUtils/Utils.dart';
@@ -120,24 +121,27 @@ class _CalendarEventState extends State<CalendarEvent> {
         fit: StackFit.expand,
         children: [
           Container(
-              color: Colors.blue,
-              child: Column(children: [
+            color: HexColor("#6462AA"),
+            child: Column(
+              children: [
                 Container(
-                  margin: EdgeInsets.fromLTRB(
-                      0,
-                      MediaQuery.of(context).size.height * 0.08,
-                      0,
-                      MediaQuery.of(context).size.height * 0.04),
+                  margin: EdgeInsets.fromLTRB(0, MediaQuery.of(context).size.height*0.03, 0, MediaQuery.of(context).size.height*0.03),
                   child: Row(
                     children: [
-                      IconButton(
-                          icon: Icon(Icons.arrow_back_ios, color: Colors.white),
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          }),
-                      Text(LabelStr.lblEvents,
-                          style: AppTheme.regularTextStyle()
-                              .copyWith(fontSize: 18, color: Colors.white))
+                      Container(
+                        margin: EdgeInsets.only(top: 10),
+                        child: IconButton(
+                            icon: Icon(Icons.arrow_back_ios, color: Colors.white),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            }),
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(top: 10),
+                        child: Text(LabelStr.lblEvents,
+                            style: AppTheme.regularTextStyle()
+                                .copyWith(fontSize: 18, color: Colors.white)),
+                      )
                     ],
                   ),
                 ),
@@ -145,15 +149,17 @@ class _CalendarEventState extends State<CalendarEvent> {
                   child: Container(
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(30),
-                            topRight: Radius.circular(30)),
-                        color: Colors.white),
+                            topLeft: Radius.circular(30.0),
+                            topRight: Radius.circular(30.0)),
+                        color: HexColor("FAFAFA")),
                     height: MediaQuery.of(context).size.height,
                     width: MediaQuery.of(context).size.width,
-                    padding: EdgeInsets.all(20),
+                    padding: EdgeInsets.all(10),
                   ),
-                ),
-              ])),
+                )
+              ],
+            ),
+          ),
           Positioned(
               top: MediaQuery.of(context).size.height * 0.20,
               left: MediaQuery.of(context).size.height * 0.03,
@@ -161,7 +167,7 @@ class _CalendarEventState extends State<CalendarEvent> {
               child: Container(
                 margin: EdgeInsets.only(top: 20),
                 padding: EdgeInsets.all(10),
-                color: Colors.white,
+                color: HexColor("FAFAFA"),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -170,11 +176,11 @@ class _CalendarEventState extends State<CalendarEvent> {
                     // This trailing comma makes auto-formatting nicer for build methods.
                     //custom icon without header
                     Container(
-                      height: MediaQuery.of(context).size.height * 0.70,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
                           border: Border.all(color: Colors.black, width: 1)),
                       child: Column(
+                        mainAxisSize: MainAxisSize.min,
                         children: [
                           Container(
                             margin: EdgeInsets.only(),
@@ -183,8 +189,11 @@ class _CalendarEventState extends State<CalendarEvent> {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: <Widget>[
                                 IconButton(
-                                  icon: Icon(Icons.arrow_back_ios,
-                                      color: Colors.black),
+                                  icon: Padding(
+                                    padding: EdgeInsets.all(5),
+                                    child: Icon(Icons.arrow_back_ios,
+                                        color: Colors.black),
+                                  ),
                                   onPressed: () {
                                     setState(() {
                                       _targetDateTime = DateTime(
@@ -206,8 +215,11 @@ class _CalendarEventState extends State<CalendarEvent> {
                                   ),
                                 ),
                                 IconButton(
-                                  icon: Icon(Icons.arrow_forward_ios,
-                                      color: Colors.black),
+                                  icon: Padding(
+                                    padding: EdgeInsets.all(5),
+                                    child: Icon(Icons.arrow_forward_ios,
+                                        color: Colors.black),
+                                  ),
                                   onPressed: () {
                                     setState(() {
                                       _targetDateTime = DateTime(
@@ -221,7 +233,9 @@ class _CalendarEventState extends State<CalendarEvent> {
                               ],
                             ),
                           ),
+                          SizedBox(height: 10),
                           Container(
+                            height: MediaQuery.of(context).size.height*0.33,
                             child: _calendarCarouselNoHeader,
                           ),
                         ],
