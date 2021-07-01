@@ -9,7 +9,6 @@ import 'package:tucson_app/GeneralUtils/Constant.dart';
 import 'package:tucson_app/GeneralUtils/HelperWidgets.dart';
 import 'package:tucson_app/GeneralUtils/LabelStr.dart';
 import 'package:tucson_app/GeneralUtils/Utils.dart';
-import 'package:tucson_app/GeneralUtils/_DropdownMenuPainter.dart';
 import 'package:tucson_app/Model/AuthViewModel.dart';
 import 'package:tucson_app/Model/SchoolListResponse.dart';
 import 'package:tucson_app/WebService/WebService.dart';
@@ -29,6 +28,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   var _fnameController = TextEditingController();
   var _lnameController = TextEditingController();
   var _dobController = TextEditingController();
+  var _zipController = TextEditingController();
   var _emailController = TextEditingController();
   var _pwdController = TextEditingController();
   var _confPwdController = TextEditingController();
@@ -47,11 +47,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
   void initState() {
     super.initState();
     setState(() {
-      /*_fnameController.text = "john";
-      _lnameController.text = "smith";
-      _emailController.text = "john@gmail.com";
-      _pwdController.text = "12345678";
-      _confPwdController.text = "12345678";*/
       _formattedDob = DateFormat("yyyy-MM-dd'T'hh:mm:ss").format(currentDate);
       _dobController.text = Utils.convertDate(_formattedDob, DateFormat("MM-dd-yyyy"));
     });
@@ -159,9 +154,23 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         Text(LabelStr.lblLname, style: AppTheme.regularTextStyle().copyWith(fontSize: 14)),
                         textFieldFor(LabelStr.lblLname, _lnameController, textInputAction: TextInputAction.next, keyboardType: TextInputType.text),
                         SizedBox(height: 10),
-                        Text(LabelStr.lbldob, style: AppTheme.regularTextStyle().copyWith(fontSize: 14)),
-                        textFieldFor(LabelStr.lbldob, _dobController, readOnly: true, suffixIcon: InkWell(onTap:(){_selectDate(context);},child: Icon(Icons.calendar_today_outlined, size: 24))),
-                        SizedBox(height: 10),
+                        _userType.compareTo(LabelStr.lblStudent)==0 ? Column(
+                          mainAxisAlignment:MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                          Text(LabelStr.lbldob, style: AppTheme.regularTextStyle().copyWith(fontSize: 14)),
+                          textFieldFor(LabelStr.lbldob, _dobController, readOnly: true, suffixIcon: InkWell(onTap:(){_selectDate(context);},child: Icon(Icons.calendar_today_outlined, size: 24))),
+                          SizedBox(height: 10)
+                        ]) : Container(),
+                        _userType.compareTo(LabelStr.lblParentGuardian)==0 ? Column(
+                          mainAxisAlignment:MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(LabelStr.lblZipCode, style: AppTheme.regularTextStyle().copyWith(fontSize: 14)),
+                            textFieldFor(LabelStr.lblZipCode, _zipController, textInputAction: TextInputAction.next, keyboardType: TextInputType.number),
+                            SizedBox(height: 10),
+                          ],
+                        ) : Container(),
                         Text(LabelStr.lblEmail, style: AppTheme.regularTextStyle().copyWith(fontSize: 14)),
                         textFieldFor(LabelStr.lblEmail, _emailController, textInputAction: TextInputAction.next, keyboardType: TextInputType.emailAddress),
                         SizedBox(height: 10),
@@ -176,6 +185,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 isExpanded: true,
                                 itemHeight: 50,
                                 isDense: true,
+                                hint: Text("Select School", style: AppTheme.regularTextStyle()),
                                 underline: Container(
                                   height: 0,
                                   color: Colors.white,
@@ -300,9 +310,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
     String email = _emailController.text;
     String password = _pwdController.text;
     String confirmPwd = _confPwdController.text;
+    String zipCode = _zipController.text;
 
     Utils.showLoader(true, context);
-    _authViewModel.signUpResult(_userType, fname, lname, _formattedDob, email, password, confirmPwd, _selectedSchool.id, (isSuccess, message) {
+    _authViewModel.signUpResult(_userType, fname, lname, _formattedDob, zipCode,  email, password, confirmPwd, _selectedSchool.id, (isSuccess, message) {
       Utils.showLoader(false, context);
       if(isSuccess){
         setState(() {

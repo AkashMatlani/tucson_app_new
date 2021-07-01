@@ -1,8 +1,7 @@
-import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tucson_app/GeneralUtils/ProgressHUD.dart';
-import 'package:tucson_app/Model/AuthViewModel.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class DisplayWebview extends StatefulWidget {

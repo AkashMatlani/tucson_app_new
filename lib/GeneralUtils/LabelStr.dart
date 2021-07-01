@@ -21,6 +21,7 @@ class LabelStr {
   static const lblFname = "First Name";
   static const lblLname = "Last Name";
   static const lbldob = "Date Of Birth";
+  static const lblZipCode = "Zip Code";
   static const lblSchoolName = "School Name";
   static const lblSchoolPrograms = "Schools & Programs";
   static const lblRqForService = "Request for Services";
@@ -57,6 +58,8 @@ class LabelStr {
   static const enterValidFname = "Please enter valid first name";
   static const enterLname = "Please enter last name";
   static const enterValidLname = "Please enter valid last name";
+  static const enterZipCode = "Please enter zip code";
+  static const enterValidZipCode = "Please enter valid zip code";
   static const pwdNotMatchError = "New password and confirm password did not match";
   static const pwdNotMatchError1 = "Password and confirm password did not match";
   //static const enterValidPwd = "Passwords must contain at least six characters including letters, numbers and special characters";
@@ -70,6 +73,7 @@ class LabelStr {
   static const emptyFieldError = "Please fill required details";
   static const enterPhoneNumber = "Please enter phone number";
   static const enterValidPhoneNumber = "Please enter valid phone number";
+  static const accountInActive = "User Account is Inactive. Please contact your TUCSON administrator";
 
   static const lblCoolStuff = "Cool Stuff";
   static const lblStudentBlogs = "Student Blogs";
