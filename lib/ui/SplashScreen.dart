@@ -22,18 +22,20 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
 
-  late int userId;
-  late String role;
+  @override
+  BuildContext get context => super.context;
+
   @override
   void initState() {
     super.initState();
-    Timer(Duration(seconds: 2), (){
+    Timer(Duration(milliseconds: 200), () {
       SharedPreferences.getInstance().then((prefs) async {
         PrefUtils.getUserDataFromPref();
-        if(prefs.containsKey(PrefUtils.isLoggedIn) && prefs.getBool(PrefUtils.isLoggedIn)!){
-         role= prefs.getString(PrefUtils.userRole)!;
-          userId=prefs.getInt(PrefUtils.userId)!;
-        checkUserStatus();
+        if (prefs.containsKey(PrefUtils.isLoggedIn) &&
+            prefs.getBool(PrefUtils.isLoggedIn)!) {
+          String role = prefs.getString(PrefUtils.userRole)!;
+          int userId = prefs.getInt(PrefUtils.userId)!;
+          checkUserStatus(userId, role);
         } else {
           Utils.navigateReplaceToScreen(context, DonationScreen());
         }
@@ -46,29 +48,33 @@ class _SplashScreenState extends State<SplashScreen> {
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
-            image: DecorationImage(image: AssetImage(MyImage.splashImage), fit: BoxFit.fill)
-        ),
+            image: DecorationImage(
+                image: AssetImage(MyImage.splashImage), fit: BoxFit.fill)),
       ),
     );
   }
 
-  checkUserStatus() {
+  checkUserStatus(int userId, String role) {
     Utils.showLoader(true, context);
-    var params = {"Id": userId};
+    var params = {"userId": userId};
     WebService.postAPICall(WebService.getUserStatus, params).then((response) {
       Utils.showLoader(false, context);
       if (response.statusCode == 1) {
         if (response.body != null) {
-          Utils.showToast(context, "Success", Colors.green);
-          if(role.compareTo("Student") == 0){
-            Utils.navigateReplaceToScreen(context, StudentDashboardScreen());
-          } else if(role.compareTo("Community") == 0){
-            Utils.navigateReplaceToScreen(context, CommunityDashboardScreen());
+          bool isActive = response.body["isActive"];
+          if(isActive) {
+            if (role.compareTo("Student") == 0) {
+              Utils.navigateReplaceToScreen(context, StudentDashboardScreen());
+            } else if (role.compareTo("Community") == 0) {
+              Utils.navigateReplaceToScreen(context, CommunityDashboardScreen());
+            } else {
+              Utils.navigateReplaceToScreen(context, ParentDashBoardScreen());
+            }
           } else {
-            Utils.navigateReplaceToScreen(context, ParentDashBoardScreen());
+            Utils.showToast(context, response.message, Colors.red);
           }
         } else {
-          Utils.showToast(context, "Failure", Colors.red);
+          Utils.showToast(context, response.message, Colors.red);
         }
       } else {
         Utils.showToast(context, response.message, Colors.red);

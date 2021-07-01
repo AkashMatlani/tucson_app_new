@@ -8,6 +8,7 @@ import 'package:tucson_app/GeneralUtils/LabelStr.dart';
 class WebService {
 
   static const baseUrl = "http://35.231.45.54:99/api/";
+
   static const userLogin = "User/Login";
   static const changePassword = "User/ChangePassword";
   static const resetPassword = "User/ResetPassword";
