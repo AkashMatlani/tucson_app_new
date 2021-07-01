@@ -5,7 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tucson_app/GeneralUtils/PrefsUtils.dart';
+import 'package:tucson_app/WebService/WebService.dart';
 import 'package:tucson_app/ui/SignInScreen.dart';
+import '../DisplayWebview.dart';
 import 'BlogScreen.dart';
 import 'package:tucson_app/GeneralUtils/ColorExtension.dart';
 import 'package:tucson_app/GeneralUtils/Constant.dart';
@@ -61,6 +63,7 @@ class _StudentDashboardScreenState extends State<StudentDashboardScreen> {
 
   String language="";
   String userName="";
+  late int schoolId;
 
   @override
   void initState() {
@@ -71,6 +74,10 @@ class _StudentDashboardScreenState extends State<StudentDashboardScreen> {
         setState(() {
           language = prefs.getString(PrefUtils.yourLanguage)!;
           userName = prefs.getString(PrefUtils.userFirstName)!;
+          schoolId = prefs.getInt(PrefUtils.schoolId)!;
+          if(schoolId == null){
+            schoolId = 0;
+          }
         });
       });
     });
@@ -187,6 +194,12 @@ class _StudentDashboardScreenState extends State<StudentDashboardScreen> {
                                 Utils.navigateToScreen(context, CalendarEvent());
                               } else if (index == 6) {
                                 Utils.navigateToScreen(context, VolunteerOpportunitiesScreen());
+                              } else if (index == 7) {
+                                var params={
+                                  "schoolId": schoolId,
+                                  "contentTypeName":"Awareity"
+                                };
+                                getWebApiFromUrl(context, params);
                               } else if (index == 8) {
                                 Utils.showLoader(true, context);
                                 PrefUtils.clearPref();
@@ -240,5 +253,23 @@ class _StudentDashboardScreenState extends State<StudentDashboardScreen> {
         ],
       ),
     );
+  }
+
+  getWebApiFromUrl(BuildContext context, Map<String, Object> params) {
+    Utils.showLoader(true, context);
+    WebService.postAPICall(WebService.contentByType, params).then((response) {
+      Utils.showLoader(false, context);
+      if (response.statusCode == 1) {
+        if(response.body != null){
+          String webUrl = response.body[0]["contentTransactionTypeJoin"][0]["objectPath"];
+          Utils.navigateToScreen(context, DisplayWebview(webUrl));
+        }
+      } else {
+        Utils.showToast(context, response.message, Colors.red);
+      }
+    }).catchError((error) {
+      Utils.showLoader(false, context);
+      Utils.showToast(context, LabelStr.serverError, Colors.red);
+    });
   }
 }
