@@ -17,11 +17,11 @@ class _SchoolProgramScreenState extends State<SchoolPrograms> {
       name: LabelStr.lblCatlogOfSchools,
       svgPicture: MyImage.websiteIcon,
     ),
-    GridListItems(name: LabelStr.lblMassd, svgPicture: MyImage.websiteIcon),
-    GridListItems(name: LabelStr.lblAassd, svgPicture: MyImage.websiteIcon),
-    GridListItems(name: LabelStr.lblNassd, svgPicture: MyImage.websiteIcon),
-    GridListItems(name: LabelStr.lblRssd, svgPicture: MyImage.websiteIcon),
-    GridListItems(name: LabelStr.lblApssd, svgPicture: MyImage.websiteIcon),
+    GridListItems(name: LabelStr.lblMassd, svgPicture: MyImage.massdIcon),
+    GridListItems(name: LabelStr.lblAassd, svgPicture: MyImage.aasdIcon),
+    GridListItems(name: LabelStr.lblNassd, svgPicture: MyImage.nassdIcon),
+    GridListItems(name: LabelStr.lblRssd, svgPicture: MyImage.rssdIcon),
+    GridListItems(name: LabelStr.lblApssd, svgPicture: MyImage.apssdIcon),
     GridListItems(name: LabelStr.lblFace, svgPicture: MyImage.websiteIcon),
   ];
 
@@ -106,10 +106,10 @@ class _SchoolProgramScreenState extends State<SchoolPrograms> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
                                   Padding(
-                                      padding: EdgeInsets.fromLTRB(
-                                          16.0, 12.0, 16.0, 8.0),
+                                      padding: EdgeInsets.only(
+                                         left: 12,top: 10),
                                       child: SvgPicture.asset(
-                                          menuItems[index].svgPicture)),
+                                          menuItems[index].svgPicture,height: 60,width: 60,)),
                                   Padding(
                                     padding: EdgeInsets.fromLTRB(
                                         16.0, 12.0, 16.0, 8.0),

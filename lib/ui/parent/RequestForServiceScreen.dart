@@ -24,18 +24,18 @@ class _RequestForServiceScreenState extends State<RequestForServiceScreen> {
         name: LabelStr.lblStudentServices,
         svgPicture: MyImage.studentServicesIcon),
     GridListItems(
-        name: LabelStr.lblTakeItOut, svgPicture: MyImage.mentalHealthIcon),
+        name: LabelStr.lblTakeItOut, svgPicture: MyImage.takeItOut),
     GridListItems(
-        name: LabelStr.lblDroupOutPrevention, svgPicture: MyImage.dropOutIcon),
+        name: LabelStr.lblDroupOutPrevention, svgPicture: MyImage.dropOut),
     GridListItems(
         name: LabelStr.lblHealthServices,
-        svgPicture: MyImage.healthServiceIcon),
+        svgPicture: MyImage.healthService),
     GridListItems(
         name: LabelStr.lblTranslationServices,
         svgPicture: MyImage.translationServiceIcon),
     GridListItems(
         name: LabelStr.lblTransporation,
-        svgPicture: MyImage.transportationIcon),
+        svgPicture: MyImage.transporation),
   ];
 
   @override
@@ -128,10 +128,10 @@ class _RequestForServiceScreenState extends State<RequestForServiceScreen> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
                                   Padding(
-                                      padding: EdgeInsets.fromLTRB(
-                                          16.0, 12.0, 16.0, 8.0),
+                                      padding: EdgeInsets.only(
+                                          left: 12,top: 10,right: 20),
                                       child: SvgPicture.asset(
-                                          menuItems[index].svgPicture)),
+                                          menuItems[index].svgPicture,height: 50,width: 50,)),
                                   Padding(
                                     padding: EdgeInsets.fromLTRB(
                                         16.0, 12.0, 16.0, 8.0),

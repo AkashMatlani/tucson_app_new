@@ -24,7 +24,7 @@ class _CommunityResourcesScreenState extends State<CommunityResources> {
     GridListItems(
         name: LabelStr.lblScholarship, svgPicture: MyImage.articlesIcon),
     GridListItems(
-        name: LabelStr.lblFamilyResourcesCenters, svgPicture: MyImage.blogsIcon),
+        name: LabelStr.lblFamilyResourcesCenters, svgPicture: MyImage.familyResourcesCenter),
     GridListItems(
         name: LabelStr.lblClothingBank, svgPicture: MyImage.blogsIcon),
     GridListItems(
@@ -114,10 +114,10 @@ class _CommunityResourcesScreenState extends State<CommunityResources> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
                                   Padding(
-                                      padding: EdgeInsets.fromLTRB(
-                                          16.0, 12.0, 16.0, 8.0),
+                                      padding: EdgeInsets.only(
+                                          left: 20,top: 10,right: 20),
                                       child: SvgPicture.asset(
-                                          menuItems[index].svgPicture)),
+                                          menuItems[index].svgPicture,height: 50,width: 50,)),
                                   Padding(
                                     padding: EdgeInsets.fromLTRB(
                                         16.0, 12.0, 16.0, 8.0),

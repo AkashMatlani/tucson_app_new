@@ -175,7 +175,7 @@ class AuthViewModel {
         "password": password,
         "firstName": fname,
         "lastName": lname,
-        "ZipCode": zipCode,
+        "zipCode": zipCode,
         "email": email,
         "profileImageURL": "",
         "schoolId": schoolId,

@@ -78,11 +78,21 @@ class MyImage {
   static const familyResourcesCentersIcon="assets/images/icons/family_resources.svg";
   static const clothingBankIcon="assets/images/icons/clothing_bank.svg";
   static const websiteIcon="assets/images/icons/website.svg";
+  static const massdIcon="assets/images/icons/ic_massd.svg";
+  static const aasdIcon="assets/images/icons/ic_aasd.svg";
+  static const nassdIcon="assets/images/icons/ic_nassd.svg";
+  static const rssdIcon="assets/images/icons/ic_rssd.svg";
+  static const apssdIcon="assets/images/icons/ic_apssd.svg";
   static const studentServicesIcon="assets/images/icons/student_services.svg";
   static const dropOutIcon="assets/images/icons/ic_dropout.svg";
   static const healthServiceIcon="assets/images/icons/ic_health_service.svg";
   static const translationServiceIcon="assets/images/icons/ic_translation_service.svg";
   static const transportationIcon="assets/images/icons/ic_transportation.svg";
+  static const familyResourcesCenter="assets/images/icons/ic_family_resources_center.svg";
+  static const takeItOut="assets/images/icons/ic_take_it_out.svg";
+  static const dropOut="assets/images/icons/ic_drop_out.svg";
+  static const healthService="assets/images/icons/ic_health_service.svg";
+  static const transporation="assets/images/icons/ic_transporation.svg";
 
   static const listForwordIcon="assets/images/icons/ic_list_forword.svg";
   static const dummyIcon="assets/images/icons/ic_dummy.svg";
