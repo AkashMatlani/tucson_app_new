@@ -23,6 +23,7 @@ class LabelStr {
   static const lbldob = "Date Of Birth";
   static const lblZipCode = "Zip Code";
   static const lblSchoolName = "School Name";
+  static const lblSelectSchool = "Select School";
   static const lblSchoolPrograms = "Schools & Programs";
   static const lblRqForService = "Request for Services";
 
