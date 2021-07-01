@@ -88,7 +88,7 @@ class AuthViewModel {
     }
   }
 
-  ValidationResult validateSignUp(String fname, String lname, String email, String password, String confirmPwd) {
+  ValidationResult validateSignUp(String userType, String fname, String lname, String zipCode, String email, String password, String confirmPwd) {
 
     if (fname.isEmpty) {
       return ValidationResult(false, LabelStr.enterFname);
@@ -100,6 +100,14 @@ class AuthViewModel {
       return ValidationResult(false, LabelStr.enterLname);
     } else if (!lname.contains(RegExp(r'^[a-zA-Z]')) && lname.length < 3) {
       return ValidationResult(false, LabelStr.enterValidLname);
+    }
+
+    if(userType.compareTo("ParentGuardian") == 0){
+      if (zipCode.isEmpty) {
+        return ValidationResult(false, LabelStr.enterZipCode);
+      } else if(zipCode.length !=5){
+        return ValidationResult(false, LabelStr.enterValidZipCode);
+      }
     }
 
     if (email.isEmpty) {
@@ -128,29 +136,55 @@ class AuthViewModel {
     return ValidationResult(true, "success");
   }
 
-  void signUpResult(String userType, String fname, String lname, String dob, String email, String password, String confirmPwd, int schoolId, ResponseCallback callback) {
-    var params = {
-      "password": password,
-      "firstName": fname,
-      "lastName": lname,
-      "dob": dob,
-      "email": email,
-      "phoneNumber": "",
-      "profileImageURL": "",
-      if(userType.compareTo("Student") == 0)
-        "schoolId": schoolId,
-      "role": userType
-    };
-
+  void signUpResult(String userType, String fname, String lname, String dob, String zipCode, String email, String password, String confirmPwd, int schoolId, ResponseCallback callback) {
+    late var params;
     String apiMethod="";
+    if(schoolId == null){
+      schoolId = 0;
+    }
     if(userType.compareTo("Student") == 0){
       apiMethod = WebService.studentSignUp;
+      params = {
+        "password": password,
+        "firstName": fname,
+        "lastName": lname,
+        "dob": dob,
+        "email": email,
+        "profileImageURL": "",
+        "schoolId": schoolId,
+        "role": userType,
+        "isApprove": false,
+        "isRejected": false,
+      };
     } else if(userType.compareTo("Community") == 0){
       apiMethod = WebService.communitySignUp;
+      params = {
+        "password": password,
+        "firstName": fname,
+        "lastName": lname,
+        "email": email,
+        "profileImageURL": "",
+        "schoolId": schoolId,
+        "role": userType,
+        "isApprove": false,
+        "isRejected": false,
+      };
     } else{
       apiMethod = WebService.parentSignUp;
+      params = {
+        "password": password,
+        "firstName": fname,
+        "lastName": lname,
+        "ZipCode": zipCode,
+        "email": email,
+        "profileImageURL": "",
+        "schoolId": schoolId,
+        "role": userType,
+        "isApprove": false,
+        "isRejected": false,
+      };
     }
-    var validateResult = validateSignUp(fname, lname, email, password, confirmPwd);
+    var validateResult = validateSignUp(userType,  fname, lname, zipCode, email, password, confirmPwd);
     if (validateResult.isValid) {
       WebService.postAPICall(apiMethod, params).then((response) {
         if (response.statusCode == 1) {

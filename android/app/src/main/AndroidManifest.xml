@@ -5,7 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:label="tucson_app"
+        android:label="Tucson Unified Connect"
        android:usesCleartextTraffic="true"
        tools:ignore="GoogleAppIndexingWarning"
         android:icon="@mipmap/ic_launcher"

@@ -4,20 +4,19 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:tucson_app/GeneralUtils/PrefsUtils.dart';
-import 'package:tucson_app/ui/SignInScreen.dart';
-import '../parent/CommunityResources.dart';
 import 'package:tucson_app/GeneralUtils/ColorExtension.dart';
 import 'package:tucson_app/GeneralUtils/Constant.dart';
 import 'package:tucson_app/GeneralUtils/LabelStr.dart';
+import 'package:tucson_app/GeneralUtils/PrefsUtils.dart';
 import 'package:tucson_app/GeneralUtils/Utils.dart';
 import 'package:tucson_app/Model/GridListItems.dart';
 import 'package:tucson_app/PostJobsScreen.dart';
-import 'CommunityEventScreen.dart';
-import '../student/VolunteerOpportunitiesScreen.dart';
+import 'package:tucson_app/ui/SignInScreen.dart';
 import 'package:tucson_app/ui/parent/Event.dart';
 
-import '../parent/Education.dart';
+import '../parent/CommunityResources.dart';
+import '../student/VolunteerOpportunitiesScreen.dart';
+import 'CommunityEventScreen.dart';
 
 class CommunityDashboardScreen extends StatefulWidget {
   @override
