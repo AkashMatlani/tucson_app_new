@@ -60,7 +60,7 @@ class LabelStr {
   static const enterValidFname = "Please enter valid first name";
   static const enterLname = "Please enter last name";
   static const enterValidLname = "Please enter valid last name";
-  static const enterDob = "Please enter date of birth";
+  static const enterDob = "Please select date of birth";
   static const enterZipCode = "Please enter zip code";
   static const enterValidZipCode = "Please enter valid zip code";
   static const pwdNotMatchError = "New password and confirm password did not match";

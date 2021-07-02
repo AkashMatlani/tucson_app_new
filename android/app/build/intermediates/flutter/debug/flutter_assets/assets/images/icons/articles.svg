@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 50 50">
+    <defs>
+        <linearGradient id="gx6vmnbdpa" x1="408.124%" x2="-364.133%" y1="384.948%" y2="-307.726%">
+            <stop offset="0%" stop-color="#6462AA"/>
+            <stop offset="33.452%" stop-color="#20B69E"/>
+            <stop offset="51.202%" stop-color="#6462AA"/>
+            <stop offset="100%" stop-color="#4CA7DA"/>
+        </linearGradient>
+    </defs>
+    <g fill="none" fill-rule="evenodd">
+        <g fill="url(#gx6vmnbdpa)" fill-rule="nonzero" transform="translate(-237.000000, -321.000000)">
+            <g>
+                <g>
+                    <path d="M47.5 0H10.833c-1.416 0-2.5 1.083-2.5 2.5v24.167h-7.5c-.5 0-.833.333-.833.833V45c0 2.75 2.25 5 5 5h40c2.75 0 5-2.25 5-5V2.5C50 1.083 48.917 0 47.5 0zM1.667 45V28.333h6.666V45c0 1.833-1.5 3.333-3.333 3.333-1.833 0-3.333-1.5-3.333-3.333zm46.666 0c0 1.833-1.5 3.333-3.333 3.333H8.75c.16-.196.308-.404.443-.62.47-.721.758-1.568.801-2.477.004-.078.006-.157.006-.236V2.5c0-.5.333-.833.833-.833H47.5c.5 0 .833.333.833.833V45z" transform="translate(217.000000, 304.000000) translate(20.000000, 17.000000)"/>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

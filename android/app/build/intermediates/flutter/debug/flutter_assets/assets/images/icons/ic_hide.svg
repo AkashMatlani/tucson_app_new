@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="20px" height="21px" viewBox="0 0 20 21" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>eye-off</title>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Signup" transform="translate(-327.000000, -984.000000)">
+            <g id="eye-off" transform="translate(328.000000, 985.000000)">
+                <path d="M13.86,13.86 C12.4613918,14.9260927 10.7583607,15.5167062 9,15.5454545 C3.27272727,15.5454545 0,9 0,9 C1.0177281,7.10336918 2.42929264,5.44631515 4.14,4.14 M7.28181818,2.65090909 C7.84499916,2.51908324 8.42159788,2.45318624 9,2.45452485 C14.7272727,2.45452485 18,9 18,9 C17.5033469,9.92913329 16.9110453,10.803875 16.2327273,11.61 M10.7345455,10.7345455 C10.1226417,11.3912286 9.20109095,11.6615428 8.33141812,11.4394436 C7.46174528,11.2173444 6.78265559,10.5382547 6.56055641,9.66858188 C6.33845722,8.79890905 6.60877142,7.87735826 7.26545455,7.26545455" id="Shape" fill="#C6CBD4"></path>
+                <line x1="0" y1="0" x2="18" y2="19" id="Path" stroke="#C6CBD4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></line>
+            </g>
+        </g>
+    </g>
+</svg>

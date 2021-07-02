@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 36 36">
+    <defs>
+        <linearGradient id="4r5p5hldwa" x1="342.898%" x2="-364.133%" y1="290.437%" y2="-307.726%">
+            <stop offset="0%" stop-color="#6462AA"/>
+            <stop offset="33.452%" stop-color="#20B69E"/>
+            <stop offset="51.202%" stop-color="#6462AA"/>
+            <stop offset="100%" stop-color="#4CA7DA"/>
+        </linearGradient>
+    </defs>
+    <g fill="none" fill-rule="evenodd">
+        <g>
+            <g>
+                <g>
+                    <g>
+                        <g>
+                            <g transform="translate(-343.000000, -153.000000) translate(21.000000, 135.000000) translate(14.000000, 14.000000) translate(308.000000, 4.000000) translate(0.000000, -0.000000)">
+                                <circle cx="18" cy="18" r="18" fill="url(#4r5p5hldwa)" fill-rule="nonzero"/>
+                            </g>
+                            <path fill="#FFF" fill-rule="nonzero" d="M21.831 17.994l-6.851-6.827c-.225-.223-.588-.223-.812.002-.224.224-.224.587.001.81l6.444 6.421-6.444 6.42c-.225.224-.225.587-.001.811.112.113.26.169.406.169.147 0 .294-.056.406-.168l6.851-6.826c.108-.107.169-.254.169-.406 0-.152-.06-.298-.169-.406z" transform="translate(-343.000000, -153.000000) translate(21.000000, 135.000000) translate(14.000000, 14.000000) translate(308.000000, 4.000000) translate(0.000000, -0.000000)"/>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

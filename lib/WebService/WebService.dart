@@ -15,13 +15,15 @@ class WebService {
   static const forgotPassword = "User/ForgotPassword";
   static const getUserStatus = "User/GetUserStatus";
   static const donationURL = "TUSDConfiguration/GetDonationURL";
-  static const schoolList = "School/GetAll";
+  static const schoolList = "School/GetAllForMobile";
   static const studentSignUp = "Student/Create";
   static const employeeSignUp = "Employee/Create";
   static const communitySignUp = "Community/Create";
   static const parentSignUp = "ParentGuardian/Create";
   static const parentGetAllEventForMobile= "Event/GetAllEventForMobile";
   static const contentByType = "ContentMaster/GetContentByType";
+
+  static const studentContentByType = "Student/GetContentByType";
 
 
   static Future<ServerResponse> getAPICall(String apiName, Map<String, dynamic> params) async {

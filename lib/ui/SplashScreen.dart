@@ -28,7 +28,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    Timer(Duration(milliseconds: 200), () {
+    Timer(Duration(seconds: 2), () {
       SharedPreferences.getInstance().then((prefs) async {
         PrefUtils.getUserDataFromPref();
         if (prefs.containsKey(PrefUtils.isLoggedIn) &&

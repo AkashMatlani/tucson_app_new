@@ -72,7 +72,7 @@ class AuthViewModel {
     if (validateResult.isValid) {
       WebService.getAPICall(WebService.forgotPassword, params).then((response) {
         if (response.statusCode == 1) {
-          callback(true, LabelStr.checkMailLink);
+          callback(true, response.body.toString());
         } else {
           callback(false, response.message);
         }

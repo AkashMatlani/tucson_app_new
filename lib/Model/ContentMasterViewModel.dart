@@ -9,7 +9,7 @@ class ContentMasterViewModel{
   List<ContentTransactionResponse> contentList = [];
 
   getContentList(var params,  ResponseCallback callback){
-    WebService.postAPICall(WebService.contentByType, params).then((response) {
+    WebService.postAPICall(WebService.studentContentByType, params).then((response) {
       if (response.statusCode == 1) {
         contentList = [];
         for (var data in response.body[0]["contentTransactionTypeJoin"]) {

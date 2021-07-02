@@ -1,0 +1,174 @@
+-- Merging decision tree log ---
+manifest
+ADDED from D:\S_Rai\Flutter\TucsonApp\tucson_app\android\app\src\main\AndroidManifest.xml:1:1-47:12
+INJECTED from D:\S_Rai\Flutter\TucsonApp\tucson_app\android\app\src\main\AndroidManifest.xml:1:1-47:12
+INJECTED from D:\S_Rai\Flutter\TucsonApp\tucson_app\android\app\src\main\AndroidManifest.xml:1:1-47:12
+INJECTED from D:\S_Rai\Flutter\TucsonApp\tucson_app\android\app\src\main\AndroidManifest.xml:1:1-47:12
+MERGED from D:\S_Rai\Flutter\TucsonApp\tucson_app\android\app\src\main\AndroidManifest.xml:1:1-47:12
+MERGED from [:shared_preferences] D:\S_Rai\Flutter\TucsonApp\tucson_app\build\shared_preferences\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-7:12
+MERGED from [:sqflite] D:\S_Rai\Flutter\TucsonApp\tucson_app\build\sqflite\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-7:12
+MERGED from [:connectivity_plus] D:\S_Rai\Flutter\TucsonApp\tucson_app\build\connectivity_plus\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-9:12
+MERGED from [:android_intent_plus] D:\S_Rai\Flutter\TucsonApp\tucson_app\build\android_intent_plus\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-7:12
+MERGED from [:path_provider] D:\S_Rai\Flutter\TucsonApp\tucson_app\build\path_provider\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-7:12
+MERGED from [:device_apps] D:\S_Rai\Flutter\TucsonApp\tucson_app\build\device_apps\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-7:12
+MERGED from [:webview_flutter] D:\S_Rai\Flutter\TucsonApp\tucson_app\build\webview_flutter\intermediates\library_manifest\debug\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.webkit:webkit:1.0.0] C:\Users\Dashlp130\.gradle\caches\transforms-2\files-2.1\92c7754f19d5e5974bd73fa084c6bb5e\webkit-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.fragment:fragment:1.1.0] C:\Users\Dashlp130\.gradle\caches\transforms-2\files-2.1\d5dfc4106e73ac48f055fe721d18c35a\fragment-1.1.0\AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.viewpager:viewpager:1.0.0] C:\Users\Dashlp130\.gradle\caches\transforms-2\files-2.1\58c5bbabf48ccf521fd58d3c953710c5\viewpager-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.loader:loader:1.0.0] C:\Users\Dashlp130\.gradle\caches\transforms-2\files-2.1\b3c0202e7d182dddb421f41b5b48126e\loader-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.activity:activity:1.0.0] C:\Users\Dashlp130\.gradle\caches\transforms-2\files-2.1\319534a4be79b1b5daed67deb5853513\jetified-activity-1.0.0\AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.customview:customview:1.0.0] C:\Users\Dashlp130\.gradle\caches\transforms-2\files-2.1\c97e4032db717b351ed9a39ad2c6db3c\customview-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.core:core:1.1.0] C:\Users\Dashlp130\.gradle\caches\transforms-2\files-2.1\da310b12d325959a2e8cfc466fbff441\core-1.1.0\AndroidManifest.xml:17:1-26:12
+MERGED from [androidx.lifecycle:lifecycle-runtime:2.2.0] C:\Users\Dashlp130\.gradle\caches\transforms-2\files-2.1\f2e40da30421ca284560e323b25191db\lifecycle-runtime-2.2.0\AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.savedstate:savedstate:1.0.0] C:\Users\Dashlp130\.gradle\caches\transforms-2\files-2.1\841fb756d54b477a287d7d306f6c8a61\jetified-savedstate-1.0.0\AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.lifecycle:lifecycle-livedata:2.0.0] C:\Users\Dashlp130\.gradle\caches\transforms-2\files-2.1\d2f1be9e7036dafceb612336e9a99963\lifecycle-livedata-2.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.0.0] C:\Users\Dashlp130\.gradle\caches\transforms-2\files-2.1\f7e639a3f1a96ede339be8c3ba0da187\lifecycle-livedata-core-2.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.arch.core:core-runtime:2.0.0] C:\Users\Dashlp130\.gradle\caches\transforms-2\files-2.1\329a0bc921e96de58887f890bbd9616d\core-runtime-2.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.0] C:\Users\Dashlp130\.gradle\caches\transforms-2\files-2.1\1248188cc0f33bfebf91f3863a2fed9a\versionedparcelable-1.1.0\AndroidManifest.xml:17:1-27:12
+MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.1.0] C:\Users\Dashlp130\.gradle\caches\transforms-2\files-2.1\39cb3108cbb99029dd61c2f3290c52e3\lifecycle-viewmodel-2.1.0\AndroidManifest.xml:17:1-22:12
+INJECTED from D:\S_Rai\Flutter\TucsonApp\tucson_app\android\app\src\debug\AndroidManifest.xml:1:1-7:12
+INJECTED from D:\S_Rai\Flutter\TucsonApp\tucson_app\android\app\src\debug\AndroidManifest.xml:1:1-7:12
+INJECTED from D:\S_Rai\Flutter\TucsonApp\tucson_app\android\app\src\debug\AndroidManifest.xml:1:1-7:12
+	package
+		ADDED from D:\S_Rai\Flutter\TucsonApp\tucson_app\android\app\src\main\AndroidManifest.xml:3:5-29
+		INJECTED from D:\S_Rai\Flutter\TucsonApp\tucson_app\android\app\src\main\AndroidManifest.xml
+		INJECTED from D:\S_Rai\Flutter\TucsonApp\tucson_app\android\app\src\debug\AndroidManifest.xml
+	android:versionName
+		INJECTED from D:\S_Rai\Flutter\TucsonApp\tucson_app\android\app\src\main\AndroidManifest.xml
+		ADDED from D:\S_Rai\Flutter\TucsonApp\tucson_app\android\app\src\main\AndroidManifest.xml:1:1-47:12
+		INJECTED from D:\S_Rai\Flutter\TucsonApp\tucson_app\android\app\src\debug\AndroidManifest.xml
+	xmlns:tools
+		ADDED from D:\S_Rai\Flutter\TucsonApp\tucson_app\android\app\src\main\AndroidManifest.xml:2:5-51
+		ADDED from D:\S_Rai\Flutter\TucsonApp\tucson_app\android\app\src\main\AndroidManifest.xml:2:5-51
+	android:versionCode
+		INJECTED from D:\S_Rai\Flutter\TucsonApp\tucson_app\android\app\src\main\AndroidManifest.xml
+		ADDED from D:\S_Rai\Flutter\TucsonApp\tucson_app\android\app\src\main\AndroidManifest.xml:1:1-47:12
+		INJECTED from D:\S_Rai\Flutter\TucsonApp\tucson_app\android\app\src\debug\AndroidManifest.xml
+	xmlns:android
+		ADDED from D:\S_Rai\Flutter\TucsonApp\tucson_app\android\app\src\main\AndroidManifest.xml:1:11-69
+uses-permission#android.permission.INTERNET
+ADDED from D:\S_Rai\Flutter\TucsonApp\tucson_app\android\app\src\main\AndroidManifest.xml:5:5-67
+MERGED from D:\S_Rai\Flutter\TucsonApp\tucson_app\android\app\src\main\AndroidManifest.xml:5:5-67
+MERGED from D:\S_Rai\Flutter\TucsonApp\tucson_app\android\app\src\main\AndroidManifest.xml:5:5-67
+	android:name
+		ADDED from D:\S_Rai\Flutter\TucsonApp\tucson_app\android\app\src\main\AndroidManifest.xml:5:22-64
+application
+ADDED from D:\S_Rai\Flutter\TucsonApp\tucson_app\android\app\src\main\AndroidManifest.xml:7:5-46:19
+MERGED from [androidx.core:core:1.1.0] C:\Users\Dashlp130\.gradle\caches\transforms-2\files-2.1\da310b12d325959a2e8cfc466fbff441\core-1.1.0\AndroidManifest.xml:24:5-89
+MERGED from [androidx.core:core:1.1.0] C:\Users\Dashlp130\.gradle\caches\transforms-2\files-2.1\da310b12d325959a2e8cfc466fbff441\core-1.1.0\AndroidManifest.xml:24:5-89
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.0] C:\Users\Dashlp130\.gradle\caches\transforms-2\files-2.1\1248188cc0f33bfebf91f3863a2fed9a\versionedparcelable-1.1.0\AndroidManifest.xml:24:5-25:19
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.0] C:\Users\Dashlp130\.gradle\caches\transforms-2\files-2.1\1248188cc0f33bfebf91f3863a2fed9a\versionedparcelable-1.1.0\AndroidManifest.xml:24:5-25:19
+	android:appComponentFactory
+		ADDED from [androidx.core:core:1.1.0] C:\Users\Dashlp130\.gradle\caches\transforms-2\files-2.1\da310b12d325959a2e8cfc466fbff441\core-1.1.0\AndroidManifest.xml:24:18-86
+	android:label
+		ADDED from D:\S_Rai\Flutter\TucsonApp\tucson_app\android\app\src\main\AndroidManifest.xml:8:9-47
+	tools:ignore
+		ADDED from D:\S_Rai\Flutter\TucsonApp\tucson_app\android\app\src\main\AndroidManifest.xml:10:8-47
+	android:roundIcon
+		ADDED from D:\S_Rai\Flutter\TucsonApp\tucson_app\android\app\src\main\AndroidManifest.xml:12:9-56
+	tools:targetApi
+		ADDED from D:\S_Rai\Flutter\TucsonApp\tucson_app\android\app\src\main\AndroidManifest.xml:13:9-28
+	android:icon
+		ADDED from D:\S_Rai\Flutter\TucsonApp\tucson_app\android\app\src\main\AndroidManifest.xml:11:9-43
+	android:usesCleartextTraffic
+		ADDED from D:\S_Rai\Flutter\TucsonApp\tucson_app\android\app\src\main\AndroidManifest.xml:9:8-43
+activity#com.tucson_app.MainActivity
+ADDED from D:\S_Rai\Flutter\TucsonApp\tucson_app\android\app\src\main\AndroidManifest.xml:14:9-40:20
+	android:launchMode
+		ADDED from D:\S_Rai\Flutter\TucsonApp\tucson_app\android\app\src\main\AndroidManifest.xml:18:13-43
+	android:hardwareAccelerated
+		ADDED from D:\S_Rai\Flutter\TucsonApp\tucson_app\android\app\src\main\AndroidManifest.xml:17:13-47
+	android:windowSoftInputMode
+		ADDED from D:\S_Rai\Flutter\TucsonApp\tucson_app\android\app\src\main\AndroidManifest.xml:20:13-55
+	android:configChanges
+		ADDED from D:\S_Rai\Flutter\TucsonApp\tucson_app\android\app\src\main\AndroidManifest.xml:16:13-163
+	android:theme
+		ADDED from D:\S_Rai\Flutter\TucsonApp\tucson_app\android\app\src\main\AndroidManifest.xml:19:13-47
+	android:name
+		ADDED from D:\S_Rai\Flutter\TucsonApp\tucson_app\android\app\src\main\AndroidManifest.xml:15:13-41
+meta-data#io.flutter.embedding.android.NormalTheme
+ADDED from D:\S_Rai\Flutter\TucsonApp\tucson_app\android\app\src\main\AndroidManifest.xml:25:13-27:57
+	android:resource
+		ADDED from D:\S_Rai\Flutter\TucsonApp\tucson_app\android\app\src\main\AndroidManifest.xml:27:17-54
+	android:name
+		ADDED from D:\S_Rai\Flutter\TucsonApp\tucson_app\android\app\src\main\AndroidManifest.xml:26:17-72
+meta-data#io.flutter.embedding.android.SplashScreenDrawable
+ADDED from D:\S_Rai\Flutter\TucsonApp\tucson_app\android\app\src\main\AndroidManifest.xml:33:13-35:66
+	android:resource
+		ADDED from D:\S_Rai\Flutter\TucsonApp\tucson_app\android\app\src\main\AndroidManifest.xml:35:17-63
+	android:name
+		ADDED from D:\S_Rai\Flutter\TucsonApp\tucson_app\android\app\src\main\AndroidManifest.xml:34:17-81
+intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
+ADDED from D:\S_Rai\Flutter\TucsonApp\tucson_app\android\app\src\main\AndroidManifest.xml:36:13-39:29
+action#android.intent.action.MAIN
+ADDED from D:\S_Rai\Flutter\TucsonApp\tucson_app\android\app\src\main\AndroidManifest.xml:37:17-69
+	android:name
+		ADDED from D:\S_Rai\Flutter\TucsonApp\tucson_app\android\app\src\main\AndroidManifest.xml:37:25-66
+category#android.intent.category.LAUNCHER
+ADDED from D:\S_Rai\Flutter\TucsonApp\tucson_app\android\app\src\main\AndroidManifest.xml:38:17-77
+	android:name
+		ADDED from D:\S_Rai\Flutter\TucsonApp\tucson_app\android\app\src\main\AndroidManifest.xml:38:27-74
+meta-data#flutterEmbedding
+ADDED from D:\S_Rai\Flutter\TucsonApp\tucson_app\android\app\src\main\AndroidManifest.xml:43:9-45:33
+	android:value
+		ADDED from D:\S_Rai\Flutter\TucsonApp\tucson_app\android\app\src\main\AndroidManifest.xml:45:13-30
+	android:name
+		ADDED from D:\S_Rai\Flutter\TucsonApp\tucson_app\android\app\src\main\AndroidManifest.xml:44:13-44
+uses-sdk
+INJECTED from D:\S_Rai\Flutter\TucsonApp\tucson_app\android\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from D:\S_Rai\Flutter\TucsonApp\tucson_app\android\app\src\main\AndroidManifest.xml
+INJECTED from D:\S_Rai\Flutter\TucsonApp\tucson_app\android\app\src\main\AndroidManifest.xml
+MERGED from [:shared_preferences] D:\S_Rai\Flutter\TucsonApp\tucson_app\build\shared_preferences\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
+MERGED from [:shared_preferences] D:\S_Rai\Flutter\TucsonApp\tucson_app\build\shared_preferences\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
+MERGED from [:sqflite] D:\S_Rai\Flutter\TucsonApp\tucson_app\build\sqflite\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
+MERGED from [:sqflite] D:\S_Rai\Flutter\TucsonApp\tucson_app\build\sqflite\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
+MERGED from [:connectivity_plus] D:\S_Rai\Flutter\TucsonApp\tucson_app\build\connectivity_plus\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
+MERGED from [:connectivity_plus] D:\S_Rai\Flutter\TucsonApp\tucson_app\build\connectivity_plus\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
+MERGED from [:android_intent_plus] D:\S_Rai\Flutter\TucsonApp\tucson_app\build\android_intent_plus\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
+MERGED from [:android_intent_plus] D:\S_Rai\Flutter\TucsonApp\tucson_app\build\android_intent_plus\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
+MERGED from [:path_provider] D:\S_Rai\Flutter\TucsonApp\tucson_app\build\path_provider\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
+MERGED from [:path_provider] D:\S_Rai\Flutter\TucsonApp\tucson_app\build\path_provider\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
+MERGED from [:device_apps] D:\S_Rai\Flutter\TucsonApp\tucson_app\build\device_apps\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
+MERGED from [:device_apps] D:\S_Rai\Flutter\TucsonApp\tucson_app\build\device_apps\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
+MERGED from [:webview_flutter] D:\S_Rai\Flutter\TucsonApp\tucson_app\build\webview_flutter\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
+MERGED from [:webview_flutter] D:\S_Rai\Flutter\TucsonApp\tucson_app\build\webview_flutter\intermediates\library_manifest\debug\AndroidManifest.xml:5:5-44
+MERGED from [androidx.webkit:webkit:1.0.0] C:\Users\Dashlp130\.gradle\caches\transforms-2\files-2.1\92c7754f19d5e5974bd73fa084c6bb5e\webkit-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.webkit:webkit:1.0.0] C:\Users\Dashlp130\.gradle\caches\transforms-2\files-2.1\92c7754f19d5e5974bd73fa084c6bb5e\webkit-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.fragment:fragment:1.1.0] C:\Users\Dashlp130\.gradle\caches\transforms-2\files-2.1\d5dfc4106e73ac48f055fe721d18c35a\fragment-1.1.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.fragment:fragment:1.1.0] C:\Users\Dashlp130\.gradle\caches\transforms-2\files-2.1\d5dfc4106e73ac48f055fe721d18c35a\fragment-1.1.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.viewpager:viewpager:1.0.0] C:\Users\Dashlp130\.gradle\caches\transforms-2\files-2.1\58c5bbabf48ccf521fd58d3c953710c5\viewpager-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.viewpager:viewpager:1.0.0] C:\Users\Dashlp130\.gradle\caches\transforms-2\files-2.1\58c5bbabf48ccf521fd58d3c953710c5\viewpager-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.loader:loader:1.0.0] C:\Users\Dashlp130\.gradle\caches\transforms-2\files-2.1\b3c0202e7d182dddb421f41b5b48126e\loader-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.loader:loader:1.0.0] C:\Users\Dashlp130\.gradle\caches\transforms-2\files-2.1\b3c0202e7d182dddb421f41b5b48126e\loader-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.activity:activity:1.0.0] C:\Users\Dashlp130\.gradle\caches\transforms-2\files-2.1\319534a4be79b1b5daed67deb5853513\jetified-activity-1.0.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.activity:activity:1.0.0] C:\Users\Dashlp130\.gradle\caches\transforms-2\files-2.1\319534a4be79b1b5daed67deb5853513\jetified-activity-1.0.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.customview:customview:1.0.0] C:\Users\Dashlp130\.gradle\caches\transforms-2\files-2.1\c97e4032db717b351ed9a39ad2c6db3c\customview-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.customview:customview:1.0.0] C:\Users\Dashlp130\.gradle\caches\transforms-2\files-2.1\c97e4032db717b351ed9a39ad2c6db3c\customview-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.core:core:1.1.0] C:\Users\Dashlp130\.gradle\caches\transforms-2\files-2.1\da310b12d325959a2e8cfc466fbff441\core-1.1.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.core:core:1.1.0] C:\Users\Dashlp130\.gradle\caches\transforms-2\files-2.1\da310b12d325959a2e8cfc466fbff441\core-1.1.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.lifecycle:lifecycle-runtime:2.2.0] C:\Users\Dashlp130\.gradle\caches\transforms-2\files-2.1\f2e40da30421ca284560e323b25191db\lifecycle-runtime-2.2.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.lifecycle:lifecycle-runtime:2.2.0] C:\Users\Dashlp130\.gradle\caches\transforms-2\files-2.1\f2e40da30421ca284560e323b25191db\lifecycle-runtime-2.2.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.savedstate:savedstate:1.0.0] C:\Users\Dashlp130\.gradle\caches\transforms-2\files-2.1\841fb756d54b477a287d7d306f6c8a61\jetified-savedstate-1.0.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.savedstate:savedstate:1.0.0] C:\Users\Dashlp130\.gradle\caches\transforms-2\files-2.1\841fb756d54b477a287d7d306f6c8a61\jetified-savedstate-1.0.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.lifecycle:lifecycle-livedata:2.0.0] C:\Users\Dashlp130\.gradle\caches\transforms-2\files-2.1\d2f1be9e7036dafceb612336e9a99963\lifecycle-livedata-2.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata:2.0.0] C:\Users\Dashlp130\.gradle\caches\transforms-2\files-2.1\d2f1be9e7036dafceb612336e9a99963\lifecycle-livedata-2.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.0.0] C:\Users\Dashlp130\.gradle\caches\transforms-2\files-2.1\f7e639a3f1a96ede339be8c3ba0da187\lifecycle-livedata-core-2.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.0.0] C:\Users\Dashlp130\.gradle\caches\transforms-2\files-2.1\f7e639a3f1a96ede339be8c3ba0da187\lifecycle-livedata-core-2.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.arch.core:core-runtime:2.0.0] C:\Users\Dashlp130\.gradle\caches\transforms-2\files-2.1\329a0bc921e96de58887f890bbd9616d\core-runtime-2.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.arch.core:core-runtime:2.0.0] C:\Users\Dashlp130\.gradle\caches\transforms-2\files-2.1\329a0bc921e96de58887f890bbd9616d\core-runtime-2.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.0] C:\Users\Dashlp130\.gradle\caches\transforms-2\files-2.1\1248188cc0f33bfebf91f3863a2fed9a\versionedparcelable-1.1.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.0] C:\Users\Dashlp130\.gradle\caches\transforms-2\files-2.1\1248188cc0f33bfebf91f3863a2fed9a\versionedparcelable-1.1.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.1.0] C:\Users\Dashlp130\.gradle\caches\transforms-2\files-2.1\39cb3108cbb99029dd61c2f3290c52e3\lifecycle-viewmodel-2.1.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.1.0] C:\Users\Dashlp130\.gradle\caches\transforms-2\files-2.1\39cb3108cbb99029dd61c2f3290c52e3\lifecycle-viewmodel-2.1.0\AndroidManifest.xml:20:5-44
+INJECTED from D:\S_Rai\Flutter\TucsonApp\tucson_app\android\app\src\debug\AndroidManifest.xml
+INJECTED from D:\S_Rai\Flutter\TucsonApp\tucson_app\android\app\src\debug\AndroidManifest.xml
+	android:targetSdkVersion
+		INJECTED from D:\S_Rai\Flutter\TucsonApp\tucson_app\android\app\src\main\AndroidManifest.xml
+		INJECTED from D:\S_Rai\Flutter\TucsonApp\tucson_app\android\app\src\debug\AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from D:\S_Rai\Flutter\TucsonApp\tucson_app\android\app\src\main\AndroidManifest.xml
+		INJECTED from D:\S_Rai\Flutter\TucsonApp\tucson_app\android\app\src\debug\AndroidManifest.xml
+uses-permission#android.permission.ACCESS_NETWORK_STATE
+ADDED from [:connectivity_plus] D:\S_Rai\Flutter\TucsonApp\tucson_app\build\connectivity_plus\intermediates\library_manifest\debug\AndroidManifest.xml:7:5-79
+	android:name
+		ADDED from [:connectivity_plus] D:\S_Rai\Flutter\TucsonApp\tucson_app\build\connectivity_plus\intermediates\library_manifest\debug\AndroidManifest.xml:7:22-76

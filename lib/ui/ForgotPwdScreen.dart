@@ -1,15 +1,14 @@
 
-import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:tucson_app/GeneralUtils/ColorExtension.dart';
 import 'package:tucson_app/GeneralUtils/Constant.dart';
 import 'package:tucson_app/GeneralUtils/HelperWidgets.dart';
 import 'package:tucson_app/GeneralUtils/LabelStr.dart';
 import 'package:tucson_app/GeneralUtils/Utils.dart';
 import 'package:tucson_app/Model/AuthViewModel.dart';
+import 'package:tucson_app/ui/DisplayWebview.dart';
 import 'package:tucson_app/ui/SignInScreen.dart';
 
 class ForgotPwdScreen extends StatefulWidget {
@@ -30,18 +29,25 @@ class _ForgotPwdScreenState extends State<ForgotPwdScreen> {
       child: Scaffold(
         body: Container(
           decoration: BoxDecoration(
-              image: DecorationImage(image: AssetImage(MyImage.splashBg), fit: BoxFit.fill)
+              image: DecorationImage(
+                  image: AssetImage(MyImage.splashBg), fit: BoxFit.fill)
           ),
           child: Stack(
             fit: StackFit.expand,
             children: [
               Container(
-                height: MediaQuery.of(context).size.height*0.38,
+                height: MediaQuery
+                    .of(context)
+                    .size
+                    .height * 0.38,
                 alignment: Alignment.topCenter,
                 child: Image.asset(MyImage.forgotPassword),
               ),
               Positioned.fill(
-                top: MediaQuery.of(context).size.height*0.2,
+                top: MediaQuery
+                    .of(context)
+                    .size
+                    .height * 0.2,
                 bottom: 0.0,
                 child: Container(
                   decoration: BoxDecoration(
@@ -59,10 +65,18 @@ class _ForgotPwdScreenState extends State<ForgotPwdScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          Text(LabelStr.lblForgotPwd.substring(0, LabelStr.lblForgotPwd.length-1), style: AppTheme.customTextStyle(MyFont.SSPro_bold, 30.0, MyColor.darkLblTextColor())),
+                          Text(LabelStr.lblForgotPwd.substring(
+                              0, LabelStr.lblForgotPwd.length - 1),
+                              style: AppTheme.customTextStyle(
+                                  MyFont.SSPro_bold, 30.0,
+                                  MyColor.darkLblTextColor())),
                           SizedBox(height: 20),
-                          Text(LabelStr.lblEmail, style: AppTheme.regularTextStyle().copyWith(fontSize: 14)),
-                          textFieldFor(LabelStr.lblEmail, _emailController, textInputAction: TextInputAction.done, keyboardType: TextInputType.emailAddress),
+                          Text(LabelStr.lblEmail,
+                              style: AppTheme.regularTextStyle().copyWith(
+                                  fontSize: 14)),
+                          textFieldFor(LabelStr.lblEmail, _emailController,
+                              textInputAction: TextInputAction.done,
+                              keyboardType: TextInputType.emailAddress),
                           SizedBox(height: 20),
                           Container(
                             decoration: BoxDecoration(
@@ -76,11 +90,17 @@ class _ForgotPwdScreenState extends State<ForgotPwdScreen> {
                               ),
                             ),
                             height: 50,
-                            width: MediaQuery.of(context).size.width,
+                            width: MediaQuery
+                                .of(context)
+                                .size
+                                .width,
                             child: TextButton(
-                              child: Text(LabelStr.lblSubmit, style: AppTheme.customTextStyle(MyFont.SSPro_bold, 16.0, Colors.white)),
-                              onPressed: (){
-                                FocusScope.of(context).requestFocus(FocusNode());
+                              child: Text(LabelStr.lblSubmit,
+                                  style: AppTheme.customTextStyle(
+                                      MyFont.SSPro_bold, 16.0, Colors.white)),
+                              onPressed: () {
+                                FocusScope.of(context).requestFocus(
+                                    FocusNode());
                                 _forgotPassword(context);
                               },
                             ),
@@ -98,18 +118,20 @@ class _ForgotPwdScreenState extends State<ForgotPwdScreen> {
     );
   }
 
-  _forgotPassword(BuildContext context){
+  _forgotPassword(BuildContext context) {
     String email = _emailController.text.toString();
     Utils.showLoader(true, context);
     _authViewModel.forgotPwdResult(email, (isSuccess, message) {
       Utils.showLoader(false, context);
-      if(isSuccess){
+      if (isSuccess) {
         setState(() {
           _emailController.text = "";
         });
-        Utils.showAlertDialog(context, message, (success, response){
-          if(success){
-            Utils.navigateWithClearState(context, SignInScreen());
+
+        Utils.showAlertDialog(context, message, (success, response) {
+          if (success) {
+            //Utils.navigateWithClearState(context, SignInScreen());
+            Utils.navigateToScreen(context, DisplayWebview(message));
           }
         });
       } else {
