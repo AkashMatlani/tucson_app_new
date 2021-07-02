@@ -1,4 +1,3 @@
-import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -6,10 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:tucson_app/GeneralUtils/ColorExtension.dart';
 import 'package:tucson_app/GeneralUtils/Constant.dart';
 import 'package:tucson_app/GeneralUtils/LabelStr.dart';
-import 'package:tucson_app/GeneralUtils/Utils.dart';
-import 'package:tucson_app/Model/ArticleResponse.dart';
 import 'package:tucson_app/Model/AuthViewModel.dart';
-import 'package:tucson_app/Model/ContentTransactionTypeJoin.dart';
 
 class ArticlesScreen extends StatefulWidget {
   @override

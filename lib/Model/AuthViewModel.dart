@@ -2,14 +2,11 @@ import 'package:tucson_app/GeneralUtils/Constant.dart';
 import 'package:tucson_app/GeneralUtils/LabelStr.dart';
 import 'package:tucson_app/GeneralUtils/PrefsUtils.dart';
 import 'package:tucson_app/GeneralUtils/Utils.dart';
-import 'package:tucson_app/Model/ArticleResponse.dart';
-import 'package:tucson_app/Model/ContentTransactionTypeJoin.dart';
 import 'package:tucson_app/Model/EventForMobileResponse.dart';
 import 'package:tucson_app/Model/LoginResponse.dart';
 import 'package:tucson_app/WebService/WebService.dart';
 
 class AuthViewModel {
-  List<ContentTransactionTypeJoin> articleList = [];
   List<EventForMobileResponse> eventForMobileList = [];
 
   ValidationResult validateLogIn(String email, String password) {
@@ -136,11 +133,11 @@ class AuthViewModel {
     return ValidationResult(true, "success");
   }
 
-  void signUpResult(String userType, String fname, String lname, String dob, String zipCode, String email, String password, String confirmPwd, int schoolId, ResponseCallback callback) {
+  void signUpResult(String userType, String fname, String lname, String dob, String zipCode, String email, String password, String confirmPwd, var schoolId, ResponseCallback callback) {
     late var params;
     String apiMethod="";
-    if(schoolId == null){
-      schoolId = 0;
+    if(schoolId == 0){
+      schoolId = null;
     }
     if(userType.compareTo("Student") == 0){
       apiMethod = WebService.studentSignUp;

@@ -57,12 +57,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
     setState(() {
       _showPwd = !_showPwd;
     });
+    FocusScope.of(context).requestFocus(FocusNode());
   }
 
   void _toggleConfPwd() {
     setState(() {
       _showConfPwd = !_showConfPwd;
     });
+    FocusScope.of(context).requestFocus(FocusNode());
+
   }
 
   @override
@@ -220,7 +223,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         textFieldFor(LabelStr.lblPassword, _pwdController, textInputAction: TextInputAction.done, keyboardType: TextInputType.text, obscure:_showPwd, suffixIcon: InkWell(onTap:(){_togglePwd();},child: Padding(padding: EdgeInsets.fromLTRB(10, 15, 0, 15), child: SvgPicture.asset(_showPwd ? MyImage.hidePwdIcon : MyImage.viewPwdIcon)))),
                         SizedBox(height: 10),
                         Text(LabelStr.lblConfirmPwd, style: AppTheme.regularTextStyle().copyWith(fontSize: 14)),
-                        textFieldFor(LabelStr.lblConfirmPwd, _confPwdController, textInputAction: TextInputAction.done, keyboardType: TextInputType.text, obscure:_showConfPwd, suffixIcon: InkWell(onTap:(){_toggleConfPwd();},child: Padding(padding: EdgeInsets.fromLTRB(10, 15, 0, 15), child: SvgPicture.asset(_showConfPwd ? MyImage.hidePwdIcon : MyImage.hidePwdIcon)))),
+                        textFieldFor(LabelStr.lblConfirmPwd, _confPwdController, textInputAction: TextInputAction.done, keyboardType: TextInputType.text, obscure:_showConfPwd, suffixIcon: InkWell(onTap:(){_toggleConfPwd();},child: Padding(padding: EdgeInsets.fromLTRB(10, 15, 0, 15), child: SvgPicture.asset(_showConfPwd ? MyImage.hidePwdIcon : MyImage.viewPwdIcon)))),
                         SizedBox(height: 30),
                         Container(
                           decoration: BoxDecoration(

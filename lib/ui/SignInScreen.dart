@@ -36,6 +36,7 @@ class _SignInScreenState extends State<SignInScreen> {
     setState(() {
       _showPwd = !_showPwd;
     });
+    FocusScope.of(context).requestFocus(FocusNode());
   }
 
   @override
