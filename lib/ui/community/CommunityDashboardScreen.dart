@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:double_back_to_close/double_back_to_close.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -20,45 +21,37 @@ import 'CommunityEventScreen.dart';
 
 class CommunityDashboardScreen extends StatefulWidget {
   @override
-  _CommunityDashboardScreenState createState() => _CommunityDashboardScreenState();
+  _CommunityDashboardScreenState createState() =>
+      _CommunityDashboardScreenState();
 }
 
 class _CommunityDashboardScreenState extends State<CommunityDashboardScreen> {
-
+  bool allowClose = false;
   late List<GridListItems> menuItems = [
     GridListItems(
-        name: LabelStr.lblTusdCalendar,
-        svgPicture: MyImage.studentIcon),
+        name: LabelStr.lblTusdCalendar, svgPicture: MyImage.studentIcon),
     GridListItems(
-        name: LabelStr.lblPostJob,
-        svgPicture: MyImage.scholarshipIcon),
+        name: LabelStr.lblPostJob, svgPicture: MyImage.scholarshipIcon),
     GridListItems(
         name: LabelStr.lblCommmunityEvents,
         svgPicture: MyImage.mentalHealthIcon),
     GridListItems(
-        name: LabelStr.lblVolunteerOpportunites,
-        svgPicture: MyImage.jobsIcon),
+        name: LabelStr.lblVolunteerOpportunites, svgPicture: MyImage.jobsIcon),
     GridListItems(
-        name: LabelStr.lblGivingDonation,
-        svgPicture: MyImage.eventIcon),
+        name: LabelStr.lblGivingDonation, svgPicture: MyImage.eventIcon),
     GridListItems(
-        name: LabelStr.lblResources,
-        svgPicture: MyImage.resourceIcon),
-    GridListItems(
-        name: LabelStr.lblAwarity,
-        svgPicture: MyImage.awarityIcon),
-    GridListItems(
-        name: LabelStr.lblLogout,
-        svgPicture: MyImage.logoutIcon),
+        name: LabelStr.lblResources, svgPicture: MyImage.resourceIcon),
+    GridListItems(name: LabelStr.lblAwarity, svgPicture: MyImage.awarityIcon),
+    GridListItems(name: LabelStr.lblLogout, svgPicture: MyImage.logoutIcon),
   ];
 
-  String language="";
-  String userName="";
+  String language = "";
+  String userName = "";
 
   @override
   void initState() {
     super.initState();
-    Timer(Duration(milliseconds: 200), (){
+    Timer(Duration(milliseconds: 200), () {
       SharedPreferences.getInstance().then((prefs) async {
         PrefUtils.getUserDataFromPref();
         setState(() {
@@ -72,7 +65,15 @@ class _CommunityDashboardScreenState extends State<CommunityDashboardScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
+        body: DoubleBack(
+      condition: allowClose,
+      onConditionFail: () {
+        setState(() {
+          allowClose = true;
+        });
+      },
+      // message: "Press back again to exit",
+      child: Stack(
         children: [
           Container(
             color: HexColor("#6462AA"),
@@ -80,7 +81,7 @@ class _CommunityDashboardScreenState extends State<CommunityDashboardScreen> {
             child: Column(
               children: [
                 Container(
-                  height: MediaQuery.of(context).size.height*0.25,
+                  height: MediaQuery.of(context).size.height * 0.25,
                   child: Row(
                     children: [
                       Expanded(
@@ -90,9 +91,17 @@ class _CommunityDashboardScreenState extends State<CommunityDashboardScreen> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              Text(LabelStr.lblHi, style: AppTheme.customTextStyle(MyFont.SSPro_regular, 25.0, Colors.white)),
+                              Text(LabelStr.lblHi,
+                                  style: AppTheme.customTextStyle(
+                                      MyFont.SSPro_regular,
+                                      25.0,
+                                      Colors.white)),
                               SizedBox(width: 5),
-                              Text(userName, style: AppTheme.customTextStyle(MyFont.SSPro_semibold, 25.0, Colors.white))
+                              Text(userName,
+                                  style: AppTheme.customTextStyle(
+                                      MyFont.SSPro_semibold,
+                                      25.0,
+                                      Colors.white))
                             ],
                           ),
                         ),
@@ -118,7 +127,9 @@ class _CommunityDashboardScreenState extends State<CommunityDashboardScreen> {
                                   size: 25.0,
                                 ),
                                 SizedBox(width: 5),
-                                Text(language, style: AppTheme.regularTextStyle().copyWith(color: Colors.white))
+                                Text(language,
+                                    style: AppTheme.regularTextStyle()
+                                        .copyWith(color: Colors.white))
                               ],
                             )
                           ],
@@ -132,10 +143,8 @@ class _CommunityDashboardScreenState extends State<CommunityDashboardScreen> {
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.only(
                             topLeft: Radius.circular(50.0),
-                            topRight: Radius.circular(50.0)
-                        ),
-                        color: Colors.white
-                    ),
+                            topRight: Radius.circular(50.0)),
+                        color: Colors.white),
                     height: MediaQuery.of(context).size.height,
                     width: MediaQuery.of(context).size.width,
                     padding: EdgeInsets.all(20),
@@ -145,11 +154,11 @@ class _CommunityDashboardScreenState extends State<CommunityDashboardScreen> {
             ),
           ),
           Positioned(
-            top: MediaQuery.of(context).size.height*0.2,
-            left: MediaQuery.of(context).size.width*0.08,
-            right: MediaQuery.of(context).size.width*0.08,
+            top: MediaQuery.of(context).size.height * 0.2,
+            left: MediaQuery.of(context).size.width * 0.08,
+            right: MediaQuery.of(context).size.width * 0.08,
             child: Container(
-              height: MediaQuery.of(context).size.height*0.8,
+              height: MediaQuery.of(context).size.height * 0.8,
               child: SingleChildScrollView(
                 child: GridView.builder(
                     physics: ScrollPhysics(),
@@ -169,18 +178,23 @@ class _CommunityDashboardScreenState extends State<CommunityDashboardScreen> {
                               if (index == 0) {
                                 Utils.navigateToScreen(context, Event());
                               } else if (index == 1) {
-                                Utils.navigateToScreen(context, PostJobsScreen());
+                                Utils.navigateToScreen(
+                                    context, PostJobsScreen());
                               } else if (index == 2) {
-                                Utils.navigateToScreen(context, CommunityEventScreen());
+                                Utils.navigateToScreen(
+                                    context, CommunityEventScreen());
                               } else if (index == 3) {
-                                Utils.navigateToScreen(context, VolunteerOpportunitiesScreen());
+                                Utils.navigateToScreen(
+                                    context, VolunteerOpportunitiesScreen());
                               } else if (index == 5) {
-                                Utils.navigateToScreen(context, CommunityResources());
+                                Utils.navigateToScreen(
+                                    context, CommunityResources());
                               } else if (index == 7) {
                                 Utils.showLoader(true, context);
                                 PrefUtils.clearPref();
                                 Utils.showLoader(false, context);
-                                Utils.navigateWithClearState(context, SignInScreen());
+                                Utils.navigateWithClearState(
+                                    context, SignInScreen());
                               }
                             });
                           },
@@ -193,7 +207,7 @@ class _CommunityDashboardScreenState extends State<CommunityDashboardScreen> {
                               clipBehavior: Clip.antiAlias,
                               child: Column(
                                 mainAxisAlignment:
-                                MainAxisAlignment.spaceAround,
+                                    MainAxisAlignment.spaceAround,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
                                   Padding(
@@ -206,9 +220,9 @@ class _CommunityDashboardScreenState extends State<CommunityDashboardScreen> {
                                         16.0, 12.0, 16.0, 8.0),
                                     child: Column(
                                       crossAxisAlignment:
-                                      CrossAxisAlignment.center,
+                                          CrossAxisAlignment.center,
                                       mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
+                                          MainAxisAlignment.spaceAround,
                                       children: <Widget>[
                                         Text(
                                           menuItems[index].name,
@@ -219,15 +233,21 @@ class _CommunityDashboardScreenState extends State<CommunityDashboardScreen> {
                                     ),
                                   ),
                                 ],
-                              )
-                          )
-                      );
+                              )));
                     }),
               ),
             ),
           )
         ],
       ),
-    );
+      waitForSecondBackPress: 5,
+      // default 2
+      textStyle: TextStyle(
+        fontSize: 20,
+        color: Colors.white,
+      ),
+      background: Colors.red,
+      backgroundRadius: 30,
+    ));
   }
 }

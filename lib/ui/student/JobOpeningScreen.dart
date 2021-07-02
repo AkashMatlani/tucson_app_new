@@ -152,7 +152,7 @@ class _JobOpeningScreenState extends State<JobOpeningScreen> {
       "contentTypeName": "Jobs"
     };
     Utils.showLoader(true, context);
-    _contentViewModel.getContentList(params, (isSuccess, message){
+    _contentViewModel.getContentList(params,context ,(isSuccess, message){
       Utils.showLoader(false, context);
       isLoading = false;
       if(isSuccess){

@@ -1,6 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:tucson_app/GeneralUtils/LabelStr.dart';
 import 'package:tucson_app/GeneralUtils/Utils.dart';
 import 'package:tucson_app/WebService/WebService.dart';
+import 'package:tucson_app/ui/WebViewEmpty.dart';
 
 import 'ContentResponse.dart';
 
@@ -8,7 +10,7 @@ class ContentMasterViewModel{
 
   List<ContentTransactionResponse> contentList = [];
 
-  getContentList(var params,  ResponseCallback callback){
+  getContentList(var params, BuildContext context, ResponseCallback callback){
     WebService.postAPICall(WebService.contentByType, params).then((response) {
       if (response.statusCode == 1) {
         contentList = [];
@@ -24,6 +26,7 @@ class ContentMasterViewModel{
       contentList = [];
       print(error);
       callback(false, LabelStr.serverError);
+      Utils.navigateToScreen(context, WebViewEmpty());
     });
   }
 }

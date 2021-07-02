@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:double_back_to_close/double_back_to_close.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -26,6 +27,7 @@ class ParentDashBoardScreen extends StatefulWidget {
 }
 
 class _ParentDashBoardScreenState extends State<ParentDashBoardScreen> {
+  bool allowClose = false;
   late List<GridListItems> menuItems = [
     GridListItems(
       name: LabelStr.lblEducation,
@@ -82,7 +84,15 @@ class _ParentDashBoardScreenState extends State<ParentDashBoardScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
+      body:  DoubleBack(
+        condition: allowClose,
+        onConditionFail: () {
+      setState(() {
+        allowClose = true;
+      });
+    },
+    // message: "Press back again to exit",
+    child:Stack(
         children: [
           Container(
             color: HexColor("#6462AA"),
@@ -250,10 +260,17 @@ class _ParentDashBoardScreenState extends State<ParentDashBoardScreen> {
                     }),
               ),
             ),
-          )
+          ),
         ],
       ),
-    );
+        waitForSecondBackPress: 5,
+        // default 2
+        textStyle: TextStyle(
+          fontSize: 20,
+          color: Colors.white,
+        ),
+        background: Colors.red,
+        backgroundRadius: 30,),);
   }
 
   getWebApiFromUrl(BuildContext context, Map<String, Object> params) {
