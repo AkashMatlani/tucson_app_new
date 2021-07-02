@@ -21,6 +21,7 @@ class LabelStr {
   static const lblFname = "First Name";
   static const lblLname = "Last Name";
   static const lbldob = "Date Of Birth";
+  static const lblSelectdob = "Select Date Of Birth";
   static const lblZipCode = "Zip Code";
   static const lblSchoolName = "School Name";
   static const lblSelectSchool = "Select School";
@@ -59,6 +60,7 @@ class LabelStr {
   static const enterValidFname = "Please enter valid first name";
   static const enterLname = "Please enter last name";
   static const enterValidLname = "Please enter valid last name";
+  static const enterDob = "Please enter date of birth";
   static const enterZipCode = "Please enter zip code";
   static const enterValidZipCode = "Please enter valid zip code";
   static const pwdNotMatchError = "New password and confirm password did not match";

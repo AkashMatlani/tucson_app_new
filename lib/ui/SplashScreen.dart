@@ -72,17 +72,25 @@ class _SplashScreenState extends State<SplashScreen> {
             }
           } else {
             Utils.showToast(context, response.message, Colors.red);
+            Timer(Duration(seconds: 2), ()=>dispose());
           }
         } else {
           Utils.showToast(context, response.message, Colors.red);
+          Timer(Duration(seconds: 2), ()=>dispose());
         }
       } else {
         Utils.showToast(context, response.message, Colors.red);
+        Timer(Duration(seconds: 2), ()=>dispose());
       }
     }).catchError((error) {
       Utils.showLoader(false, context);
       print(error);
       Utils.showToast(context, LabelStr.serverError, Colors.red);
     });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 }
