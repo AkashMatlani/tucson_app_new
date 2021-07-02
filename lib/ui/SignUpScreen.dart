@@ -310,7 +310,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
     String password = _pwdController.text;
     String confirmPwd = _confPwdController.text;
     String zipCode = _zipController.text;
-    String dob = _dobController.text;
 
     Utils.showLoader(true, context);
     _authViewModel.signUpResult(_userType, fname, lname, _formattedDob, zipCode,  email, password, confirmPwd, _selectedSchool.id, (isSuccess, message) {

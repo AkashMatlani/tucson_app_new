@@ -1,5 +1,6 @@
 
 import 'dart:async';
+import 'dart:html';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -18,6 +19,7 @@ class DisplayWebview extends StatefulWidget {
 class _DisplayWebviewState extends State<DisplayWebview> {
   bool _isLoading = true;
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  late WebViewController _controller;
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +30,9 @@ class _DisplayWebviewState extends State<DisplayWebview> {
              initialUrl: widget.webViewUrl,
              javascriptMode: JavascriptMode.unrestricted,
              onPageFinished: pageFinishedLoading,
-
+             onWebViewCreated: (WebViewController webViewController) {
+               _controller = webViewController;
+             },
           ),
           inAsyncCall: _isLoading,
           opacity: 0.0,
@@ -40,13 +44,22 @@ class _DisplayWebviewState extends State<DisplayWebview> {
   }
 
   void pageFinishedLoading(String url) {
-    if(url.compareTo("http://35.231.45.54:701/backoffice/resetpassword") == 0){
-      Timer(Duration(seconds: 2), (){
-        Utils.navigateReplaceToScreen(context, SignInScreen());
-      });
-    }
     setState(() {
       _isLoading = false;
     });
+    readJS(url);
+  }
+
+  void readJS(String url) async{
+    String html = await _controller.evaluateJavascript("window.document.getElementsByTagName('html')[0].outerHTML;");
+    print(html);
+    if(html.compareTo("Your password reset successfully.") == 0){
+      Utils.showToast(context, "Success", Colors.green);
+      /*Timer(Duration(seconds: 2), (){
+        Utils.navigateReplaceToScreen(context, SignInScreen());
+      });*/
+    } else {
+      Utils.showToast(context, "Failed", Colors.green);
+    }
   }
 }
