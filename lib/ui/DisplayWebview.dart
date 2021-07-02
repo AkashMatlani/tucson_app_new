@@ -2,6 +2,8 @@
 import 'dart:async';
 import 'dart:html';
 
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tucson_app/GeneralUtils/ProgressHUD.dart';
@@ -21,6 +23,7 @@ class _DisplayWebviewState extends State<DisplayWebview> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   late WebViewController _controller;
 
+  NavigationDelegate? navigationDelegate;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,6 +36,9 @@ class _DisplayWebviewState extends State<DisplayWebview> {
              onWebViewCreated: (WebViewController webViewController) {
                _controller = webViewController;
              },
+              initialUrl: widget.webViewUrl,
+              javascriptMode: JavascriptMode.unrestricted,
+              onPageFinished: pageFinishedLoading,
           ),
           inAsyncCall: _isLoading,
           opacity: 0.0,

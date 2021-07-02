@@ -39,6 +39,8 @@ dependencies:
   webview_flutter: ^2.0.9
   toast: ^0.1.5
   double_back_to_close: ^2.0.0
+  flutter_inappwebview: ^5.3.2
+
 
 
 dev_dependencies:

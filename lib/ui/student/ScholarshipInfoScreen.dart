@@ -152,7 +152,7 @@ class _ScholarshipInfoScreenState extends State<ScholarshipInfoScreen> {
       "contentTypeName": "Scholarship"
     };
     Utils.showLoader(true, context);
-    _contentViewModel.getContentList(params, (isSuccess, message){
+    _contentViewModel.getContentList(params,context, (isSuccess, message){
       Utils.showLoader(false, context);
       isLoading = false;
       if(isSuccess){
