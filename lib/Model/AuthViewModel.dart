@@ -85,7 +85,7 @@ class AuthViewModel {
     }
   }
 
-  ValidationResult validateSignUp(String userType, String fname, String lname, String zipCode, String email, String password, String confirmPwd) {
+  ValidationResult validateSignUp(String userType, String fname, String lname, String dob, String zipCode, String email, String password, String confirmPwd) {
 
     if (fname.isEmpty) {
       return ValidationResult(false, LabelStr.enterFname);
@@ -97,6 +97,12 @@ class AuthViewModel {
       return ValidationResult(false, LabelStr.enterLname);
     } else if (!lname.contains(RegExp(r'^[a-zA-Z]')) && lname.length < 3) {
       return ValidationResult(false, LabelStr.enterValidLname);
+    }
+
+    if(userType.compareTo("Student") == 0){
+      if (dob.isEmpty) {
+        return ValidationResult(false, LabelStr.enterDob);
+      }
     }
 
     if(userType.compareTo("ParentGuardian") == 0){
@@ -181,7 +187,7 @@ class AuthViewModel {
         "isRejected": false,
       };
     }
-    var validateResult = validateSignUp(userType,  fname, lname, zipCode, email, password, confirmPwd);
+    var validateResult = validateSignUp(userType,  fname, lname, dob, zipCode, email, password, confirmPwd);
     if (validateResult.isValid) {
       WebService.postAPICall(apiMethod, params).then((response) {
         if (response.statusCode == 1) {

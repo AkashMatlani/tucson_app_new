@@ -46,10 +46,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
   @override
   void initState() {
     super.initState();
-    setState(() {
-      _formattedDob = DateFormat("yyyy-MM-dd'T'hh:mm:ss").format(currentDate);
-      _dobController.text = Utils.convertDate(_formattedDob, DateFormat("MM-dd-yyyy"));
-    });
     Timer(Duration(milliseconds: 100), () => _getSchoolList());
   }
 
@@ -84,7 +80,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               child: Image.asset(MyImage.signup),
             ),
             Positioned.fill(
-              top: MediaQuery.of(context).size.height*0.28,
+              top: MediaQuery.of(context).size.height*0.2,
               bottom: 0.0,
               child: Container(
                 decoration: BoxDecoration(
@@ -162,7 +158,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                           Text(LabelStr.lbldob, style: AppTheme.regularTextStyle().copyWith(fontSize: 14)),
-                          textFieldFor(LabelStr.lbldob, _dobController, readOnly: true, suffixIcon: InkWell(onTap:(){_selectDate(context);},child: Icon(Icons.calendar_today_outlined, size: 24))),
+                          textFieldFor(LabelStr.lblSelectdob, _dobController, readOnly: true, suffixIcon: InkWell(onTap:(){_selectDate(context);},child: Icon(Icons.calendar_today_outlined, size: 24))),
                           SizedBox(height: 10)
                         ]) : Container(),
                         _userType.compareTo(LabelStr.lblParentGuardian)==0 ? Column(
@@ -314,6 +310,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     String password = _pwdController.text;
     String confirmPwd = _confPwdController.text;
     String zipCode = _zipController.text;
+    String dob = _dobController.text;
 
     Utils.showLoader(true, context);
     _authViewModel.signUpResult(_userType, fname, lname, _formattedDob, zipCode,  email, password, confirmPwd, _selectedSchool.id, (isSuccess, message) {
@@ -325,9 +322,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
           _emailController.text = "";
           _pwdController.text = "";
           _confPwdController.text = "";
+          _dobController.text = "";
           _selectedSchool = _schoolList[0];
-          _formattedDob = DateFormat("yyyy-MM-dd'T'hh:mm:ss").format(DateTime.now());
-          _dobController.text = Utils.convertDate(_formattedDob, DateFormat("MM-dd-yyyy"));
         });
         FocusScope.of(context).requestFocus(defaultField);
         if (_userType.compareTo("Student") == 0) {

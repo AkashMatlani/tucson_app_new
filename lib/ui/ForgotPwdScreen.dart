@@ -41,7 +41,7 @@ class _ForgotPwdScreenState extends State<ForgotPwdScreen> {
                 child: Image.asset(MyImage.forgotPassword),
               ),
               Positioned.fill(
-                top: MediaQuery.of(context).size.height*0.28,
+                top: MediaQuery.of(context).size.height*0.2,
                 bottom: 0.0,
                 child: Container(
                   decoration: BoxDecoration(
