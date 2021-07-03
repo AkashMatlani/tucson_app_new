@@ -287,7 +287,7 @@ class _ParentDashBoardScreenState extends State<ParentDashBoardScreen> {
       }
     }).catchError((error) {
       Utils.showLoader(false, context);
-      Utils.showToast(context, LabelStr.serverError, Colors.red);
+     // Utils.showToast(context, LabelStr.serverError, Colors.red);
     });
   }
 }

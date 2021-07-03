@@ -22,12 +22,12 @@ class ContentMasterViewModel{
         callback(true, "");
       } else {
         contentList = [];
-        callback(false, response.message);
+        callback(false, "");
       }
     }).catchError((error) {
       contentList = [];
       print(error);
-      callback(false, LabelStr.serverError);
+      callback(false,"");
       Utils.navigateToScreen(context, WebViewEmpty());
     });
   }
