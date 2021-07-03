@@ -149,6 +149,7 @@ class _VolunteerOpportunitiesScreenState extends State<VolunteerOpportunitiesScr
     ContentMasterViewModel _contentViewModel = ContentMasterViewModel();
     var params = {
       "schoolId": schoolId,
+      "roleId": 0,
       "contentTypeName": "Volunteer"
     };
     Utils.showLoader(true, context);

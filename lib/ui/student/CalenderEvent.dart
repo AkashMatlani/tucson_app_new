@@ -22,10 +22,10 @@ class CalendarEvent extends StatefulWidget {
 }
 
 class _CalendarEventState extends State<CalendarEvent> {
-  String _currentMonth = DateFormat.yMMM().format(DateTime(2021, 6, 3));
-  DateTime _targetDateTime = DateTime(2021, 6, 3);
-  DateTime _currentDate = DateTime(2021, 6, 3);
-  DateTime _currentDate2 = DateTime(2021, 6, 3);
+  String _currentMonth = DateFormat.yMMM().format(DateTime(2021,7, 3));
+  DateTime _targetDateTime = DateTime(2021, 7, 3);
+  DateTime _currentDate = DateTime(2021, 7, 3);
+  DateTime _currentDate2 = DateTime(2021, 7, 3);
 
   AuthViewModel _authViewModel = AuthViewModel();
   late List<EventForMobileResponse> eventist = [];
@@ -75,7 +75,7 @@ class _CalendarEventState extends State<CalendarEvent> {
       targetDateTime: _targetDateTime,
       customGridViewPhysics: NeverScrollableScrollPhysics(),
       markedDateCustomShapeBorder:
-          CircleBorder(side: BorderSide(color: Colors.yellow)),
+          CircleBorder(side: BorderSide(color: Colors.blue)),
       markedDateCustomTextStyle: TextStyle(
         fontSize: 18,
         color: Colors.blue,

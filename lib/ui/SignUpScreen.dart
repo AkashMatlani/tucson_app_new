@@ -328,13 +328,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
         FocusScope.of(context).requestFocus(defaultField);
         if (_userType.compareTo("Student") == 0) {
           //Utils.showToast(context, LabelStr.lblStudent + " " + message, Colors.green);
-          message = LabelStr.lblStudent + " " + message;
+          message = LabelStr.lblStudent + " " + message+ " "+" Once admin approve your sign up. you can able to sign in.";
         } else if (_userType.compareTo("ParentGuardian") == 0) {
           //Utils.showToast(context, LabelStr.lblParent + " " + message, Colors.green);
-          message = LabelStr.lblParent + " " + message;
+          message = LabelStr.lblParent + " " + message+ " "+" Once admin approve your sign up. you can able to sign in.";
         } else {
           //Utils.showToast(context, LabelStr.lblCommunity + " " + message, Colors.green);
-          message = LabelStr.lblCommunity + " " + message;
+          message = LabelStr.lblCommunity + " " + message+ " "+" Once admin approve your sign up. you can able to sign in.";
         }
         Utils.showAlertDialog(context, message, (success, response){
           if(success) {

@@ -149,6 +149,7 @@ class _JobOpeningScreenState extends State<JobOpeningScreen> {
     ContentMasterViewModel _contentViewModel = ContentMasterViewModel();
     var params = {
       "schoolId": schoolId,
+      "roleId": 0,
       "contentTypeName": "Jobs"
     };
     Utils.showLoader(true, context);

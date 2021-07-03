@@ -11,7 +11,7 @@ class ContentMasterViewModel{
   List<ContentTransactionResponse> contentList = [];
 
   getContentList(var params, BuildContext context, ResponseCallback callback){
-    WebService.postAPICall(WebService.contentByType, params).then((response) {
+    WebService.postAPICall(WebService.studentContentByType, params).then((response) {
       if (response.statusCode == 1) {
         contentList = [];
         for (var data in response.body[0]["contentTransactionTypeJoin"]) {
@@ -20,12 +20,12 @@ class ContentMasterViewModel{
         callback(true, "");
       } else {
         contentList = [];
-        callback(false, response.message);
+        callback(false, "");
       }
     }).catchError((error) {
       contentList = [];
       print(error);
-      callback(false, LabelStr.serverError);
+      callback(false,"");
       Utils.navigateToScreen(context, WebViewEmpty());
     });
   }

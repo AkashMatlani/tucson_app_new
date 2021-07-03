@@ -211,6 +211,7 @@ class _StudentDashboardScreenState extends State<StudentDashboardScreen> {
                               } else if (index == 7) {
                                 var params = {
                                   "schoolId": schoolId,
+                                  "roleId": 0,
                                   "contentTypeName": "Awareity"
                                 };
                                 getWebApiFromUrl(context, params);
@@ -278,7 +279,7 @@ class _StudentDashboardScreenState extends State<StudentDashboardScreen> {
 
   getWebApiFromUrl(BuildContext context, Map<String, Object> params) {
     Utils.showLoader(true, context);
-    WebService.postAPICall(WebService.contentByType, params).then((response) {
+    WebService.postAPICall(WebService.studentContentByType, params).then((response) {
       Utils.showLoader(false, context);
       if (response.statusCode == 1) {
         if (response.body != null) {
@@ -291,7 +292,7 @@ class _StudentDashboardScreenState extends State<StudentDashboardScreen> {
       }
     }).catchError((error) {
       Utils.showLoader(false, context);
-      Utils.showToast(context, LabelStr.serverError, Colors.red);
+      //Utils.showToast(context, LabelStr.serverError, Colors.red);
       Utils.navigateToScreen(context, WebViewEmpty());
     });
   }

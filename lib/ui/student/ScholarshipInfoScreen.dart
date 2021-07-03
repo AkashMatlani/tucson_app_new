@@ -149,6 +149,7 @@ class _ScholarshipInfoScreenState extends State<ScholarshipInfoScreen> {
     ContentMasterViewModel _contentViewModel = ContentMasterViewModel();
     var params = {
       "schoolId": schoolId,
+      "roleId": 0,
       "contentTypeName": "Scholarship"
     };
     Utils.showLoader(true, context);

@@ -22,7 +22,7 @@ class WebService {
   static const parentSignUp = "ParentGuardian/Create";
   static const parentGetAllEventForMobile= "Event/GetAllEventForMobile";
   static const contentByType = "ContentMaster/GetContentByType";
-
+  static const studentContentByType = "Student/GetContentByType";
 
   static Future<ServerResponse> getAPICall(String apiName, Map<String, dynamic> params) async {
     var url = baseUrl + apiName;
