@@ -1,11 +1,9 @@
 import 'dart:async';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tucson_app/GeneralUtils/ProgressHUD.dart';
 import 'package:tucson_app/GeneralUtils/Utils.dart';
 import 'package:webview_flutter/webview_flutter.dart';
-
 import 'SignInScreen.dart';
 
 
@@ -51,9 +49,9 @@ class _DisplayWebviewState extends State<DisplayWebview> {
     //readJS(url);
   }
 
-  void readJS(String url) async{
-    String html = await _controller.evaluateJavascript("console.log(document.documentElement.innerHTML);");
-    print(html);
+  /*void readJS(String url) async{
+    String text = await _controller.evaluateJavascript("console.log(document.documentElement.innerHTML);");
+    print(text);
     if(html.compareTo("Your password reset successfully.") == 0){
       Utils.showToast(context, "Success", Colors.green);
       Timer(Duration(seconds: 2), (){
@@ -62,5 +60,5 @@ class _DisplayWebviewState extends State<DisplayWebview> {
     } else {
       Utils.showToast(context, "Failed", Colors.green);
     }
-  }
+  }*/
 }
