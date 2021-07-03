@@ -1,5 +1,5 @@
 class LabelStr {
-  static const lblEmail = "Email";
+  static const lblEmail = "TUSD Email";
   static const lblPassword = "Password";
   static const lblSignIn = "Sign In";
   static const lblSelectLanguage = "Select Language";
@@ -15,7 +15,7 @@ class LabelStr {
 
   static const lblSignUpAs = "Sign Up As";
   static const lblStudent = "Student";
-  static const lblParentGuardian = "ParentGuardian";
+  static const lblParentGuardian = "Parent-Guardian";
   static const lblParent = "Parent";
   static const lblCommunity = "Community";
   static const lblFname = "First Name";
@@ -84,7 +84,7 @@ class LabelStr {
   static const lblScholerShipInformation = "Scholarship Information";
   static const lblMentalHealthSupport = "Mental Health Support";
   static const lblJobOpnings = "Job Openings";
-  static const lblAwarity ="Awartiy";
+  static const lblAwarity ="Awareity";
   static const lblVolunteerOpportunites = "Volunteer Opportunities";
   static const lblEvents = "Events";
   static const lblSmartChoice = "Smart Choice";
@@ -144,4 +144,6 @@ class LabelStr {
   static const lblEventDetail = "Date & Time:\n16/05/2021\nEvent Details:\nK-5 GATE Summer Enrichment ProgramIn this FREE summer program GATE students will explore hands-on and minds-on lessons that integrate intellectual challenge along with critical and creative thinking.\nJune 2-30; Monday-Friday; 8 a.m.- 12 p.m.Lineweaver Location - GATE Qualifying Students OnlyTully Location - Open Access GATE (All Students Eligible)";
 
   static const lblRegistered = "registered successfully";
+  static const lblDonationTitle = "Gifts & Donations";
+  static const lblDonationDesc = "Private support allows us to infuse additional resources into programs and services that enhance and enrich experiences for students and families.";
 }

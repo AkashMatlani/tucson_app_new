@@ -325,15 +325,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
           _selectedSchool = _schoolList[0];
         });
         FocusScope.of(context).requestFocus(defaultField);
-        if (_userType.compareTo("Student") == 0) {
+        if (_userType.compareTo(LabelStr.lblStudent) == 0) {
           //Utils.showToast(context, LabelStr.lblStudent + " " + message, Colors.green);
           message = LabelStr.lblStudent + " " + message;
-        } else if (_userType.compareTo("ParentGuardian") == 0) {
-          //Utils.showToast(context, LabelStr.lblParent + " " + message, Colors.green);
-          message = LabelStr.lblParent + " " + message;
-        } else {
+        } else if (_userType.compareTo(LabelStr.lblCommunity) == 0) {
           //Utils.showToast(context, LabelStr.lblCommunity + " " + message, Colors.green);
           message = LabelStr.lblCommunity + " " + message;
+        } else {
+          //Utils.showToast(context, LabelStr.lblParent + " " + message, Colors.green);
+          message = LabelStr.lblParent + " " + message;
         }
         Utils.showAlertDialog(context, message, (success, response){
           if(success) {

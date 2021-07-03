@@ -39,13 +39,17 @@ class _DonationScreenState extends State<DonationScreen> {
                 margin: EdgeInsets.fromLTRB(50, 80, 50, 0),
                 child: SvgPicture.asset(MyImage.donationImg),
               ),
-              Container(
-                child: Text(
-                    "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
-                    style: AppTheme.regularTextStyle(),
-                    textAlign: TextAlign.center),
-              ),
-              SizedBox(height: 80),
+              SizedBox(height: 10),
+              Text(
+                  LabelStr.lblDonationTitle,
+                  style: AppTheme.regularTextStyle().copyWith(fontWeight: FontWeight.w700),
+                  textAlign: TextAlign.center),
+              SizedBox(height: 5),
+              Text(
+                  LabelStr.lblDonationDesc,
+                  style: AppTheme.regularTextStyle(),
+                  textAlign: TextAlign.center),
+              SizedBox(height: MediaQuery.of(context).size.height*0.1),
               Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),

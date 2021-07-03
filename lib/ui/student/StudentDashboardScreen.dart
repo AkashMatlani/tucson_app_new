@@ -211,6 +211,7 @@ class _StudentDashboardScreenState extends State<StudentDashboardScreen> {
                               } else if (index == 7) {
                                 var params = {
                                   "schoolId": schoolId,
+                                  "roleId": 0,
                                   "contentTypeName": "Awareity"
                                 };
                                 getWebApiFromUrl(context, params);

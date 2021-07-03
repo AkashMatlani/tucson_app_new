@@ -63,9 +63,9 @@ class _SplashScreenState extends State<SplashScreen> {
         if (response.body != null) {
           bool isActive = response.body["isActive"];
           if(isActive) {
-            if (role.compareTo("Student") == 0) {
+            if (role.compareTo(LabelStr.lblStudent) == 0) {
               Utils.navigateReplaceToScreen(context, StudentDashboardScreen());
-            } else if (role.compareTo("Community") == 0) {
+            } else if (role.compareTo(LabelStr.lblCommunity) == 0) {
               Utils.navigateReplaceToScreen(context, CommunityDashboardScreen());
             } else {
               Utils.navigateReplaceToScreen(context, ParentDashBoardScreen());

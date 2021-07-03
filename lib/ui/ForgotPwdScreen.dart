@@ -130,8 +130,8 @@ class _ForgotPwdScreenState extends State<ForgotPwdScreen> {
 
         Utils.showAlertDialog(context, message, (success, response) {
           if (success) {
-            //Utils.navigateWithClearState(context, SignInScreen());
-            Utils.navigateToScreen(context, DisplayWebview(message));
+            Utils.navigateWithClearState(context, SignInScreen());
+            //Utils.navigateToScreen(context, DisplayWebview(message));
           }
         });
       } else {

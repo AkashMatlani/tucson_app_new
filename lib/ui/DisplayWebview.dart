@@ -1,15 +1,13 @@
-
-import 'dart:async';
-import 'dart:html';
-
 import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tucson_app/GeneralUtils/ProgressHUD.dart';
 import 'package:tucson_app/GeneralUtils/Utils.dart';
-import 'package:tucson_app/ui/SignInScreen.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+
+import 'SignInScreen.dart';
+
 
 class DisplayWebview extends StatefulWidget {
   DisplayWebview(this.webViewUrl);
@@ -35,10 +33,7 @@ class _DisplayWebviewState extends State<DisplayWebview> {
              onPageFinished: pageFinishedLoading,
              onWebViewCreated: (WebViewController webViewController) {
                _controller = webViewController;
-             },
-              initialUrl: widget.webViewUrl,
-              javascriptMode: JavascriptMode.unrestricted,
-              onPageFinished: pageFinishedLoading,
+             }
           ),
           inAsyncCall: _isLoading,
           opacity: 0.0,
@@ -53,17 +48,17 @@ class _DisplayWebviewState extends State<DisplayWebview> {
     setState(() {
       _isLoading = false;
     });
-    readJS(url);
+    //readJS(url);
   }
 
   void readJS(String url) async{
-    String html = await _controller.evaluateJavascript("window.document.getElementsByTagName('html')[0].outerHTML;");
+    String html = await _controller.evaluateJavascript("console.log(document.documentElement.innerHTML);");
     print(html);
     if(html.compareTo("Your password reset successfully.") == 0){
       Utils.showToast(context, "Success", Colors.green);
-      /*Timer(Duration(seconds: 2), (){
+      Timer(Duration(seconds: 2), (){
         Utils.navigateReplaceToScreen(context, SignInScreen());
-      });*/
+      });
     } else {
       Utils.showToast(context, "Failed", Colors.green);
     }

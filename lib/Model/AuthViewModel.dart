@@ -72,7 +72,8 @@ class AuthViewModel {
     if (validateResult.isValid) {
       WebService.getAPICall(WebService.forgotPassword, params).then((response) {
         if (response.statusCode == 1) {
-          callback(true, response.body.toString());
+          ///callback(true, response.body.toString());
+          callback(true, LabelStr.checkMailLink);
         } else {
           callback(false, response.message);
         }
@@ -145,7 +146,7 @@ class AuthViewModel {
     if(schoolId == 0){
       schoolId = null;
     }
-    if(userType.compareTo("Student") == 0){
+    if(userType.compareTo(LabelStr.lblStudent) == 0){
       apiMethod = WebService.studentSignUp;
       params = {
         "password": password,
@@ -159,7 +160,7 @@ class AuthViewModel {
         "isApprove": false,
         "isRejected": false,
       };
-    } else if(userType.compareTo("Community") == 0){
+    } else if(userType.compareTo(LabelStr.lblCommunity) == 0){
       apiMethod = WebService.communitySignUp;
       params = {
         "password": password,
@@ -182,7 +183,7 @@ class AuthViewModel {
         "email": email,
         "profileImageURL": "",
         "schoolId": schoolId,
-        "role": userType,
+        "role": "ParentGuardian",
         "isApprove": false,
         "isRejected": false,
       };
