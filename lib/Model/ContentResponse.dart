@@ -10,6 +10,8 @@ class ContentResponse {
   late int _schoolId;
   late int _contentTypeId;
   late String _contentTitle;
+  late String _contents;
+  late String _createdOn;
   late String _schoolName;
   late List<ContentTransactionResponse> _contentTransactionTypeJoin;
 
@@ -17,6 +19,8 @@ class ContentResponse {
   int get schoolId => _schoolId;
   int get contentTypeId => _contentTypeId;
   String get contentTitle => _contentTitle;
+  String get content => _contents;
+  String get createdOn => _createdOn;
   String get schoolName => _schoolName;
   List<ContentTransactionResponse> get contentTransactionTypeJoin => _contentTransactionTypeJoin;
 
@@ -25,12 +29,16 @@ class ContentResponse {
     required int schoolId,
     required int contentTypeId,
     required String contentTitle,
+    required String content,
+    required String createdOn,
     required String schoolName,
     required List<ContentTransactionResponse> contentTransactionTypeJoin}){
     _contentMasterId = contentMasterId;
     _schoolId = schoolId;
     _contentTypeId = contentTypeId;
     _contentTitle = contentTitle;
+    _contents = content;
+    _createdOn = createdOn;
     _schoolName = schoolName;
     _contentTransactionTypeJoin = contentTransactionTypeJoin;
 }
@@ -40,6 +48,8 @@ class ContentResponse {
     _schoolId = json["schoolId"];
     _contentTypeId = json["contentTypeId"];
     _contentTitle = json["contentTitle"];
+    _contents = json["contents"];
+    _createdOn = json["createdOn"];
     _schoolName = json["schoolName"];
     if (json["contentTransactionTypeJoin"] != null) {
       _contentTransactionTypeJoin = [];
@@ -55,6 +65,8 @@ class ContentResponse {
     map["schoolId"] = _schoolId;
     map["contentTypeId"] = _contentTypeId;
     map["contentTitle"] = _contentTitle;
+    map["contents"] = _contents;
+    map["createdOn"] = _createdOn;
     map["schoolName"] = _schoolName;
     if (_contentTransactionTypeJoin != null) {
       map["contentTransactionTypeJoin"] = _contentTransactionTypeJoin.map((v) => v.toJson()).toList();

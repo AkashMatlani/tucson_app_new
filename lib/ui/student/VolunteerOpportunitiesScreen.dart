@@ -150,13 +150,17 @@ class _VolunteerOpportunitiesScreenState extends State<VolunteerOpportunitiesScr
       "contentTypeName": "Volunteer"
     };
     Utils.showLoader(true, context);
-    _contentViewModel.getContentList(context, params, "", (isSuccess, message){
+    _contentViewModel.getContentList(context, params, (isSuccess, message){
       Utils.showLoader(false, context);
       isLoading = false;
       if(isSuccess){
         setState(() {
           _volunteerList = [];
-          _volunteerList = _contentViewModel.contentList;
+          for(var data in _contentViewModel.contentList){
+            for(var listData in data.contentTransactionTypeJoin){
+              _volunteerList.add(listData);
+            }
+          }
         });
       } else {
         setState(() {

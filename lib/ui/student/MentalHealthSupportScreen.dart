@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +13,8 @@ import 'package:tucson_app/GeneralUtils/Utils.dart';
 import 'package:tucson_app/Model/HealthSupportResponse.dart';
 import 'package:tucson_app/WebService/WebService.dart';
 import 'package:tucson_app/ui/DisplayWebview.dart';
+import 'package:tucson_app/ui/VideoPlayerScreen.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
 
 class MentalHealthSupportScreen extends StatefulWidget {
@@ -91,25 +95,30 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
               child: isLoading ? emptyListView() : SingleChildScrollView(
                 child: Column(
                   children: [
-                    Container(
-                      margin: EdgeInsets.only(top: 20),
-                      height: MediaQuery.of(context).size.height*0.3,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          color: Colors.white
-                      ),
-                      child: /*ClipRRect(
-                        borderRadius: BorderRadius.circular(10),
-                        child: CachedNetworkImage(
-                          fit: BoxFit.cover,
-                          useOldImageOnUrlChange: false,
-                          imageUrl: getVideoThumbinail(),
-                          placeholder: (context, url) => Container(height: 40, width: 40, alignment: Alignment.center, child: CircularProgressIndicator()),
-                          errorWidget: (context, url, error) => Image.asset(MyImage.videoUrlImage),
+                    InkWell(
+                      onTap: (){
+                        Utils.navigateToScreen(context, VideoPlayerScreen(_supportResponse.supportDocument));
+                      },
+                      child: Container(
+                        margin: EdgeInsets.only(top: 30),
+                        height: MediaQuery.of(context).size.height*0.24,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            color: Colors.white
                         ),
-                      )*/ Image.asset(MyImage.videoUrlImage, fit: BoxFit.fill),
+                        child: /*ClipRRect(
+                          borderRadius: BorderRadius.circular(10),
+                          child: CachedNetworkImage(
+                            fit: BoxFit.cover,
+                            useOldImageOnUrlChange: false,
+                            imageUrl: getVideoThumbinail(),
+                            placeholder: (context, url) => Container(height: 40, width: 40, alignment: Alignment.center, child: CircularProgressIndicator()),
+                            errorWidget: (context, url, error) => Image.asset(MyImage.videoUrlImage),
+                          ),
+                        )*/ Image.asset(MyImage.videoUrlImage, fit: BoxFit.fill),
+                      ),
                     ),
-                    SizedBox(height: 15),
+                    SizedBox(height: 20),
                     Row(
                       children: [
                         Expanded(
@@ -388,8 +397,10 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
                             style: AppTheme.customTextStyle(MyFont.SSPro_bold,
                                 16.0, Color.fromRGBO(255, 255, 255, 1))),
                         onPressed: () {
-                          print("Call me");
                           Navigator.of(context).pop();
+                          Timer(Duration(milliseconds: 200), (){
+                            _makingPhoneCall(_supportResponse.nsphPhoneNumber);
+                          });
                         },
                       ),
                     ),
@@ -416,5 +427,14 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
         ),
       ),
     );
+  }
+
+  _makingPhoneCall(String number) async {
+    String  url ='tel:'+number;
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
   }
 }

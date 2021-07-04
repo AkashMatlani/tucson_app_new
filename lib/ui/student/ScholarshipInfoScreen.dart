@@ -150,13 +150,17 @@ class _ScholarshipInfoScreenState extends State<ScholarshipInfoScreen> {
       "contentTypeName": "Scholarship"
     };
     Utils.showLoader(true, context);
-    _contentViewModel.getContentList(context, params, "", (isSuccess, message){
+    _contentViewModel.getContentList(context, params, (isSuccess, message){
       Utils.showLoader(false, context);
       isLoading = false;
       if(isSuccess){
         setState(() {
           _scholarshipInfoList = [];
-          _scholarshipInfoList = _contentViewModel.contentList;
+          for(var data in _contentViewModel.contentList){
+            for(var listData in data.contentTransactionTypeJoin){
+              _scholarshipInfoList.add(listData);
+            }
+          }
         });
       } else {
         setState(() {
