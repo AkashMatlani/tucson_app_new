@@ -91,6 +91,7 @@ class LabelStr {
   static const lblParentVUE = "ParentVUE";
   static const lblEducationWebstite = "Educational Website";
   static const lblVideos = "Videos";
+  static const lblWebview = "WebView";
   static const lblActivites = "Activites";
   static const lblArticles = "Articles";
   static const lblStories = "Stories";

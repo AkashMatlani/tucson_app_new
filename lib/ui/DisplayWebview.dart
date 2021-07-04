@@ -1,10 +1,7 @@
-import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tucson_app/GeneralUtils/ProgressHUD.dart';
-import 'package:tucson_app/GeneralUtils/Utils.dart';
 import 'package:webview_flutter/webview_flutter.dart';
-import 'SignInScreen.dart';
 
 
 class DisplayWebview extends StatefulWidget {
@@ -17,11 +14,11 @@ class DisplayWebview extends StatefulWidget {
 class _DisplayWebviewState extends State<DisplayWebview> {
   bool _isLoading = true;
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
-  late WebViewController _controller;
+  //late WebViewController _controller;
 
-  NavigationDelegate? navigationDelegate;
   @override
   Widget build(BuildContext context) {
+    print("WebUrl => ${widget.webViewUrl}");
     return Scaffold(
       body: SafeArea(
         child: ProgressHUD(
@@ -29,9 +26,9 @@ class _DisplayWebviewState extends State<DisplayWebview> {
              initialUrl: widget.webViewUrl,
              javascriptMode: JavascriptMode.unrestricted,
              onPageFinished: pageFinishedLoading,
-             onWebViewCreated: (WebViewController webViewController) {
+             /*onWebViewCreated: (WebViewController webViewController) {
                _controller = webViewController;
-             }
+             }*/
           ),
           inAsyncCall: _isLoading,
           opacity: 0.0,

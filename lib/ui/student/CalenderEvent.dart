@@ -45,6 +45,7 @@ class _CalendarEventState extends State<CalendarEvent> {
     events: {},
   );
   late String eventNameTitle = "";
+  late double blockSizeVertical;
 
   @override
   void initState() {
@@ -54,6 +55,10 @@ class _CalendarEventState extends State<CalendarEvent> {
 
   @override
   Widget build(BuildContext context) {
+
+    var screenHeight = MediaQuery.of(context).size.height;
+    blockSizeVertical = screenHeight / 100;
+
     final _calendarCarouselNoHeader = CalendarCarousel<Event>(
       todayBorderColor: Colors.green,
       onDayPressed: (date, events) {
@@ -70,7 +75,7 @@ class _CalendarEventState extends State<CalendarEvent> {
       weekFormat: false,
 //      firstDayOfWeek: 4,
       markedDatesMap: _markedDateMap,
-      height: 420.0,
+      height: blockSizeVertical*32,
       selectedDateTime: _currentDate2,
       targetDateTime: _targetDateTime,
       customGridViewPhysics: NeverScrollableScrollPhysics(),
@@ -237,7 +242,7 @@ class _CalendarEventState extends State<CalendarEvent> {
                           ),
                           SizedBox(height: 10),
                           Container(
-                            height: MediaQuery.of(context).size.height*0.33,
+                            height: blockSizeVertical*32,
                             child: _calendarCarouselNoHeader,
                           ),
                         ],

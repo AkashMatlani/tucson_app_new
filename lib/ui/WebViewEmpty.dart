@@ -24,7 +24,6 @@ class _WebViewEmptyState extends State<WebViewEmpty> {
       onWillPop: ()=>Utils.navigateReplaceToScreen(context, StudentDashboardScreen()),
       child: Scaffold(
         body: Stack(
-          fit: StackFit.expand,
           children: [
             Container(
               color: HexColor("#6462AA"),
@@ -32,6 +31,7 @@ class _WebViewEmptyState extends State<WebViewEmpty> {
                 children: [
                   Container(
                     margin: EdgeInsets.fromLTRB(0, MediaQuery.of(context).size.height*0.03, 0, MediaQuery.of(context).size.height*0.03),
+                    height: MediaQuery.of(context).size.height*0.06,
                     child: Row(
                       children: [
                         Container(
@@ -39,29 +39,27 @@ class _WebViewEmptyState extends State<WebViewEmpty> {
                           child: IconButton(
                               icon: Icon(Icons.arrow_back_ios, color: Colors.white),
                               onPressed: () {
-                                Utils.navigateReplaceToScreen(context, StudentDashboardScreen());
+                                Navigator.of(context).pop();
                               }),
                         ),
                         Container(
                           margin: EdgeInsets.only(top: 10),
-                          child: Text("WebView",
+                          child: Text(LabelStr.lblWebview,
                               style: AppTheme.regularTextStyle()
                                   .copyWith(fontSize: 18, color: Colors.white)),
                         )
                       ],
                     ),
                   ),
-                  Expanded(
-                    child: Container(
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(30.0),
-                              topRight: Radius.circular(30.0)),
-                          color: HexColor("FAFAFA")),
-                      height: MediaQuery.of(context).size.height,
-                      width: MediaQuery.of(context).size.width,
-                      padding: EdgeInsets.all(10),
-                    ),
+                  Container(
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(30.0),
+                            topRight: Radius.circular(30.0)),
+                        color: HexColor("FAFAFA")),
+                    height: MediaQuery.of(context).size.height*0.88,
+                    width: MediaQuery.of(context).size.width,
+                    padding: EdgeInsets.all(10),
                   )
                 ],
               ),
@@ -82,11 +80,10 @@ class _WebViewEmptyState extends State<WebViewEmpty> {
   }
 
   emptyListView() {
-    return Expanded(
-      child: Container(
-          alignment: Alignment.center,
-          child: Text(LabelStr.lblNoData, style: AppTheme.regularTextStyle().copyWith(fontSize: 18, color: Colors.red))
-      ),
+    return Container(
+      alignment: Alignment.center,
+      height: MediaQuery.of(context).size.height*0.88,
+      child: Text(LabelStr.lblNoData, style: AppTheme.regularTextStyle().copyWith(fontSize: 18, color: Colors.red)),
     );
   }
 }

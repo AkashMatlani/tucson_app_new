@@ -11,13 +11,20 @@ import 'ContentResponse.dart';
 class ContentMasterViewModel{
 
   List<ContentTransactionResponse> contentList = [];
+  List<ContentResponse> contentBlogList = [];
 
-  getContentList(var params, BuildContext context, ResponseCallback callback){
+  getContentList(BuildContext context, var params, String contentType, ResponseCallback callback){
     WebService.postAPICall(WebService.studentContentByType, params).then((response) {
       if (response.statusCode == 1) {
-        contentList = [];
-        for (var data in response.body[0]["contentTransactionTypeJoin"]) {
-          contentList.add(ContentTransactionResponse.fromJson(data));
+        if(contentType.compareTo("blog") == 0){
+          for (var data in response.body) {
+            contentList.add(ContentTransactionResponse.fromJson(data));
+          }
+        } else {
+          contentList = [];
+          for (var data in response.body[0]["contentTransactionTypeJoin"]) {
+            contentList.add(ContentTransactionResponse.fromJson(data));
+          }
         }
         callback(true, "");
       } else {

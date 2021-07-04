@@ -158,7 +158,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                           Text(LabelStr.lbldob, style: AppTheme.regularTextStyle().copyWith(fontSize: 14)),
-                          textFieldFor(LabelStr.lblSelectdob, _dobController, readOnly: true, suffixIcon: InkWell(onTap:(){_selectDate(context);},child: Icon(Icons.calendar_today_outlined, size: 24))),
+                          textFieldFor(LabelStr.lblSelectdob, _dobController, readOnly: true, onTap:(){_selectDate(context);}, suffixIcon: InkWell(onTap:(){_selectDate(context);},child: Icon(Icons.calendar_today_outlined, size: 24))),
                           SizedBox(height: 10)
                         ]) : Container(),
                         _userType.compareTo(LabelStr.lblParentGuardian)==0 ? Column(

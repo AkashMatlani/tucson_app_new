@@ -38,7 +38,6 @@ class _VolunteerOpportunitiesScreenState extends State<VolunteerOpportunitiesScr
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
-        fit: StackFit.expand,
         children: [
           Container(
             color: HexColor("#6462AA"),
@@ -46,6 +45,7 @@ class _VolunteerOpportunitiesScreenState extends State<VolunteerOpportunitiesScr
               children: [
                 Container(
                   margin: EdgeInsets.fromLTRB(0, MediaQuery.of(context).size.height*0.03, 0, MediaQuery.of(context).size.height*0.03),
+                  height: MediaQuery.of(context).size.height*0.06,
                   child: Row(
                     children: [
                       Container(
@@ -65,38 +65,36 @@ class _VolunteerOpportunitiesScreenState extends State<VolunteerOpportunitiesScr
                     ],
                   ),
                 ),
-                Expanded(
-                  child: Container(
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(30.0),
-                            topRight: Radius.circular(30.0)),
-                        color: HexColor("FAFAFA")),
-                    height: MediaQuery.of(context).size.height,
-                    width: MediaQuery.of(context).size.width,
-                    padding: EdgeInsets.all(10),
-                  ),
+                Container(
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(30.0),
+                          topRight: Radius.circular(30.0)),
+                      color: HexColor("FAFAFA")),
+                  height: MediaQuery.of(context).size.height*0.88,
+                  width: MediaQuery.of(context).size.width,
+                  padding: EdgeInsets.all(10),
                 )
               ],
             ),
           ),
           Positioned(
-              top: MediaQuery.of(context).size.height*0.12,
-              left: MediaQuery.of(context).size.height*0.012,
-              right: MediaQuery.of(context).size.height*0.012,
-              child: Container(
-                height: MediaQuery.of(context).size.height*0.88,
-                child: _volunteerList.length == 0 ? emptyListView() : SingleChildScrollView(
-                  child:  ListView.builder(
-                      itemCount: _volunteerList.length,
-                      shrinkWrap: true,
-                      physics: ScrollPhysics(),
-                      padding: EdgeInsets.only(top: 20),
-                      itemBuilder: (BuildContext context, int position){
-                        return _listRowItem(context, position);
-                      }),
-                ),
+            top: MediaQuery.of(context).size.height*0.12,
+            left: MediaQuery.of(context).size.height*0.012,
+            right: MediaQuery.of(context).size.height*0.012,
+            child: Container(
+              height: MediaQuery.of(context).size.height*0.88,
+              child: _volunteerList.length == 0 ? emptyListView() : SingleChildScrollView(
+                child:  ListView.builder(
+                    itemCount: _volunteerList.length,
+                    shrinkWrap: true,
+                    physics: ScrollPhysics(),
+                    padding: EdgeInsets.only(top: 20),
+                    itemBuilder: (BuildContext context, int position){
+                      return _listRowItem(context, position);
+                    }),
               ),
+            ),
           )
         ],
       ),
@@ -137,11 +135,10 @@ class _VolunteerOpportunitiesScreenState extends State<VolunteerOpportunitiesScr
   }
 
   emptyListView() {
-    return Expanded(
-      child: Container(
-        alignment: Alignment.center,
-        child: isLoading ? Container() : Text(LabelStr.lblNoData, style: AppTheme.regularTextStyle().copyWith(fontSize: 18, color: Colors.red)),
-      ),
+    return Container(
+      alignment: Alignment.center,
+      height: MediaQuery.of(context).size.height*0.88,
+      child: isLoading ? Container() : Text(LabelStr.lblNoData, style: AppTheme.regularTextStyle().copyWith(fontSize: 18, color: Colors.red)),
     );
   }
 
@@ -153,7 +150,7 @@ class _VolunteerOpportunitiesScreenState extends State<VolunteerOpportunitiesScr
       "contentTypeName": "Volunteer"
     };
     Utils.showLoader(true, context);
-    _contentViewModel.getContentList(params,context, (isSuccess, message){
+    _contentViewModel.getContentList(context, params, "", (isSuccess, message){
       Utils.showLoader(false, context);
       isLoading = false;
       if(isSuccess){

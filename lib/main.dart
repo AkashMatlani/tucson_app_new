@@ -25,7 +25,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: 'Tucson App',
+        title: 'Tucson Unified Connect',
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
