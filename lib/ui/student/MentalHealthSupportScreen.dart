@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:tucson_app/GeneralUtils/ColorExtension.dart';
@@ -362,9 +363,9 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
               ),*/
                 Padding(
                   padding: const EdgeInsets.fromLTRB(20.0, 20, 10, 10),
-                  child: Text(
-                    _supportResponse.contents,
-                    style: AppTheme.regularTextStyle()
+                  child: Html(
+                    data: _supportResponse.contents,
+                    defaultTextStyle: AppTheme.regularTextStyle()
                         .copyWith(fontSize: 16, color: Color.fromRGBO(0, 0, 0, 1)),
                   ),
                 ),

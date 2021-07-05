@@ -319,7 +319,7 @@ class _CalendarEventState extends State<CalendarEvent> {
                       int.parse(dateInFormatText[0]),
                       int.parse(dateInFormatText[1])),
                   new Event(
-                    dot:Container(
+                  /*  dot:Container(
                       height: 30,
                       width: 30,
                         decoration: BoxDecoration(
@@ -328,7 +328,7 @@ class _CalendarEventState extends State<CalendarEvent> {
                             ),
                             borderRadius: BorderRadius.all(Radius.circular(20))
                         ),
-                    ),
+                    ),*/
                       date: new DateTime(
                           int.parse(dateInFormatText[2]),
                           int.parse(dateInFormatText[0]),
@@ -340,7 +340,7 @@ class _CalendarEventState extends State<CalendarEvent> {
                           child: Text(
                               "Event Details:" + "\n" + eventist[i].eventDetail,
                               style: AppTheme.regularTextStyle().copyWith(
-                                  fontSize: 16, color: Colors.black26)),
+                                  fontSize: 16, color: Colors.black54)),
                         ),
                       )));
             });
@@ -386,7 +386,7 @@ class _CalendarEventState extends State<CalendarEvent> {
                   child: Text(
                     "Date & Time:" + "\n" + finalDate,
                     style: AppTheme.regularTextStyle()
-                        .copyWith(fontSize: 16, color: Colors.black26),
+                        .copyWith(fontSize: 16, color: Colors.black54),
                   ),
                 ),
                 abcd!,
