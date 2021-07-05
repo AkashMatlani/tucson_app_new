@@ -40,9 +40,9 @@ class MyImage {
   static const splashLogoImg = "assets/images/bg_images/splash_logo.png";
   static const splashBottomImg = "assets/images/bg_images/splash_bottom_img.png";
   static const userGroupImg = "assets/images/bg_images/user_group.svg";
-  static const passwordReset = "assets/images/bg_images/reset_pwd_header_bg.jpg";
-  static const signup = "assets/images/bg_images/signup_header_bg.jpg";
-  static const signIn = "assets/images/bg_images/signin_header_bg.jpg";
+  static const passwordReset = "assets/images/bg_images/reset_pwd_header_bg.png";
+  static const signup = "assets/images/bg_images/signup_header_bg.png";
+  static const signIn = "assets/images/bg_images/signin_header_bg.png";
   static const forgotPassword = "assets/images/bg_images/forgot_pwd_header_bg.jpg";
   static const donationImg = "assets/images/bg_images/donation_img.svg";
 
@@ -103,6 +103,7 @@ class MyImage {
   static const mentalHealthSupport="assets/images/icons/mental_health_support.svg";
   static const splashImage="assets/images/bg_images/launch_image.png";
   static const videoUrlImage = "assets/images/bg_images/default_video_thumb.png";
+  static const audioUrlImage = "assets/images/bg_images/default_audio_thumb.jpg";
 
 }
 

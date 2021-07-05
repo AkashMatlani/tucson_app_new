@@ -106,7 +106,7 @@ class _BlogScreenState extends State<BlogScreen> {
   _listRowItems(BuildContext context, int index) {
     return InkWell(
       onTap: () {
-        Utils.navigateToScreen(context, BlogDetailsScreen());
+        Utils.navigateToScreen(context, BlogDetailsScreen(_blogList[index]));
       },
       child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
