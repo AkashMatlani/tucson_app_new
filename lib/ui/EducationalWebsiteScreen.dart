@@ -110,7 +110,7 @@ class _EducationalWebsiteScreenState extends State<EducationalWebsiteScreen> {
     return Container(
       alignment: Alignment.center,
       height: MediaQuery.of(context).size.height*0.88,
-      child: Text(LabelStr.lblNoData, style: AppTheme.regularTextStyle().copyWith(fontSize: 18, color: Colors.red)),
+      child: Text(LabelStr.lblNoEducationalWeb, style: AppTheme.regularTextStyle().copyWith(fontSize: 18, color: Colors.red)),
     );
   }
 }

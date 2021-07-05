@@ -41,7 +41,22 @@ class _ForgotPwdScreenState extends State<ForgotPwdScreen> {
                     .size
                     .height * 0.3,
                 alignment: Alignment.topCenter,
-                child: Image.asset(MyImage.forgotPassword),
+                child: Stack(
+                  children: [
+                    Image.asset(MyImage.forgotPassword),
+                    Positioned(
+                      top: MediaQuery.of(context).size.height*0.04,
+                      child: Padding(
+                        padding: EdgeInsets.all(10),
+                        child: IconButton(
+                            icon: Icon(Icons.arrow_back_ios, color: Colors.white),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            }),
+                      ),
+                    )
+                  ],
+                ),
               ),
               Positioned.fill(
                 top: MediaQuery

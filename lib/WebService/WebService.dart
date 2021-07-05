@@ -24,6 +24,7 @@ class WebService {
   static const contentByType = "ContentMaster/GetContentByType";
   static const studentContentByType = "Student/GetContentByType";
   static const tusdSupportBySchoolID = "TUSDSupport/GetBySchoolId";
+  static const getSchoolCategoryType = "ContentMaster/GetSchoolCategoryType";
 
   static Future<ServerResponse> getAPICall(String apiName, Map<String, dynamic> params) async {
     var url = baseUrl + apiName;

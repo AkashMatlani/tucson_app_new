@@ -12,12 +12,13 @@ import 'package:tucson_app/ui/DisplayWebview.dart';
 import 'package:tucson_app/ui/ImageViewerScreen.dart';
 import 'package:tucson_app/ui/VideoPlayerScreen.dart';
 
-import 'DocumentViewerScreen.dart';
+import '../DocumentViewerScreen.dart';
 
 class BlogDetailsScreen extends StatefulWidget {
 
-  BlogDetailsScreen(this.contentResponse);
+  BlogDetailsScreen(this.title, this.contentResponse);
   ContentResponse contentResponse;
+  String title;
 
   @override
   _BlogDetailsScreenState createState() => _BlogDetailsScreenState();
@@ -34,6 +35,9 @@ class _BlogDetailsScreenState extends State<BlogDetailsScreen> {
   @override
   void initState() {
     super.initState();
+    if(widget.title.compareTo(LabelStr.lblStudentBlogs) ==0){
+      widget.title = LabelStr.lblBlogDetails;
+    }
     for(var data in widget.contentResponse.contentTransactionTypeJoin){
       if(data.contentTransTypeName.compareTo("Image") == 0){
         imageLink = data.objectPath;
@@ -73,7 +77,7 @@ class _BlogDetailsScreenState extends State<BlogDetailsScreen> {
                       ),
                       Container(
                         margin: EdgeInsets.only(top: 10),
-                        child: Text(LabelStr.lblBlogDetails,
+                        child: Text(widget.title,
                             style: AppTheme.regularTextStyle()
                                 .copyWith(fontSize: 18, color: Colors.white)),
                       )
@@ -101,6 +105,7 @@ class _BlogDetailsScreenState extends State<BlogDetailsScreen> {
               height: MediaQuery.of(context).size.height*0.88,
               child: SingleChildScrollView(
                 child: Container(
+                  margin: EdgeInsets.only(left: 12),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -148,7 +153,11 @@ class _BlogDetailsScreenState extends State<BlogDetailsScreen> {
         } else if(type.compareTo("Files") == 0){
           Utils.navigateToScreen(context, DocumentViewerScreen(link));
         } else if(type.compareTo("Video") == 0){
-          Utils.navigateToScreen(context, VideoPlayerScreen(link));
+          if(link.contains("https://www.youtube.com/") == 0){
+            Utils.navigateToScreen(context, DisplayWebview(link));
+          } else {
+            Utils.navigateToScreen(context, VideoPlayerScreen(link));
+          }
         } else if(type.compareTo("Audio") == 0){
           Utils.navigateToScreen(context, AudioPlayerScreen(link));
         } else {

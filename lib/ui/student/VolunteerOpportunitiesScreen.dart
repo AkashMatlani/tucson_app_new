@@ -138,7 +138,7 @@ class _VolunteerOpportunitiesScreenState extends State<VolunteerOpportunitiesScr
     return Container(
       alignment: Alignment.center,
       height: MediaQuery.of(context).size.height*0.88,
-      child: isLoading ? Container() : Text(LabelStr.lblNoData, style: AppTheme.regularTextStyle().copyWith(fontSize: 18, color: Colors.red)),
+      child: isLoading ? Container() : Text(LabelStr.lblNoVolunteer, style: AppTheme.regularTextStyle().copyWith(fontSize: 18, color: Colors.red)),
     );
   }
 

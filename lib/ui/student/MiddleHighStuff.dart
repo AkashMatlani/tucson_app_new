@@ -3,7 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:tucson_app/GeneralUtils/Constant.dart';
 import 'package:tucson_app/GeneralUtils/LabelStr.dart';
+import 'package:tucson_app/GeneralUtils/Utils.dart';
 import 'package:tucson_app/Model/GridListItems.dart';
+
+import 'BlogScreen.dart';
+import 'VideoListScreen.dart';
 
 class MiddleHighStuff extends StatefulWidget {
   @override
@@ -43,7 +47,13 @@ class _MiddleHighStuffState extends State<MiddleHighStuff> {
               itemBuilder: (BuildContext ctx, index) {
                 return GestureDetector(
                     onTap: () {
-                      print("Clicked");
+                      if(index == 0){
+                        Utils.navigateToScreen(context, VideoListScreen(LabelStr.lblVideos));
+                      } else if(index == 1){
+                        Utils.navigateToScreen(context, BlogScreen(LabelStr.lblArticles));
+                      } else {
+                        Utils.navigateToScreen(context, BlogScreen(LabelStr.lblStories));
+                      }
                     },
                     child: Card(
                         shape: RoundedRectangleBorder(

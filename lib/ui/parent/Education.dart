@@ -11,8 +11,8 @@ import 'package:tucson_app/ui/ArticlesScreen.dart';
 import 'package:tucson_app/ui/EducationalWebsiteScreen.dart';
 import 'package:tucson_app/ui/student/ActivitesScreen.dart';
 import 'package:tucson_app/ui/student/BlogScreen.dart';
-
 import '../../GeneralUtils/LabelStr.dart';
+
 
 class Education extends StatefulWidget {
   @override
@@ -130,7 +130,7 @@ class _EducationScreenState extends State<Education> {
                             }
                             else if (index == 4) {
                               Utils.navigateToScreen(
-                                  context, BlogScreen());
+                                  context, BlogScreen(LabelStr.lblEducation));
                             }
                           },
                           child: Card(

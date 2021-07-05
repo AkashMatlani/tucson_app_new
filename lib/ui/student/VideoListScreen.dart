@@ -7,24 +7,25 @@ import 'package:tucson_app/GeneralUtils/PrefsUtils.dart';
 import 'package:tucson_app/GeneralUtils/Utils.dart';
 import 'package:tucson_app/Model/ContentMasterViewModel.dart';
 import 'package:tucson_app/Model/ContentResponse.dart';
+import 'package:tucson_app/ui/DisplayWebview.dart';
 import 'BlogDetailsScreen.dart';
 
 import '../../GeneralUtils/ColorExtension.dart';
 
 
-class BlogScreen extends StatefulWidget {
+class VideoListScreen extends StatefulWidget {
 
-  BlogScreen(this.title);
+  VideoListScreen(this.title);
   String title;
 
   @override
-  _BlogScreenState createState() => _BlogScreenState();
+  _VideoListScreenState createState() => _VideoListScreenState();
 }
 
-class _BlogScreenState extends State<BlogScreen> {
+class _VideoListScreenState extends State<VideoListScreen> {
 
   bool isLoading = true;
-  List<ContentResponse> _contentList = [];
+  List<ContentTransactionResponse> _videoList = [];
 
   @override
   void initState() {
@@ -91,9 +92,9 @@ class _BlogScreenState extends State<BlogScreen> {
             child: Container(
               margin: EdgeInsets.only(left: 3),
               height: MediaQuery.of(context).size.height*0.88,
-              child: _contentList.length == 0 ? emptyListView() : SingleChildScrollView(
+              child: _videoList.length == 0 ? emptyListView() : SingleChildScrollView(
                 child:  ListView.builder(
-                    itemCount: _contentList.length,
+                    itemCount: _videoList.length,
                     shrinkWrap: true,
                     physics: ScrollPhysics(),
                     padding: EdgeInsets.all(10),
@@ -111,7 +112,11 @@ class _BlogScreenState extends State<BlogScreen> {
   _listRowItems(BuildContext context, int index) {
     return InkWell(
       onTap: () {
-        Utils.navigateToScreen(context, BlogDetailsScreen(widget.title, _contentList[index]));
+        if(_videoList[index].objectPath.contains("https://www.youtube.com/")){
+          Utils.navigateToScreen(context, DisplayWebview(_videoList[index].objectPath));
+        }else {
+          Utils.navigateToScreen(context, VideoListScreen(_videoList[index].objectPath));
+        }
       },
       child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -136,17 +141,9 @@ class _BlogScreenState extends State<BlogScreen> {
                         )*/ Image.asset(MyImage.videoUrlImage, fit: BoxFit.fill),
             ),
             Padding(
-                padding: EdgeInsets.only(top: 15),
-                child: Text(
-                  Utils.convertDate(_contentList[index].createdOn, DateFormat("MMM dd, yyyy")),
-                  style: AppTheme.regularTextStyle().copyWith(
-                      fontSize: 14,
-                      color: Color.fromRGBO(111, 111, 111, 1)),
-                )),
-            Padding(
                 padding: EdgeInsets.only(top: 5, bottom: 20),
                 child: Text(
-                    _contentList[index].contentTitle,
+                    _videoList[index].objectName,
                     style: AppTheme.customTextStyle(
                         MyFont.SSPro_bold,
                         20.0,
@@ -165,26 +162,11 @@ class _BlogScreenState extends State<BlogScreen> {
 
   _getContentList(int schoolId) {
     ContentMasterViewModel _contentViewModel = ContentMasterViewModel();
-    var params;
-    if(widget.title.compareTo(LabelStr.lblStudentBlogs) == 0){
-      params = {
-        "schoolId": schoolId,
-        "roleId": 0,
-        "contentTypeName": "blog"
-      };
-    } else if(widget.title.compareTo(LabelStr.lblArticles) == 0){
-      params = {
-        "schoolId": schoolId,
-        "roleId": 0,
-        "contentTypeName": "Article"
-      };
-    } else if(widget.title.compareTo(LabelStr.lblStories) == 0){
-      params = {
-        "schoolId": schoolId,
-        "roleId": 0,
-        "contentTypeName": "Stories"
-      };
-    }
+    var params = {
+      "schoolId": schoolId,
+      "roleId": 0,
+      "contentTypeName": "Video"
+    };
 
     Utils.showLoader(true, context);
     _contentViewModel.getContentList(context, params, (isSuccess, message){
@@ -192,12 +174,18 @@ class _BlogScreenState extends State<BlogScreen> {
       isLoading = false;
       if(isSuccess){
         setState(() {
-          _contentList = [];
-          _contentList = _contentViewModel.contentList;
+          _videoList = [];
+          for(var data in _contentViewModel.contentList){
+            for(var innerData in data.contentTransactionTypeJoin){
+              if(innerData.contentTransTypeName.compareTo("Video") == 0){
+                _videoList.add(innerData);
+              }
+            }
+          }
         });
       } else {
         setState(() {
-          _contentList = [];
+          _videoList = [];
         });
       }
     });

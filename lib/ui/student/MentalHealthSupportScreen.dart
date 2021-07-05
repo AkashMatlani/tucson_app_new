@@ -99,7 +99,13 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
                   children: [
                     InkWell(
                       onTap: (){
-                        Utils.navigateToScreen(context, VideoPlayerScreen(_supportResponse.supportDocument));
+                        if(_supportResponse.supportDocument == null){
+                          Utils.showToast(context, LabelStr.lblNoVideo, Colors.red);
+                        } else if(_supportResponse.supportDocument.contains("https://www.youtube.com/")){
+                          Utils.navigateToScreen(context, DisplayWebview(_supportResponse.supportDocument));
+                        } else {
+                          Utils.navigateToScreen(context, VideoPlayerScreen(_supportResponse.supportDocument));
+                        }
                       },
                       child: Container(
                         margin: EdgeInsets.only(top: 30),
@@ -303,18 +309,11 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
     return fileName;
   }
 
-  videolodingView(){
-    return Container(
-      alignment: Alignment.center,
-      child: isLoading ? Container() : Text(LabelStr.lblNoData, style: AppTheme.regularTextStyle().copyWith(fontSize: 18, color: Colors.red)),
-    );
-  }
-
   emptyListView() {
     return Container(
       alignment: Alignment.center,
       height: MediaQuery.of(context).size.height*0.88,
-      child: isLoading ? Container() : Text(LabelStr.lblNoData, style: AppTheme.regularTextStyle().copyWith(fontSize: 18, color: Colors.red)),
+      child: isLoading ? Container() : Text(LabelStr.lblNoMentalHealth, style: AppTheme.regularTextStyle().copyWith(fontSize: 18, color: Colors.red)),
     );
   }
 
@@ -328,8 +327,6 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
         setState(() {
           _supportResponse = HealthSupportResponse.fromJson(response.body);
         });
-      } else {
-        Utils.showToast(context, LabelStr.lblNoData, Colors.red);
       }
     }).catchError((onError){
       Utils.showLoader(false, context);

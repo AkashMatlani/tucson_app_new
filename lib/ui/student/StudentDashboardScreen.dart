@@ -5,25 +5,24 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:tucson_app/GeneralUtils/PrefsUtils.dart';
-import 'package:tucson_app/WebService/WebService.dart';
-import 'package:tucson_app/ui/SignInScreen.dart';
-import '../DisplayWebview.dart';
-import '../WebViewEmpty.dart';
-import 'BlogScreen.dart';
 import 'package:tucson_app/GeneralUtils/ColorExtension.dart';
 import 'package:tucson_app/GeneralUtils/Constant.dart';
 import 'package:tucson_app/GeneralUtils/LabelStr.dart';
+import 'package:tucson_app/GeneralUtils/PrefsUtils.dart';
 import 'package:tucson_app/GeneralUtils/Utils.dart';
 import 'package:tucson_app/Model/GridListItems.dart';
+import 'package:tucson_app/WebService/WebService.dart';
+import 'package:tucson_app/ui/SignInScreen.dart';
+import 'package:tucson_app/ui/student/CoolStuffScreen.dart';
+
+import '../DisplayWebview.dart';
+import '../WebViewEmpty.dart';
+import 'BlogScreen.dart';
 import 'CalenderEvent.dart';
 import 'JobOpeningScreen.dart';
 import 'MentalHealthSupportScreen.dart';
 import 'ScholarshipInfoScreen.dart';
 import 'VolunteerOpportunitiesScreen.dart';
-import 'package:tucson_app/ui/student/CoolStuffScreen.dart';
-
-import '../parent/Education.dart';
 
 class StudentDashboardScreen extends StatefulWidget {
   @override
@@ -189,10 +188,9 @@ class _StudentDashboardScreenState extends State<StudentDashboardScreen> {
                             setState(() {
                               // ontap of each card, set the defined int to the grid view index
                               if (index == 0) {
-                                Utils.navigateToScreen(
-                                    context, CoolStuffScreen());
+                                getSchoolType();
                               } else if (index == 1) {
-                                Utils.navigateToScreen(context, BlogScreen());
+                                Utils.navigateToScreen(context, BlogScreen(LabelStr.lblStudentBlogs));
                               } else if (index == 2) {
                                 Utils.navigateToScreen(
                                     context, ScholarshipInfoScreen());
@@ -300,6 +298,25 @@ class _StudentDashboardScreenState extends State<StudentDashboardScreen> {
       Utils.showLoader(false, context);
       //Utils.showToast(context, LabelStr.serverError, Colors.red);
       Utils.navigateToScreen(context, WebViewEmpty());
+    });
+  }
+
+  void getSchoolType() {
+    Utils.showLoader(true, context);
+    var params = {
+      "schoolId": schoolId
+    };
+    WebService.postAPICall(WebService.getSchoolCategoryType, params).then((response){
+      Utils.showLoader(false, context);
+      if(response.statusCode == 1){
+        String schoolCategory = response.body["categoryName"];
+        Utils.navigateToScreen(context, CoolStuffScreen(schoolCategory));
+      } else {
+        Utils.showToast(context, response.message, Colors.red);
+      }
+    }).catchError((onError){
+      Utils.showLoader(false, context);
+      Utils.showToast(context, LabelStr.connectionError, Colors.red);
     });
   }
 }

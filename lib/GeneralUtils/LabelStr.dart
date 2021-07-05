@@ -37,6 +37,7 @@ class LabelStr {
   static const lblHi = "Hi";
   static const lblOk = "Ok";
   static const lblNo = "No";
+  static const lblFound = "Found";
   static const lblNotification = "Notification";
   static const lblProfile = " Profile";
   static const lblAboutUs = "About Us";
@@ -48,8 +49,13 @@ class LabelStr {
   static const lblClose= "Close";
   static const lblDone = "Done";
   static const lblLogout = "Sign Out";
-  static const lblNoData = "No Data Found";
-  static const lblNoFile = "File not found";
+  static const lblNoVideo = "No Video Found";
+  static const lblNoJobs = "No Job Found";
+  static const lblNoVolunteer = "No Volunteer Opportunity Found";
+  static const lblNoScholarship = "No Scholarship Found";
+  static const lblNoMentalHealth = "Mental Health Support Not Found";
+  static const lblNoWebUrl = "URL Not Found";
+  static const lblNoEducationalWeb = "No Educational Website Found";
 
   static const enterUserEmail = "Please enter your email id";
   static const enterValidEmail = "Please enter valid email";

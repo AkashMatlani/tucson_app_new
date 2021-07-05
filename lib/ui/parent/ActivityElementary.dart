@@ -5,7 +5,7 @@ import 'package:tucson_app/GeneralUtils/LabelStr.dart';
 import 'package:tucson_app/GeneralUtils/Utils.dart';
 import 'package:tucson_app/Model/ContentResponse.dart';
 import 'package:tucson_app/Model/GridListItems.dart';
-import 'package:tucson_app/ui/BlogDetailsScreen.dart';
+import '../student/BlogDetailsScreen.dart';
 
 class ActivityElementary extends StatefulWidget {
   @override
@@ -55,7 +55,7 @@ class _ActivityElementaryState extends State<ActivityElementary> {
                     return InkWell(
                       onTap: () {
                         var content = ContentResponse(contentMasterId: 0, schoolId: 0, contentTypeId: 0, contentTitle: "", content: "", createdOn: "", schoolName: "", contentTransactionTypeJoin: []);
-                        Utils.navigateToScreen(context, BlogDetailsScreen(content));
+                        Utils.navigateToScreen(context, BlogDetailsScreen(LabelStr.lblElementary, content));
                       },
                       child: Column(
                           mainAxisAlignment: MainAxisAlignment.start,

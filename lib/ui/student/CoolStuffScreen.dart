@@ -8,6 +8,10 @@ import 'package:tucson_app/ui/student/ElementaryStuff.dart';
 import 'package:tucson_app/ui/student/MiddleHighStuff.dart';
 
 class CoolStuffScreen extends StatefulWidget {
+
+  CoolStuffScreen(this.schoolCategory);
+  String schoolCategory;
+
   @override
   _CoolStuffScreenScreenState createState() => _CoolStuffScreenScreenState();
 }
@@ -35,9 +39,7 @@ class _CoolStuffScreenScreenState extends State<CoolStuffScreen> with SingleTick
 
   @override
   Widget build(BuildContext context) {
-
     var tabHeight = MediaQuery.of(context).size.height * 0.06;
-
     return Scaffold(
       body: Stack(
         fit: StackFit.expand,
@@ -48,6 +50,7 @@ class _CoolStuffScreenScreenState extends State<CoolStuffScreen> with SingleTick
               children: [
                 Container(
                   margin: EdgeInsets.fromLTRB(0, MediaQuery.of(context).size.height*0.03, 0, MediaQuery.of(context).size.height*0.03),
+                  height: MediaQuery.of(context).size.height*0.06,
                   child: Row(
                     children: [
                       Container(
@@ -67,17 +70,15 @@ class _CoolStuffScreenScreenState extends State<CoolStuffScreen> with SingleTick
                     ],
                   ),
                 ),
-                Expanded(
-                  child: Container(
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(30.0),
-                            topRight: Radius.circular(30.0)),
-                        color: HexColor("FAFAFA")),
-                    height: double.infinity,
-                    width: MediaQuery.of(context).size.width,
-                    padding: EdgeInsets.all(10),
-                  ),
+                Container(
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(30.0),
+                          topRight: Radius.circular(30.0)),
+                      color: HexColor("FAFAFA")),
+                  height: MediaQuery.of(context).size.height*0.88,
+                  width: MediaQuery.of(context).size.width,
+                  padding: EdgeInsets.all(10),
                 )
               ],
             ),
@@ -90,7 +91,7 @@ class _CoolStuffScreenScreenState extends State<CoolStuffScreen> with SingleTick
               height:500,
               width: MediaQuery.of(context).size.width,
               margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
-              child: Column(
+              child: widget.schoolCategory.compareTo("K-8") ==0 ? Column(
                 children: <Widget>[
                   Stack(
                     children: [
@@ -152,12 +153,11 @@ class _CoolStuffScreenScreenState extends State<CoolStuffScreen> with SingleTick
                       )
                   )
                 ],
-              ),
+              ) : ElementaryStuff(),
             ),
           )
         ],
       ),
     );
-
   }
 }
