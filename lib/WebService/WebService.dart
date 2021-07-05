@@ -23,6 +23,7 @@ class WebService {
   static const parentGetAllEventForMobile= "Event/GetAllEventForMobile";
   static const contentByType = "ContentMaster/GetContentByType";
   static const studentContentByType = "Student/GetContentByType";
+  static const tusdSupportBySchoolID = "TUSDSupport/GetBySchoolId";
 
   static Future<ServerResponse> getAPICall(String apiName, Map<String, dynamic> params) async {
     var url = baseUrl + apiName;
