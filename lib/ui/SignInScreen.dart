@@ -50,12 +50,12 @@ class _SignInScreenState extends State<SignInScreen> {
           fit: StackFit.expand,
           children: [
             Container(
-              height: MediaQuery.of(context).size.height*0.38,
+              height: MediaQuery.of(context).size.height*0.3,
               alignment: Alignment.topCenter,
               child: Image.asset(MyImage.signIn),
             ),
             Positioned.fill(
-              top: MediaQuery.of(context).size.height*0.2,
+              top: MediaQuery.of(context).size.height*0.25,
               bottom: 0.0,
               child: Container(
                 decoration: BoxDecoration(

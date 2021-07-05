@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:tucson_app/GeneralUtils/Constant.dart';
 import 'package:tucson_app/GeneralUtils/LabelStr.dart';
 import 'package:tucson_app/GeneralUtils/Utils.dart';
+import 'package:tucson_app/Model/ContentResponse.dart';
 import 'package:tucson_app/Model/GridListItems.dart';
 import 'package:tucson_app/ui/BlogDetailsScreen.dart';
 
@@ -53,7 +54,8 @@ class _ActivityElementaryState extends State<ActivityElementary> {
                   itemBuilder: (BuildContext ctxt, int index) {
                     return InkWell(
                       onTap: () {
-                        Utils.navigateToScreen(context, BlogDetailsScreen());
+                        var content = ContentResponse(contentMasterId: 0, schoolId: 0, contentTypeId: 0, contentTitle: "", content: "", createdOn: "", schoolName: "", contentTransactionTypeJoin: []);
+                        Utils.navigateToScreen(context, BlogDetailsScreen(content));
                       },
                       child: Column(
                           mainAxisAlignment: MainAxisAlignment.start,
