@@ -8,6 +8,7 @@ import 'package:tucson_app/GeneralUtils/Utils.dart';
 import 'package:tucson_app/Model/ContentMasterViewModel.dart';
 import 'package:tucson_app/Model/ContentResponse.dart';
 import 'package:tucson_app/ui/DisplayWebview.dart';
+import 'package:tucson_app/ui/VideoPlayerScreen.dart';
 import 'BlogDetailsScreen.dart';
 
 import '../../GeneralUtils/ColorExtension.dart';
@@ -115,7 +116,7 @@ class _VideoListScreenState extends State<VideoListScreen> {
         if(_videoList[index].objectPath.contains("https://www.youtube.com/")){
           Utils.navigateToScreen(context, DisplayWebview(_videoList[index].objectPath));
         }else {
-          Utils.navigateToScreen(context, VideoListScreen(_videoList[index].objectPath));
+          Utils.navigateToScreen(context, VideoPlayerScreen(_videoList[index].objectPath));
         }
       },
       child: Column(
