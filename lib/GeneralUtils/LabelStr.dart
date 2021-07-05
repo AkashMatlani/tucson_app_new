@@ -45,6 +45,7 @@ class LabelStr {
   static const lblUpdate= "Update";
   static const lblSubmit= "Submit";
   static const lblCancel= "Cancel";
+  static const lblClose= "Close";
   static const lblDone = "Done";
   static const lblLogout = "Sign Out";
   static const lblNoData = "No Data Found";

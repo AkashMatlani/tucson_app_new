@@ -231,33 +231,39 @@ class _StudentDashboardScreenState extends State<StudentDashboardScreen> {
                               color: Color.fromRGBO(245, 246, 252, 1),
                               elevation: 5,
                               clipBehavior: Clip.antiAlias,
-                              child: Column(
-                                mainAxisAlignment:
+                              child: Wrap(
+                                children: [
+
+                                  Column(
+                                    mainAxisAlignment:
                                     MainAxisAlignment.spaceAround,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  Padding(
-                                      padding: EdgeInsets.fromLTRB(
-                                          16.0, 12.0, 16.0, 8.0),
-                                      child: SvgPicture.asset(
-                                          menuItems[index].svgPicture)),
-                                  Padding(
-                                    padding: EdgeInsets.fromLTRB(
-                                        16.0, 12.0, 16.0, 8.0),
-                                    child: Column(
-                                      crossAxisAlignment:
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: <Widget>[
+                                      Padding(
+                                          padding: EdgeInsets.fromLTRB(
+                                              16.0, 12.0, 16.0, 8.0),
+                                          child: SvgPicture.asset(
+                                              menuItems[index].svgPicture)),
+                                      Padding(
+                                        padding: EdgeInsets.fromLTRB(
+                                            16.0, 12.0, 16.0, 8.0),
+                                        child: Column(
+                                          crossAxisAlignment:
                                           CrossAxisAlignment.center,
-                                      mainAxisAlignment:
+                                          mainAxisAlignment:
                                           MainAxisAlignment.spaceAround,
-                                      children: <Widget>[
-                                        Text(
-                                          menuItems[index].name,
-                                          style: AppTheme.regularTextStyle()
-                                              .copyWith(color: Colors.black),
+                                          children: <Widget>[
+                                            Text(
+                                              menuItems[index].name,
+                                              style: AppTheme.regularTextStyle()
+                                                  .copyWith(color: Colors.black),
+                                            ),
+                                          ],
                                         ),
-                                      ],
-                                    ),
+                                      ),
+                                    ],
                                   ),
+
                                 ],
                               )));
                     }),
@@ -283,8 +289,8 @@ class _StudentDashboardScreenState extends State<StudentDashboardScreen> {
       Utils.showLoader(false, context);
       if (response.statusCode == 1) {
         if (response.body != null) {
-          String webUrl =
-              response.body[0]["contentTransactionTypeJoin"][0]["objectPath"];
+          String webUrl = response.body[0]["contentTransactionTypeJoin"][0]["objectPath"];
+          if(webUrl.isNotEmpty)
           Utils.navigateToScreen(context, DisplayWebview(webUrl));
         }
       } else {

@@ -22,7 +22,7 @@ class CalendarEvent extends StatefulWidget {
 }
 
 class _CalendarEventState extends State<CalendarEvent> {
-  String _currentMonth = DateFormat.yMMM().format(DateTime(2021,7, 3));
+  String _currentMonth = DateFormat.yMMM().format(DateTime(2021, 7, 3));
   DateTime _targetDateTime = DateTime(2021, 7, 3);
   DateTime _currentDate = DateTime(2021, 7, 3);
   DateTime _currentDate2 = DateTime(2021, 7, 3);
@@ -55,17 +55,15 @@ class _CalendarEventState extends State<CalendarEvent> {
 
   @override
   Widget build(BuildContext context) {
-
     var screenHeight = MediaQuery.of(context).size.height;
     blockSizeVertical = screenHeight / 100;
-
     final _calendarCarouselNoHeader = CalendarCarousel<Event>(
       todayBorderColor: Colors.green,
       onDayPressed: (date, events) {
         this.setState(() => _currentDate2 = date);
-        events.forEach((event) =>
-        event.title!=null?
-            bottomMenu(event.title!, _currentDate2, event.getIcon()):Container());
+        events.forEach((event) => event.title != null
+            ? bottomMenu(event.title!, _currentDate2, event.getIcon())
+            : Container());
       },
       showOnlyCurrentMonthDate: false,
       weekendTextStyle: TextStyle(
@@ -75,7 +73,7 @@ class _CalendarEventState extends State<CalendarEvent> {
       weekFormat: false,
 //      firstDayOfWeek: 4,
       markedDatesMap: _markedDateMap,
-      height: blockSizeVertical*32,
+      height: blockSizeVertical * 40,
       selectedDateTime: _currentDate2,
       targetDateTime: _targetDateTime,
       customGridViewPhysics: NeverScrollableScrollPhysics(),
@@ -130,13 +128,18 @@ class _CalendarEventState extends State<CalendarEvent> {
             child: Column(
               children: [
                 Container(
-                  margin: EdgeInsets.fromLTRB(0, MediaQuery.of(context).size.height*0.03, 0, MediaQuery.of(context).size.height*0.03),
+                  margin: EdgeInsets.fromLTRB(
+                      0,
+                      MediaQuery.of(context).size.height * 0.03,
+                      0,
+                      MediaQuery.of(context).size.height * 0.03),
                   child: Row(
                     children: [
                       Container(
                         margin: EdgeInsets.only(top: 10),
                         child: IconButton(
-                            icon: Icon(Icons.arrow_back_ios, color: Colors.white),
+                            icon:
+                                Icon(Icons.arrow_back_ios, color: Colors.white),
                             onPressed: () {
                               Navigator.of(context).pop();
                             }),
@@ -166,7 +169,7 @@ class _CalendarEventState extends State<CalendarEvent> {
             ),
           ),
           Positioned(
-              top: MediaQuery.of(context).size.height * 0.20,
+              top: MediaQuery.of(context).size.height * 0.14,
               left: MediaQuery.of(context).size.height * 0.03,
               right: MediaQuery.of(context).size.height * 0.03,
               child: Container(
@@ -181,6 +184,7 @@ class _CalendarEventState extends State<CalendarEvent> {
                     // This trailing comma makes auto-formatting nicer for build methods.
                     //custom icon without header
                     Container(
+                      height: blockSizeVertical * 48,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
                           border: Border.all(color: Colors.black12, width: 1)),
@@ -212,7 +216,8 @@ class _CalendarEventState extends State<CalendarEvent> {
                                 Expanded(
                                   child: Text(
                                     _currentMonth,
-                                    style: AppTheme.regularTextStyle().copyWith(color: HexColor("#6462AA")),
+                                    style: AppTheme.regularTextStyle()
+                                        .copyWith(color: HexColor("#6462AA")),
                                     textAlign: TextAlign.center,
                                   ),
                                 ),
@@ -240,10 +245,10 @@ class _CalendarEventState extends State<CalendarEvent> {
                             color: Colors.black12,
                             width: MediaQuery.of(context).size.width,
                           ),
-                          SizedBox(height: 10),
-                          Container(
-                            height: blockSizeVertical*32,
-                            child: _calendarCarouselNoHeader,
+                          Expanded(
+                            child: Container(
+                              child: _calendarCarouselNoHeader,
+                            ),
                           ),
                         ],
                       ),
@@ -253,12 +258,35 @@ class _CalendarEventState extends State<CalendarEvent> {
                         // bottomMenu();
                       },
                       child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          "Upcoming Event",
-                          style: AppTheme.regularTextStyle().copyWith(
-                              fontSize: 16,
-                              color: Color.fromRGBO(11, 11, 11, 1)),
+                        padding: const EdgeInsets.only(top: 8.0),
+                        child: Row(
+                          children: [
+                            Container(
+                              decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  gradient: LinearGradient(
+                                    colors: [
+                                      HexColor("#6462AA"),
+                                      HexColor("#4CA7DA"),
+                                      HexColor("#20B69E"),
+                                    ],
+                                  )),
+                              child: Icon(
+                                Icons.check_circle,
+                                size: 18.0,
+                                color: Colors.green,
+                              ),
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              "Upcoming Event",
+                              style: AppTheme.regularTextStyle().copyWith(
+                                  fontSize: 16,
+                                  color: Color.fromRGBO(11, 11, 11, 1)),
+                            ),
+                          ],
                         ),
                       ),
                     )
@@ -282,10 +310,8 @@ class _CalendarEventState extends State<CalendarEvent> {
             eventNameTitle = eventist[i].eventName;
             String date = Utils.convertDate(
                 eventist[i].fromDateTime, DateFormat('MM/dd/yyyy'));
-
             print(date);
             var dateInFormatText = date.split("/");
-            _eventIcon;
             setState(() {
               _markedDateMap.add(
                   new DateTime(
@@ -293,18 +319,28 @@ class _CalendarEventState extends State<CalendarEvent> {
                       int.parse(dateInFormatText[0]),
                       int.parse(dateInFormatText[1])),
                   new Event(
+                    dot:Container(
+                      height: 30,
+                      width: 30,
+                        decoration: BoxDecoration(
+                            border: Border.all(
+                              color:Colors.black,
+                            ),
+                            borderRadius: BorderRadius.all(Radius.circular(20))
+                        ),
+                    ),
                       date: new DateTime(
                           int.parse(dateInFormatText[2]),
                           int.parse(dateInFormatText[0]),
                           int.parse(dateInFormatText[1])),
                       title: eventist[i].eventName,
                       icon: Padding(
-                        padding: const EdgeInsets.fromLTRB(20.0, 20, 10, 10),
+                        padding: const EdgeInsets.fromLTRB(20.0, 0, 10, 0),
                         child: Container(
-                          child: Text("Event Details:"+"\n"+eventist[i].eventDetail,
+                          child: Text(
+                              "Event Details:" + "\n" + eventist[i].eventDetail,
                               style: AppTheme.regularTextStyle().copyWith(
-                                  fontSize: 16,
-                                  color: Color.fromRGBO(0, 0, 0, 1))),
+                                  fontSize: 16, color: Colors.black26)),
                         ),
                       )));
             });
@@ -316,19 +352,16 @@ class _CalendarEventState extends State<CalendarEvent> {
     });
   }
 
-  static Widget _eventIcon = new Container(
-    child: new Text("abcdpqrs"),
-  );
-
   void bottomMenu(String eventist, DateTime currentDate2, Widget? abcd) {
-
-
+    String formattedDate =
+        DateFormat("yyyy-MM-dd'T'hh:mm:ss").format(currentDate2);
+    String finalDate =
+        Utils.convertDate(formattedDate, DateFormat("dd-MM-yyyy"));
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
       builder: (context) => Container(
-        height: MediaQuery.of(context).size.height * 0.60,
         decoration: new BoxDecoration(
           color: Colors.white,
           borderRadius: new BorderRadius.only(
@@ -336,50 +369,54 @@ class _CalendarEventState extends State<CalendarEvent> {
             topRight: const Radius.circular(40.0),
           ),
         ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: Wrap(
           children: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(20.0, 40, 10, 10),
-              child: Text(eventist,
-                  style: AppTheme.customTextStyle(
-                      MyFont.SSPro_semibold, 18.0, Color.fromRGBO(0, 0, 0, 1))),
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(20.0, 20, 10, 10),
-              child: Text(
-                currentDate2.toString(),
-                style: AppTheme.regularTextStyle()
-                    .copyWith(fontSize: 16, color: Color.fromRGBO(0, 0, 0, 1)),
-              ),
-            ),
-            abcd!,
-            Padding(
-              padding: const EdgeInsets.only(top: 16),
-              child: Divider(
-                  thickness: 1, color: Color.fromRGBO(223, 223, 223, 4)),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(right: 8),
-              child: Align(
-                alignment: Alignment.topRight,
-                child: Container(
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: Color.fromRGBO(204, 204, 204, 1)),
-                  height: 50,
-                  width: MediaQuery.of(context).size.width * 0.35,
-                  child: TextButton(
-                    child: Text(LabelStr.lblCancel,
-                        style: AppTheme.customTextStyle(MyFont.SSPro_bold, 16.0,
-                            Color.fromRGBO(255, 255, 255, 1))),
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
+            Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(20.0, 40, 10, 0),
+                  child: Text(eventist,
+                      style: AppTheme.customTextStyle(MyFont.SSPro_semibold,
+                          18.0, Color.fromRGBO(0, 0, 0, 1))),
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(20.0, 20, 10, 10),
+                  child: Text(
+                    "Date & Time:" + "\n" + finalDate,
+                    style: AppTheme.regularTextStyle()
+                        .copyWith(fontSize: 16, color: Colors.black26),
                   ),
                 ),
-              ),
+                abcd!,
+                Padding(
+                  padding: const EdgeInsets.only(top: 16),
+                  child: Divider(
+                      thickness: 1, color: Color.fromRGBO(223, 223, 223, 4)),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(right: 8, top: 10, bottom: 20),
+                  child: Align(
+                    alignment: Alignment.topRight,
+                    child: Container(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: Color.fromRGBO(204, 204, 204, 1)),
+                      height: 50,
+                      width: MediaQuery.of(context).size.width * 0.35,
+                      child: TextButton(
+                        child: Text(LabelStr.lblClose,
+                            style: AppTheme.customTextStyle(MyFont.SSPro_bold,
+                                16.0, Color.fromRGBO(255, 255, 255, 1))),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
           ],
         ),
