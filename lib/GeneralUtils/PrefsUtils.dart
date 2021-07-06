@@ -9,8 +9,8 @@ class PrefUtils {
   static const String userEmail = "com.TucsonApp.userEmail";
   static const String userFirstName = "com.TucsonApp.userFirstName";
   static const String userLastName = "com.TucsonApp.userLastName";
+  static const String userDOB = "com.TucsonApp.userDOB";
   static const String userToken = "com.TucsonApp.userToken";
-  static const String UserDob = "com.TucsonApp.dob";
   static const String schoolId = "com.TucsonApp.schoolId";
   static const String yourLanguage = "com.TucsonApp.yourLanguage";
 
@@ -49,8 +49,8 @@ class PrefUtils {
     PrefUtils.setStringValue(PrefUtils.userEmail, userDetails.email);
     PrefUtils.setStringValue(PrefUtils.userFirstName, userDetails.firstName);
     PrefUtils.setStringValue(PrefUtils.userLastName, userDetails.lastName);
+    PrefUtils.setStringValue(PrefUtils.userDOB, userDetails.dob);
     PrefUtils.setStringValue(PrefUtils.userToken, userDetails.accessToken);
-    PrefUtils.setStringValue(PrefUtils.UserDob, userDetails.dob);
     if(userDetails.schoolId == null){
       PrefUtils.setIntValue(PrefUtils.schoolId, 0);
     } else {
@@ -67,7 +67,7 @@ class PrefUtils {
     await getValueFor(PrefUtils.userEmail);
     await getValueFor(PrefUtils.userFirstName);
     await getValueFor(PrefUtils.userLastName);
-    await getValueFor(PrefUtils.UserDob);
+    await getValueFor(PrefUtils.userDOB);
     await getValueFor(PrefUtils.schoolId);
     await getValueFor(PrefUtils.yourLanguage);
   }

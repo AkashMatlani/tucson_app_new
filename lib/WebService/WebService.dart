@@ -20,7 +20,7 @@ class WebService {
   static const employeeSignUp = "Employee/Create";
   static const communitySignUp = "Community/Create";
   static const parentSignUp = "ParentGuardian/Create";
-  static const parentGetAllEventForMobile= "Event/GetAllEventForMobile";
+  static const allEventForMobile= "Event/GetAllEventForMobile";
   static const contentByType = "ContentMaster/GetContentByType";
   static const studentContentByType = "Student/GetContentByType";
   static const tusdSupportBySchoolID = "TUSDSupport/GetBySchoolId";

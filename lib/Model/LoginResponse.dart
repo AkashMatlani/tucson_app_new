@@ -4,6 +4,7 @@
 /// email : "vinay@gmail.com"
 /// firstName : "vinay"
 /// lastName : "thakkar"
+/// dob : "2000-06-28T12:00:00"
 /// image : null
 /// blob : null
 /// schoolId : 1
@@ -39,7 +40,7 @@ class LoginResponse {
       required String firstName,
       required String lastName,
       required String dob,
-      dynamic image, 
+      dynamic image,
       dynamic blob,
       required int schoolId}){
     _id = id;
@@ -48,7 +49,7 @@ class LoginResponse {
     _email = email;
     _firstName = firstName;
     _lastName = lastName;
-    _dob=dob;
+    _dob = dob;
     _image = image;
     _blob = blob;
     _schoolId = schoolId;
@@ -61,7 +62,7 @@ class LoginResponse {
     _email = json["email"];
     _firstName = json["firstName"];
     _lastName = json["lastName"];
-    _dob=json["dob"];
+    _dob = json["dob"];
     _image = json["image"];
     _blob = json["blob"];
     _schoolId = json["schoolId"];

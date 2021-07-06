@@ -91,7 +91,6 @@ class _VideoListScreenState extends State<VideoListScreen> {
             left: MediaQuery.of(context).size.height*0.012,
             right: MediaQuery.of(context).size.height*0.012,
             child: Container(
-              margin: EdgeInsets.only(left: 3),
               height: MediaQuery.of(context).size.height*0.88,
               child: _videoList.length == 0 ? emptyListView() : SingleChildScrollView(
                 child:  ListView.builder(
@@ -130,16 +129,8 @@ class _VideoListScreenState extends State<VideoListScreen> {
                   borderRadius: BorderRadius.circular(20),
                   color: Colors.white
               ),
-              child: /*ClipRRect(
-                          borderRadius: BorderRadius.circular(10),
-                          child: CachedNetworkImage(
-                            fit: BoxFit.cover,
-                            useOldImageOnUrlChange: false,
-                            imageUrl: getVideoThumbinail(),
-                            placeholder: (context, url) => Container(height: 40, width: 40, alignment: Alignment.center, child: CircularProgressIndicator()),
-                            errorWidget: (context, url, error) => Image.asset(MyImage.videoUrlImage),
-                          ),
-                        )*/ Image.asset(MyImage.videoUrlImage, fit: BoxFit.fill),
+              alignment: Alignment.center,
+              child: Image.asset(MyImage.videoUrlImage, fit: BoxFit.fill),
             ),
             Padding(
                 padding: EdgeInsets.only(top: 5, bottom: 20),

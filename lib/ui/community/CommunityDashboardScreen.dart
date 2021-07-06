@@ -206,8 +206,7 @@ class _CommunityDashboardScreenState extends State<CommunityDashboardScreen> {
                               elevation: 5,
                               clipBehavior: Clip.antiAlias,
                               child: Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
                                   Padding(
@@ -218,22 +217,18 @@ class _CommunityDashboardScreenState extends State<CommunityDashboardScreen> {
                                   Padding(
                                     padding: EdgeInsets.fromLTRB(
                                         16.0, 12.0, 16.0, 8.0),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceAround,
-                                      children: <Widget>[
-                                        Text(
-                                          menuItems[index].name,
-                                          style: AppTheme.regularTextStyle()
-                                              .copyWith(color: Colors.black),
-                                        ),
-                                      ],
+                                    child: Align(
+                                      alignment: Alignment.bottomLeft,
+                                      child: Text(
+                                        menuItems[index].name,
+                                        style: AppTheme.regularTextStyle()
+                                            .copyWith(color: Colors.black),
+                                      ),
                                     ),
                                   ),
                                 ],
-                              )));
+                              ))
+                      );
                     }),
               ),
             ),

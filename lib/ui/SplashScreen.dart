@@ -85,7 +85,7 @@ class _SplashScreenState extends State<SplashScreen> {
     }).catchError((error) {
       Utils.showLoader(false, context);
       print(error);
-      Utils.showToast(context, LabelStr.serverError, Colors.red);
+      Utils.showToast(context, LabelStr.connectionError, Colors.red);
     });
   }
 

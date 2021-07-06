@@ -256,6 +256,10 @@ class _SignInScreenState extends State<SignInScreen> {
                                   value: 'ar'
                               ),
                               DropdownMenuItem(
+                                  child: Text('Kirundi'),
+                                  value: 'ru'
+                              ),
+                              DropdownMenuItem(
                                   child: Text('Somali'),
                                   value: 'so'
                               ),
