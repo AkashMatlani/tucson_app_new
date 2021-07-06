@@ -89,7 +89,6 @@ class _BlogScreenState extends State<BlogScreen> {
             left: MediaQuery.of(context).size.height*0.012,
             right: MediaQuery.of(context).size.height*0.012,
             child: Container(
-              margin: EdgeInsets.only(left: 3),
               height: MediaQuery.of(context).size.height*0.88,
               child: _contentList.length == 0 ? emptyListView() : SingleChildScrollView(
                 child:  ListView.builder(
@@ -124,6 +123,7 @@ class _BlogScreenState extends State<BlogScreen> {
                   borderRadius: BorderRadius.circular(20),
                   color: Colors.white
               ),
+              alignment: Alignment.center,
               child: /*ClipRRect(
                           borderRadius: BorderRadius.circular(10),
                           child: CachedNetworkImage(

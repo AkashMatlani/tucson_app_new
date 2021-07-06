@@ -105,7 +105,6 @@ class _BlogDetailsScreenState extends State<BlogDetailsScreen> {
               height: MediaQuery.of(context).size.height*0.88,
               child: SingleChildScrollView(
                 child: Container(
-                  margin: EdgeInsets.only(left: 12),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -117,6 +116,7 @@ class _BlogDetailsScreenState extends State<BlogDetailsScreen> {
                             borderRadius: BorderRadius.circular(20),
                             color: Colors.white
                         ),
+                        alignment: Alignment.center,
                         child: Image.asset(MyImage.videoUrlImage, fit: BoxFit.fill),
                       ),
                       SizedBox(height: 20),

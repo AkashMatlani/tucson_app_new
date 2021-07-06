@@ -4,6 +4,7 @@
 /// email : "vinay@gmail.com"
 /// firstName : "vinay"
 /// lastName : "thakkar"
+/// dob : "2000-06-28T12:00:00"
 /// image : null
 /// blob : null
 /// schoolId : 1
@@ -15,6 +16,7 @@ class LoginResponse {
   late String _email;
   late String _firstName;
   late String _lastName;
+  late String _dob;
   dynamic _image;
   dynamic _blob;
   late int _schoolId;
@@ -25,6 +27,7 @@ class LoginResponse {
   String get email => _email;
   String get firstName => _firstName;
   String get lastName => _lastName;
+  String get dob => _dob;
   dynamic get image => _image;
   dynamic get blob => _blob;
   int get schoolId => _schoolId;
@@ -36,7 +39,8 @@ class LoginResponse {
       required String email,
       required String firstName,
       required String lastName,
-      dynamic image, 
+      required String dob,
+      dynamic image,
       dynamic blob,
       required int schoolId}){
     _id = id;
@@ -45,6 +49,7 @@ class LoginResponse {
     _email = email;
     _firstName = firstName;
     _lastName = lastName;
+    _dob = dob;
     _image = image;
     _blob = blob;
     _schoolId = schoolId;
@@ -57,6 +62,7 @@ class LoginResponse {
     _email = json["email"];
     _firstName = json["firstName"];
     _lastName = json["lastName"];
+    _dob = json["dob"];
     _image = json["image"];
     _blob = json["blob"];
     _schoolId = json["schoolId"];
@@ -70,6 +76,7 @@ class LoginResponse {
     map["email"] = _email;
     map["firstName"] = _firstName;
     map["lastName"] = _lastName;
+    map["dob"] = _dob;
     map["image"] = _image;
     map["blob"] = _blob;
     map["schoolId"] = _schoolId;

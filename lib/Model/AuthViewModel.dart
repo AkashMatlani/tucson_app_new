@@ -207,7 +207,7 @@ class AuthViewModel {
 
   void getAllEventForMobile(String schoolId, ResponseCallback callback) {
     var params = {"SchoolId": schoolId};
-    WebService.getAPICall(WebService.parentGetAllEventForMobile, params).then((response) {
+    WebService.getAPICall(WebService.allEventForMobile, params).then((response) {
       if (response.statusCode == 1) {
         if (response.body != null) {
           eventForMobileList = [];

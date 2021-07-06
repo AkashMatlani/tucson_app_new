@@ -1,11 +1,14 @@
 import 'dart:async';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_calendar_carousel/classes/event.dart';
+import 'package:flutter_calendar_carousel/flutter_calendar_carousel.dart';
 import 'package:intl/intl.dart';
 import 'package:tucson_app/GeneralUtils/ColorExtension.dart';
 import 'package:tucson_app/GeneralUtils/Constant.dart';
 import 'package:tucson_app/GeneralUtils/LabelStr.dart';
+import 'package:tucson_app/GeneralUtils/PrefsUtils.dart';
 import 'package:tucson_app/GeneralUtils/Utils.dart';
 import 'package:tucson_app/Model/AuthViewModel.dart';
 import 'package:tucson_app/Model/EventForMobileResponse.dart';
@@ -22,35 +25,34 @@ class CalendarEvent extends StatefulWidget {
 }
 
 class _CalendarEventState extends State<CalendarEvent> {
-  String _currentMonth = DateFormat.yMMM().format(DateTime(2021, 7, 3));
-  DateTime _targetDateTime = DateTime(2021, 7, 3);
-  DateTime _currentDate = DateTime(2021, 7, 3);
-  DateTime _currentDate2 = DateTime(2021, 7, 3);
+  String _currentMonth = DateFormat.yMMM().format(DateTime.now());
+  DateTime _currentDate = DateTime.now();
+  DateTime selectedDate = DateTime.now();
+  late DateTime _targetDateTime;
 
   AuthViewModel _authViewModel = AuthViewModel();
-  late List<EventForMobileResponse> eventist = [];
-  List<GridListItems> menuItems = [
-    GridListItems(
-      name: LabelStr.lblEducationWebstite,
-      svgPicture: MyImage.educationalWebsiteIcon,
-    ),
-    GridListItems(name: LabelStr.lblVideos, svgPicture: MyImage.videosIcon),
-    GridListItems(
-        name: LabelStr.lblActivites, svgPicture: MyImage.activitesIcon),
-    GridListItems(name: LabelStr.lblArticles, svgPicture: MyImage.articlesIcon),
-    GridListItems(name: LabelStr.lblBlogs, svgPicture: MyImage.blogsIcon),
-  ];
+  List<EventForMobileResponse> eventist = [];
+  List<EventForMobileResponse> upcommingEventList = [];
 
   EventList<Event> _markedDateMap = new EventList<Event>(
     events: {},
   );
+
   late String eventNameTitle = "";
   late double blockSizeVertical;
 
   @override
   void initState() {
-    Timer(Duration(milliseconds: 100), () => _getEventDetail());
     super.initState();
+    _getSchoolId();
+  }
+
+  _getSchoolId() async {
+    int schoolId = await PrefUtils.getValueFor(PrefUtils.schoolId);
+    if(schoolId == null){
+      schoolId = 0;
+    }
+    _getEventDetail(schoolId);
   }
 
   @override
@@ -58,56 +60,36 @@ class _CalendarEventState extends State<CalendarEvent> {
     var screenHeight = MediaQuery.of(context).size.height;
     blockSizeVertical = screenHeight / 100;
     final _calendarCarouselNoHeader = CalendarCarousel<Event>(
-      todayBorderColor: Colors.green,
       onDayPressed: (date, events) {
-        this.setState(() => _currentDate2 = date);
+        this.setState(() => selectedDate = date);
         events.forEach((event) => event.title != null
-            ? bottomMenu(event.title!, _currentDate2, event.getIcon())
+            ? bottomMenu(event.title!, selectedDate, event.getIcon())
             : Container());
       },
       showOnlyCurrentMonthDate: false,
       weekendTextStyle: TextStyle(
-        color: Colors.red,
+        color: Colors.black87,
       ),
       thisMonthDayBorderColor: Colors.grey,
       weekFormat: false,
-//      firstDayOfWeek: 4,
-      markedDatesMap: _markedDateMap,
-      height: blockSizeVertical * 40,
-      selectedDateTime: _currentDate2,
-      targetDateTime: _targetDateTime,
-      customGridViewPhysics: NeverScrollableScrollPhysics(),
-      markedDateCustomShapeBorder:
-          CircleBorder(side: BorderSide(color: Colors.blue)),
-      markedDateCustomTextStyle: TextStyle(
-        fontSize: 18,
-        color: Colors.blue,
+      weekDayFormat: WeekdayFormat.narrow,
+      weekdayTextStyle: TextStyle(
+        color: HexColor("#6462AA")
       ),
+      markedDatesMap: _markedDateMap,
+      height: blockSizeVertical * 30,
+      selectedDateTime: selectedDate,
+      customGridViewPhysics: NeverScrollableScrollPhysics(),
       showHeader: false,
       todayTextStyle: TextStyle(
-        color: Colors.blue,
+        color: Colors.white,
       ),
-      // markedDateShowIcon: true,
-      // markedDateIconMaxShown: 2,
-      // markedDateIconBuilder: (event) {
-      //   return event.icon;
-      // },
-      // markedDateMoreShowTotal:
-      //     true,
-      todayButtonColor: Colors.yellow,
+      todayButtonColor: HexColor("#6462AA"),
       selectedDayTextStyle: TextStyle(
-        color: Colors.yellow,
+        color: HexColor("#6462AA"),
       ),
       minSelectedDate: _currentDate.subtract(Duration(days: 360)),
       maxSelectedDate: _currentDate.add(Duration(days: 360)),
-      prevDaysTextStyle: TextStyle(
-        fontSize: 16,
-        color: Colors.pinkAccent,
-      ),
-      inactiveDaysTextStyle: TextStyle(
-        color: Colors.tealAccent,
-        fontSize: 16,
-      ),
       onCalendarChanged: (DateTime date) {
         this.setState(() {
           _targetDateTime = date;
@@ -180,11 +162,8 @@ class _CalendarEventState extends State<CalendarEvent> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
-                    //custom icon
-                    // This trailing comma makes auto-formatting nicer for build methods.
-                    //custom icon without header
                     Container(
-                      height: blockSizeVertical * 48,
+                      height: blockSizeVertical * 42,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
                           border: Border.all(color: Colors.black12, width: 1)),
@@ -245,14 +224,14 @@ class _CalendarEventState extends State<CalendarEvent> {
                             color: Colors.black12,
                             width: MediaQuery.of(context).size.width,
                           ),
-                          Expanded(
-                            child: Container(
-                              child: _calendarCarouselNoHeader,
-                            ),
+                          Container(
+                            margin: EdgeInsets.only(top: 10),
+                            child: _calendarCarouselNoHeader,
                           ),
                         ],
                       ),
                     ),
+                    SizedBox(height: 5),
                     InkWell(
                       onTap: () {
                         // bottomMenu();
@@ -264,21 +243,13 @@ class _CalendarEventState extends State<CalendarEvent> {
                             Container(
                               decoration: BoxDecoration(
                                   shape: BoxShape.circle,
-                                  gradient: LinearGradient(
-                                    colors: [
-                                      HexColor("#6462AA"),
-                                      HexColor("#4CA7DA"),
-                                      HexColor("#20B69E"),
-                                    ],
-                                  )),
-                              child: Icon(
-                                Icons.check_circle,
-                                size: 18.0,
-                                color: Colors.green,
+                                  color: HexColor("#6462AA")
                               ),
+                              height: 20,
+                              width: 20,
                             ),
                             SizedBox(
-                              width: 10,
+                              width: 5,
                             ),
                             Text(
                               "Upcoming Event",
@@ -289,8 +260,15 @@ class _CalendarEventState extends State<CalendarEvent> {
                           ],
                         ),
                       ),
-                    )
-                    //
+                    ),
+                    ListView.builder(
+                        itemCount: upcommingEventList.length,
+                        shrinkWrap: true,
+                        physics: ScrollPhysics(),
+                        padding: EdgeInsets.only(top: 10),
+                        itemBuilder: (BuildContext context, int position){
+                          return _listRowItem(context, position);
+                        })
                   ],
                 ),
               )),
@@ -299,14 +277,18 @@ class _CalendarEventState extends State<CalendarEvent> {
     );
   }
 
-  void _getEventDetail() {
+  void _getEventDetail(int schoolId) {
     Utils.showLoader(true, context);
-    _authViewModel.getAllEventForMobile("1", (isSuccess, message) {
+    _authViewModel.getAllEventForMobile(schoolId.toString(), (isSuccess, message) {
       Utils.showLoader(false, context);
       if (isSuccess) {
         setState(() {
           eventist = _authViewModel.eventForMobileList;
           for (int i = 0; i < eventist.length; i++) {
+            /*bool isSuccess = _isUpcommingEvent(eventist[i].fromDateTime);
+            if(isSuccess){
+              upcommingEventList.add(eventist[i]);
+            }*/
             eventNameTitle = eventist[i].eventName;
             String date = Utils.convertDate(
                 eventist[i].fromDateTime, DateFormat('MM/dd/yyyy'));
@@ -314,21 +296,11 @@ class _CalendarEventState extends State<CalendarEvent> {
             var dateInFormatText = date.split("/");
             setState(() {
               _markedDateMap.add(
-                  new DateTime(
+                DateTime(
                       int.parse(dateInFormatText[2]),
                       int.parse(dateInFormatText[0]),
                       int.parse(dateInFormatText[1])),
-                  new Event(
-                  /*  dot:Container(
-                      height: 30,
-                      width: 30,
-                        decoration: BoxDecoration(
-                            border: Border.all(
-                              color:Colors.black,
-                            ),
-                            borderRadius: BorderRadius.all(Radius.circular(20))
-                        ),
-                    ),*/
+                Event(
                       date: new DateTime(
                           int.parse(dateInFormatText[2]),
                           int.parse(dateInFormatText[0]),
@@ -342,7 +314,8 @@ class _CalendarEventState extends State<CalendarEvent> {
                               style: AppTheme.regularTextStyle().copyWith(
                                   fontSize: 16, color: Colors.black54)),
                         ),
-                      )));
+                      ))
+              );
             });
           }
         });
@@ -350,6 +323,32 @@ class _CalendarEventState extends State<CalendarEvent> {
         Utils.showToast(context, message, Colors.red);
       }
     });
+  }
+
+  _isUpcommingEvent(String fromDateTime) {
+    var now = DateTime.now();
+    var eventDate = DateTime.parse(fromDateTime);
+    if(now.isBefore(eventDate)){
+      return true;
+    }
+  }
+
+  _listRowItem(BuildContext context, int position) {
+    return Container(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(upcommingEventList[position].eventName, style: AppTheme.regularTextStyle()),
+          Text(Utils.convertDate(upcommingEventList[position].fromDateTime, DateFormat("MM/dd/yyyy")), style: AppTheme.customTextStyle(MyFont.SSPro_regular, 14.0, Colors.black54)),
+          Container(
+            height: 1,
+            width: MediaQuery.of(context).size.width,
+            color: Colors.black26,
+          )
+        ],
+      ),
+    );
   }
 
   void bottomMenu(String eventist, DateTime currentDate2, Widget? abcd) {
