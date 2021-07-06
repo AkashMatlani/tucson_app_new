@@ -1,9 +1,7 @@
 import 'dart:async';
 
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:intl/intl.dart';
@@ -40,6 +38,7 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    _getSchoolId();
     Future.delayed(Duration(milliseconds: 200)).then((_) {
       bottomPopup(context);
     });
@@ -402,9 +401,9 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
     WebService.postAPICall(WebService.tusdSupportBySchoolID, params)
         .then((response) {
       Utils.showLoader(false, context);
-      isLoading = false;
       if (response.statusCode == 1) {
         setState(() {
+          isLoading = false;
           _supportResponse = HealthSupportResponse.fromJson(response.body);
         });
       }
@@ -488,22 +487,13 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
                                     16.0,
                                     Color.fromRGBO(255, 255, 255, 1))),
                             onPressed: () {
-                              Navigator.of(context).pop();
                               /*Timer(Duration(milliseconds: 200), (){
                                 _makingPhoneCall(_supportResponse.nsphPhoneNumber);
                               });*/
-
-                              if (isAdult2(dob)) {
+                              Navigator.of(context).pop();
+                              int age = Utils.calculateAge(DateTime.parse(dob));
+                              if(age >= 13){
                                 _mentalHealthSupportApiCall(schoolId);
-                                /* _geolocator = Geolocator();
-                                LocationOptions locationOptions = LocationOptions(accuracy: LocationAccuracy.high, distanceFilter: 1);
-
-                                checkPermission();
-
-                                StreamSubscription positionStream = _geolocator.getPositionStream(locationOptions).listen(
-                                        (Position position) {
-                                      _position = position;
-                                    });*/
                               } else {
                                 Utils.showToast(
                                     context,
@@ -511,9 +501,10 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
                                     Colors.red);
                                 Timer(
                                     Duration(milliseconds: 100),
-                                    () => Utils.backWithNoTransition(
+                                        () => Utils.backWithNoTransition(
                                         context, StudentDashboardScreen()));
                               }
+
                             },
                           ),
                         ),
