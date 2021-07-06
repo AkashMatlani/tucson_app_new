@@ -155,4 +155,5 @@ class LabelStr {
   static const lblRegistered = "registered successfully";
   static const lblDonationTitle = "Gifts & Donations";
   static const lblDonationDesc = "Private support allows us to infuse additional resources into programs and services that enhance and enrich experiences for students and families.";
+  static const lblHippa = "The Tucson Unified School District complies with The Family Educational Rights and Privacy Act (FERPA - 20 U.S.C. § 1232g; 34 CFR Part 99).\n\nBy clicking “AGREE” below and proceeding to the Tucson Unified Connect application, I acknowledge that a) TUSD, through (APP NAME) may collect personally identifiable student information, specifically, name, email address and phone numbers of students and their families. b) I understand that TUSD will not re-disclose personally-identifiable student information unless specifically permitted under FERPA. I have had the opportunity to review TUSD’s complete Notice of Rights of students and parents under FERPA.\n\nTUSD annual notification of Privacy Rights of Parents and Students: http://tusd1.org/Home/Privacy-Rights\n\n(Hyperlink should be added at bottom of screen)";
 }

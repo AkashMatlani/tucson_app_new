@@ -71,7 +71,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
   }
 
   void positionListener() {
-    int? _totalDuration = _controller.value.duration?.inMilliseconds;
+    int? _totalDuration = _controller.value.duration.inMilliseconds;
     print("positionListener duration: $_totalDuration");
     if (mounted && _totalDuration != null && _totalDuration != 0) {
       setState(() {
@@ -171,7 +171,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
           body: Stack(
             children: <Widget>[
               Center(
-                child: _controller.value.initialized
+                child: _controller.value.isInitialized
                     ? AspectRatio(
                         aspectRatio: _controller.value.aspectRatio,
                         child: VideoPlayer(_controller),
@@ -349,8 +349,8 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
       _remainingString = formatDuration(
           _controller.value.duration - _controller.value.position);
 
-      int? _totalDuration = _controller.value.duration?.inMilliseconds;
-      _playedValue = _controller.value.position.inMilliseconds / _totalDuration!;
+      int? _totalDuration = _controller.value.duration.inMilliseconds;
+      _playedValue = _controller.value.position.inMilliseconds / _totalDuration;
     });
 
     if (_controller.value.position >= _controller.value.duration) {

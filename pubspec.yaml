@@ -41,7 +41,7 @@ dependencies:
   double_back_to_close: ^2.0.0
   video_thumbnail: ^0.3.3
   path_provider: ^2.0.2
-  video_player: ^1.0.1
+  video_player: ^2.1.6
   just_audio: ^0.7.5
   volume: ^1.0.1
   wakelock: ^0.1.4+2
@@ -49,6 +49,7 @@ dependencies:
   flutter_filereader: ^2.2.0
   photo_view: ^0.11.1
   flutter_html: ^0.11.1
+  geolocator: ^7.2.0+1
 
 
 dev_dependencies:
