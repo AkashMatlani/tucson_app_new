@@ -285,6 +285,7 @@ class _CalendarEventState extends State<CalendarEvent> {
         setState(() {
           eventist = _authViewModel.eventForMobileList;
           for (int i = 0; i < eventist.length; i++) {
+            selectedDate = DateTime.parse(eventist[i].fromDateTime);
             /*bool isSuccess = _isUpcommingEvent(eventist[i].fromDateTime);
             if(isSuccess){
               upcommingEventList.add(eventist[i]);

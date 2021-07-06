@@ -32,6 +32,7 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
   bool isLoading = true;
   late double blockSizeVertical;
   late String dob;
+  late int schoolId;
   late Geolocator _geolocator;
   late Position _position;
 
@@ -39,18 +40,17 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    Future.delayed(Duration(seconds: 0)).then((_) {
+    Future.delayed(Duration(milliseconds: 200)).then((_) {
       bottomPopup(context);
     });
   }
 
   _getSchoolId() async {
-    int schoolId = await PrefUtils.getValueFor(PrefUtils.schoolId);
-    dob = await PrefUtils.getValueFor(PrefUtils.UserDob);
+    schoolId = await PrefUtils.getValueFor(PrefUtils.schoolId);
+    dob = await PrefUtils.getValueFor(PrefUtils.userDOB);
     if (schoolId == null) {
       schoolId = 0;
     }
-    _mentalHealthSupportApiCall(schoolId);
   }
 
   @override
@@ -494,6 +494,7 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
                               });*/
 
                               if (isAdult2(dob)) {
+                                _mentalHealthSupportApiCall(schoolId);
                                 /* _geolocator = Geolocator();
                                 LocationOptions locationOptions = LocationOptions(accuracy: LocationAccuracy.high, distanceFilter: 1);
 
@@ -503,7 +504,6 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
                                         (Position position) {
                                       _position = position;
                                     });*/
-                                _getSchoolId();
                               } else {
                                 Utils.showToast(
                                     context,
@@ -529,7 +529,10 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
                               style: AppTheme.customTextStyle(MyFont.SSPro_bold,
                                   16.0, Color.fromRGBO(255, 255, 255, 1))),
                           onPressed: () {
-                            Navigator.of(context).pop();
+                            Timer(
+                                Duration(milliseconds: 100),
+                                    () => Utils.backWithNoTransition(
+                                    context, StudentDashboardScreen()));
                           },
                         ),
                       ),
