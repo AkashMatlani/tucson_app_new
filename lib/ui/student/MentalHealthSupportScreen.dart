@@ -62,7 +62,7 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
       onWillPop: () =>
           Utils.backWithNoTransition(context, StudentDashboardScreen()),
       child: Scaffold(
-        body: Stack(
+         body: Stack(
           children: [
             Container(
               color: HexColor("#6462AA"),
