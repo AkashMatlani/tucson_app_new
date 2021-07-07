@@ -222,8 +222,8 @@ class _SignInScreenState extends State<SignInScreen> {
                       children: [
                         Text(LabelStr.lblSignIn, style: AppTheme.customTextStyle(MyFont.SSPro_bold, 30.0, MyColor.darkLblTextColor())),
                         SizedBox(height: 20),
-                        Text(LabelStr.lblEmail, style: AppTheme.regularTextStyle().copyWith(fontSize: 14)),
-                        textFieldFor(LabelStr.lblEmail, _emailController, textInputAction: TextInputAction.next, keyboardType: TextInputType.emailAddress),
+                        Text(LabelStr.lblSigninEmail, style: AppTheme.regularTextStyle().copyWith(fontSize: 14)),
+                        textFieldFor(LabelStr.lblSigninEmail, _emailController, textInputAction: TextInputAction.next, keyboardType: TextInputType.emailAddress),
                         SizedBox(height: 10),
                         Text(LabelStr.lblPassword, style: AppTheme.regularTextStyle().copyWith(fontSize: 14)),
                         textFieldFor(LabelStr.lblPassword, _pwdController, textInputAction: TextInputAction.done, keyboardType: TextInputType.text, obscure:_showPwd, suffixIcon: InkWell(onTap:(){_togglePwd();},child: Padding(padding: EdgeInsets.fromLTRB(10, 15, 0, 15), child: SvgPicture.asset(_showPwd ? MyImage.hidePwdIcon : MyImage.viewPwdIcon)))),

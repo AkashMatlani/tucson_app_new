@@ -3,9 +3,11 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:tucson_app/GeneralUtils/ColorExtension.dart';
 import 'package:tucson_app/GeneralUtils/Constant.dart';
 import 'package:tucson_app/GeneralUtils/LabelStr.dart';
@@ -32,7 +34,7 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
   late String dob;
   late int schoolId;
   late Geolocator _geolocator;
-  late Position _position;
+  late Position _currentPosition;
 
   @override
   void initState() {
@@ -50,6 +52,7 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
     if (schoolId == null) {
       schoolId = 0;
     }
+
   }
 
   @override
@@ -486,14 +489,33 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
                                     MyFont.SSPro_bold,
                                     16.0,
                                     Color.fromRGBO(255, 255, 255, 1))),
-                            onPressed: () {
+                            onPressed: () async {
                               /*Timer(Duration(milliseconds: 200), (){
                                 _makingPhoneCall(_supportResponse.nsphPhoneNumber);
                               });*/
                               Navigator.of(context).pop();
                               int age = Utils.calculateAge(DateTime.parse(dob));
+
                               if(age >= 13){
-                                _mentalHealthSupportApiCall(schoolId);
+                              var status = await Permission.location.status;
+
+                                  if (status.isGranted) {
+                                    _getSchoolId();
+                                    _getCurrentLocation();
+
+                                  } else {
+                                    Map<Permission, PermissionStatus> status = await [
+                                      Permission.location,
+                                    ].request();
+                                    print("Permission status :: $status");
+                                   /* if (status.isDenied) {
+                                      bottomPopup(context);
+                                    }*/
+
+                                    if (await Permission.location.isRestricted) {
+                                      bottomPopup(context);
+                                    }
+                                }
                               } else {
                                 Utils.showToast(
                                     context,
@@ -561,9 +583,26 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
     );
     return adultDate.isBefore(today);
   }
-/* void checkPermission() {
-    _geolocator.checkGeolocationPermissionStatus().then((status) { print('status: $status'); });
-    _geolocator.checkGeolocationPermissionStatus(locationPermission: GeolocationPermission.locationAlways).then((status) { print('always status: $status'); });
-    _geolocator.checkGeolocationPermissionStatus(locationPermission: GeolocationPermission.locationWhenInUse)..then((status) { print('whenInUse status: $status'); });
-  }*/
+
+
+  _getCurrentLocation() {
+    Geolocator
+        .getCurrentPosition(desiredAccuracy: LocationAccuracy.best, forceAndroidLocationManager: true)
+        .then((Position position) {
+      setState(()  async{
+        _currentPosition = position;
+        if (_currentPosition != null) {
+          print("${_currentPosition.latitude}, LNG: ${_currentPosition.longitude}");
+         /* List<Placemark> placemarks = await placemarkFromCoordinates(_currentPosition.latitude, _currentPosition.longitude);
+          print(placemarks.)*/
+        }
+      });
+    }).catchError((e) {
+      print(e);
+    });
+  }
+
+
+
 }
+
