@@ -337,19 +337,26 @@ class _CalendarEventState extends State<CalendarEvent> {
   }
 
   _listRowItem(BuildContext context, int position) {
-    return Container(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(upcommingEventList[position].eventName, style: AppTheme.regularTextStyle()),
-          Text(Utils.convertDate(upcommingEventList[position].fromDateTime, DateFormat("MM/dd/yyyy")), style: AppTheme.customTextStyle(MyFont.SSPro_regular, 14.0, Colors.black54)),
-          Container(
-            height: 1,
-            width: MediaQuery.of(context).size.width,
-            color: Colors.black26,
-          )
-        ],
+    return InkWell(
+      onTap: (){
+        var circle = Icon(Icons.circle, size: 5, color: HexColor("#FFFFFF"));
+        bottomMenu(upcommingEventList[position].eventName, DateTime.parse(upcommingEventList[position].fromDateTime), circle);
+      },
+      child: Container(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(upcommingEventList[position].eventName, style: AppTheme.regularTextStyle()),
+            Text(Utils.convertDate(upcommingEventList[position].fromDateTime, DateFormat("MM/dd/yyyy")), style: AppTheme.customTextStyle(MyFont.SSPro_regular, 14.0, Colors.black54)),
+            Container(
+              height: 1,
+              margin: EdgeInsets.only(top: 5),
+              width: MediaQuery.of(context).size.width,
+              color: Colors.black26,
+            )
+          ],
+        ),
       ),
     );
   }
