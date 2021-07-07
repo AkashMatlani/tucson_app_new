@@ -20,21 +20,42 @@ class _CoolStuffScreenScreenState extends State<CoolStuffScreen> with SingleTick
 
   late TabController _tabController;
   int activeTabIndex = 0;
+  late List<bool> _isDisabled;
 
   @override
   void initState() {
     super.initState();
+    if(widget.schoolCategory.compareTo("Elementary") == 0){
+      _isDisabled = [false, true];
+    } else if(widget.schoolCategory.compareTo("Middle") == 0){
+      _isDisabled = [true, false];
+    } else {
+      _isDisabled = [true, true];
+    }
+
+    activeTabIndex = widget.schoolCategory.compareTo("Middle") ==0 ? 1 : 0;
 
     _tabController = TabController(
       length: 2,
-      initialIndex: 0,
+      initialIndex: widget.schoolCategory.compareTo("Middle") ==0 ? 1 : 0,
       vsync: this,
     );
-    _tabController.addListener(() {
+    _tabController.addListener(onTap);
+  }
+
+  onTap() {
+    if(widget.schoolCategory.compareTo("K-8") == 0){
       setState(() {
         activeTabIndex = _tabController.index;
       });
-    });
+    } else {
+      if (_isDisabled[_tabController.index]) {
+        int index = _tabController.previousIndex;
+        setState(() {
+          _tabController.index = index;
+        });
+      }
+    }
   }
 
   @override
@@ -91,7 +112,7 @@ class _CoolStuffScreenScreenState extends State<CoolStuffScreen> with SingleTick
               height:500,
               width: MediaQuery.of(context).size.width,
               margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
-              child: widget.schoolCategory.compareTo("K-8") ==0 ? Column(
+              child: Column(
                 children: <Widget>[
                   Stack(
                     children: [
@@ -142,8 +163,9 @@ class _CoolStuffScreenScreenState extends State<CoolStuffScreen> with SingleTick
                   ),
                   SizedBox(height:20),
                   Expanded(
-                    child: Container(
+                      child: Container(
                         child: TabBarView(
+                          physics: widget.schoolCategory.compareTo("K-8") ==0 ? ScrollPhysics() : NeverScrollableScrollPhysics(),
                           controller: _tabController,
                           children: <Widget>[
                             ElementaryStuff(),
@@ -153,7 +175,7 @@ class _CoolStuffScreenScreenState extends State<CoolStuffScreen> with SingleTick
                       )
                   )
                 ],
-              ) : ElementaryStuff(),
+              )
             ),
           )
         ],

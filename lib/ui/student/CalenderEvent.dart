@@ -286,10 +286,10 @@ class _CalendarEventState extends State<CalendarEvent> {
           eventist = _authViewModel.eventForMobileList;
           for (int i = 0; i < eventist.length; i++) {
             selectedDate = DateTime.parse(eventist[i].fromDateTime);
-            /*bool isSuccess = _isUpcommingEvent(eventist[i].fromDateTime);
+            bool isSuccess = _isUpcommingEvent(eventist[i].fromDateTime);
             if(isSuccess){
               upcommingEventList.add(eventist[i]);
-            }*/
+            }
             eventNameTitle = eventist[i].eventName;
             String date = Utils.convertDate(
                 eventist[i].fromDateTime, DateFormat('MM/dd/yyyy'));
@@ -331,6 +331,8 @@ class _CalendarEventState extends State<CalendarEvent> {
     var eventDate = DateTime.parse(fromDateTime);
     if(now.isBefore(eventDate)){
       return true;
+    } else {
+      return false;
     }
   }
 

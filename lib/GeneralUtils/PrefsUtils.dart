@@ -13,6 +13,7 @@ class PrefUtils {
   static const String userToken = "com.TucsonApp.userToken";
   static const String schoolId = "com.TucsonApp.schoolId";
   static const String yourLanguage = "com.TucsonApp.yourLanguage";
+  static const String mentalHealthpopUp = "com.TucsonApp.healthPopUp";
 
 
   static setStringValue(String key, String defaultValue) async {

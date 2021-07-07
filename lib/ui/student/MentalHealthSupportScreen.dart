@@ -1,7 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
@@ -38,21 +40,24 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    _getSchoolId();
-    Future.delayed(Duration(milliseconds: 200)).then((_) {
-      bottomPopup(context);
-    });
+    _getPrefsData();
   }
 
-  _getSchoolId() async {
+  _getPrefsData() async {
     schoolId = await PrefUtils.getValueFor(PrefUtils.schoolId);
     dob = await PrefUtils.getValueFor(PrefUtils.userDOB);
     if (schoolId == null) {
       schoolId = 0;
     }
-
+    bool isPopUpOpenFirst = await PrefUtils.getValueFor(PrefUtils.mentalHealthpopUp);
+    if(isPopUpOpenFirst == null || !isPopUpOpenFirst){
+      bottomPopup(context);
+    } else {
+      Timer(Duration(milliseconds: 200), (){
+        _mentalHealthSupportApiCall(schoolId);
+      });
+    }
   }
 
   @override
@@ -390,11 +395,9 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
     return Container(
       alignment: Alignment.center,
       height: MediaQuery.of(context).size.height * 0.88,
-      child: isLoading
-          ? Container()
-          : Text(LabelStr.lblNoMentalHealth,
-              style: AppTheme.regularTextStyle()
-                  .copyWith(fontSize: 18, color: Colors.red)),
+      child: Text(LabelStr.lblNoMentalHealth,
+          style: AppTheme.regularTextStyle()
+              .copyWith(fontSize: 18, color: Colors.red))
     );
   }
 
@@ -446,17 +449,29 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
                   alignment: Alignment.center,
                   child: Padding(
                     padding: const EdgeInsets.fromLTRB(20.0, 20, 10, 10),
-                    child: Text("PRIVACY NOTICE",
-                        style: AppTheme.customTextStyle(MyFont.SSPro_bold, 20.0,
-                            Color.fromRGBO(0, 0, 0, 1))),
+                    child: Text(LabelStr.lblMentalHealthSupport, style: AppTheme.customTextStyle(MyFont.SSPro_bold, 20.0, Color.fromRGBO(0, 0, 0, 1))),
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.fromLTRB(20.0, 20, 10, 10),
-                  child: Text(
-                    LabelStr.lblHippa,
-                    style: AppTheme.regularTextStyle().copyWith(
-                        fontSize: 16, color: Color.fromRGBO(0, 0, 0, 1)),
+                  child: RichText(
+                    text: TextSpan(
+                      children: [
+                        TextSpan(
+                          text: LabelStr.lblHippa,
+                          style: AppTheme.regularTextStyle().copyWith(
+                              fontSize: 16, color: Color.fromRGBO(0, 0, 0, 1)),
+                        ),
+                        TextSpan(
+                          text: LabelStr.lblHippLink,
+                          style: AppTheme.regularTextStyle().copyWith(
+                              fontSize: 16, color: Colors.blueAccent),
+                            recognizer: new TapGestureRecognizer()
+                              ..onTap = () { Utils.navigateToScreen(context, DisplayWebview(LabelStr.lblHippLink));
+                              }
+                        ),
+                      ]
+                    )
                   ),
                 ),
                 Padding(
@@ -493,6 +508,7 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
                               /*Timer(Duration(milliseconds: 200), (){
                                 _makingPhoneCall(_supportResponse.nsphPhoneNumber);
                               });*/
+                              PrefUtils.setBoolValue(PrefUtils.mentalHealthpopUp, true);
                               Navigator.of(context).pop();
                               int age = Utils.calculateAge(DateTime.parse(dob));
 
@@ -542,6 +558,7 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
                               style: AppTheme.customTextStyle(MyFont.SSPro_bold,
                                   16.0, Color.fromRGBO(255, 255, 255, 1))),
                           onPressed: () {
+                            PrefUtils.setBoolValue(PrefUtils.mentalHealthpopUp, true);
                             Timer(
                                 Duration(milliseconds: 100),
                                     () => Utils.backWithNoTransition(
