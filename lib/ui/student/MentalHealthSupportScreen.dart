@@ -516,7 +516,7 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
                               var status = await Permission.location.status;
 
                                   if (status.isGranted) {
-                                    _getSchoolId();
+                                    _getPrefsData();
                                     _getCurrentLocation();
 
                                   } else {
