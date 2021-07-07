@@ -204,11 +204,7 @@ class _StudentDashboardScreenState extends State<StudentDashboardScreen> {
                                     };
                                     getWebApiFromUrl(context, params);
                                   } else if (index == 8) {
-                                    Utils.showLoader(true, context);
-                                    PrefUtils.clearPref();
-                                    Utils.showLoader(false, context);
-                                    Utils.navigateWithClearState(
-                                        context, SignInScreen());
+                                    _logoutFromApp(context);
                                   }
                                 });
                               },
@@ -267,7 +263,6 @@ class _StudentDashboardScreenState extends State<StudentDashboardScreen> {
       if (response.statusCode == 1) {
         if (response.body != null) {
           String webUrl = response.body[0]["contentTransactionTypeJoin"][0]["objectPath"];
-          if(webUrl.isNotEmpty)
           Utils.navigateToScreen(context, DisplayWebview(webUrl));
         }
       } else {
@@ -297,5 +292,14 @@ class _StudentDashboardScreenState extends State<StudentDashboardScreen> {
       Utils.showLoader(false, context);
       Utils.showToast(context, LabelStr.connectionError, Colors.red);
     });
+  }
+
+  _logoutFromApp(BuildContext context) async {
+    bool mentalPopUp = await PrefUtils.getValueFor(PrefUtils.mentalHealthpopUp);
+    Utils.showLoader(true, context);
+    PrefUtils.clearPref();
+    Utils.showLoader(false, context);
+    PrefUtils.setBoolValue(PrefUtils.mentalHealthpopUp, mentalPopUp);
+    Utils.navigateWithClearState(context, SignInScreen());
   }
 }

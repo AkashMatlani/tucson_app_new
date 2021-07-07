@@ -1,5 +1,5 @@
 class LabelStr {
-  static const lblEmail = "TUSD Email";
+  static const lblEmail = "Email";
   static const lblPassword = "Password";
   static const lblSignIn = "Sign In";
   static const lblSelectLanguage = "Select Language";
@@ -150,10 +150,12 @@ class LabelStr {
   static const lblVolunteerOpportunities = "Volunteer Opportunities";
   static const lblGivingDonation = "Giving/Donation";
   static const lblAgree = "Agree";
-  static const lblEventDetail = "Date & Time:\n16/05/2021\nEvent Details:\nK-5 GATE Summer Enrichment ProgramIn this FREE summer program GATE students will explore hands-on and minds-on lessons that integrate intellectual challenge along with critical and creative thinking.\nJune 2-30; Monday-Friday; 8 a.m.- 12 p.m.Lineweaver Location - GATE Qualifying Students OnlyTully Location - Open Access GATE (All Students Eligible)";
 
+  static const lblHealthPrivacy = "PRIVACY NOTICE";
   static const lblRegistered = "registered successfully";
   static const lblDonationTitle = "Gifts & Donations";
   static const lblDonationDesc = "Private support allows us to infuse additional resources into programs and services that enhance and enrich experiences for students and families.";
-  static const lblHippa = "The Tucson Unified School District complies with The Family Educational Rights and Privacy Act (FERPA - 20 U.S.C. § 1232g; 34 CFR Part 99).\n\nBy clicking “AGREE” below and proceeding to the Tucson Unified Connect application, I acknowledge that a) TUSD, through (APP NAME) may collect personally identifiable student information, specifically, name, email address and phone numbers of students and their families. b) I understand that TUSD will not re-disclose personally-identifiable student information unless specifically permitted under FERPA. I have had the opportunity to review TUSD’s complete Notice of Rights of students and parents under FERPA.\n\nTUSD annual notification of Privacy Rights of Parents and Students: http://tusd1.org/Home/Privacy-Rights\n\n(Hyperlink should be added at bottom of screen)";
+  //static const lblHippa = "<div>The Tucson Unified School District complies with The Family Educational Rights and Privacy Act (FERPA - 20 U.S.C. § 1232g; 34 CFR Part 99).\n\nBy clicking “AGREE” below and proceeding to the Tucson Unified Connect application, I acknowledge that a) TUSD, through Tucson Unified Connect may collect personally identifiable student information, specifically, name, email address and phone numbers of students and their families. b) I understand that TUSD will not re-disclose personally-identifiable student information unless specifically permitted under FERPA. I have had the opportunity to review TUSD’s complete Notice of Rights of students and parents under FERPA.\n\nTUSD annual notification of Privacy Rights of Parents and Students: <a href='http://tusd1.org/Home/Privacy-Rights'>http://tusd1.org/Home/Privacy-Rights</a></div>";
+  static const lblHippa = "The Tucson Unified School District complies with The Family Educational Rights and Privacy Act (FERPA - 20 U.S.C. § 1232g; 34 CFR Part 99).\n\nBy clicking “AGREE” below and proceeding to the Tucson Unified Connect application, I acknowledge that a) TUSD, through Tucson Unified Connect may collect personally identifiable student information, specifically, name, email address and phone numbers of students and their families. b) I understand that TUSD will not re-disclose personally-identifiable student information unless specifically permitted under FERPA. I have had the opportunity to review TUSD’s complete Notice of Rights of students and parents under FERPA.\n\nTUSD annual notification of Privacy Rights of Parents and Students: ";
+  static const lblHippLink = "http://tusd1.org/Home/Privacy-Rights";
 }
