@@ -170,8 +170,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             SizedBox(height: 10),
                           ],
                         ) : Container(),
-                        Text(LabelStr.lblEmail, style: AppTheme.regularTextStyle().copyWith(fontSize: 14)),
-                        textFieldFor(LabelStr.lblEmail, _emailController, textInputAction: TextInputAction.next, keyboardType: TextInputType.emailAddress),
+                        Text(LabelStr.lblTusdEmail, style: AppTheme.regularTextStyle().copyWith(fontSize: 14)),
+                        textFieldFor(LabelStr.lblTusdEmail, _emailController, textInputAction: TextInputAction.next, keyboardType: TextInputType.emailAddress),
                         SizedBox(height: 10),
                         Text(LabelStr.lblSchoolName, style: AppTheme.regularTextStyle().copyWith(fontSize: 14)),
                         _schoolList.length > 0 ? Column(

@@ -1,5 +1,5 @@
 class LabelStr {
-  static const lblEmail = "TUSD Email";
+  static const lblTusdEmail = "TUSD Email";
   static const lblSigninEmail = "Email";
   static const lblPassword = "Password";
   static const lblSignIn = "Sign In";

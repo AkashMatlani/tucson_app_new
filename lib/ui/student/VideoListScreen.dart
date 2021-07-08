@@ -8,6 +8,7 @@ import 'package:tucson_app/GeneralUtils/Utils.dart';
 import 'package:tucson_app/Model/ContentMasterViewModel.dart';
 import 'package:tucson_app/Model/ContentResponse.dart';
 import 'package:tucson_app/ui/DisplayWebview.dart';
+import 'package:tucson_app/ui/VideoPlayer.dart';
 import 'package:tucson_app/ui/VideoPlayerScreen.dart';
 import 'BlogDetailsScreen.dart';
 

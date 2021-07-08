@@ -13,6 +13,7 @@ import 'package:tucson_app/ui/ImageViewerScreen.dart';
 import 'package:tucson_app/ui/VideoPlayerScreen.dart';
 
 import '../DocumentViewerScreen.dart';
+import '../VideoPlayer.dart';
 
 class BlogDetailsScreen extends StatefulWidget {
 

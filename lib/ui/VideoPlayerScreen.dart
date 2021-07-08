@@ -40,6 +40,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
     super.initState();
 
     initAudioStreamType();
+    setVol(1);
     Wakelock.enable();
     _controller = VideoPlayerController.network(widget.videoUrl)
       ..initialize().then((_) {

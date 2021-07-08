@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_calendar_carousel/classes/event.dart';
 import 'package:flutter_calendar_carousel/flutter_calendar_carousel.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:intl/intl.dart';
 import 'package:tucson_app/GeneralUtils/ColorExtension.dart';
 import 'package:tucson_app/GeneralUtils/Constant.dart';
@@ -252,7 +253,7 @@ class _CalendarEventState extends State<CalendarEvent> {
                               width: 5,
                             ),
                             Text(
-                              "Upcoming Event",
+                              "Upcoming Events",
                               style: AppTheme.regularTextStyle().copyWith(
                                   fontSize: 16,
                                   color: Color.fromRGBO(11, 11, 11, 1)),
@@ -310,9 +311,9 @@ class _CalendarEventState extends State<CalendarEvent> {
                       icon: Padding(
                         padding: const EdgeInsets.fromLTRB(20.0, 0, 10, 0),
                         child: Container(
-                          child: Text(
-                              "Event Details:" + "\n" + eventist[i].eventDetail,
-                              style: AppTheme.regularTextStyle().copyWith(
+                          child: Html(
+                            data: "Event Details:" + "\n" + eventist[i].eventDetail,
+                              defaultTextStyle: AppTheme.regularTextStyle().copyWith(
                                   fontSize: 16, color: Colors.black54)),
                         ),
                       ))
@@ -337,9 +338,16 @@ class _CalendarEventState extends State<CalendarEvent> {
   }
 
   _listRowItem(BuildContext context, int position) {
+
     return InkWell(
       onTap: (){
-        var circle = Icon(Icons.circle, size: 5, color: HexColor("#FFFFFF"));
+        var circle = Container(
+          padding: EdgeInsets.fromLTRB(20.0, 0, 10, 0),
+          child: Html(
+              data: "Event Details:" + "\n" + upcommingEventList[position].eventDetail,
+              defaultTextStyle: AppTheme.regularTextStyle().copyWith(
+                  fontSize: 16, color: Colors.black54)),
+        );
         bottomMenu(upcommingEventList[position].eventName, DateTime.parse(upcommingEventList[position].fromDateTime), circle);
       },
       child: Container(
@@ -378,56 +386,58 @@ class _CalendarEventState extends State<CalendarEvent> {
             topRight: const Radius.circular(40.0),
           ),
         ),
-        child: Wrap(
-          children: [
-            Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(20.0, 40, 10, 0),
-                  child: Text(eventist,
-                      style: AppTheme.customTextStyle(MyFont.SSPro_semibold,
-                          18.0, Color.fromRGBO(0, 0, 0, 1))),
-                ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(20.0, 20, 10, 10),
-                  child: Text(
-                    "Date & Time:" + "\n" + finalDate,
-                    style: AppTheme.regularTextStyle()
-                        .copyWith(fontSize: 16, color: Colors.black54),
+        child: SingleChildScrollView(
+          child: Wrap(
+            children: [
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(20.0, 40, 10, 0),
+                    child: Text(eventist,
+                        style: AppTheme.customTextStyle(MyFont.SSPro_semibold,
+                            18.0, Color.fromRGBO(0, 0, 0, 1))),
                   ),
-                ),
-                abcd!,
-                Padding(
-                  padding: const EdgeInsets.only(top: 16),
-                  child: Divider(
-                      thickness: 1, color: Color.fromRGBO(223, 223, 223, 4)),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(right: 8, top: 10, bottom: 20),
-                  child: Align(
-                    alignment: Alignment.topRight,
-                    child: Container(
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: Color.fromRGBO(204, 204, 204, 1)),
-                      height: 50,
-                      width: MediaQuery.of(context).size.width * 0.35,
-                      child: TextButton(
-                        child: Text(LabelStr.lblClose,
-                            style: AppTheme.customTextStyle(MyFont.SSPro_bold,
-                                16.0, Color.fromRGBO(255, 255, 255, 1))),
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(20.0, 20, 10, 10),
+                    child: Text(
+                      "Date & Time:" + "\n" + finalDate,
+                      style: AppTheme.regularTextStyle()
+                          .copyWith(fontSize: 16, color: Colors.black54),
+                    ),
+                  ),
+                  abcd!,
+                  Padding(
+                    padding: const EdgeInsets.only(top: 16),
+                    child: Divider(
+                        thickness: 1, color: Color.fromRGBO(223, 223, 223, 4)),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(right: 8, top: 10, bottom: 20),
+                    child: Align(
+                      alignment: Alignment.topRight,
+                      child: Container(
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: Color.fromRGBO(204, 204, 204, 1)),
+                        height: 50,
+                        width: MediaQuery.of(context).size.width * 0.35,
+                        child: TextButton(
+                          child: Text(LabelStr.lblClose,
+                              style: AppTheme.customTextStyle(MyFont.SSPro_bold,
+                                  16.0, Color.fromRGBO(255, 255, 255, 1))),
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ],
-            ),
-          ],
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

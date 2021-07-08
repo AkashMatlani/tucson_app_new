@@ -52,156 +52,11 @@ class _SignInScreenState extends State<SignInScreen> {
           fit: StackFit.expand,
           children: [
             Container(
-              height: MediaQuery.of(context).size.height*0.3,
+              height: MediaQuery.of(context).size.height*0.33,
               alignment: Alignment.topCenter,
               child: Image.asset(MyImage.signIn),
             ),
-            Platform.isIOS?
             Positioned.fill(
-              top: MediaQuery.of(context).size.height*0.30,
-              bottom: 0.0,
-              child: Container(
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(40.0),
-                        topRight: Radius.circular(40.0)
-                    ),
-                    color: HexColor("#f9f9f9")
-                ),
-                margin: EdgeInsets.only(top: 20),
-                padding: EdgeInsets.all(30),
-                child: SingleChildScrollView(
-                  child: Container(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Text(LabelStr.lblSignIn, style: AppTheme.customTextStyle(MyFont.SSPro_bold, 30.0, MyColor.darkLblTextColor())),
-                        SizedBox(height: 20),
-                        Text(LabelStr.lblEmail, style: AppTheme.regularTextStyle().copyWith(fontSize: 14)),
-                        textFieldFor(LabelStr.lblEmail, _emailController, textInputAction: TextInputAction.next, keyboardType: TextInputType.emailAddress),
-                        SizedBox(height: 10),
-                        Text(LabelStr.lblPassword, style: AppTheme.regularTextStyle().copyWith(fontSize: 14)),
-                        textFieldFor(LabelStr.lblPassword, _pwdController, textInputAction: TextInputAction.done, keyboardType: TextInputType.text, obscure:_showPwd, suffixIcon: InkWell(onTap:(){_togglePwd();},child: Padding(padding: EdgeInsets.fromLTRB(10, 15, 0, 15), child: SvgPicture.asset(_showPwd ? MyImage.hidePwdIcon : MyImage.viewPwdIcon)))),
-                        SizedBox(height: 10),
-                        Text(LabelStr.lblSelectLanguage, style: AppTheme.regularTextStyle().copyWith(fontSize: 14)),
-                        SizedBox(height: 10),
-                        Container(
-                          margin: EdgeInsets.only(right: 8),
-                          child: DropdownButton<String>(
-                            value: _outputLanguage,
-                            isExpanded: true,
-                            itemHeight: 50,
-                            isDense: true,
-                            underline: Container(
-                              height: 0,
-                              color: Colors.black45,
-                            ),
-                            style: AppTheme.regularTextStyle(),
-                            icon: Icon(                // Add this
-                              Icons.keyboard_arrow_down,
-                              color: HexColor("#CCCCCC"),// Add this
-                            ),
-                            items: <DropdownMenuItem<String>>[
-                              DropdownMenuItem(
-                                child: Text('English'),
-                                value: 'en',
-                              ),
-                              DropdownMenuItem(
-                                  child: Text('Arabic'),
-                                  value: 'ar'
-                              ),
-                              DropdownMenuItem(
-                                  child: Text('Somali'),
-                                  value: 'so'
-                              ),
-                              DropdownMenuItem(
-                                  child: Text('Spanish'),
-                                  value: 'es'
-                              ),
-                              DropdownMenuItem(
-                                  child: Text('Swahili'),
-                                  value: 'sw'
-                              ),
-                              DropdownMenuItem(
-                                  child: Text('Vietnamese'),
-                                  value: 'vi'
-                              )
-                            ],
-                            onChanged: (value){
-                              setState(() {
-                                _outputLanguage = value.toString();
-                              });
-                            },
-                          ),
-                        ),
-                        SizedBox(height: 15),
-                        Container(
-                          height:1.3,
-                          width: MediaQuery.of(context).size.width,
-                          color: Colors.black45,
-                        ),
-                        SizedBox(height: 20),
-                        Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            gradient: LinearGradient(
-                              colors: [
-                                HexColor("#6462AA"),
-                                HexColor("#4CA7DA"),
-                                HexColor("#20B69E"),
-                              ],
-                            ),
-                          ),
-                          height: 50,
-                          width: MediaQuery.of(context).size.width,
-                          child: TextButton(
-                            child: Text(LabelStr.lblSignIn.toUpperCase(), style: AppTheme.customTextStyle(MyFont.SSPro_bold, 16.0, Colors.white)),
-                            onPressed: (){
-                              FocusScope.of(context).requestFocus(FocusNode());
-                              _signIn(context);
-                            },
-                          ),
-                        ),
-                        SizedBox(height: 5),
-                        InkWell(
-                          onTap: (){
-                            FocusScope.of(context).requestFocus(FocusNode());
-                            Utils.navigateToScreen(context, ForgotPwdScreen());
-                          },
-                          child: Container(
-                            alignment: Alignment.centerRight,
-                            padding: EdgeInsets.fromLTRB(0, 5, 0, 5),
-                            child: Text(LabelStr.lblForgotPwd.toUpperCase(), style: AppTheme.customTextStyle(MyFont.SSPro_semibold, 16.0, HexColor("#5772A8"))),
-                          ),
-                        ),
-                        SizedBox(height: MediaQuery.of(context).size.height*0.1),
-                        Container(
-                          alignment: Alignment.bottomCenter,
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(LabelStr.lblNoAcc, style: AppTheme.customTextStyle(MyFont.SSPro_regular, 16.0, HexColor("#383838"))),
-                              InkWell(
-                                  onTap: (){
-                                    FocusScope.of(context).requestFocus(FocusNode());
-                                    Utils.navigateToScreen(context, SignUpScreen());
-                                  },
-                                  child: Padding(
-                                    padding: EdgeInsets.fromLTRB(2, 5, 5, 5),
-                                    child: Text(LabelStr.lblSignUp.toUpperCase(), style: AppTheme.customTextStyle(MyFont.SSPro_semibold, 16.0, HexColor("#5772A8"))),
-                                  )
-                              )
-                            ],
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ): Positioned.fill(
               top: MediaQuery.of(context).size.height*0.33,
               bottom: 0.0,
               child: Container(
@@ -323,7 +178,7 @@ class _SignInScreenState extends State<SignInScreen> {
                             child: Text(LabelStr.lblForgotPwd.toUpperCase(), style: AppTheme.customTextStyle(MyFont.SSPro_semibold, 16.0, HexColor("#5772A8"))),
                           ),
                         ),
-                        SizedBox(height: MediaQuery.of(context).size.height*0.1),
+                        SizedBox(height: MediaQuery.of(context).size.height*0.03),
                         Container(
                           alignment: Alignment.bottomCenter,
                           child: Row(

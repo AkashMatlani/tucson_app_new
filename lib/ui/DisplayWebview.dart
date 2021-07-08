@@ -3,10 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:tucson_app/GeneralUtils/ProgressHUD.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
-
 class DisplayWebview extends StatefulWidget {
   DisplayWebview(this.webViewUrl);
+
   String webViewUrl;
+
   @override
   _DisplayWebviewState createState() => _DisplayWebviewState();
 }
@@ -14,19 +15,27 @@ class DisplayWebview extends StatefulWidget {
 class _DisplayWebviewState extends State<DisplayWebview> {
   bool _isLoading = true;
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+
   //late WebViewController _controller;
 
   @override
   Widget build(BuildContext context) {
     print("WebUrl => ${widget.webViewUrl}");
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Color(0xff6462AA),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back_ios, color: Colors.white),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+      ),
       body: SafeArea(
         child: ProgressHUD(
           child: WebView(
-             initialUrl: widget.webViewUrl,
-             javascriptMode: JavascriptMode.unrestricted,
-             onPageFinished: pageFinishedLoading,
-             /*onWebViewCreated: (WebViewController webViewController) {
+            initialUrl: widget.webViewUrl,
+            javascriptMode: JavascriptMode.unrestricted,
+            onPageFinished: pageFinishedLoading,
+            /*onWebViewCreated: (WebViewController webViewController) {
                _controller = webViewController;
              }*/
           ),
@@ -46,7 +55,7 @@ class _DisplayWebviewState extends State<DisplayWebview> {
     //readJS(url);
   }
 
-  /*void readJS(String url) async{
+/*void readJS(String url) async{
     String text = await _controller.evaluateJavascript("console.log(document.documentElement.innerHTML);");
     print(text);
     if(html.compareTo("Your password reset successfully.") == 0){
