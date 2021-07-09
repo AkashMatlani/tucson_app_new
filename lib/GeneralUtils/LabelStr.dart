@@ -1,4 +1,5 @@
 class LabelStr {
+
   static const lblTusdEmail = "TUSD Email";
   static const lblSigninEmail = "Email";
   static const lblPassword = "Password";
@@ -148,8 +149,6 @@ class LabelStr {
 
   static const lblPostJob = "Post Jobs";
   static const lblCommmunityEvents = "Commmunity Events";
-  static const lblVolunteerOpportunities = "Volunteer Opportunities";
-  static const lblGivingDonation = "Giving/Donation";
   static const lblAgree = "Agree";
 
   static const lblHealthPrivacy = "PRIVACY NOTICE";

@@ -41,6 +41,7 @@ class _CalendarEventState extends State<CalendarEvent> {
 
   late String eventNameTitle = "";
   late double blockSizeVertical;
+  String? languageCode;
 
   @override
   void initState() {
@@ -50,6 +51,7 @@ class _CalendarEventState extends State<CalendarEvent> {
 
   _getSchoolId() async {
     int schoolId = await PrefUtils.getValueFor(PrefUtils.schoolId);
+    languageCode = await PrefUtils.getValueFor(PrefUtils.sortLanguageCode);
     if(schoolId == null){
       schoolId = 0;
     }

@@ -1,16 +1,15 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:tucson_app/GeneralUtils/Constant.dart';
 import 'package:tucson_app/GeneralUtils/LabelStr.dart';
 import 'package:tucson_app/GeneralUtils/PrefsUtils.dart';
 import 'package:tucson_app/GeneralUtils/Utils.dart';
 import 'package:tucson_app/Model/ContentMasterViewModel.dart';
 import 'package:tucson_app/Model/ContentResponse.dart';
+import 'package:tucson_app/WebService/WebService.dart';
 import 'package:tucson_app/ui/DisplayWebview.dart';
-import 'package:tucson_app/ui/VideoPlayer.dart';
 import 'package:tucson_app/ui/VideoPlayerScreen.dart';
-import 'BlogDetailsScreen.dart';
 
 import '../../GeneralUtils/ColorExtension.dart';
 
@@ -27,6 +26,7 @@ class VideoListScreen extends StatefulWidget {
 class _VideoListScreenState extends State<VideoListScreen> {
 
   bool isLoading = true;
+  String? languageCode;
   List<ContentTransactionResponse> _videoList = [];
 
   @override
@@ -37,6 +37,7 @@ class _VideoListScreenState extends State<VideoListScreen> {
 
   _getSchoolId() async {
     int schoolId = await PrefUtils.getValueFor(PrefUtils.schoolId);
+    languageCode = await PrefUtils.getValueFor(PrefUtils.sortLanguageCode);
     if(schoolId == null){
       schoolId = 0;
     }
@@ -149,7 +150,7 @@ class _VideoListScreenState extends State<VideoListScreen> {
     return Container(
       alignment: Alignment.center,
       height: MediaQuery.of(context).size.height*0.88,
-      child: isLoading ? Container() : Text(LabelStr.lblNo+" "+widget.title+" "+LabelStr.lblFound, style: AppTheme.regularTextStyle().copyWith(fontSize: 18, color: Colors.red)),
+      child: isLoading ? Container() : Text('no'.tr()+" "+widget.title+" "+'found'.tr(), style: AppTheme.regularTextStyle().copyWith(fontSize: 18, color: Colors.red)),
     );
   }
 
@@ -163,8 +164,6 @@ class _VideoListScreenState extends State<VideoListScreen> {
 
     Utils.showLoader(true, context);
     _contentViewModel.getContentList(context, params, (isSuccess, message){
-      Utils.showLoader(false, context);
-      isLoading = false;
       if(isSuccess){
         setState(() {
           _videoList = [];
@@ -176,11 +175,44 @@ class _VideoListScreenState extends State<VideoListScreen> {
             }
           }
         });
+        translateListData();
       } else {
+        Utils.showLoader(false, context);
+        isLoading = false;
         setState(() {
           _videoList = [];
         });
       }
+    });
+  }
+
+  translateListData(){
+    List<String> nameList=[];
+    List<ContentTransactionResponse> tempList =[];
+    for(var items in _videoList){
+      nameList.add(items.objectName);
+    }
+    String nameStr = nameList.join("==)");
+    WebService.translateApiCall(languageCode!, nameStr, (isSuccess, response){
+      if(isSuccess){
+        List<String> resultArr = response.toString().split("==)");
+        for(int i=0; i< resultArr.length; i++){
+          tempList.add(ContentTransactionResponse(contentTransactionId: _videoList[i].contentTransactionId,
+              contentMasterId: _videoList[i].contentMasterId,
+              contentTransTypeId: _videoList[i].contentTransTypeId,
+              objectName: resultArr[i],
+              objectPath: _videoList[i].objectPath,
+              contentTransTypeName: _videoList[i].contentTransTypeName));
+        }
+        setState(() {
+          _videoList = [];
+          _videoList.addAll(tempList);
+        });
+      } else {
+        Utils.showToast(context, "Page Translation Failed", Colors.red);
+      }
+      isLoading = false;
+      Utils.showLoader(false, context);
     });
   }
 }

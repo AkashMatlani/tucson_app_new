@@ -1,13 +1,14 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:tucson_app/GeneralUtils/ColorExtension.dart';
 import 'package:tucson_app/GeneralUtils/Constant.dart';
-import 'package:tucson_app/GeneralUtils/LabelStr.dart';
 import 'package:tucson_app/GeneralUtils/PrefsUtils.dart';
 import 'package:tucson_app/GeneralUtils/Utils.dart';
 import 'package:tucson_app/Model/ContentMasterViewModel.dart';
 import 'package:tucson_app/Model/ContentResponse.dart';
+import 'package:tucson_app/WebService/WebService.dart';
 import 'package:tucson_app/ui/DisplayWebview.dart';
 
 class JobOpeningScreen extends StatefulWidget {
@@ -18,6 +19,7 @@ class JobOpeningScreen extends StatefulWidget {
 class _JobOpeningScreenState extends State<JobOpeningScreen> {
 
   bool isLoading = true;
+  String? languageCode;
   List<ContentTransactionResponse> _jobList = [];
 
   @override
@@ -28,6 +30,7 @@ class _JobOpeningScreenState extends State<JobOpeningScreen> {
 
   _getSchoolId() async {
     int schoolId = await PrefUtils.getValueFor(PrefUtils.schoolId);
+    languageCode = await PrefUtils.getValueFor(PrefUtils.sortLanguageCode);
     if(schoolId == null){
       schoolId = 0;
     }
@@ -58,7 +61,7 @@ class _JobOpeningScreenState extends State<JobOpeningScreen> {
                       ),
                       Container(
                         margin: EdgeInsets.only(top: 10),
-                        child: Text(LabelStr.lblJobOpnings,
+                        child: Text('job_openings'.tr(),
                             style: AppTheme.regularTextStyle()
                                 .copyWith(fontSize: 18, color: Colors.white)),
                       )
@@ -138,7 +141,7 @@ class _JobOpeningScreenState extends State<JobOpeningScreen> {
     return Container(
       alignment: Alignment.center,
       height: MediaQuery.of(context).size.height*0.88,
-      child: isLoading ? Container() : Text(LabelStr.lblNoJobs, style: AppTheme.regularTextStyle().copyWith(fontSize: 18, color: Colors.red)),
+      child: isLoading ? Container() : Text('no_job'.tr(), style: AppTheme.regularTextStyle().copyWith(fontSize: 18, color: Colors.red)),
     );
   }
 
@@ -151,8 +154,6 @@ class _JobOpeningScreenState extends State<JobOpeningScreen> {
     };
     Utils.showLoader(true, context);
     _contentViewModel.getContentList(context, params, (isSuccess, message){
-      Utils.showLoader(false, context);
-      isLoading = false;
       if(isSuccess){
         setState(() {
           _jobList = [];
@@ -162,11 +163,44 @@ class _JobOpeningScreenState extends State<JobOpeningScreen> {
             }
           }
         });
+        translateListData();
       } else {
+        Utils.showLoader(false, context);
+        isLoading = false;
         setState(() {
           _jobList = [];
         });
       }
+    });
+  }
+
+  translateListData(){
+    List<String> nameList=[];
+    List<ContentTransactionResponse> tempList =[];
+    for(var items in _jobList){
+      nameList.add(items.objectName);
+    }
+    String nameStr = nameList.join("==)");
+    WebService.translateApiCall(languageCode!, nameStr, (isSuccess, response){
+      if(isSuccess){
+        List<String> resultArr = response.toString().split("==)");
+        for(int i=0; i< resultArr.length; i++){
+          tempList.add(ContentTransactionResponse(contentTransactionId: _jobList[i].contentTransactionId,
+              contentMasterId: _jobList[i].contentMasterId,
+              contentTransTypeId: _jobList[i].contentTransTypeId,
+              objectName: resultArr[i],
+              objectPath: _jobList[i].objectPath,
+              contentTransTypeName: _jobList[i].contentTransTypeName));
+        }
+        setState(() {
+          _jobList = [];
+          _jobList.addAll(tempList);
+        });
+      } else {
+        Utils.showToast(context, "Page Translation Failed", Colors.red);
+      }
+      isLoading = false;
+      Utils.showLoader(false, context);
     });
   }
 }

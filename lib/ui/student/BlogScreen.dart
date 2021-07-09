@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -7,6 +8,7 @@ import 'package:tucson_app/GeneralUtils/PrefsUtils.dart';
 import 'package:tucson_app/GeneralUtils/Utils.dart';
 import 'package:tucson_app/Model/ContentMasterViewModel.dart';
 import 'package:tucson_app/Model/ContentResponse.dart';
+import 'package:tucson_app/WebService/WebService.dart';
 import 'BlogDetailsScreen.dart';
 
 import '../../GeneralUtils/ColorExtension.dart';
@@ -25,6 +27,7 @@ class _BlogScreenState extends State<BlogScreen> {
 
   bool isLoading = true;
   List<ContentResponse> _contentList = [];
+  String? languageCode;
 
   @override
   void initState() {
@@ -34,6 +37,7 @@ class _BlogScreenState extends State<BlogScreen> {
 
   _getSchoolId() async {
     int schoolId = await PrefUtils.getValueFor(PrefUtils.schoolId);
+    languageCode = await PrefUtils.getValueFor(PrefUtils.sortLanguageCode);
     if(schoolId == null){
       schoolId = 0;
     }
@@ -110,6 +114,14 @@ class _BlogScreenState extends State<BlogScreen> {
   _listRowItems(BuildContext context, int index) {
     return InkWell(
       onTap: () {
+        if(widget.title.compareTo('student_blogs'.tr()) ==0){
+          widget.title = 'blog_details'.tr();
+        } else if(widget.title.compareTo('articles'.tr()) ==0){
+          widget.title = 'article_details'.tr();
+        } else if(widget.title.compareTo('stories'.tr()) ==0){
+          widget.title = 'story_details'.tr();
+        }
+
         Utils.navigateToScreen(context, BlogDetailsScreen(widget.title, _contentList[index]));
       },
       child: Column(
@@ -159,7 +171,7 @@ class _BlogScreenState extends State<BlogScreen> {
     return Container(
       alignment: Alignment.center,
       height: MediaQuery.of(context).size.height*0.88,
-      child: isLoading ? Container() : Text(LabelStr.lblNo+" "+widget.title+" "+LabelStr.lblFound, style: AppTheme.regularTextStyle().copyWith(fontSize: 18, color: Colors.red)),
+      child: isLoading ? Container() : Text('no'.tr()+" "+widget.title+" "+'found'.tr(), style: AppTheme.regularTextStyle().copyWith(fontSize: 18, color: Colors.red)),
     );
   }
 
@@ -188,18 +200,51 @@ class _BlogScreenState extends State<BlogScreen> {
 
     Utils.showLoader(true, context);
     _contentViewModel.getContentList(context, params, (isSuccess, message){
-      Utils.showLoader(false, context);
-      isLoading = false;
       if(isSuccess){
         setState(() {
           _contentList = [];
           _contentList = _contentViewModel.contentList;
         });
+        translateListData();
       } else {
+        Utils.showLoader(false, context);
+        isLoading = false;
         setState(() {
           _contentList = [];
         });
       }
     });
+  }
+
+  translateListData(){
+    List<ContentResponse> tempLList=[];
+    List<String> blogNameList = [];
+    for(var itemName in _contentList){
+      blogNameList.add(itemName.contentTitle);
+    }
+    String listStr = blogNameList.join("==)");
+    WebService.translateApiCall(languageCode!, listStr, (isSuccess, response){
+      if(isSuccess){
+        List<String> resultArr = response.toString().split("==)");
+        for(int i=0; i<resultArr.length; i++){
+          tempLList.add(ContentResponse(contentMasterId: _contentList[i].contentMasterId,
+              schoolId: _contentList[i].schoolId,
+              contentTypeId: _contentList[i].contentTypeId,
+              contentTitle: _contentList[i].contentTitle,
+              content: _contentList[i].content,
+              createdOn: _contentList[i].createdOn,
+              schoolName: _contentList[i].schoolName,
+              contentTransactionTypeJoin: _contentList[i].contentTransactionTypeJoin));
+        }
+        setState(() {
+          _contentList = [];
+          _contentList.addAll(tempLList);
+        });
+      } else {
+        Utils.showToast(context, "Page Translation Failed", Colors.red);
+      }
+    });
+    isLoading = false;
+    Utils.showLoader(false, context);
   }
 }

@@ -1,13 +1,13 @@
 import 'dart:async';
 
 import 'package:double_back_to_close/double_back_to_close.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tucson_app/GeneralUtils/ColorExtension.dart';
 import 'package:tucson_app/GeneralUtils/Constant.dart';
-import 'package:tucson_app/GeneralUtils/LabelStr.dart';
 import 'package:tucson_app/GeneralUtils/PrefsUtils.dart';
 import 'package:tucson_app/GeneralUtils/Utils.dart';
 import 'package:tucson_app/Model/GridListItems.dart';
@@ -24,6 +24,7 @@ import 'MentalHealthSupportScreen.dart';
 import 'ScholarshipInfoScreen.dart';
 import 'VolunteerOpportunitiesScreen.dart';
 
+
 class StudentDashboardScreen extends StatefulWidget {
   @override
   _StudentDashboardScreenState createState() => _StudentDashboardScreenState();
@@ -34,27 +35,29 @@ class _StudentDashboardScreenState extends State<StudentDashboardScreen> {
   bool allowClose = false;
   late List<GridListItems> menuItems = [
     GridListItems(
-      name: LabelStr.lblCoolStuff,
+      name: 'cool_stuff'.tr(),
       svgPicture: MyImage.coolStuffIcon,
     ),
     GridListItems(
-        name: LabelStr.lblStudentBlogs, svgPicture: MyImage.studentIcon),
+        name: 'student_blogs'.tr(), svgPicture: MyImage.studentIcon),
     GridListItems(
-        name: LabelStr.lblScholerShipInfo, svgPicture: MyImage.scholarshipIcon),
+        name: 'scholarship_info'.tr(), svgPicture: MyImage.scholarshipIcon),
     GridListItems(
-        name: LabelStr.lblMentalHealthSupport,
+        name: 'mental_health_support'.tr(),
         svgPicture: MyImage.mentalHealthIcon),
-    GridListItems(name: LabelStr.lblJobOpnings, svgPicture: MyImage.jobsIcon),
-    GridListItems(name: LabelStr.lblEvents, svgPicture: MyImage.eventIcon),
+    GridListItems(name: 'job_openings'.tr(), svgPicture: MyImage.jobsIcon),
+    GridListItems(name: 'events'.tr(), svgPicture: MyImage.eventIcon),
     GridListItems(
-        name: LabelStr.lblVolunteerOpportunites,
+        name: 'volunteer_opportunity'.tr(),
         svgPicture: MyImage.volunteerIcon),
-    GridListItems(name: LabelStr.lblAwarity, svgPicture: MyImage.awarityIcon),
-    GridListItems(name: LabelStr.lblLogout, svgPicture: MyImage.logoutIcon),
+    GridListItems(name: 'awareity'.tr(), svgPicture: MyImage.awarityIcon),
+    GridListItems(name: 'sign_out'.tr(), svgPicture: MyImage.logoutIcon),
   ];
 
-  String language = "";
-  String userName = "";
+  String? sortLanguageCode;
+  String? language;
+  String? firstName;
+  String? schoolCategory;
   late int schoolId;
 
   @override
@@ -64,214 +67,238 @@ class _StudentDashboardScreenState extends State<StudentDashboardScreen> {
       SharedPreferences.getInstance().then((prefs) async {
         PrefUtils.getUserDataFromPref();
         setState(() {
-          language = prefs.getString(PrefUtils.yourLanguage)!;
-          userName = prefs.getString(PrefUtils.userFirstName)!;
+          sortLanguageCode = prefs.getString(PrefUtils.sortLanguageCode);
+          language = prefs.getString(PrefUtils.yourLanguage);
+          firstName = prefs.getString(PrefUtils.userFirstName);
           schoolId = prefs.getInt(PrefUtils.schoolId)!;
           dob =  prefs.getString(PrefUtils.userDOB)!;
           if (schoolId == null) {
             schoolId = 0;
           }
         });
+        _getFirstName();
       });
+    });
+  }
+
+  _getFirstName(){
+    WebService.translateApiCall(sortLanguageCode!, firstName!, (isSuccess, response){
+      if(isSuccess){
+        setState(() {
+          firstName = response.toString();
+        });
+      } else {
+        Utils.showToast(context, "Page Translation Failed", Colors.red);
+      }
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: DoubleBack(
-      condition: allowClose,
-      onConditionFail: () {
-        setState(() {
-          allowClose = true;
-        });
-      },
-      child: Stack(
-        children: [
-          Container(
-            color: HexColor("#6462AA"),
-            child: Column(
-              children: [
-                Container(
-                  height: MediaQuery.of(context).size.height * 0.25,
-                  child: Row(
-                    children: [
-                      Expanded(
-                        flex: 3,
-                        child: Padding(
-                            padding: EdgeInsets.only(left: 10),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Text(LabelStr.lblHi,
-                                    style: AppTheme.customTextStyle(
-                                        MyFont.SSPro_regular,
-                                        25.0,
-                                        Colors.white)),
-                                SizedBox(width: 5),
-                                Text(userName,
-                                    style: AppTheme.customTextStyle(
-                                        MyFont.SSPro_semibold,
-                                        25.0,
-                                        Colors.white))
-                              ],
-                            )),
-                      ),
-                      Container(
-                        padding: EdgeInsets.only(right: 10),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.account_circle,
-                              color: Colors.white,
-                              size: 60.0,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Icon(
-                                  Icons.circle,
-                                  color: Colors.limeAccent,
-                                  size: 25.0,
-                                ),
-                                SizedBox(width: 5),
-                                Text(language,
-                                    style: AppTheme.regularTextStyle()
-                                        .copyWith(color: Colors.white))
-                              ],
-                            )
-                          ],
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-                Expanded(
-                  child: Container(
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(50.0),
-                            topRight: Radius.circular(50.0)),
-                        color: Colors.white),
-                    height: MediaQuery.of(context).size.height,
-                    width: MediaQuery.of(context).size.width,
-                    padding: EdgeInsets.all(20),
-                  ),
-                )
-              ],
-            ),
-          ),
-          Positioned(
-            top: MediaQuery.of(context).size.height * 0.2,
-            left: MediaQuery.of(context).size.width * 0.08,
-            right: MediaQuery.of(context).size.width * 0.08,
-            child: Container(
-              height: MediaQuery.of(context).size.height * 0.8,
-              child: SingleChildScrollView(
-                child: GridView.builder(
-                    physics: ScrollPhysics(),
-                    shrinkWrap: true,
-                    padding: EdgeInsets.only(bottom: 20),
-                    gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                        maxCrossAxisExtent: 200,
-                        childAspectRatio: 2 / 2,
-                        crossAxisSpacing: 20,
-                        mainAxisSpacing: 20),
-                    itemCount: menuItems.length,
-                    itemBuilder: (BuildContext ctx, index) {
-                      return GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              // ontap of each card, set the defined int to the grid view index
-                              if (index == 0) {
-                                getSchoolType();
-                              } else if (index == 1) {
-                                Utils.navigateToScreen(context,
-                                    BlogScreen(LabelStr.lblStudentBlogs));
-                              } else if (index == 2) {
-                                Utils.navigateToScreen(
-                                    context, ScholarshipInfoScreen());
-                              } else if (index == 3) {
-                                int age =
-                                    Utils.calculateAge(DateTime.parse(dob));
-                                if (age >= 13) {
-                                  Utils.navigateToScreen(
-                                      context, MentalHealthSupportScreen());
-                                } else {
-                                  Utils.showToast(
-                                      context,
-                                      "Mental Health Support is available only for Students with age >=13 years",
-                                      Colors.red);
-                                }
-                              } else if (index == 4) {
-                                Utils.navigateToScreen(
-                                    context, JobOpeningScreen());
-                              } else if (index == 5) {
-                                Utils.navigateToScreen(
-                                    context, CalendarEvent());
-                              } else if (index == 6) {
-                                Utils.navigateToScreen(
-                                    context, VolunteerOpportunitiesScreen());
-                              } else if (index == 7) {
-                                var params = {
-                                  "schoolId": schoolId,
-                                  "roleId": 0,
-                                  "contentTypeName": "Awareity"
-                                };
-                                getWebApiFromUrl(context, params);
-                              } else if (index == 8) {
-                                _logoutFromApp(context);
-                              }
-                            });
-                          },
-                          child: Card(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(15.0),
-                              ),
-                              color: Color.fromRGBO(245, 246, 252, 1),
-                              elevation: 5,
-                              clipBehavior: Clip.antiAlias,
-                              child: Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  Padding(
-                                      padding: EdgeInsets.fromLTRB(
-                                          16.0, 12.0, 16.0, 8.0),
-                                      child: SvgPicture.asset(
-                                          menuItems[index].svgPicture)),
-                                  Padding(
-                                    padding: EdgeInsets.fromLTRB(
-                                        16.0, 12.0, 16.0, 8.0),
-                                    child: Align(
-                                      alignment: Alignment.bottomLeft,
-                                      child: Text(
-                                        menuItems[index].name,
-                                        style: AppTheme.regularTextStyle()
-                                            .copyWith(color: Colors.black),
-                                      ),
-                                    ),
-                                  ),
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+          body: DoubleBack(
+        condition: allowClose,
+        onConditionFail: () {
+          setState(() {
+            allowClose = true;
+          });
+        },
+        child: Stack(
+          children: [
+            Container(
+              color: HexColor("#6462AA"),
+              child: Column(
+                children: [
+                  Container(
+                    height: MediaQuery.of(context).size.height * 0.25,
+                    child: Row(
+                      children: [
+                        Expanded(
+                          flex: 3,
+                          child: Padding(
+                              padding: EdgeInsets.only(left: 10),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Text('hi'.tr(),
+                                      style: AppTheme.customTextStyle(
+                                          MyFont.SSPro_regular,
+                                          25.0,
+                                          Colors.white)),
+                                  SizedBox(width: 5),
+                                  Text(firstName!,
+                                      style: AppTheme.customTextStyle(
+                                          MyFont.SSPro_semibold,
+                                          25.0,
+                                          Colors.white))
                                 ],
-                              )));
-                    }),
+                              )),
+                        ),
+                        Container(
+                          padding: EdgeInsets.only(right: 10),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.account_circle,
+                                color: Colors.white,
+                                size: 60.0,
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    Icons.circle,
+                                    color: Colors.limeAccent,
+                                    size: 25.0,
+                                  ),
+                                  SizedBox(width: 5),
+                                  Text(language!,
+                                      style: AppTheme.regularTextStyle()
+                                          .copyWith(color: Colors.white))
+                                ],
+                              )
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                  Expanded(
+                    child: Container(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(50.0),
+                              topRight: Radius.circular(50.0)),
+                          color: Colors.white),
+                      height: MediaQuery.of(context).size.height,
+                      width: MediaQuery.of(context).size.width,
+                      padding: EdgeInsets.all(20),
+                    ),
+                  )
+                ],
               ),
             ),
-          ),
-        ],
-      ),
-      waitForSecondBackPress: 5,
-      textStyle: TextStyle(
-        fontSize: 20,
-        color: Colors.white,
-      ),
-      background: Colors.red,
-      backgroundRadius: 30,
-    ));
+            Positioned(
+              top: MediaQuery.of(context).size.height * 0.2,
+              left: MediaQuery.of(context).size.width * 0.08,
+              right: MediaQuery.of(context).size.width * 0.08,
+              child: Container(
+                height: MediaQuery.of(context).size.height * 0.8,
+                child: SingleChildScrollView(
+                  child: GridView.builder(
+                      physics: ScrollPhysics(),
+                      shrinkWrap: true,
+                      padding: EdgeInsets.only(bottom: 20),
+                      gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                          maxCrossAxisExtent: 200,
+                          childAspectRatio: 2 / 2,
+                          crossAxisSpacing: 20,
+                          mainAxisSpacing: 20),
+                      itemCount: menuItems.length,
+                      itemBuilder: (BuildContext ctx, index) {
+                        return GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                // ontap of each card, set the defined int to the grid view index
+                                if (index == 0) {
+                                  getSchoolType();
+                                } else if (index == 1) {
+                                  Utils.navigateToScreen(context,
+                                      BlogScreen('student_blogs'.tr()));
+                                } else if (index == 2) {
+                                  Utils.navigateToScreen(
+                                      context, ScholarshipInfoScreen());
+                                } else if (index == 3) {
+                                  int age =
+                                      Utils.calculateAge(DateTime.parse(dob));
+                                  if(schoolCategory!.compareTo("High") == 0){
+                                    if (age >= 13) {
+                                      Utils.navigateToScreen(
+                                          context, MentalHealthSupportScreen());
+                                    } else {
+                                      Utils.showToast(
+                                          context,
+                                          "Mental Health Support is available only for Students with age >=13 years",
+                                          Colors.red);
+                                    }
+                                  } else{
+                                    Utils.showToast(
+                                        context,
+                                        "Mental Health Support is available only for high school students",
+                                        Colors.red);
+                                  }
+                                } else if (index == 4) {
+                                  Utils.navigateToScreen(
+                                      context, JobOpeningScreen());
+                                } else if (index == 5) {
+                                  Utils.navigateToScreen(
+                                      context, CalendarEvent());
+                                } else if (index == 6) {
+                                  Utils.navigateToScreen(
+                                      context, VolunteerOpportunitiesScreen());
+                                } else if (index == 7) {
+                                  var params = {
+                                    "schoolId": schoolId,
+                                    "roleId": 0,
+                                    "contentTypeName": "Awareity"
+                                  };
+                                  getWebApiFromUrl(context, params);
+                                } else if (index == 8) {
+                                  _logoutFromApp(context);
+                                }
+                              });
+                            },
+                            child: Card(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(15.0),
+                                ),
+                                color: Color.fromRGBO(245, 246, 252, 1),
+                                elevation: 5,
+                                clipBehavior: Clip.antiAlias,
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Padding(
+                                        padding: EdgeInsets.fromLTRB(
+                                            16.0, 12.0, 16.0, 8.0),
+                                        child: SvgPicture.asset(
+                                            menuItems[index].svgPicture)),
+                                    Padding(
+                                      padding: EdgeInsets.fromLTRB(
+                                          16.0, 12.0, 16.0, 8.0),
+                                      child: Align(
+                                        alignment: Alignment.bottomLeft,
+                                        child: Text(
+                                          menuItems[index].name,
+                                          style: AppTheme.regularTextStyle()
+                                              .copyWith(color: Colors.black),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                )));
+                      }),
+                ),
+              ),
+            ),
+          ],
+        ),
+        waitForSecondBackPress: 5,
+        textStyle: TextStyle(
+          fontSize: 20,
+          color: Colors.white,
+        ),
+        background: Colors.red,
+        backgroundRadius: 30,
+      )),
+    );
   }
 
   getWebApiFromUrl(BuildContext context, Map<String, Object> params) {
@@ -290,7 +317,6 @@ class _StudentDashboardScreenState extends State<StudentDashboardScreen> {
       }
     }).catchError((error) {
       Utils.showLoader(false, context);
-      //Utils.showToast(context, LabelStr.serverError, Colors.red);
       Utils.navigateToScreen(context, WebViewEmpty());
     });
   }
@@ -302,23 +328,27 @@ class _StudentDashboardScreenState extends State<StudentDashboardScreen> {
         .then((response) {
       Utils.showLoader(false, context);
       if (response.statusCode == 1) {
-        String schoolCategory = response.body["categoryName"];
-        Utils.navigateToScreen(context, CoolStuffScreen(schoolCategory));
+        schoolCategory = response.body["categoryName"];
+        Utils.navigateToScreen(context, CoolStuffScreen(schoolCategory!));
       } else {
         Utils.showToast(context, response.message, Colors.red);
       }
     }).catchError((onError) {
       Utils.showLoader(false, context);
-      Utils.showToast(context, LabelStr.connectionError, Colors.red);
+      Utils.showToast(context, 'check_connectivity'.tr(), Colors.red);
     });
   }
 
   _logoutFromApp(BuildContext context) async {
     bool mentalPopUp = await PrefUtils.getValueFor(PrefUtils.mentalHealthpopUp);
+    String langCode = await PrefUtils.getValueFor(PrefUtils.sortLanguageCode);
+    String langName = await PrefUtils.getValueFor(PrefUtils.yourLanguage);
     Utils.showLoader(true, context);
     PrefUtils.clearPref();
     Utils.showLoader(false, context);
     PrefUtils.setBoolValue(PrefUtils.mentalHealthpopUp, mentalPopUp);
+    PrefUtils.setStringValue(PrefUtils.sortLanguageCode, langCode);
+    PrefUtils.setStringValue(PrefUtils.yourLanguage, langName);
     Utils.navigateWithClearState(context, SignInScreen());
   }
 }
