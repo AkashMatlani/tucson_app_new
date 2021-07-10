@@ -13,6 +13,7 @@ class PrefUtils {
   static const String userToken = "com.TucsonApp.userToken";
   static const String schoolId = "com.TucsonApp.schoolId";
   static const String yourLanguage = "com.TucsonApp.yourLanguage";
+  static const String sortLanguageCode = "com.TucsonApp.sortLanguageCode";
   static const String mentalHealthpopUp = "com.TucsonApp.healthPopUp";
 
 
@@ -57,7 +58,6 @@ class PrefUtils {
     } else {
       PrefUtils.setIntValue(PrefUtils.schoolId, userDetails.schoolId);
     }
-    PrefUtils.setStringValue(PrefUtils.yourLanguage, "English");
   }
 
   static void getUserDataFromPref() async {

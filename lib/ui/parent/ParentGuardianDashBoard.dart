@@ -17,6 +17,7 @@ import 'package:tucson_app/ui/SignInScreen.dart';
 import 'package:tucson_app/ui/parent/Event.dart';
 import 'package:tucson_app/ui/parent/RequestForServiceScreen.dart';
 import 'package:tucson_app/ui/parent/SchoolPrograms.dart';
+
 import 'CommunityResources.dart';
 import 'Education.dart';
 
@@ -281,7 +282,7 @@ class _ParentDashBoardScreenState extends State<ParentDashBoardScreen> {
       }
     }).catchError((error) {
       Utils.showLoader(false, context);
-     // Utils.showToast(context, LabelStr.serverError, Colors.red);
+     Utils.showToast(context, LabelStr.connectionError, Colors.red);
     });
   }
 }

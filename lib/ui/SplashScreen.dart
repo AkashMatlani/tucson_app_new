@@ -1,5 +1,5 @@
 import 'dart:async';
-
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -25,6 +25,8 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   BuildContext get context => super.context;
 
+  String? languageCode;
+
   @override
   void initState() {
     super.initState();
@@ -35,6 +37,11 @@ class _SplashScreenState extends State<SplashScreen> {
             prefs.getBool(PrefUtils.isLoggedIn)!) {
           String role = prefs.getString(PrefUtils.userRole)!;
           int userId = prefs.getInt(PrefUtils.userId)!;
+
+          languageCode = prefs.getString(PrefUtils.sortLanguageCode);
+          if(languageCode == null){
+            languageCode = "en";
+          }
           checkUserStatus(userId, role);
         } else {
           Utils.navigateReplaceToScreen(context, DonationScreen());
@@ -71,26 +78,29 @@ class _SplashScreenState extends State<SplashScreen> {
               Utils.navigateReplaceToScreen(context, ParentDashBoardScreen());
             }
           } else {
-            Utils.showToast(context, response.message, Colors.red);
-            Timer(Duration(seconds: 2), ()=>dispose());
+            _translateMessage(response.message);
           }
         } else {
-          Utils.showToast(context, response.message, Colors.red);
-          Timer(Duration(seconds: 2), ()=>dispose());
+          _translateMessage(response.message);
         }
       } else {
-        Utils.showToast(context, response.message, Colors.red);
-        Timer(Duration(seconds: 2), ()=>dispose());
+        _translateMessage(response.message);
       }
     }).catchError((error) {
       Utils.showLoader(false, context);
       print(error);
-      Utils.showToast(context, LabelStr.connectionError, Colors.red);
+      Utils.showToast(context, 'check_connectivity'.tr(), Colors.red);
     });
   }
 
-  @override
-  void dispose() {
-    super.dispose();
+  _translateMessage(String message){
+    WebService.translateApiCall(languageCode!, message, (isSuccess, response){
+      if(isSuccess){
+        Utils.showToast(context, response.toString(), Colors.red);
+        Timer(Duration(seconds: 2), ()=> Navigator.of(context).pop());
+      } else {
+        Utils.showToast(context, "Page Translation Failed", Colors.red);
+      }
+    });
   }
 }

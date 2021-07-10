@@ -9,7 +9,7 @@ import 'package:tucson_app/GeneralUtils/Utils.dart';
 import 'package:tucson_app/Model/GridListItems.dart';
 import 'package:tucson_app/ui/ArticlesScreen.dart';
 import 'package:tucson_app/ui/EducationalWebsiteScreen.dart';
-import 'package:tucson_app/ui/student/ActivitesScreen.dart';
+import 'ActivitesScreen.dart';
 import 'package:tucson_app/ui/student/BlogScreen.dart';
 import '../../GeneralUtils/LabelStr.dart';
 

@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
@@ -5,8 +6,10 @@ import 'package:intl/intl.dart';
 import 'package:tucson_app/GeneralUtils/ColorExtension.dart';
 import 'package:tucson_app/GeneralUtils/Constant.dart';
 import 'package:tucson_app/GeneralUtils/LabelStr.dart';
+import 'package:tucson_app/GeneralUtils/PrefsUtils.dart';
 import 'package:tucson_app/GeneralUtils/Utils.dart';
 import 'package:tucson_app/Model/ContentResponse.dart';
+import 'package:tucson_app/WebService/WebService.dart';
 import 'package:tucson_app/ui/AudioPlayerScreen.dart';
 import 'package:tucson_app/ui/DisplayWebview.dart';
 import 'package:tucson_app/ui/ImageViewerScreen.dart';
@@ -14,7 +17,7 @@ import 'package:tucson_app/ui/VideoPlayerScreen.dart';
 import 'package:tucson_app/ui/community/VideoPlayerScreen.dart';
 
 import '../DocumentViewerScreen.dart';
-import '../VideoPlayer.dart';
+
 
 class BlogDetailsScreen extends StatefulWidget {
   BlogDetailsScreen(this.title, this.contentResponse);
@@ -27,11 +30,15 @@ class BlogDetailsScreen extends StatefulWidget {
 }
 
 class _BlogDetailsScreenState extends State<BlogDetailsScreen> {
-  String doclink = "";
-  String imageLink = "";
-  String videoLink = "";
-  String audioLink = "";
-  String webLink = "";
+
+  String doclink="";
+  String imageLink="";
+  String videoLink="";
+  String audioLink="";
+  String webLink="";
+  String? languageCode;
+  String? contentTitle;
+  String? contentDesc;
 
   @override
   void initState() {
@@ -57,6 +64,19 @@ class _BlogDetailsScreenState extends State<BlogDetailsScreen> {
         webLink = data.objectPath;
       }
     }
+    setState(() {
+      contentTitle = widget.contentResponse.contentTitle;
+      contentDesc = widget.contentResponse.content;
+    });
+    getPrefsData();
+  }
+
+  void getPrefsData() async {
+    languageCode = await PrefUtils.getValueFor(PrefUtils.sortLanguageCode);
+    if(languageCode == null){
+      languageCode = "en";
+    }
+    _translateData();
   }
 
   @override
@@ -138,12 +158,10 @@ class _BlogDetailsScreenState extends State<BlogDetailsScreen> {
                               fontSize: 14,
                               color: Color.fromRGBO(111, 111, 111, 1))),
                       SizedBox(height: 5),
-                      Text(widget.contentResponse.contentTitle,
-                          style: AppTheme.customTextStyle(MyFont.SSPro_semibold,
-                              20.0, Color.fromRGBO(0, 0, 0, 1))),
+                      Text(contentTitle!, style: AppTheme.customTextStyle(MyFont.SSPro_semibold, 20.0, Color.fromRGBO(0, 0, 0, 1))),
                       SizedBox(height: 30),
                       Html(
-                        data: widget.contentResponse.content,
+                        data: contentDesc!,
                         defaultTextStyle: AppTheme.regularTextStyle(),
                       ),
                       SizedBox(height: 10),
@@ -199,4 +217,19 @@ class _BlogDetailsScreenState extends State<BlogDetailsScreen> {
       ),
     );
   }
+
+  void _translateData() {
+    String inputData = widget.contentResponse.contentTitle + "==)" +widget.contentResponse.content;
+    WebService.translateApiCall(languageCode!, inputData, (isSuccess, response){
+      if(isSuccess){
+        setState(() {
+          contentTitle = response.toString().split("==)")[0];
+          contentDesc = response.toString().split("==)")[1];
+        });
+      } else {
+        Utils.showToast(context, "Page Translation Failed", Colors.red);
+      }
+    });
+  }
+
 }

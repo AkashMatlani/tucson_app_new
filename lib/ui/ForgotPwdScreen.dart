@@ -1,15 +1,17 @@
-
-
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tucson_app/GeneralUtils/ColorExtension.dart';
 import 'package:tucson_app/GeneralUtils/Constant.dart';
 import 'package:tucson_app/GeneralUtils/HelperWidgets.dart';
 import 'package:tucson_app/GeneralUtils/LabelStr.dart';
+import 'package:tucson_app/GeneralUtils/PrefsUtils.dart';
 import 'package:tucson_app/GeneralUtils/Utils.dart';
 import 'package:tucson_app/Model/AuthViewModel.dart';
+import 'package:tucson_app/WebService/WebService.dart';
 import 'package:tucson_app/ui/DisplayWebview.dart';
 import 'package:tucson_app/ui/SignInScreen.dart';
+
 
 class ForgotPwdScreen extends StatefulWidget {
 
@@ -21,112 +23,128 @@ class _ForgotPwdScreenState extends State<ForgotPwdScreen> {
 
   var _emailController = TextEditingController();
   AuthViewModel _authViewModel = AuthViewModel();
+  String? languageCode;
+
+  @override
+  void initState() {
+    super.initState();
+    getSharedPrefsData();
+  }
+
+  getSharedPrefsData() async {
+    languageCode = await PrefUtils.getValueFor(PrefUtils.sortLanguageCode);
+    if(languageCode == null){
+      languageCode = "en";
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () => Utils.backWithNoTransition(context, SignInScreen()),
-      child: Scaffold(
-        body: Container(
-          decoration: BoxDecoration(
-              image: DecorationImage(
-                  image: AssetImage(MyImage.splashBg), fit: BoxFit.fill)
-          ),
-          child: Stack(
-            fit: StackFit.expand,
-            children: [
-              Container(
-                height: MediaQuery
-                    .of(context)
-                    .size
-                    .height * 0.3,
-                alignment: Alignment.topCenter,
-                child: Stack(
-                  children: [
-                    Image.asset(MyImage.forgotPassword),
-                    Positioned(
-                      top: MediaQuery.of(context).size.height*0.04,
-                      child: Padding(
-                        padding: EdgeInsets.all(10),
-                        child: IconButton(
-                            icon: Icon(Icons.arrow_back_ios, color: Colors.white),
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            }),
-                      ),
-                    )
-                  ],
-                ),
-              ),
-              Positioned.fill(
-                top: MediaQuery
-                    .of(context)
-                    .size
-                    .height * 0.25,
-                bottom: 0.0,
-                child: Container(
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(40.0),
-                          topRight: Radius.circular(40.0)
-                      ),
-                      color: HexColor("#f9f9f9")
-                  ),
-                  margin: EdgeInsets.only(top: 20),
-                  padding: EdgeInsets.all(30),
-                  child: SingleChildScrollView(
-                    child: Container(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Text(LabelStr.lblForgotPwd.substring(
-                              0, LabelStr.lblForgotPwd.length - 1),
-                              style: AppTheme.customTextStyle(
-                                  MyFont.SSPro_bold, 30.0,
-                                  MyColor.darkLblTextColor())),
-                          SizedBox(height: 20),
-                          Text(LabelStr.lblTusdEmail,
-                              style: AppTheme.regularTextStyle().copyWith(
-                                  fontSize: 14)),
-                          textFieldFor(LabelStr.lblTusdEmail, _emailController,
-                              textInputAction: TextInputAction.done,
-                              keyboardType: TextInputType.emailAddress),
-                          SizedBox(height: 20),
-                          Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              gradient: LinearGradient(
-                                colors: [
-                                  HexColor("#6462AA"),
-                                  HexColor("#4CA7DA"),
-                                  HexColor("#20B69E"),
-                                ],
-                              ),
-                            ),
-                            height: 50,
-                            width: MediaQuery
-                                .of(context)
-                                .size
-                                .width,
-                            child: TextButton(
-                              child: Text(LabelStr.lblSubmit,
-                                  style: AppTheme.customTextStyle(
-                                      MyFont.SSPro_bold, 16.0, Colors.white)),
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: Scaffold(
+          body: Container(
+            decoration: BoxDecoration(
+                image: DecorationImage(
+                    image: AssetImage(MyImage.splashBg), fit: BoxFit.fill)
+            ),
+            child: Stack(
+              fit: StackFit.expand,
+              children: [
+                Container(
+                  height: MediaQuery
+                      .of(context)
+                      .size
+                      .height * 0.3,
+                  alignment: Alignment.topCenter,
+                  child: Stack(
+                    children: [
+                      Image.asset(MyImage.forgotPassword),
+                      Positioned(
+                        top: MediaQuery.of(context).size.height*0.04,
+                        child: Padding(
+                          padding: EdgeInsets.all(10),
+                          child: IconButton(
+                              icon: Icon(Icons.arrow_back_ios, color: Colors.white),
                               onPressed: () {
-                                FocusScope.of(context).requestFocus(
-                                    FocusNode());
-                                _forgotPassword(context);
-                              },
-                            ),
-                          )
-                        ],
+                                Navigator.of(context).pop();
+                              }),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+                Positioned.fill(
+                  top: MediaQuery
+                      .of(context)
+                      .size
+                      .height * 0.25,
+                  bottom: 0.0,
+                  child: Container(
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(40.0),
+                            topRight: Radius.circular(40.0)
+                        ),
+                        color: HexColor("#f9f9f9")
+                    ),
+                    margin: EdgeInsets.only(top: 20),
+                    padding: EdgeInsets.all(30),
+                    child: SingleChildScrollView(
+                      child: Container(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Text('forgot_password'.tr().substring(0, 'forgot_password'.tr().length - 1),
+                                style: AppTheme.customTextStyle(
+                                    MyFont.SSPro_bold, 30.0,
+                                    MyColor.darkLblTextColor())),
+                            SizedBox(height: 20),
+                            Text('tusd_email'.tr(),
+                                style: AppTheme.regularTextStyle().copyWith(
+                                    fontSize: 14)),
+                            textFieldFor('tusd_email'.tr(), _emailController,
+                                textInputAction: TextInputAction.done,
+                                keyboardType: TextInputType.emailAddress),
+                            SizedBox(height: 20),
+                            Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                gradient: LinearGradient(
+                                  colors: [
+                                    HexColor("#6462AA"),
+                                    HexColor("#4CA7DA"),
+                                    HexColor("#20B69E"),
+                                  ],
+                                ),
+                              ),
+                              height: 50,
+                              width: MediaQuery
+                                  .of(context)
+                                  .size
+                                  .width,
+                              child: TextButton(
+                                child: Text('submit'.tr(),
+                                    style: AppTheme.customTextStyle(
+                                        MyFont.SSPro_bold, 16.0, Colors.white)),
+                                onPressed: () {
+                                  FocusScope.of(context).requestFocus(
+                                      FocusNode());
+                                  _forgotPassword(context);
+                                },
+                              ),
+                            )
+                          ],
+                        ),
                       ),
                     ),
                   ),
-                ),
-              )
-            ],
+                )
+              ],
+            ),
           ),
         ),
       ),
@@ -143,14 +161,19 @@ class _ForgotPwdScreenState extends State<ForgotPwdScreen> {
           _emailController.text = "";
         });
 
-        Utils.showAlertDialog(context, message, (success, response) {
+        Utils.showAlertDialog(context, 'check_mail_for_reset_pwd'.tr(), (success, response) {
           if (success) {
             Utils.navigateWithClearState(context, SignInScreen());
-            //Utils.navigateToScreen(context, DisplayWebview(message));
           }
         });
       } else {
-        Utils.showToast(context, message, Colors.red);
+        WebService.translateApiCall(languageCode!, message, (isSuccess, response){
+          if(isSuccess){
+            Utils.showToast(context, response.toString(), Colors.red);
+          } else {
+            Utils.showToast(context, "Page Translation Failed", Colors.red);
+          }
+        });
         print("*************** $message *****************");
       }
     });

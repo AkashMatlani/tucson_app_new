@@ -39,6 +39,7 @@ class _CalendarEventState extends State<CalendarEvent> {
 
   late String eventNameTitle = "";
   late double blockSizeVertical;
+  String? languageCode;
   static Widget _presentIcon(String day) => CircleAvatar(
     backgroundColor: Colors.green,
     child: Text(
@@ -56,6 +57,7 @@ class _CalendarEventState extends State<CalendarEvent> {
 
   _getSchoolId() async {
     int schoolId = await PrefUtils.getValueFor(PrefUtils.schoolId);
+    languageCode = await PrefUtils.getValueFor(PrefUtils.sortLanguageCode);
     if(schoolId == null){
       schoolId = 0;
     }

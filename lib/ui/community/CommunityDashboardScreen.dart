@@ -38,7 +38,7 @@ class _CommunityDashboardScreenState extends State<CommunityDashboardScreen> {
     GridListItems(
         name: LabelStr.lblVolunteerOpportunites, svgPicture: MyImage.jobsIcon),
     GridListItems(
-        name: LabelStr.lblGivingDonation, svgPicture: MyImage.eventIcon),
+        name: LabelStr.lblDonation, svgPicture: MyImage.eventIcon),
     GridListItems(
         name: LabelStr.lblResources, svgPicture: MyImage.resourceIcon),
     GridListItems(name: LabelStr.lblAwarity, svgPicture: MyImage.awarityIcon),

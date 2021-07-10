@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -8,7 +9,9 @@ import 'package:tucson_app/GeneralUtils/PrefsUtils.dart';
 import 'package:tucson_app/GeneralUtils/Utils.dart';
 import 'package:tucson_app/Model/ContentMasterViewModel.dart';
 import 'package:tucson_app/Model/ContentResponse.dart';
+import 'package:tucson_app/WebService/WebService.dart';
 import 'package:tucson_app/ui/DisplayWebview.dart';
+
 
 class VolunteerOpportunitiesScreen extends StatefulWidget {
   @override
@@ -18,6 +21,7 @@ class VolunteerOpportunitiesScreen extends StatefulWidget {
 class _VolunteerOpportunitiesScreenState extends State<VolunteerOpportunitiesScreen> {
 
   bool isLoading = true;
+  String? languageCode;
   List<ContentTransactionResponse> _volunteerList = [];
 
   @override
@@ -28,6 +32,7 @@ class _VolunteerOpportunitiesScreenState extends State<VolunteerOpportunitiesScr
 
   _getSchoolId() async {
     int schoolId = await PrefUtils.getValueFor(PrefUtils.schoolId);
+    languageCode = await PrefUtils.getValueFor(PrefUtils.sortLanguageCode);
     if(schoolId == null){
       schoolId = 0;
     }
@@ -58,7 +63,7 @@ class _VolunteerOpportunitiesScreenState extends State<VolunteerOpportunitiesScr
                       ),
                       Container(
                         margin: EdgeInsets.only(top: 10),
-                        child: Text(LabelStr.lblVolunteerOpportunites,
+                        child: Text('volunteer_opportunity'.tr(),
                             style: AppTheme.regularTextStyle()
                                 .copyWith(fontSize: 18, color: Colors.white)),
                       )
@@ -138,7 +143,7 @@ class _VolunteerOpportunitiesScreenState extends State<VolunteerOpportunitiesScr
     return Container(
       alignment: Alignment.center,
       height: MediaQuery.of(context).size.height*0.88,
-      child: isLoading ? Container() : Text(LabelStr.lblNoVolunteer, style: AppTheme.regularTextStyle().copyWith(fontSize: 18, color: Colors.red)),
+      child: isLoading ? Container() : Text('no_volunteer'.tr(), style: AppTheme.regularTextStyle().copyWith(fontSize: 18, color: Colors.red)),
     );
   }
 
@@ -151,8 +156,6 @@ class _VolunteerOpportunitiesScreenState extends State<VolunteerOpportunitiesScr
     };
     Utils.showLoader(true, context);
     _contentViewModel.getContentList(context, params, (isSuccess, message){
-      Utils.showLoader(false, context);
-      isLoading = false;
       if(isSuccess){
         setState(() {
           _volunteerList = [];
@@ -162,11 +165,44 @@ class _VolunteerOpportunitiesScreenState extends State<VolunteerOpportunitiesScr
             }
           }
         });
+        translateListData();
       } else {
+        Utils.showLoader(false, context);
+        isLoading = false;
         setState(() {
           _volunteerList = [];
         });
       }
+    });
+  }
+
+  translateListData(){
+    List<String> nameList=[];
+    List<ContentTransactionResponse> tempList =[];
+    for(var items in _volunteerList){
+      nameList.add(items.objectName);
+    }
+    String nameStr = nameList.join("==)");
+    WebService.translateApiCall(languageCode!, nameStr, (isSuccess, response){
+      if(isSuccess){
+        List<String> resultArr = response.toString().split("==)");
+        for(int i=0; i< resultArr.length; i++){
+          tempList.add(ContentTransactionResponse(contentTransactionId: _volunteerList[i].contentTransactionId,
+              contentMasterId: _volunteerList[i].contentMasterId,
+              contentTransTypeId: _volunteerList[i].contentTransTypeId,
+              objectName: resultArr[i],
+              objectPath: _volunteerList[i].objectPath,
+              contentTransTypeName: _volunteerList[i].contentTransTypeName));
+        }
+        setState(() {
+          _volunteerList = [];
+          _volunteerList.addAll(tempList);
+        });
+      } else {
+        Utils.showToast(context, "Page Translation Failed", Colors.red);
+      }
+      isLoading = false;
+      Utils.showLoader(false, context);
     });
   }
 }

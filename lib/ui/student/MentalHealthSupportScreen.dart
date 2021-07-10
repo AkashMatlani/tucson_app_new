@@ -96,7 +96,7 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
                         ),
                         Container(
                           margin: EdgeInsets.only(top: 10),
-                          child: Text(LabelStr.lblMentalHealthSupport,
+                          child: Text('mental_health_support'.tr(),
                               style: AppTheme.regularTextStyle()
                                   .copyWith(fontSize: 18, color: Colors.white)),
                         )
@@ -131,8 +131,7 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
                             InkWell(
                               onTap: () {
                                 if (_supportResponse.supportDocument == null) {
-                                  Utils.showToast(
-                                      context, LabelStr.lblNoVideo, Colors.red);
+                                  Utils.showToast(context, 'no_video'.tr(), Colors.red);
                                 } else if (_supportResponse.supportDocument
                                     .contains("https://www.youtube.com/")) {
                                   Utils.navigateToScreen(
@@ -209,8 +208,7 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
                                                         .spaceAround,
                                                 children: <Widget>[
                                                   Text(
-                                                    LabelStr
-                                                        .lblBehaviorialHealth,
+                                                    'palo_verde_health'.tr(),
                                                     style: AppTheme
                                                             .regularTextStyle()
                                                         .copyWith(
@@ -264,7 +262,7 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
                                                         .spaceAround,
                                                 children: <Widget>[
                                                   Text(
-                                                    LabelStr.lblTalkSpace,
+                                                    'talk_space'.tr(),
                                                     style: AppTheme
                                                             .regularTextStyle()
                                                         .copyWith(
@@ -305,7 +303,7 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
                                       child: SvgPicture.asset(MyImage.callIcon),
                                     ),
                                     SizedBox(width: 10),
-                                    Text(LabelStr.lblSuicideLifeline,
+                                    Text('prevention_lifeline'.tr(),
                                         style: AppTheme.customTextStyle(
                                             MyFont.SSPro_regular,
                                             16.0,
@@ -349,7 +347,7 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
                                       ),
                                     ),
                                     SizedBox(width: 10),
-                                    Text(LabelStr.lblSuicideLifeline,
+                                    Text('prevention_lifeline'.tr(),
                                         style: AppTheme.customTextStyle(
                                             MyFont.SSPro_regular,
                                             16.0,
@@ -421,7 +419,7 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
     return Container(
         alignment: Alignment.center,
         height: MediaQuery.of(context).size.height * 0.88,
-        child: Text(loadedApiCall ? LabelStr.lblNoMentalHealth : "",
+        child: Text(loadedApiCall ? 'no_mental_health'.tr() : "",
             style: AppTheme.regularTextStyle()
                 .copyWith(fontSize: 18, color: Colors.red)));
   }
@@ -448,7 +446,7 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
       Utils.showLoader(false, context);
       isLoading = false;
       loadedApiCall = true;
-      Utils.showToast(context, LabelStr.connectionError, Colors.red);
+      Utils.showToast(context, 'check_connectivity'.tr(), Colors.red);
     });
   }
 
@@ -536,7 +534,7 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
                   alignment: Alignment.center,
                   child: Padding(
                     padding: const EdgeInsets.fromLTRB(20.0, 20, 10, 10),
-                    child: Text(LabelStr.lblMentalHealthSupport,
+                    child: Text('mental_health_support'.tr(),
                         style: AppTheme.customTextStyle(MyFont.SSPro_bold, 20.0,
                             Color.fromRGBO(0, 0, 0, 1))),
                   ),
@@ -546,12 +544,12 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
                   child: RichText(
                       text: TextSpan(children: [
                     TextSpan(
-                      text: LabelStr.lblHippa,
+                      text: 'mental_health_popup_desc'.tr(),
                       style: AppTheme.regularTextStyle().copyWith(
                           fontSize: 16, color: Color.fromRGBO(0, 0, 0, 1)),
                     ),
                     TextSpan(
-                        text: LabelStr.lblHippLink,
+                        text: 'mental_health_url'.tr(),
                         style: AppTheme.regularTextStyle()
                             .copyWith(fontSize: 16, color: Colors.blueAccent),
                         recognizer: new TapGestureRecognizer()
@@ -586,7 +584,7 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
                           height: blockSizeVertical * 7,
                           width: MediaQuery.of(context).size.width * 0.4,
                           child: TextButton(
-                            child: Text(LabelStr.lblAgree,
+                            child: Text('agree'.tr(),
                                 style: AppTheme.customTextStyle(
                                     MyFont.SSPro_bold,
                                     16.0,
@@ -748,7 +746,7 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
         Utils.showToast(context, message, Colors.red);
       }
     }).catchError((error) {
-      Utils.showToast(context, LabelStr.connectionError, Colors.red);
+      Utils.showToast(context, 'check_connectivity'.tr(), Colors.red);
     });
   }
 }
