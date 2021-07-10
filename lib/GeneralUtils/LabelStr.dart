@@ -47,6 +47,7 @@ class LabelStr {
   static const lblUpdate= "Update";
   static const lblSubmit= "Submit";
   static const lblCancel= "Cancel";
+  static const lblNotAgree= "Not Agree";
   static const lblClose= "Close";
   static const lblDone = "Done";
   static const lblLogout = "Sign Out";
@@ -105,6 +106,8 @@ class LabelStr {
   static const lblStories = "Stories";
   static const lblBlogs = "Blogs";
   static const lblBlogDetails = "Blog Details";
+  static const lblArticleDetail = "Article Detail";
+  static const lblStoryDetail = "Story Detail";
   static const lblTusdCalendar = "TUSD Calendar";
   static const lblFrcSchedule = "FRC Schedule";
   static const lblParentUniversity = "Parent University";
@@ -159,4 +162,6 @@ class LabelStr {
   //static const lblHippa = "<div>The Tucson Unified School District complies with The Family Educational Rights and Privacy Act (FERPA - 20 U.S.C. § 1232g; 34 CFR Part 99).\n\nBy clicking “AGREE” below and proceeding to the Tucson Unified Connect application, I acknowledge that a) TUSD, through Tucson Unified Connect may collect personally identifiable student information, specifically, name, email address and phone numbers of students and their families. b) I understand that TUSD will not re-disclose personally-identifiable student information unless specifically permitted under FERPA. I have had the opportunity to review TUSD’s complete Notice of Rights of students and parents under FERPA.\n\nTUSD annual notification of Privacy Rights of Parents and Students: <a href='http://tusd1.org/Home/Privacy-Rights'>http://tusd1.org/Home/Privacy-Rights</a></div>";
   static const lblHippa = "The Tucson Unified School District complies with The Family Educational Rights and Privacy Act (FERPA - 20 U.S.C. § 1232g; 34 CFR Part 99).\n\nBy clicking “AGREE” below and proceeding to the Tucson Unified Connect application, I acknowledge that a) TUSD, through Tucson Unified Connect may collect personally identifiable student information, specifically, name, email address and phone numbers of students and their families. b) I understand that TUSD will not re-disclose personally-identifiable student information unless specifically permitted under FERPA. I have had the opportunity to review TUSD’s complete Notice of Rights of students and parents under FERPA.\n\nTUSD annual notification of Privacy Rights of Parents and Students: ";
   static const lblHippLink = "http://tusd1.org/Home/Privacy-Rights";
+  static const lblMentalHealthUnderThirteen = "Mental Health Support is available only for Students with age >=13 years";
+  static const lblNoMentalSupport = "No mental health support for this school.";
 }

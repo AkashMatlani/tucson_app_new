@@ -52,18 +52,18 @@ class _SignInScreenState extends State<SignInScreen> {
           fit: StackFit.expand,
           children: [
             Container(
-              height: MediaQuery.of(context).size.height*0.33,
+              height: MediaQuery.of(context).size.height*0.28,
               alignment: Alignment.topCenter,
               child: Image.asset(MyImage.signIn),
             ),
             Positioned.fill(
-              top: MediaQuery.of(context).size.height*0.33,
+              top: MediaQuery.of(context).size.height*0.26,
               bottom: 0.0,
               child: Container(
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(40.0),
-                        topRight: Radius.circular(40.0)
+                        topLeft: Radius.circular(30.0),
+                        topRight: Radius.circular(30.0)
                     ),
                     color: HexColor("#f9f9f9")
                 ),

@@ -13,8 +13,6 @@ import 'package:tucson_app/GeneralUtils/PrefsUtils.dart';
 import 'package:tucson_app/GeneralUtils/Utils.dart';
 import 'package:tucson_app/Model/AuthViewModel.dart';
 import 'package:tucson_app/Model/EventForMobileResponse.dart';
-import 'package:tucson_app/Model/GridListItems.dart';
-
 import 'package:flutter_calendar_carousel/flutter_calendar_carousel.dart'
     show CalendarCarousel;
 import 'package:flutter_calendar_carousel/classes/event_list.dart';
@@ -30,7 +28,7 @@ class _CalendarEventState extends State<CalendarEvent> {
   DateTime _currentDate = DateTime.now();
   DateTime selectedDate = DateTime.now();
   late DateTime _targetDateTime;
-
+  late double cHeight;
   AuthViewModel _authViewModel = AuthViewModel();
   List<EventForMobileResponse> eventist = [];
   List<EventForMobileResponse> upcommingEventList = [];
@@ -41,7 +39,15 @@ class _CalendarEventState extends State<CalendarEvent> {
 
   late String eventNameTitle = "";
   late double blockSizeVertical;
-
+  static Widget _presentIcon(String day) => CircleAvatar(
+    backgroundColor: Colors.green,
+    child: Text(
+      day,
+      style: TextStyle(
+        color: Colors.black,
+      ),
+    ),
+  );
   @override
   void initState() {
     super.initState();
@@ -58,6 +64,7 @@ class _CalendarEventState extends State<CalendarEvent> {
 
   @override
   Widget build(BuildContext context) {
+    cHeight = MediaQuery.of(context).size.height;
     var screenHeight = MediaQuery.of(context).size.height;
     blockSizeVertical = screenHeight / 100;
     final _calendarCarouselNoHeader = CalendarCarousel<Event>(
@@ -68,6 +75,7 @@ class _CalendarEventState extends State<CalendarEvent> {
             : Container());
       },
       showOnlyCurrentMonthDate: false,
+
       weekendTextStyle: TextStyle(
         color: Colors.black87,
       ),
@@ -78,7 +86,7 @@ class _CalendarEventState extends State<CalendarEvent> {
         color: HexColor("#6462AA")
       ),
       markedDatesMap: _markedDateMap,
-      height: blockSizeVertical * 30,
+      height: blockSizeVertical * 35,
       selectedDateTime: selectedDate,
       customGridViewPhysics: NeverScrollableScrollPhysics(),
       showHeader: false,
@@ -439,6 +447,18 @@ class _CalendarEventState extends State<CalendarEvent> {
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Widget markerRepresent(Color color, String data) {
+    return new ListTile(
+      leading: new CircleAvatar(
+        backgroundColor: color,
+        radius: cHeight * 0.022,
+      ),
+      title: new Text(
+        data,
       ),
     );
   }

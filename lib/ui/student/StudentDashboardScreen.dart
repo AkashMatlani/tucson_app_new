@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:double_back_to_close/double_back_to_close.dart';
 import 'package:flutter/cupertino.dart';
@@ -13,8 +14,9 @@ import 'package:tucson_app/GeneralUtils/Utils.dart';
 import 'package:tucson_app/Model/GridListItems.dart';
 import 'package:tucson_app/WebService/WebService.dart';
 import 'package:tucson_app/ui/SignInScreen.dart';
+import 'package:tucson_app/ui/student/CalendarPage2.dart';
 import 'package:tucson_app/ui/student/CoolStuffScreen.dart';
-
+import 'package:http/http.dart' as http;
 import '../DisplayWebview.dart';
 import '../WebViewEmpty.dart';
 import 'BlogScreen.dart';
@@ -67,7 +69,7 @@ class _StudentDashboardScreenState extends State<StudentDashboardScreen> {
           language = prefs.getString(PrefUtils.yourLanguage)!;
           userName = prefs.getString(PrefUtils.userFirstName)!;
           schoolId = prefs.getInt(PrefUtils.schoolId)!;
-          dob =  prefs.getString(PrefUtils.userDOB)!;
+          dob = prefs.getString(PrefUtils.userDOB)!;
           if (schoolId == null) {
             schoolId = 0;
           }
@@ -195,23 +197,15 @@ class _StudentDashboardScreenState extends State<StudentDashboardScreen> {
                                 Utils.navigateToScreen(
                                     context, ScholarshipInfoScreen());
                               } else if (index == 3) {
-                                int age =
-                                    Utils.calculateAge(DateTime.parse(dob));
-                                if (age >= 13) {
-                                  Utils.navigateToScreen(
-                                      context, MentalHealthSupportScreen());
-                                } else {
-                                  Utils.showToast(
-                                      context,
-                                      "Mental Health Support is available only for Students with age >=13 years",
-                                      Colors.red);
-                                }
+                                getMentalSupportExistOrNot();
+                                /*
+                                }*/
                               } else if (index == 4) {
                                 Utils.navigateToScreen(
                                     context, JobOpeningScreen());
                               } else if (index == 5) {
                                 Utils.navigateToScreen(
-                                    context, CalendarEvent());
+                                    context, CalendarPage2());
                               } else if (index == 6) {
                                 Utils.navigateToScreen(
                                     context, VolunteerOpportunitiesScreen());
@@ -320,5 +314,39 @@ class _StudentDashboardScreenState extends State<StudentDashboardScreen> {
     Utils.showLoader(false, context);
     PrefUtils.setBoolValue(PrefUtils.mentalHealthpopUp, mentalPopUp);
     Utils.navigateWithClearState(context, SignInScreen());
+  }
+
+  Future<void> getMentalSupportExistOrNot() async {
+    var url = WebService.baseUrl + WebService.getMentalSupportExist +"?id="+'$schoolId';
+    print("Get Url :" + url);
+    var postUri = Uri.parse(url);
+    var headers = {"Content-Type": 'application/json'};
+    var response;
+
+    // String queryString = Uri().query;
+      //var requestUrl = url + '?' + queryString;
+      //var postUri = Uri.parse(url);
+      response = await http.get(postUri, headers: headers);
+
+    var result = response.body;
+    if (response.statusCode == 200) {
+      var jsValue = json.decode(result);
+      bool value = jsValue["output"];
+      if (value) {
+        int age = Utils.calculateAge(DateTime.parse(dob));
+        if (age >= 13) {
+          Utils.navigateToScreen(context, MentalHealthSupportScreen());
+        } else {
+          Utils.showToast(
+              context, LabelStr.lblMentalHealthUnderThirteen, Colors.red);
+        }
+      } else {
+        Utils.showToast(context, LabelStr.lblNoMentalSupport, Colors.red);
+      }
+    } else {
+      var jsValue = json.decode(response.body);
+      var message = jsValue["errorMessage"];
+      Utils.showToast(context, message, Colors.red);
+    }
   }
 }

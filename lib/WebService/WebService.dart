@@ -26,6 +26,7 @@ class WebService {
   static const tusdSupportBySchoolID = "TUSDSupport/GetBySchoolId";
   static const getSchoolCategoryType = "ContentMaster/GetSchoolCategoryType";
   static const supportNotifierMail = "User/SupportNotifierMail";
+  static const getMentalSupportExist = "TUSDSupport/IsMentalHealthSupportExists";
 
   static Future<ServerResponse> getAPICall(String apiName, Map<String, dynamic> params) async {
     var url = baseUrl + apiName;

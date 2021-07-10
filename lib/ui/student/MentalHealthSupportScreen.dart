@@ -1,7 +1,8 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
+import 'package:ext_storage/ext_storage.dart';
 import 'package:http/http.dart' as http;
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -18,8 +19,7 @@ import 'package:tucson_app/GeneralUtils/Utils.dart';
 import 'package:tucson_app/Model/HealthSupportResponse.dart';
 import 'package:tucson_app/WebService/WebService.dart';
 import 'package:tucson_app/ui/DisplayWebview.dart';
-import 'package:tucson_app/ui/VideoPlayer.dart';
-import 'package:tucson_app/ui/VideoPlayerScreen.dart';
+import 'package:tucson_app/ui/community/VideoPlayerScreen.dart';
 import 'package:tucson_app/ui/student/StudentDashboardScreen.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
@@ -142,7 +142,7 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
                                 } else {
                                   Utils.navigateToScreen(
                                       context,
-                                      VideoPlayerScreen(
+                                      VideoPlayerScreenOne(
                                           _supportResponse.supportDocument));
                                 }
                               },
@@ -374,13 +374,38 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
       ),
     );
   }
-
+  late String path;
   getVideoThumbinail() async {
+    var status = await Permission.storage.status;
+    if (status.isGranted) {
+  /*    if (io.Platform.isIOS) {
+        io.Directory appDocDirectory;
+        appDocDirectory = await getApplicationDocumentsDirectory();
+        Directory directory= await new Directory(appDocDirectory.path+'/'+'Download').create(recursive: true);
+        String path=directory.path.toString();
+        File file = new File('$path/$filename');
+        ToastUtils.showToast(context, "Your file save at "+file.toString()+" location", Colors.green);
+        await file.writeAsBytes(bytes);
+        return file;
+      }
+      else{*/
+      path = await ExtStorage.getExternalStoragePublicDirectory(ExtStorage.DIRECTORY_DOWNLOADS);
+       // File file = new File('$path/$filename');
+       // ToastUtils.showToast(context, "Your file save at "+file.toString()+" location", Colors.green);
+        //await file.writeAsBytes(bytes);
+       // return file;
+    } else {
+      Map<Permission, PermissionStatus> status = await [
+        Permission.storage,
+      ].request();
+      print("Permission status :: $status");
+    }
+
     String? fileName;
     try {
       fileName = await VideoThumbnail.thumbnailFile(
         video: _supportResponse.supportDocument,
-        thumbnailPath: (await getTemporaryDirectory()).path,
+        thumbnailPath: path,
         imageFormat: ImageFormat.JPEG,
         maxHeight: 240,
         quality: 50,
@@ -411,6 +436,7 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
           isLoading = false;
           loadedApiCall = true;
           _supportResponse = HealthSupportResponse.fromJson(response.body);
+          getVideoThumbinail();
           getSUpportNotifierMail(
               _currentPosition.latitude, _currentPosition.longitude);
           // mailSend();
@@ -481,6 +507,8 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
 
   void bottomPopup(BuildContext context) {
     showModalBottomSheet(
+      isDismissible: false,
+      enableDrag: false,
       context: context,
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
@@ -570,14 +598,7 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
                               PrefUtils.setBoolValue(
                                   PrefUtils.mentalHealthpopUp, true);
                               Navigator.of(context).pop();
-                              int age = Utils.calculateAge(DateTime.parse(dob));
 
-                              if (age >= 13) {
-                                var statusResponse =
-                                    await Permission.location.status;
-                                if (statusResponse.isGranted) {
-                                  _getCurrentLocation();
-                                } else {
                                   Map<Permission, PermissionStatus> status =
                                       await [
                                     Permission.location,
@@ -605,17 +626,6 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
                                       Permission.location,
                                     ].request();
                                   }
-                                }
-                              } else {
-                                Utils.showToast(
-                                    context,
-                                    "Mental Health Support is available only for Students with age >=13 years",
-                                    Colors.red);
-                                Timer(
-                                    Duration(milliseconds: 100),
-                                    () => Utils.backWithNoTransition(
-                                        context, StudentDashboardScreen()));
-                              }
                             },
                           ),
                         ),
@@ -627,7 +637,7 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
                         height: 50,
                         width: MediaQuery.of(context).size.width * 0.4,
                         child: TextButton(
-                          child: Text(LabelStr.lblCancel,
+                          child: Text(LabelStr.lblNotAgree,
                               style: AppTheme.customTextStyle(MyFont.SSPro_bold,
                                   16.0, Color.fromRGBO(255, 255, 255, 1))),
                           onPressed: () {

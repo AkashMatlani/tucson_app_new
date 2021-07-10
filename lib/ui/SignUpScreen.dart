@@ -327,13 +327,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
         FocusScope.of(context).requestFocus(defaultField);
         if (_userType.compareTo(LabelStr.lblStudent) == 0) {
           //Utils.showToast(context, LabelStr.lblStudent + " " + message, Colors.green);
-          message = LabelStr.lblStudent + " " + message+ " "+" Once admin approve your sign up. you can able to sign in.";
+          message = LabelStr.lblStudent + " " + message+ " "+" Once admin approves, you should be able to sign in.";
         } else if (_userType.compareTo(LabelStr.lblCommunity) == 0) {
           //Utils.showToast(context, LabelStr.lblCommunity + " " + message, Colors.green);
-          message = LabelStr.lblCommunity + " " + message+ " "+" Once admin approve your sign up. you can able to sign in.";
+          message = LabelStr.lblCommunity + " " + message+ " "+" Once admin approves, you should be able to sign in.";
         } else {
           //Utils.showToast(context, LabelStr.lblParent + " " + message, Colors.green);
-          message = LabelStr.lblParent + " " + message+ " "+" Once admin approve your sign up. you can able to sign in.";
+          message = LabelStr.lblParent + " " + message+ " "+" Once admin approves, you should be able to sign in.";
         }
         Utils.showAlertDialog(context, message, (success, response){
           if(success) {
@@ -352,7 +352,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         context: context,
         initialDate: currentDate,
         firstDate: DateTime(1960),
-        lastDate: currentDate);
+        lastDate: DateTime.now());
     if (pickedDate != null && pickedDate != currentDate)
       setState(() {
         currentDate = pickedDate;

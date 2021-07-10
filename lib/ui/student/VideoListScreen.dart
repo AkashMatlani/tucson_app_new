@@ -1,6 +1,8 @@
+import 'package:ext_storage/ext_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:tucson_app/GeneralUtils/Constant.dart';
 import 'package:tucson_app/GeneralUtils/LabelStr.dart';
 import 'package:tucson_app/GeneralUtils/PrefsUtils.dart';
@@ -10,6 +12,8 @@ import 'package:tucson_app/Model/ContentResponse.dart';
 import 'package:tucson_app/ui/DisplayWebview.dart';
 import 'package:tucson_app/ui/VideoPlayer.dart';
 import 'package:tucson_app/ui/VideoPlayerScreen.dart';
+import 'package:tucson_app/ui/community/VideoPlayerScreen.dart';
+import 'package:video_thumbnail/video_thumbnail.dart';
 import 'BlogDetailsScreen.dart';
 
 import '../../GeneralUtils/ColorExtension.dart';
@@ -116,7 +120,7 @@ class _VideoListScreenState extends State<VideoListScreen> {
         if(_videoList[index].objectPath.contains("https://www.youtube.com/")){
           Utils.navigateToScreen(context, DisplayWebview(_videoList[index].objectPath));
         }else {
-          Utils.navigateToScreen(context, VideoPlayerScreen(_videoList[index].objectPath));
+          Utils.navigateToScreen(context, VideoPlayerScreenOne(_videoList[index].objectPath));
         }
       },
       child: Column(
@@ -176,11 +180,55 @@ class _VideoListScreenState extends State<VideoListScreen> {
             }
           }
         });
+        getVideoThumbinail();
       } else {
         setState(() {
           _videoList = [];
         });
       }
     });
+  }
+
+  late String path="";
+  getVideoThumbinail() async {
+    var status = await Permission.storage.status;
+    if (status.isGranted) {
+      /*    if (io.Platform.isIOS) {
+        io.Directory appDocDirectory;
+        appDocDirectory = await getApplicationDocumentsDirectory();
+        Directory directory= await new Directory(appDocDirectory.path+'/'+'Download').create(recursive: true);
+        String path=directory.path.toString();
+        File file = new File('$path/$filename');
+        ToastUtils.showToast(context, "Your file save at "+file.toString()+" location", Colors.green);
+        await file.writeAsBytes(bytes);
+        return file;
+      }
+      else{*/
+      path = await ExtStorage.getExternalStoragePublicDirectory(ExtStorage.DIRECTORY_DOWNLOADS);
+      // File file = new File('$path/$filename');
+      // ToastUtils.showToast(context, "Your file save at "+file.toString()+" location", Colors.green);
+      //await file.writeAsBytes(bytes);
+      // return file;
+    } else {
+      Map<Permission, PermissionStatus> status = await [
+        Permission.storage,
+      ].request();
+      print("Permission status :: $status");
+    }
+
+    String? fileName;
+    try {
+      fileName = await VideoThumbnail.thumbnailFile(
+        video: _videoList[0].objectPath,
+        thumbnailPath: path,
+        imageFormat: ImageFormat.JPEG,
+        maxHeight: 240,
+        quality: 50,
+      );
+    } catch (e) {
+      print(e);
+      fileName = "";
+    }
+    return fileName;
   }
 }
