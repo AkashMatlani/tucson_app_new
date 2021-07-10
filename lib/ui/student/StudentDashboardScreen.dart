@@ -9,6 +9,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tucson_app/GeneralUtils/ColorExtension.dart';
 import 'package:tucson_app/GeneralUtils/Constant.dart';
+import 'package:tucson_app/GeneralUtils/LabelStr.dart';
 import 'package:tucson_app/GeneralUtils/PrefsUtils.dart';
 import 'package:tucson_app/GeneralUtils/Utils.dart';
 import 'package:tucson_app/Model/GridListItems.dart';
@@ -26,7 +27,6 @@ import 'MentalHealthSupportScreen.dart';
 import 'ScholarshipInfoScreen.dart';
 import 'VolunteerOpportunitiesScreen.dart';
 
-
 class StudentDashboardScreen extends StatefulWidget {
   @override
   _StudentDashboardScreenState createState() => _StudentDashboardScreenState();
@@ -40,8 +40,7 @@ class _StudentDashboardScreenState extends State<StudentDashboardScreen> {
       name: 'cool_stuff'.tr(),
       svgPicture: MyImage.coolStuffIcon,
     ),
-    GridListItems(
-        name: 'student_blogs'.tr(), svgPicture: MyImage.studentIcon),
+    GridListItems(name: 'student_blogs'.tr(), svgPicture: MyImage.studentIcon),
     GridListItems(
         name: 'scholarship_info'.tr(), svgPicture: MyImage.scholarshipIcon),
     GridListItems(
@@ -50,8 +49,7 @@ class _StudentDashboardScreenState extends State<StudentDashboardScreen> {
     GridListItems(name: 'job_openings'.tr(), svgPicture: MyImage.jobsIcon),
     GridListItems(name: 'events'.tr(), svgPicture: MyImage.eventIcon),
     GridListItems(
-        name: 'volunteer_opportunity'.tr(),
-        svgPicture: MyImage.volunteerIcon),
+        name: 'volunteer_opportunity'.tr(), svgPicture: MyImage.volunteerIcon),
     GridListItems(name: 'awareity'.tr(), svgPicture: MyImage.awarityIcon),
     GridListItems(name: 'sign_out'.tr(), svgPicture: MyImage.logoutIcon),
   ];
@@ -83,9 +81,10 @@ class _StudentDashboardScreenState extends State<StudentDashboardScreen> {
     });
   }
 
-  _getFirstName(){
-    WebService.translateApiCall(sortLanguageCode!, firstName!, (isSuccess, response){
-      if(isSuccess){
+  _getFirstName() {
+    WebService.translateApiCall(sortLanguageCode!, firstName!,
+        (isSuccess, response) {
+      if (isSuccess) {
         setState(() {
           firstName = response.toString();
         });
@@ -216,30 +215,15 @@ class _StudentDashboardScreenState extends State<StudentDashboardScreen> {
                                   Utils.navigateToScreen(
                                       context, ScholarshipInfoScreen());
                                 } else if (index == 3) {
-                                  int age =
-                                      Utils.calculateAge(DateTime.parse(dob));
-                                  if(schoolCategory!.compareTo("High") == 0){
-                                    if (age >= 13) {
-                                      Utils.navigateToScreen(
-                                          context, MentalHealthSupportScreen());
-                                    } else {
-                                      Utils.showToast(
-                                          context,
-                                          "Mental Health Support is available only for Students with age >=13 years",
-                                          Colors.red);
-                                    }
-                                  } else{
-                                    Utils.showToast(
-                                        context,
-                                        "Mental Health Support is available only for high school students",
-                                        Colors.red);
+                                  if (schoolCategory!.compareTo("High") == 0) {
+                                    getMentalSupportExistOrNot();
                                   }
                                 } else if (index == 4) {
                                   Utils.navigateToScreen(
                                       context, JobOpeningScreen());
                                 } else if (index == 5) {
                                   Utils.navigateToScreen(
-                                      context, CalendarEvent());
+                                      context, CalendarPage2());
                                 } else if (index == 6) {
                                   Utils.navigateToScreen(
                                       context, VolunteerOpportunitiesScreen());
@@ -355,16 +339,19 @@ class _StudentDashboardScreenState extends State<StudentDashboardScreen> {
   }
 
   Future<void> getMentalSupportExistOrNot() async {
-    var url = WebService.baseUrl + WebService.getMentalSupportExist +"?id="+'$schoolId';
+    var url = WebService.baseUrl +
+        WebService.getMentalSupportExist +
+        "?id=" +
+        '$schoolId';
     print("Get Url :" + url);
     var postUri = Uri.parse(url);
     var headers = {"Content-Type": 'application/json'};
     var response;
 
     // String queryString = Uri().query;
-      //var requestUrl = url + '?' + queryString;
-      //var postUri = Uri.parse(url);
-      response = await http.get(postUri, headers: headers);
+    //var requestUrl = url + '?' + queryString;
+    //var postUri = Uri.parse(url);
+    response = await http.get(postUri, headers: headers);
 
     var result = response.body;
     if (response.statusCode == 200) {

@@ -9,7 +9,6 @@ import 'package:video_player/video_player.dart';
 import 'package:volume/volume.dart';
 import 'package:wakelock/wakelock.dart';
 
-
 class VideoPlayerScreen extends StatefulWidget {
 
   VideoPlayerScreen(this.videoUrl);
