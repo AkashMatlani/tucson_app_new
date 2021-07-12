@@ -46,67 +46,70 @@ class _BlogScreenState extends State<BlogScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(
-        children: [
-          Container(
-            color: HexColor("#6462AA"),
-            child: Column(
-              children: [
-                Container(
-                  margin: EdgeInsets.fromLTRB(0, MediaQuery.of(context).size.height*0.03, 0, MediaQuery.of(context).size.height*0.03),
-                  height: MediaQuery.of(context).size.height*0.06,
-                  child: Row(
-                    children: [
-                      Container(
-                        margin: EdgeInsets.only(top: 10),
-                        child: IconButton(
-                            icon: Icon(Icons.arrow_back_ios, color: Colors.white),
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            }),
-                      ),
-                      Container(
-                        margin: EdgeInsets.only(top: 10),
-                        child: Text(widget.title,
-                            style: AppTheme.regularTextStyle()
-                                .copyWith(fontSize: 18, color: Colors.white)),
-                      )
-                    ],
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        body: Stack(
+          children: [
+            Container(
+              color: HexColor("#6462AA"),
+              child: Column(
+                children: [
+                  Container(
+                    margin: EdgeInsets.fromLTRB(0, MediaQuery.of(context).size.height*0.03, 0, MediaQuery.of(context).size.height*0.03),
+                    height: MediaQuery.of(context).size.height*0.06,
+                    child: Row(
+                      children: [
+                        Container(
+                          margin: EdgeInsets.only(top: 10),
+                          child: IconButton(
+                              icon: Icon(Icons.arrow_back_ios, color: Colors.white),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              }),
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(top: 10),
+                          child: Text(widget.title,
+                              style: AppTheme.regularTextStyle()
+                                  .copyWith(fontSize: 18, color: Colors.white)),
+                        )
+                      ],
+                    ),
                   ),
-                ),
-                Container(
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(30.0),
-                          topRight: Radius.circular(30.0)),
-                      color: HexColor("FAFAFA")),
-                  height: MediaQuery.of(context).size.height*0.88,
-                  width: MediaQuery.of(context).size.width,
-                  padding: EdgeInsets.all(10),
-                )
-              ],
-            ),
-          ),
-          Positioned(
-            top: MediaQuery.of(context).size.height*0.12,
-            left: MediaQuery.of(context).size.height*0.012,
-            right: MediaQuery.of(context).size.height*0.012,
-            child: Container(
-              height: MediaQuery.of(context).size.height*0.88,
-              child: _contentList.length == 0 ? emptyListView() : SingleChildScrollView(
-                child:  ListView.builder(
-                    itemCount: _contentList.length,
-                    shrinkWrap: true,
-                    physics: ScrollPhysics(),
+                  Container(
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(30.0),
+                            topRight: Radius.circular(30.0)),
+                        color: HexColor("FAFAFA")),
+                    height: MediaQuery.of(context).size.height*0.88,
+                    width: MediaQuery.of(context).size.width,
                     padding: EdgeInsets.all(10),
-                    itemBuilder: (BuildContext context, int position){
-                      return _listRowItems(context, position);
-                    }),
+                  )
+                ],
               ),
             ),
-          )
-        ],
+            Positioned(
+              top: MediaQuery.of(context).size.height*0.12,
+              left: MediaQuery.of(context).size.height*0.012,
+              right: MediaQuery.of(context).size.height*0.012,
+              child: Container(
+                height: MediaQuery.of(context).size.height*0.88,
+                child: _contentList.length == 0 ? emptyListView() : SingleChildScrollView(
+                  child:  ListView.builder(
+                      itemCount: _contentList.length,
+                      shrinkWrap: true,
+                      physics: ScrollPhysics(),
+                      padding: EdgeInsets.all(10),
+                      itemBuilder: (BuildContext context, int position){
+                        return _listRowItems(context, position);
+                      }),
+                ),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

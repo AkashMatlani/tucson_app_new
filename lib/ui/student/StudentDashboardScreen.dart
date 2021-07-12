@@ -217,6 +217,8 @@ class _StudentDashboardScreenState extends State<StudentDashboardScreen> {
                                 } else if (index == 3) {
                                   if (schoolCategory!.compareTo("High") == 0) {
                                     getMentalSupportExistOrNot();
+                                  } else {
+                                    Utils.showToast(context, 'school_not_support'.tr(), Colors.red);
                                   }
                                 } else if (index == 4) {
                                   Utils.navigateToScreen(
