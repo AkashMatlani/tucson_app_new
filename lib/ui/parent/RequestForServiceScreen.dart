@@ -4,7 +4,10 @@ import 'package:tucson_app/GeneralUtils/ColorExtension.dart';
 import 'package:tucson_app/GeneralUtils/Constant.dart';
 import 'package:tucson_app/GeneralUtils/Utils.dart';
 import 'package:tucson_app/Model/GridListItems.dart';
+import 'package:tucson_app/WebService/WebService.dart';
+import 'package:tucson_app/ui/DisplayWebview.dart';
 import 'package:tucson_app/ui/DropoutPreventionScreen.dart';
+import 'package:tucson_app/ui/WebViewEmpty.dart';
 
 import '../../GeneralUtils/LabelStr.dart';
 
@@ -23,19 +26,16 @@ class _RequestForServiceScreenState extends State<RequestForServiceScreen> {
     GridListItems(
         name: LabelStr.lblStudentServices,
         svgPicture: MyImage.studentServicesIcon),
-    GridListItems(
-        name: LabelStr.lblTakeItOut, svgPicture: MyImage.takeItOut),
+    GridListItems(name: LabelStr.lblTakeItOut, svgPicture: MyImage.takeItOut),
     GridListItems(
         name: LabelStr.lblDroupOutPrevention, svgPicture: MyImage.dropOut),
     GridListItems(
-        name: LabelStr.lblHealthServices,
-        svgPicture: MyImage.healthService),
+        name: LabelStr.lblHealthServices, svgPicture: MyImage.healthService),
     GridListItems(
         name: LabelStr.lblTranslationServices,
         svgPicture: MyImage.translationServiceIcon),
     GridListItems(
-        name: LabelStr.lblTransporation,
-        svgPicture: MyImage.transporation),
+        name: LabelStr.lblTransporation, svgPicture: MyImage.transporation),
   ];
 
   @override
@@ -110,9 +110,32 @@ class _RequestForServiceScreenState extends State<RequestForServiceScreen> {
                       return GestureDetector(
                           onTap: () {
                             print("Clicked");
-                            if (index == 3) {
+                            if (index == 2) {
+                              var params = {
+                                "schoolId": 13,
+                                "roleId": 0,
+                                "contentTypeName": "Talk It Out"
+                              };
+                              getWebApiFromUrl(context, params);
+                            }
+                            else if (index == 3) {
                               Utils.navigateToScreen(
                                   context, DropoutPreventionScreen());
+                            }
+                            else if (index == 4) {
+                              var params = {
+                                "schoolId": 13,
+                                "roleId": 0,
+                                "contentTypeName": "Health Services"
+                              };
+                              getWebApiFromUrl(context, params);
+                            } else if (index == 6) {
+                              var params = {
+                                "schoolId": 13,
+                                "roleId": 0,
+                                "contentTypeName": "Transportation"
+                              };
+                              getWebApiFromUrl(context, params);
                             }
                           },
                           child: Card(
@@ -129,9 +152,12 @@ class _RequestForServiceScreenState extends State<RequestForServiceScreen> {
                                 children: <Widget>[
                                   Padding(
                                       padding: EdgeInsets.only(
-                                          left: 12,top: 10,right: 20),
+                                          left: 12, top: 10, right: 20),
                                       child: SvgPicture.asset(
-                                          menuItems[index].svgPicture,height: 50,width: 50,)),
+                                        menuItems[index].svgPicture,
+                                        height: 50,
+                                        width: 50,
+                                      )),
                                   Padding(
                                     padding: EdgeInsets.fromLTRB(
                                         16.0, 12.0, 16.0, 8.0),
@@ -158,5 +184,25 @@ class _RequestForServiceScreenState extends State<RequestForServiceScreen> {
         ],
       ),
     );
+  }
+
+  getWebApiFromUrl(BuildContext context, Map<String, Object> params) {
+    Utils.showLoader(true, context);
+    WebService.postAPICall(WebService.parentContentByType, params)
+        .then((response) {
+      Utils.showLoader(false, context);
+      if (response.statusCode == 1) {
+        if (response.body != null) {
+          String webUrl =
+              response.body[0]["contentTransactionTypeJoin"][0]["objectPath"];
+          Utils.navigateToScreen(context, DisplayWebview(webUrl));
+        }
+      } else {
+        Utils.showToast(context, response.message, Colors.red);
+      }
+    }).catchError((error) {
+      Utils.showLoader(false, context);
+      Utils.navigateToScreen(context, WebViewEmpty());
+    });
   }
 }

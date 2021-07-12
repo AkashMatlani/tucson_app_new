@@ -14,6 +14,7 @@ import 'package:tucson_app/Model/GridListItems.dart';
 import 'package:tucson_app/WebService/WebService.dart';
 import 'package:tucson_app/ui/DisplayWebview.dart';
 import 'package:tucson_app/ui/SignInScreen.dart';
+import 'package:tucson_app/ui/WebViewEmpty.dart';
 import 'package:tucson_app/ui/parent/Event.dart';
 import 'package:tucson_app/ui/parent/RequestForServiceScreen.dart';
 import 'package:tucson_app/ui/parent/SchoolPrograms.dart';
@@ -193,13 +194,15 @@ class _ParentDashBoardScreenState extends State<ParentDashBoardScreen> {
                                 Utils.navigateToScreen(context, CommunityResources());
                               } else if (index == 3) {
                                 var params={
-                                  "schoolId": schoolId,
+                                  "schoolId": 13,
+                                  "roleId": 0,
                                   "contentTypeName":"SmartChoice"
                                 };
                                 getWebApiFromUrl(context, params);
                               } else if (index == 4) {
                                 var params={
-                                  "schoolId": schoolId,
+                                  "schoolId": 13,
+                                  "roleId": 0,
                                   "contentTypeName":"ParentVUE"
                                 };
                                 getWebApiFromUrl(context, params);
@@ -209,7 +212,8 @@ class _ParentDashBoardScreenState extends State<ParentDashBoardScreen> {
                                 Utils.navigateToScreen(context, RequestForServiceScreen());
                               } else if (index == 7) {
                                 var params={
-                                  "schoolId": schoolId,
+                                  "schoolId": 13,
+                                  "roleId": 0,
                                   "contentTypeName":"Awareity"
                                 };
                                 getWebApiFromUrl(context, params);
@@ -268,7 +272,7 @@ class _ParentDashBoardScreenState extends State<ParentDashBoardScreen> {
         backgroundRadius: 30,),);
   }
 
-  getWebApiFromUrl(BuildContext context, Map<String, Object> params) {
+/*  getWebApiFromUrl(BuildContext context, Map<String, Object> params) {
     Utils.showLoader(true, context);
     WebService.postAPICall(WebService.contentByType, params).then((response) {
       Utils.showLoader(false, context);
@@ -283,6 +287,26 @@ class _ParentDashBoardScreenState extends State<ParentDashBoardScreen> {
     }).catchError((error) {
       Utils.showLoader(false, context);
      Utils.showToast(context, LabelStr.connectionError, Colors.red);
+    });
+  }*/
+
+  getWebApiFromUrl(BuildContext context, Map<String, Object> params) {
+    Utils.showLoader(true, context);
+    WebService.postAPICall(WebService.parentContentByType, params)
+        .then((response) {
+      Utils.showLoader(false, context);
+      if (response.statusCode == 1) {
+        if (response.body != null) {
+          String webUrl =
+          response.body[0]["contentTransactionTypeJoin"][0]["objectPath"];
+          Utils.navigateToScreen(context, DisplayWebview(webUrl));
+        }
+      } else {
+        Utils.showToast(context, response.message, Colors.red);
+      }
+    }).catchError((error) {
+      Utils.showLoader(false, context);
+      Utils.navigateToScreen(context, WebViewEmpty());
     });
   }
 }

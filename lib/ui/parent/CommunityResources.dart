@@ -3,7 +3,11 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:tucson_app/GeneralUtils/ColorExtension.dart';
 import 'package:tucson_app/GeneralUtils/Constant.dart';
 import 'package:tucson_app/GeneralUtils/LabelStr.dart';
+import 'package:tucson_app/GeneralUtils/Utils.dart';
 import 'package:tucson_app/Model/GridListItems.dart';
+import 'package:tucson_app/WebService/WebService.dart';
+import 'package:tucson_app/ui/DisplayWebview.dart';
+import 'package:tucson_app/ui/WebViewEmpty.dart';
 
 
 class CommunityResources extends StatefulWidget {
@@ -99,7 +103,57 @@ class _CommunityResourcesScreenState extends State<CommunityResources> {
                     itemBuilder: (BuildContext ctx, index) {
                       return GestureDetector(
                           onTap: () {
-                            print("Clicked");
+                            if (index == 0) {
+                              var params = {
+                                "schoolId": 13,
+                                "roleId": 0,
+                                "contentTypeName": "Community FoodBank"
+                              };
+                              getWebApiFromUrl(context, params);
+                            } else if (index == 1) {
+                              var params = {
+                                "schoolId": 13,
+                                "roleId": 0,
+                                "contentTypeName": "Autisum Society"
+                              };
+                              getWebApiFromUrl(context, params);
+                            }else if (index == 2) {
+                              var params = {
+                                "schoolId": 13,
+                                "roleId": 0,
+                                "contentTypeName": "UA Cooperative Extension"
+                              };
+                              getWebApiFromUrl(context, params);
+                            }else if (index == 4) {
+                              var params = {
+                                "schoolId": 13,
+                                "roleId": 0,
+                                "contentTypeName": "Family Resource Centers"
+                              };
+                              getWebApiFromUrl(context, params);
+                            }else if (index == 5) {
+                              var params = {
+                                "schoolId": 13,
+                                "roleId": 0,
+                                "contentTypeName": "Clothing Bank"
+                              };
+                              getWebApiFromUrl(context, params);
+                            }else if (index == 6 ){
+                              var params = {
+                                "schoolId": 13,
+                                "roleId": 0,
+                                "contentTypeName": "TUSD Counselling"
+                              };
+                              getWebApiFromUrl(context, params);
+                            }else if (index == 7) {
+                              var params = {
+                                "schoolId": 13,
+                                "roleId": 0,
+                                "contentTypeName": "McKinney Vento"
+                              };
+                              getWebApiFromUrl(context, params);
+                            }
+
                           },
                           child: Card(
                               shape: RoundedRectangleBorder(
@@ -146,5 +200,26 @@ class _CommunityResourcesScreenState extends State<CommunityResources> {
         ],
       ),
     );
+  }
+
+  getWebApiFromUrl(BuildContext context, Map<String, Object> params) {
+    Utils.showLoader(true, context);
+    WebService.postAPICall(WebService.parentContentByType, params)
+        .then((response) {
+      Utils.showLoader(false, context);
+      if (response.statusCode == 1) {
+        if (response.body != null) {
+          String webUrl =
+          response.body[0]["contentTransactionTypeJoin"][0]["objectPath"];
+          if(webUrl.isNotEmpty)
+          Utils.navigateToScreen(context, DisplayWebview(webUrl));
+        }
+      } else {
+        Utils.showToast(context, response.message, Colors.red);
+      }
+    }).catchError((error) {
+      Utils.showLoader(false, context);
+      Utils.navigateToScreen(context, WebViewEmpty());
+    });
   }
 }

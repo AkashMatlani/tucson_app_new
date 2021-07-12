@@ -1,15 +1,14 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'dart:async';
 import 'dart:convert';
-import 'dart:io';
-import 'package:ext_storage/ext_storage.dart';
 import 'package:http/http.dart' as http;
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:intl/intl.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:tucson_app/GeneralUtils/ColorExtension.dart';
 import 'package:tucson_app/GeneralUtils/Constant.dart';
@@ -19,7 +18,8 @@ import 'package:tucson_app/GeneralUtils/Utils.dart';
 import 'package:tucson_app/Model/HealthSupportResponse.dart';
 import 'package:tucson_app/WebService/WebService.dart';
 import 'package:tucson_app/ui/DisplayWebview.dart';
-import 'package:tucson_app/ui/community/VideoPlayerScreen.dart';
+import 'package:tucson_app/ui/VideoPlayer.dart';
+import 'package:tucson_app/ui/VideoPlayerScreen.dart';
 import 'package:tucson_app/ui/student/StudentDashboardScreen.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
@@ -96,7 +96,7 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
                         ),
                         Container(
                           margin: EdgeInsets.only(top: 10),
-                          child: Text('mental_health_support'.tr(),
+                          child: Text(LabelStr.lblMentalHealthSupport,
                               style: AppTheme.regularTextStyle()
                                   .copyWith(fontSize: 18, color: Colors.white)),
                         )
@@ -131,7 +131,8 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
                             InkWell(
                               onTap: () {
                                 if (_supportResponse.supportDocument == null) {
-                                  Utils.showToast(context, 'no_video'.tr(), Colors.red);
+                                  Utils.showToast(
+                                      context, LabelStr.lblNoVideo, Colors.red);
                                 } else if (_supportResponse.supportDocument
                                     .contains("https://www.youtube.com/")) {
                                   Utils.navigateToScreen(
@@ -141,7 +142,7 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
                                 } else {
                                   Utils.navigateToScreen(
                                       context,
-                                      VideoPlayerScreenOne(
+                                      VideoPlayerScreen(
                                           _supportResponse.supportDocument));
                                 }
                               },
@@ -208,7 +209,8 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
                                                         .spaceAround,
                                                 children: <Widget>[
                                                   Text(
-                                                    'palo_verde_health'.tr(),
+                                                    LabelStr
+                                                        .lblBehaviorialHealth,
                                                     style: AppTheme
                                                             .regularTextStyle()
                                                         .copyWith(
@@ -262,7 +264,7 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
                                                         .spaceAround,
                                                 children: <Widget>[
                                                   Text(
-                                                    'talk_space'.tr(),
+                                                    LabelStr.lblTalkSpace,
                                                     style: AppTheme
                                                             .regularTextStyle()
                                                         .copyWith(
@@ -303,7 +305,7 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
                                       child: SvgPicture.asset(MyImage.callIcon),
                                     ),
                                     SizedBox(width: 10),
-                                    Text('prevention_lifeline'.tr(),
+                                    Text(LabelStr.lblSuicideLifeline,
                                         style: AppTheme.customTextStyle(
                                             MyFont.SSPro_regular,
                                             16.0,
@@ -347,7 +349,7 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
                                       ),
                                     ),
                                     SizedBox(width: 10),
-                                    Text('prevention_lifeline'.tr(),
+                                    Text(LabelStr.lblSuicideLifeline,
                                         style: AppTheme.customTextStyle(
                                             MyFont.SSPro_regular,
                                             16.0,
@@ -372,38 +374,13 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
       ),
     );
   }
-  late String path;
-  getVideoThumbinail() async {
-    var status = await Permission.storage.status;
-    if (status.isGranted) {
-  /*    if (io.Platform.isIOS) {
-        io.Directory appDocDirectory;
-        appDocDirectory = await getApplicationDocumentsDirectory();
-        Directory directory= await new Directory(appDocDirectory.path+'/'+'Download').create(recursive: true);
-        String path=directory.path.toString();
-        File file = new File('$path/$filename');
-        ToastUtils.showToast(context, "Your file save at "+file.toString()+" location", Colors.green);
-        await file.writeAsBytes(bytes);
-        return file;
-      }
-      else{*/
-      path = await ExtStorage.getExternalStoragePublicDirectory(ExtStorage.DIRECTORY_DOWNLOADS);
-       // File file = new File('$path/$filename');
-       // ToastUtils.showToast(context, "Your file save at "+file.toString()+" location", Colors.green);
-        //await file.writeAsBytes(bytes);
-       // return file;
-    } else {
-      Map<Permission, PermissionStatus> status = await [
-        Permission.storage,
-      ].request();
-      print("Permission status :: $status");
-    }
 
+  getVideoThumbinail() async {
     String? fileName;
     try {
       fileName = await VideoThumbnail.thumbnailFile(
         video: _supportResponse.supportDocument,
-        thumbnailPath: path,
+        thumbnailPath: (await getTemporaryDirectory()).path,
         imageFormat: ImageFormat.JPEG,
         maxHeight: 240,
         quality: 50,
@@ -419,7 +396,7 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
     return Container(
         alignment: Alignment.center,
         height: MediaQuery.of(context).size.height * 0.88,
-        child: Text(loadedApiCall ? 'no_mental_health'.tr() : "",
+        child: Text(loadedApiCall ? LabelStr.lblNoMentalHealth : "",
             style: AppTheme.regularTextStyle()
                 .copyWith(fontSize: 18, color: Colors.red)));
   }
@@ -434,7 +411,6 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
           isLoading = false;
           loadedApiCall = true;
           _supportResponse = HealthSupportResponse.fromJson(response.body);
-          getVideoThumbinail();
           getSUpportNotifierMail(
               _currentPosition.latitude, _currentPosition.longitude);
           // mailSend();
@@ -446,7 +422,7 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
       Utils.showLoader(false, context);
       isLoading = false;
       loadedApiCall = true;
-      Utils.showToast(context, 'check_connectivity'.tr(), Colors.red);
+      Utils.showToast(context, LabelStr.connectionError, Colors.red);
     });
   }
 
@@ -505,8 +481,6 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
 
   void bottomPopup(BuildContext context) {
     showModalBottomSheet(
-      isDismissible: false,
-      enableDrag: false,
       context: context,
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
@@ -534,7 +508,7 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
                   alignment: Alignment.center,
                   child: Padding(
                     padding: const EdgeInsets.fromLTRB(20.0, 20, 10, 10),
-                    child: Text('mental_health_support'.tr(),
+                    child: Text(LabelStr.lblMentalHealthSupport,
                         style: AppTheme.customTextStyle(MyFont.SSPro_bold, 20.0,
                             Color.fromRGBO(0, 0, 0, 1))),
                   ),
@@ -544,12 +518,12 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
                   child: RichText(
                       text: TextSpan(children: [
                     TextSpan(
-                      text: 'mental_health_popup_desc'.tr(),
+                      text: LabelStr.lblHippa,
                       style: AppTheme.regularTextStyle().copyWith(
                           fontSize: 16, color: Color.fromRGBO(0, 0, 0, 1)),
                     ),
                     TextSpan(
-                        text: 'mental_health_url'.tr(),
+                        text: LabelStr.lblHippLink,
                         style: AppTheme.regularTextStyle()
                             .copyWith(fontSize: 16, color: Colors.blueAccent),
                         recognizer: new TapGestureRecognizer()
@@ -584,7 +558,7 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
                           height: blockSizeVertical * 7,
                           width: MediaQuery.of(context).size.width * 0.4,
                           child: TextButton(
-                            child: Text('agree'.tr(),
+                            child: Text(LabelStr.lblAgree,
                                 style: AppTheme.customTextStyle(
                                     MyFont.SSPro_bold,
                                     16.0,
@@ -596,7 +570,14 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
                               PrefUtils.setBoolValue(
                                   PrefUtils.mentalHealthpopUp, true);
                               Navigator.of(context).pop();
+                              int age = Utils.calculateAge(DateTime.parse(dob));
 
+                              if (age >= 13) {
+                                var statusResponse =
+                                    await Permission.location.status;
+                                if (statusResponse.isGranted) {
+                                  _getCurrentLocation();
+                                } else {
                                   Map<Permission, PermissionStatus> status =
                                       await [
                                     Permission.location,
@@ -624,6 +605,17 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
                                       Permission.location,
                                     ].request();
                                   }
+                                }
+                              } else {
+                                Utils.showToast(
+                                    context,
+                                    "Mental Health Support is available only for Students with age >=13 years",
+                                    Colors.red);
+                                Timer(
+                                    Duration(milliseconds: 100),
+                                    () => Utils.backWithNoTransition(
+                                        context, StudentDashboardScreen()));
+                              }
                             },
                           ),
                         ),
@@ -635,7 +627,7 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
                         height: 50,
                         width: MediaQuery.of(context).size.width * 0.4,
                         child: TextButton(
-                          child: Text(LabelStr.lblNotAgree,
+                          child: Text(LabelStr.lblCancel,
                               style: AppTheme.customTextStyle(MyFont.SSPro_bold,
                                   16.0, Color.fromRGBO(255, 255, 255, 1))),
                           onPressed: () {
@@ -746,7 +738,7 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
         Utils.showToast(context, message, Colors.red);
       }
     }).catchError((error) {
-      Utils.showToast(context, 'check_connectivity'.tr(), Colors.red);
+      Utils.showToast(context, LabelStr.connectionError, Colors.red);
     });
   }
 }

@@ -25,6 +25,7 @@ class WebService {
   static const allEventForMobile= "Event/GetAllEventForMobile";
   static const contentByType = "ContentMaster/GetContentByType";
   static const studentContentByType = "Student/GetContentByType";
+  static const parentContentByType = "ParentGuardian/GetContentByType";
   static const tusdSupportBySchoolID = "TUSDSupport/GetBySchoolId";
   static const getSchoolCategoryType = "ContentMaster/GetSchoolCategoryType";
   static const supportNotifierMail = "User/SupportNotifierMail";

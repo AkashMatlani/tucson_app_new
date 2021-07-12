@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:tucson_app/GeneralUtils/ColorExtension.dart';
 import 'package:tucson_app/GeneralUtils/Constant.dart';
 import 'package:tucson_app/GeneralUtils/LabelStr.dart';
 import 'package:tucson_app/GeneralUtils/PrefsUtils.dart';
@@ -16,9 +17,7 @@ import 'package:tucson_app/ui/DisplayWebview.dart';
 import 'package:tucson_app/ui/VideoPlayerScreen.dart';
 import 'package:tucson_app/ui/community/VideoPlayerScreen.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
-import 'BlogDetailsScreen.dart';
 
-import '../../GeneralUtils/ColorExtension.dart';
 
 
 class VideoListScreen extends StatefulWidget {

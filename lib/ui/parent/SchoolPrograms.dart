@@ -2,9 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:tucson_app/GeneralUtils/ColorExtension.dart';
 import 'package:tucson_app/GeneralUtils/Constant.dart';
+import 'package:tucson_app/GeneralUtils/Utils.dart';
+import 'package:tucson_app/WebService/WebService.dart';
+import 'package:tucson_app/ui/WebViewEmpty.dart';
 
 import '../../GeneralUtils/LabelStr.dart';
 import '../../Model/GridListItems.dart';
+import '../DisplayWebview.dart';
 
 class SchoolPrograms extends StatefulWidget {
   @override
@@ -36,13 +40,18 @@ class _SchoolProgramScreenState extends State<SchoolPrograms> {
             child: Column(
               children: [
                 Container(
-                  margin: EdgeInsets.fromLTRB(0, MediaQuery.of(context).size.height*0.03, 0, MediaQuery.of(context).size.height*0.03),
+                  margin: EdgeInsets.fromLTRB(
+                      0,
+                      MediaQuery.of(context).size.height * 0.03,
+                      0,
+                      MediaQuery.of(context).size.height * 0.03),
                   child: Row(
                     children: [
                       Container(
                         margin: EdgeInsets.only(top: 10),
                         child: IconButton(
-                            icon: Icon(Icons.arrow_back_ios, color: Colors.white),
+                            icon:
+                                Icon(Icons.arrow_back_ios, color: Colors.white),
                             onPressed: () {
                               Navigator.of(context).pop();
                             }),
@@ -72,11 +81,11 @@ class _SchoolProgramScreenState extends State<SchoolPrograms> {
             ),
           ),
           Positioned(
-            top: MediaQuery.of(context).size.height*0.20,
-            left: MediaQuery.of(context).size.height*0.03,
-            right: MediaQuery.of(context).size.height*0.03,
+            top: MediaQuery.of(context).size.height * 0.20,
+            left: MediaQuery.of(context).size.height * 0.03,
+            right: MediaQuery.of(context).size.height * 0.03,
             child: Container(
-              height: MediaQuery.of(context).size.height*0.8,
+              height: MediaQuery.of(context).size.height * 0.8,
               child: SingleChildScrollView(
                 child: GridView.builder(
                     physics: ScrollPhysics(),
@@ -91,7 +100,58 @@ class _SchoolProgramScreenState extends State<SchoolPrograms> {
                     itemBuilder: (BuildContext ctx, index) {
                       return GestureDetector(
                           onTap: () {
-                            print("Clicked");
+                            setState(() {
+                              if (index == 0) {
+                                var params = {
+                                  "schoolId": "13",
+                                  "roleId": 0,
+                                  "contentTypeName": "Catalog of Schools"
+                                };
+                                getWebApiFromUrl(context, params);
+                              } else if (index == 1) {
+                                var params = {
+                                  "schoolId": 13,
+                                  "roleId": 0,
+                                  "contentTypeName": "MASSD"
+                                };
+                                getWebApiFromUrl(context, params);
+                              } else if (index == 2) {
+                                var params = {
+                                  "schoolId": 13,
+                                  "roleId": 0,
+                                  "contentTypeName": "AASSD"
+                                };
+                                getWebApiFromUrl(context, params);
+                              } else if (index == 3) {
+                                var params = {
+                                  "schoolId": 13,
+                                  "roleId": 0,
+                                  "contentTypeName": "NASSD"
+                                };
+                                getWebApiFromUrl(context, params);
+                              } else if (index == 4) {
+                                var params = {
+                                  "schoolId": 13,
+                                  "roleId": 0,
+                                  "contentTypeName": "RSSD"
+                                };
+                                getWebApiFromUrl(context, params);
+                              } else if (index == 5) {
+                                var params = {
+                                  "schoolId": 13,
+                                  "roleId": 0,
+                                  "contentTypeName": "APSSD"
+                                };
+                                getWebApiFromUrl(context, params);
+                              } else if (index == 6) {
+                                var params = {
+                                  "schoolId": 13,
+                                  "roleId": 0,
+                                  "contentTypeName": "FACE"
+                                };
+                                getWebApiFromUrl(context, params);
+                              }
+                            });
                           },
                           child: Card(
                               shape: RoundedRectangleBorder(
@@ -102,22 +162,25 @@ class _SchoolProgramScreenState extends State<SchoolPrograms> {
                               clipBehavior: Clip.antiAlias,
                               child: Column(
                                 mainAxisAlignment:
-                                MainAxisAlignment.spaceAround,
+                                    MainAxisAlignment.spaceAround,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
                                   Padding(
-                                      padding: EdgeInsets.only(
-                                         left: 12,top: 10),
+                                      padding:
+                                          EdgeInsets.only(left: 12, top: 10),
                                       child: SvgPicture.asset(
-                                          menuItems[index].svgPicture,height: 60,width: 60,)),
+                                        menuItems[index].svgPicture,
+                                        height: 60,
+                                        width: 60,
+                                      )),
                                   Padding(
                                     padding: EdgeInsets.fromLTRB(
                                         16.0, 12.0, 16.0, 8.0),
                                     child: Column(
                                       crossAxisAlignment:
-                                      CrossAxisAlignment.center,
+                                          CrossAxisAlignment.center,
                                       mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
+                                          MainAxisAlignment.spaceAround,
                                       children: <Widget>[
                                         Text(
                                           menuItems[index].name,
@@ -128,9 +191,7 @@ class _SchoolProgramScreenState extends State<SchoolPrograms> {
                                     ),
                                   ),
                                 ],
-                              )
-                          )
-                      );
+                              )));
                     }),
               ),
             ),
@@ -139,5 +200,24 @@ class _SchoolProgramScreenState extends State<SchoolPrograms> {
       ),
     );
   }
-}
 
+  getWebApiFromUrl(BuildContext context, Map<String, Object> params) {
+    Utils.showLoader(true, context);
+    WebService.postAPICall(WebService.parentContentByType, params)
+        .then((response) {
+      Utils.showLoader(false, context);
+      if (response.statusCode == 1) {
+        if (response.body != null) {
+          String webUrl =
+              response.body[0]["contentTransactionTypeJoin"][0]["objectPath"];
+          Utils.navigateToScreen(context, DisplayWebview(webUrl));
+        }
+      } else {
+        Utils.showToast(context, response.message, Colors.red);
+      }
+    }).catchError((error) {
+      Utils.showLoader(false, context);
+      Utils.navigateToScreen(context, WebViewEmpty());
+    });
+  }
+}
