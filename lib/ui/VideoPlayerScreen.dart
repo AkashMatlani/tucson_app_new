@@ -167,7 +167,6 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
     return OrientationBuilder(
       builder: (context, orientation) {
         return Scaffold(
-          resizeToAvoidBottomInset: true,
           backgroundColor: Colors.black,
           body: Stack(
             children: <Widget>[
@@ -200,20 +199,19 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                               children: <Widget>[
                                 SizedBox(width: 10),
                                 Container(
-                                  padding: EdgeInsets.all(8),
+                                  padding: EdgeInsets.all(6),
                                   color: Colors.transparent,
                                   child: Text(_currentPositionString,
-                                      style: AppTheme.customTextStyle(MyFont.SSPro_semibold, 18.0, Colors.white)),
+                                      style: AppTheme.customTextStyle(MyFont.SSPro_semibold, 16.0, Colors.white)),
                                 ),
-                                Align(
-                                  alignment: Alignment.center,
+                                Expanded(
                                   child: Row(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.center,
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: <Widget>[
                                       RaisedButton(
-                                          padding: EdgeInsets.all(8.0),
+                                          padding: EdgeInsets.all(6.0),
                                           color: Colors.transparent,
                                           textColor: Colors.white,
                                           onPressed: () {
@@ -234,10 +232,10 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                                             });
                                           },
                                           child: Icon(Icons.fast_rewind,
-                                              size: 25)),
-                                      SizedBox(width: 5),
+                                              size: 30)),
+                                      SizedBox(width: 3),
                                       RaisedButton(
-                                          padding: EdgeInsets.all(8.0),
+                                          padding: EdgeInsets.all(6.0),
                                           color: Colors.transparent,
                                           textColor: Colors.white,
                                           onPressed: () {
@@ -251,10 +249,10 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                                               _controller.value.isPlaying
                                                   ? Icons.pause
                                                   : Icons.play_arrow,
-                                              size: 25)),
-                                      SizedBox(width: 5),
+                                              size: 30)),
+                                      SizedBox(width: 3),
                                       RaisedButton(
-                                          padding: EdgeInsets.all(8.0),
+                                          padding: EdgeInsets.all(6.0),
                                           color: Colors.transparent,
                                           textColor: Colors.white,
                                           onPressed: () {
@@ -285,15 +283,15 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                                             });
                                           },
                                           child: Icon(Icons.fast_forward,
-                                              size: 25))
+                                              size: 30))
                                     ],
                                   ),
                                 ),
                                 Container(
-                                  padding: EdgeInsets.all(8),
+                                  padding: EdgeInsets.all(6),
                                   color: Colors.transparent,
                                   child: Text(_remainingString,
-                                      style: AppTheme.customTextStyle(MyFont.SSPro_semibold, 18.0, Colors.white)),
+                                      style: AppTheme.customTextStyle(MyFont.SSPro_semibold, 16.0, Colors.white)),
                                 ),
                                 SizedBox(width: 10),
                               ],
