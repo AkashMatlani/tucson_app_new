@@ -105,55 +105,54 @@ class _CommunityResourcesScreenState extends State<CommunityResources> {
                           onTap: () {
                             if (index == 0) {
                               var params = {
-                                "schoolId": 13,
+                                "schoolId": 1,
                                 "roleId": 0,
-                                "contentTypeName": "Community FoodBank"
+                                "contentTypeName": "CommunityFoodBank"
                               };
                               getWebApiFromUrl(context, params);
                             } else if (index == 1) {
                               var params = {
-                                "schoolId": 13,
+                                "schoolId": 1,
                                 "roleId": 0,
-                                "contentTypeName": "Autisum Society"
+                                "contentTypeName": "AutisumSociety"
                               };
                               getWebApiFromUrl(context, params);
                             }else if (index == 2) {
                               var params = {
-                                "schoolId": 13,
+                                "schoolId": 1,
                                 "roleId": 0,
-                                "contentTypeName": "UA Cooperative Extension"
+                                "contentTypeName": "UACooperativeExtension"
                               };
                               getWebApiFromUrl(context, params);
                             }else if (index == 4) {
                               var params = {
-                                "schoolId": 13,
+                                "schoolId": 1,
                                 "roleId": 0,
-                                "contentTypeName": "Family Resource Centers"
+                                "contentTypeName": "FamilyResourceCenters"
                               };
                               getWebApiFromUrl(context, params);
                             }else if (index == 5) {
                               var params = {
-                                "schoolId": 13,
+                                "schoolId": 1,
                                 "roleId": 0,
-                                "contentTypeName": "Clothing Bank"
+                                "contentTypeName": "ClothingBank"
                               };
                               getWebApiFromUrl(context, params);
                             }else if (index == 6 ){
                               var params = {
-                                "schoolId": 13,
+                                "schoolId": 1,
                                 "roleId": 0,
-                                "contentTypeName": "TUSD Counselling"
+                                "contentTypeName": "TUSDCounselling"
                               };
                               getWebApiFromUrl(context, params);
                             }else if (index == 7) {
                               var params = {
-                                "schoolId": 13,
+                                "schoolId": 1,
                                 "roleId": 0,
-                                "contentTypeName": "McKinney Vento"
+                                "contentTypeName": "McKinneyVento"
                               };
                               getWebApiFromUrl(context, params);
                             }
-
                           },
                           child: Card(
                               shape: RoundedRectangleBorder(

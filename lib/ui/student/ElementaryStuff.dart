@@ -6,9 +6,12 @@ import 'package:tucson_app/GeneralUtils/Constant.dart';
 import 'package:tucson_app/GeneralUtils/LabelStr.dart';
 import 'package:tucson_app/GeneralUtils/Utils.dart';
 import 'package:tucson_app/Model/GridListItems.dart';
+import 'package:tucson_app/ui/VideoPlayerScreen.dart';
 import 'package:tucson_app/ui/student/VideoListScreen.dart';
 
+
 import 'BlogScreen.dart';
+import 'VideoForIOS.dart';
 
 class ElementaryStuff extends StatefulWidget {
   @override
@@ -51,6 +54,8 @@ class _ElementaryStuffState extends State<ElementaryStuff> {
                   return GestureDetector(
                       onTap: () {
                         if(index == 0){
+                          //Utils.navigateToScreen(context, VideoPlayerScreen("https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4"));
+                          //Utils.navigateToScreen(context, VideoPlayerScreen());
                           Utils.navigateToScreen(context, VideoListScreen('videos'.tr()));
                         } else if(index == 1){
                           Utils.navigateToScreen(context, BlogScreen('articles'.tr()));

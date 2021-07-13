@@ -112,9 +112,9 @@ class _RequestForServiceScreenState extends State<RequestForServiceScreen> {
                             print("Clicked");
                             if (index == 2) {
                               var params = {
-                                "schoolId": 13,
+                                "schoolId": 1,
                                 "roleId": 0,
-                                "contentTypeName": "Talk It Out"
+                                "contentTypeName": "TalkItOut"
                               };
                               getWebApiFromUrl(context, params);
                             }
@@ -124,14 +124,14 @@ class _RequestForServiceScreenState extends State<RequestForServiceScreen> {
                             }
                             else if (index == 4) {
                               var params = {
-                                "schoolId": 13,
+                                "schoolId": 1,
                                 "roleId": 0,
-                                "contentTypeName": "Health Services"
+                                "contentTypeName": "HealthServices"
                               };
                               getWebApiFromUrl(context, params);
                             } else if (index == 6) {
                               var params = {
-                                "schoolId": 13,
+                                "schoolId": 1,
                                 "roleId": 0,
                                 "contentTypeName": "Transportation"
                               };

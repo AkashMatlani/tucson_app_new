@@ -6,8 +6,10 @@ import 'package:tucson_app/GeneralUtils/Constant.dart';
 import 'package:tucson_app/GeneralUtils/LabelStr.dart';
 import 'package:tucson_app/GeneralUtils/Utils.dart';
 import 'package:tucson_app/Model/GridListItems.dart';
+import 'package:tucson_app/ui/VideoPlayerScreen.dart';
 
 import 'BlogScreen.dart';
+import 'VideoForIOS.dart';
 import 'VideoListScreen.dart';
 
 class MiddleHighStuff extends StatefulWidget {
@@ -52,6 +54,9 @@ class _MiddleHighStuffState extends State<MiddleHighStuff> {
                       onTap: () {
                         if(index == 0){
                           Utils.navigateToScreen(context, VideoListScreen('videos'.tr()));
+                          //Utils.navigateToScreen(context, VideoPlayerScreen("https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4"));
+
+                          // Utils.navigateToScreen(context, VideoPlayerScreen());
                         } else if(index == 1){
                           Utils.navigateToScreen(context, BlogScreen('articles'.tr()));
                         } else {

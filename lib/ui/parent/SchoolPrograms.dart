@@ -103,49 +103,49 @@ class _SchoolProgramScreenState extends State<SchoolPrograms> {
                             setState(() {
                               if (index == 0) {
                                 var params = {
-                                  "schoolId": "13",
+                                  "schoolId": 1,
                                   "roleId": 0,
-                                  "contentTypeName": "Catalog of Schools"
+                                  "contentTypeName": "CatalogofSchools"
                                 };
                                 getWebApiFromUrl(context, params);
                               } else if (index == 1) {
                                 var params = {
-                                  "schoolId": 13,
+                                  "schoolId": 1,
                                   "roleId": 0,
                                   "contentTypeName": "MASSD"
                                 };
                                 getWebApiFromUrl(context, params);
                               } else if (index == 2) {
                                 var params = {
-                                  "schoolId": 13,
+                                  "schoolId": 1,
                                   "roleId": 0,
                                   "contentTypeName": "AASSD"
                                 };
                                 getWebApiFromUrl(context, params);
                               } else if (index == 3) {
                                 var params = {
-                                  "schoolId": 13,
+                                  "schoolId": 1,
                                   "roleId": 0,
                                   "contentTypeName": "NASSD"
                                 };
                                 getWebApiFromUrl(context, params);
                               } else if (index == 4) {
                                 var params = {
-                                  "schoolId": 13,
+                                  "schoolId": 1,
                                   "roleId": 0,
                                   "contentTypeName": "RSSD"
                                 };
                                 getWebApiFromUrl(context, params);
                               } else if (index == 5) {
                                 var params = {
-                                  "schoolId": 13,
+                                  "schoolId": 1,
                                   "roleId": 0,
                                   "contentTypeName": "APSSD"
                                 };
                                 getWebApiFromUrl(context, params);
                               } else if (index == 6) {
                                 var params = {
-                                  "schoolId": 13,
+                                  "schoolId": 1,
                                   "roleId": 0,
                                   "contentTypeName": "FACE"
                                 };

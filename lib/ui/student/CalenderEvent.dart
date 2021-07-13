@@ -1,18 +1,20 @@
-import 'dart:async';
-
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_calendar_carousel/classes/event.dart';
+import 'package:flutter_calendar_carousel/classes/event_list.dart';
 import 'package:flutter_calendar_carousel/flutter_calendar_carousel.dart';
+import 'package:flutter_calendar_carousel/flutter_calendar_carousel.dart' show CalendarCarousel;
 import 'package:flutter_html/flutter_html.dart';
 import 'package:intl/intl.dart';
+import 'package:intl/intl.dart' show DateFormat;
 import 'package:tucson_app/GeneralUtils/ColorExtension.dart';
 import 'package:tucson_app/GeneralUtils/Constant.dart';
-import 'package:tucson_app/GeneralUtils/LabelStr.dart';
 import 'package:tucson_app/GeneralUtils/PrefsUtils.dart';
 import 'package:tucson_app/GeneralUtils/Utils.dart';
 import 'package:tucson_app/Model/AuthViewModel.dart';
 import 'package:tucson_app/Model/EventForMobileResponse.dart';
+import 'package:tucson_app/WebService/WebService.dart';
 import 'package:flutter_calendar_carousel/flutter_calendar_carousel.dart'
     show CalendarCarousel;
 import 'package:flutter_calendar_carousel/classes/event_list.dart';
@@ -112,178 +114,181 @@ class _CalendarEventState extends State<CalendarEvent> {
       },
     );
 
-    return Scaffold(
-      body: Stack(
-        fit: StackFit.expand,
-        children: [
-          Container(
-            color: HexColor("#6462AA"),
-            child: Column(
-              children: [
-                Container(
-                  margin: EdgeInsets.fromLTRB(
-                      0,
-                      MediaQuery.of(context).size.height * 0.03,
-                      0,
-                      MediaQuery.of(context).size.height * 0.03),
-                  child: Row(
-                    children: [
-                      Container(
-                        margin: EdgeInsets.only(top: 10),
-                        child: IconButton(
-                            icon:
-                                Icon(Icons.arrow_back_ios, color: Colors.white),
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            }),
-                      ),
-                      Container(
-                        margin: EdgeInsets.only(top: 10),
-                        child: Text(LabelStr.lblEvents,
-                            style: AppTheme.regularTextStyle()
-                                .copyWith(fontSize: 18, color: Colors.white)),
-                      )
-                    ],
-                  ),
-                ),
-                Expanded(
-                  child: Container(
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(30.0),
-                            topRight: Radius.circular(30.0)),
-                        color: HexColor("FAFAFA")),
-                    height: MediaQuery.of(context).size.height,
-                    width: MediaQuery.of(context).size.width,
-                    padding: EdgeInsets.all(10),
-                  ),
-                )
-              ],
-            ),
-          ),
-          Positioned(
-              top: MediaQuery.of(context).size.height * 0.14,
-              left: MediaQuery.of(context).size.height * 0.03,
-              right: MediaQuery.of(context).size.height * 0.03,
-              child: Container(
-                margin: EdgeInsets.only(top: 20),
-                padding: EdgeInsets.all(10),
-                color: HexColor("FAFAFA"),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: <Widget>[
-                    Container(
-                      height: blockSizeVertical * 42,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          border: Border.all(color: Colors.black12, width: 1)),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Container(
-                            margin: EdgeInsets.only(),
-                            child: new Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: <Widget>[
-                                IconButton(
-                                  icon: Padding(
-                                    padding: EdgeInsets.all(10),
-                                    child: Icon(Icons.arrow_back_ios,
-                                        color: HexColor("#6462AA"), size: 16),
-                                  ),
-                                  onPressed: () {
-                                    setState(() {
-                                      _targetDateTime = DateTime(
-                                          _targetDateTime.year,
-                                          _targetDateTime.month - 1);
-                                      _currentMonth = DateFormat.yMMM()
-                                          .format(_targetDateTime);
-                                    });
-                                  },
-                                ),
-                                Expanded(
-                                  child: Text(
-                                    _currentMonth,
-                                    style: AppTheme.regularTextStyle()
-                                        .copyWith(color: HexColor("#6462AA")),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                ),
-                                IconButton(
-                                  icon: Padding(
-                                    padding: EdgeInsets.all(10),
-                                    child: Icon(Icons.arrow_forward_ios,
-                                        color: HexColor("#6462AA"), size: 16),
-                                  ),
-                                  onPressed: () {
-                                    setState(() {
-                                      _targetDateTime = DateTime(
-                                          _targetDateTime.year,
-                                          _targetDateTime.month + 1);
-                                      _currentMonth = DateFormat.yMMM()
-                                          .format(_targetDateTime);
-                                    });
-                                  },
-                                )
-                              ],
-                            ),
-                          ),
-                          Container(
-                            height: 1,
-                            color: Colors.black12,
-                            width: MediaQuery.of(context).size.width,
-                          ),
-                          Container(
-                            margin: EdgeInsets.only(top: 10),
-                            child: _calendarCarouselNoHeader,
-                          ),
-                        ],
-                      ),
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        body: Stack(
+          fit: StackFit.expand,
+          children: [
+            Container(
+              color: HexColor("#6462AA"),
+              child: Column(
+                children: [
+                  Container(
+                    margin: EdgeInsets.fromLTRB(
+                        0,
+                        MediaQuery.of(context).size.height * 0.03,
+                        0,
+                        MediaQuery.of(context).size.height * 0.03),
+                    child: Row(
+                      children: [
+                        Container(
+                          margin: EdgeInsets.only(top: 10),
+                          child: IconButton(
+                              icon:
+                                  Icon(Icons.arrow_back_ios, color: Colors.white),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              }),
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(top: 10),
+                          child: Text('events'.tr(),
+                              style: AppTheme.regularTextStyle()
+                                  .copyWith(fontSize: 18, color: Colors.white)),
+                        )
+                      ],
                     ),
-                    SizedBox(height: 5),
-                    InkWell(
-                      onTap: () {
-                        // bottomMenu();
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 8.0),
-                        child: Row(
+                  ),
+                  Expanded(
+                    child: Container(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(30.0),
+                              topRight: Radius.circular(30.0)),
+                          color: HexColor("FAFAFA")),
+                      height: MediaQuery.of(context).size.height,
+                      width: MediaQuery.of(context).size.width,
+                      padding: EdgeInsets.all(10),
+                    ),
+                  )
+                ],
+              ),
+            ),
+            Positioned(
+                top: MediaQuery.of(context).size.height * 0.14,
+                left: MediaQuery.of(context).size.height * 0.03,
+                right: MediaQuery.of(context).size.height * 0.03,
+                child: Container(
+                  margin: EdgeInsets.only(top: 20),
+                  padding: EdgeInsets.all(10),
+                  color: HexColor("FAFAFA"),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                      Container(
+                        height: blockSizeVertical * 42,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            border: Border.all(color: Colors.black12, width: 1)),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
                           children: [
                             Container(
-                              decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: HexColor("#6462AA")
+                              margin: EdgeInsets.only(),
+                              child: new Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: <Widget>[
+                                  IconButton(
+                                    icon: Padding(
+                                      padding: EdgeInsets.all(10),
+                                      child: Icon(Icons.arrow_back_ios,
+                                          color: HexColor("#6462AA"), size: 16),
+                                    ),
+                                    onPressed: () {
+                                      setState(() {
+                                        _targetDateTime = DateTime(
+                                            _targetDateTime.year,
+                                            _targetDateTime.month - 1);
+                                        _currentMonth = DateFormat.yMMM()
+                                            .format(_targetDateTime);
+                                      });
+                                    },
+                                  ),
+                                  Expanded(
+                                    child: Text(
+                                      _currentMonth,
+                                      style: AppTheme.regularTextStyle()
+                                          .copyWith(color: HexColor("#6462AA")),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                  IconButton(
+                                    icon: Padding(
+                                      padding: EdgeInsets.all(10),
+                                      child: Icon(Icons.arrow_forward_ios,
+                                          color: HexColor("#6462AA"), size: 16),
+                                    ),
+                                    onPressed: () {
+                                      setState(() {
+                                        _targetDateTime = DateTime(
+                                            _targetDateTime.year,
+                                            _targetDateTime.month + 1);
+                                        _currentMonth = DateFormat.yMMM()
+                                            .format(_targetDateTime);
+                                      });
+                                    },
+                                  )
+                                ],
                               ),
-                              height: 20,
-                              width: 20,
                             ),
-                            SizedBox(
-                              width: 5,
+                            Container(
+                              height: 1,
+                              color: Colors.black12,
+                              width: MediaQuery.of(context).size.width,
                             ),
-                            Text(
-                              "Upcoming Events",
-                              style: AppTheme.regularTextStyle().copyWith(
-                                  fontSize: 16,
-                                  color: Color.fromRGBO(11, 11, 11, 1)),
+                            Container(
+                              margin: EdgeInsets.only(top: 10),
+                              child: _calendarCarouselNoHeader,
                             ),
                           ],
                         ),
                       ),
-                    ),
-                    ListView.builder(
-                        itemCount: upcommingEventList.length,
-                        shrinkWrap: true,
-                        physics: ScrollPhysics(),
-                        padding: EdgeInsets.only(top: 10),
-                        itemBuilder: (BuildContext context, int position){
-                          return _listRowItem(context, position);
-                        })
-                  ],
-                ),
-              )),
-        ],
+                      SizedBox(height: 5),
+                      InkWell(
+                        onTap: () {
+                          // bottomMenu();
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 8.0),
+                          child: Row(
+                            children: [
+                              Container(
+                                decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: HexColor("#6462AA")
+                                ),
+                                height: 20,
+                                width: 20,
+                              ),
+                              SizedBox(
+                                width: 5,
+                              ),
+                              Text(
+                                'upcoming_events'.tr(),
+                                style: AppTheme.regularTextStyle().copyWith(
+                                    fontSize: 16,
+                                    color: Color.fromRGBO(11, 11, 11, 1)),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      ListView.builder(
+                          itemCount: upcommingEventList.length,
+                          shrinkWrap: true,
+                          physics: ScrollPhysics(),
+                          padding: EdgeInsets.only(top: 10),
+                          itemBuilder: (BuildContext context, int position){
+                            return _listRowItem(context, position);
+                          })
+                    ],
+                  ),
+                )),
+          ],
+        ),
       ),
     );
   }
@@ -322,7 +327,7 @@ class _CalendarEventState extends State<CalendarEvent> {
                         padding: const EdgeInsets.fromLTRB(20.0, 0, 10, 0),
                         child: Container(
                           child: Html(
-                            data: "Event Details:" + "\n" + eventist[i].eventDetail,
+                            data: 'event_details'.tr()+ ':' + '\n' + eventist[i].eventDetail,
                               defaultTextStyle: AppTheme.regularTextStyle().copyWith(
                                   fontSize: 16, color: Colors.black54)),
                         ),
@@ -348,13 +353,12 @@ class _CalendarEventState extends State<CalendarEvent> {
   }
 
   _listRowItem(BuildContext context, int position) {
-
     return InkWell(
       onTap: (){
         var circle = Container(
           padding: EdgeInsets.fromLTRB(20.0, 0, 10, 0),
           child: Html(
-              data: "Event Details:" + "\n" + upcommingEventList[position].eventDetail,
+              data: 'event_details'.tr()+ ':' + '\n' + upcommingEventList[position].eventDetail,
               defaultTextStyle: AppTheme.regularTextStyle().copyWith(
                   fontSize: 16, color: Colors.black54)),
         );
@@ -412,7 +416,7 @@ class _CalendarEventState extends State<CalendarEvent> {
                   Padding(
                     padding: const EdgeInsets.fromLTRB(20.0, 20, 10, 10),
                     child: Text(
-                      "Date & Time:" + "\n" + finalDate,
+                      'date_time'.tr()+':' + "\n" + finalDate,
                       style: AppTheme.regularTextStyle()
                           .copyWith(fontSize: 16, color: Colors.black54),
                     ),
@@ -434,7 +438,7 @@ class _CalendarEventState extends State<CalendarEvent> {
                         height: 50,
                         width: MediaQuery.of(context).size.width * 0.35,
                         child: TextButton(
-                          child: Text(LabelStr.lblClose,
+                          child: Text('close'.tr(),
                               style: AppTheme.customTextStyle(MyFont.SSPro_bold,
                                   16.0, Color.fromRGBO(255, 255, 255, 1))),
                           onPressed: () {
@@ -451,6 +455,64 @@ class _CalendarEventState extends State<CalendarEvent> {
         ),
       ),
     );
+  }
+
+  _translateEventTitleData(){
+    Utils.showLoader(true, context);
+    List<String> titleList = [];
+    for(var event in eventist){
+      titleList.add(event.eventName);
+    }
+    String resultArr = titleList.join("=)");
+    WebService.translateApiCall(languageCode!, resultArr, (isSuccess, response) {
+      if(isSuccess){
+        _translateEventDetailsData(resultArr);
+      } else {
+        Utils.showLoader(false, context);
+        Utils.showToast(context, "Page Translation Failed", Colors.red);
+      }
+    });
+  }
+
+  _translateEventDetailsData(String titleArr) {
+    List<String> detailsList = [];
+    for(var event in eventist){
+      detailsList.add(event.eventDetail);
+    }
+    String resultArr = detailsList.join("=)");
+    WebService.translateApiCall(languageCode!, resultArr, (isSuccess, response) {
+      if(isSuccess){
+        var resultTitleArr = response.toString().split("==)");
+        var resultDescArr = response.toString().split("==)");
+        List<EventForMobileResponse> tempList = [];
+        for(int i=0; i<resultTitleArr.length; i++){
+          tempList.add(EventForMobileResponse(
+              createdOn: eventist[i].createdOn,
+              createdBy: eventist[i].createdBy,
+              eventDetail: resultDescArr[i],
+              eventName: resultTitleArr[i],
+              eventTypeId: eventist[i].eventTypeId,
+              eventTypeName: eventist[i].eventTypeName,
+              freeFields1: eventist[i].freeFields1,
+              freeFields2: eventist[i].freeFields2,
+              freeFields3: eventist[i].freeFields3,
+              freeFields4: eventist[i].freeFields4,
+              fromDateTime: eventist[i].fromDateTime,
+              isActive: eventist[i].isActive,
+              schoolId: eventist[i].schoolId,
+              schoolName: eventist[i].schoolName,
+              shareMode: eventist[i].shareMode,
+              toDateTime: eventist[i].toDateTime,
+              tusdEventId: eventist[i].tusdEventId,
+              updatedBy: eventist[i].updatedBy,
+              updatedOn: eventist[i].updatedOn));
+        }
+        Utils.showLoader(false, context);
+      } else {
+        Utils.showLoader(false, context);
+        Utils.showToast(context, "Page Translation Failed", Colors.red);
+      }
+    });
   }
 
   Widget markerRepresent(Color color, String data) {

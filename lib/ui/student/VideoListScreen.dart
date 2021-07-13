@@ -1,9 +1,12 @@
+import 'dart:io';
+
 import 'package:ext_storage/ext_storage.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:tucson_app/GeneralUtils/ColorExtension.dart';
 import 'package:tucson_app/GeneralUtils/Constant.dart';
@@ -16,6 +19,7 @@ import 'package:tucson_app/WebService/WebService.dart';
 import 'package:tucson_app/ui/DisplayWebview.dart';
 import 'package:tucson_app/ui/VideoPlayerScreen.dart';
 import 'package:tucson_app/ui/community/VideoPlayerScreen.dart';
+import 'package:tucson_app/ui/student/VideoForIOS.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
 
 
@@ -34,11 +38,13 @@ class _VideoListScreenState extends State<VideoListScreen> {
   bool isLoading = true;
   String? languageCode;
   List<ContentTransactionResponse> _videoList = [];
-
+ late String imagePath="";
+ List<String> _imageLink=[];
   @override
   void initState() {
     super.initState();
     _getSchoolId();
+
   }
 
   _getSchoolId() async {
@@ -118,12 +124,13 @@ class _VideoListScreenState extends State<VideoListScreen> {
   }
 
   _listRowItems(BuildContext context, int index) {
+
     return InkWell(
       onTap: () {
         if(_videoList[index].objectPath.contains("https://www.youtube.com/")){
           Utils.navigateToScreen(context, DisplayWebview(_videoList[index].objectPath));
         }else {
-          Utils.navigateToScreen(context, VideoPlayerScreenOne(_videoList[index].objectPath));
+          Utils.navigateToScreen(context, VideoPlayerScreen(_videoList[index].objectPath));
         }
       },
       child: Column(
@@ -138,7 +145,8 @@ class _VideoListScreenState extends State<VideoListScreen> {
                   color: Colors.white
               ),
               alignment: Alignment.center,
-              child: Image.asset(MyImage.videoUrlImage, fit: BoxFit.fill),
+              //child: new Image.file(File(imagePath)),
+              child: Image.asset(MyImage.videoUrlImage),
             ),
             Padding(
                 padding: EdgeInsets.only(top: 5, bottom: 20),
@@ -150,6 +158,7 @@ class _VideoListScreenState extends State<VideoListScreen> {
                         Color.fromRGBO(0, 0, 0, 1))))
           ]),
     );
+
   }
 
   emptyListView() {
@@ -160,6 +169,7 @@ class _VideoListScreenState extends State<VideoListScreen> {
     );
   }
 
+  late String tempdat;
   _getContentList(int schoolId) {
     ContentMasterViewModel _contentViewModel = ContentMasterViewModel();
     var params = {
@@ -177,10 +187,19 @@ class _VideoListScreenState extends State<VideoListScreen> {
             for(var innerData in data.contentTransactionTypeJoin){
               if(innerData.contentTransTypeName.compareTo("Video") == 0){
                 _videoList.add(innerData);
+               _imageLink.add(innerData.objectPath);
+
+                tempdat =innerData.objectPath;
+               // getVideoThumbinail(innerData.objectPath);
               }
             }
           }
         });
+        if(_imageLink.length>=0)
+          {
+            getVideoThumbinail(tempdat);
+          }
+
         translateListData();
       } else {
         Utils.showLoader(false, context);
@@ -222,11 +241,11 @@ class _VideoListScreenState extends State<VideoListScreen> {
     });
   }
 
-  late String path="";
-  getVideoThumbinail() async {
-    var status = await Permission.storage.status;
+  late var  fileName;
+  getVideoThumbinail(String imageLink) async {
+   /* var status = await Permission.storage.status;
     if (status.isGranted) {
-      /*    if (io.Platform.isIOS) {
+      *//*    if (io.Platform.isIOS) {
         io.Directory appDocDirectory;
         appDocDirectory = await getApplicationDocumentsDirectory();
         Directory directory= await new Directory(appDocDirectory.path+'/'+'Download').create(recursive: true);
@@ -236,7 +255,7 @@ class _VideoListScreenState extends State<VideoListScreen> {
         await file.writeAsBytes(bytes);
         return file;
       }
-      else{*/
+      else{*//*
       path = await ExtStorage.getExternalStoragePublicDirectory(ExtStorage.DIRECTORY_DOWNLOADS);
       // File file = new File('$path/$filename');
       // ToastUtils.showToast(context, "Your file save at "+file.toString()+" location", Colors.green);
@@ -262,6 +281,18 @@ class _VideoListScreenState extends State<VideoListScreen> {
       print(e);
       fileName = "";
     }
-    return fileName;
+    return fileName;*/
+
+     fileName = await VideoThumbnail.thumbnailFile(
+      video: imageLink[0],
+      thumbnailPath: (await getApplicationDocumentsDirectory()).path,
+      imageFormat: ImageFormat.WEBP,
+      maxHeight: 64, // specify the height of the thumbnail, let the width auto-scaled to keep the source aspect ratio
+      quality: 75,
+    );
+
+     imagePath=fileName;
+     print("imagePath-->>"+imagePath);
+     return imagePath;
   }
 }

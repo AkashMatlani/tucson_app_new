@@ -194,14 +194,14 @@ class _ParentDashBoardScreenState extends State<ParentDashBoardScreen> {
                                 Utils.navigateToScreen(context, CommunityResources());
                               } else if (index == 3) {
                                 var params={
-                                  "schoolId": 13,
+                                  "schoolId": 1,
                                   "roleId": 0,
                                   "contentTypeName":"SmartChoice"
                                 };
                                 getWebApiFromUrl(context, params);
                               } else if (index == 4) {
                                 var params={
-                                  "schoolId": 13,
+                                  "schoolId": 1,
                                   "roleId": 0,
                                   "contentTypeName":"ParentVUE"
                                 };
@@ -212,7 +212,7 @@ class _ParentDashBoardScreenState extends State<ParentDashBoardScreen> {
                                 Utils.navigateToScreen(context, RequestForServiceScreen());
                               } else if (index == 7) {
                                 var params={
-                                  "schoolId": 13,
+                                  "schoolId": 1,
                                   "roleId": 0,
                                   "contentTypeName":"Awareity"
                                 };

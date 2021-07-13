@@ -167,6 +167,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
     return OrientationBuilder(
       builder: (context, orientation) {
         return Scaffold(
+          resizeToAvoidBottomInset: true,
           backgroundColor: Colors.black,
           body: Stack(
             children: <Widget>[
@@ -197,14 +198,15 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                             SizedBox(height: 7),
                             Row(
                               children: <Widget>[
-                                SizedBox(width: 20),
+                                SizedBox(width: 10),
                                 Container(
                                   padding: EdgeInsets.all(8),
                                   color: Colors.transparent,
                                   child: Text(_currentPositionString,
                                       style: AppTheme.customTextStyle(MyFont.SSPro_semibold, 18.0, Colors.white)),
                                 ),
-                                Expanded(
+                                Align(
+                                  alignment: Alignment.center,
                                   child: Row(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.center,
@@ -232,7 +234,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                                             });
                                           },
                                           child: Icon(Icons.fast_rewind,
-                                              size: 30)),
+                                              size: 25)),
                                       SizedBox(width: 5),
                                       RaisedButton(
                                           padding: EdgeInsets.all(8.0),
@@ -249,7 +251,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                                               _controller.value.isPlaying
                                                   ? Icons.pause
                                                   : Icons.play_arrow,
-                                              size: 30)),
+                                              size: 25)),
                                       SizedBox(width: 5),
                                       RaisedButton(
                                           padding: EdgeInsets.all(8.0),
@@ -283,7 +285,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                                             });
                                           },
                                           child: Icon(Icons.fast_forward,
-                                              size: 30))
+                                              size: 25))
                                     ],
                                   ),
                                 ),
@@ -293,7 +295,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                                   child: Text(_remainingString,
                                       style: AppTheme.customTextStyle(MyFont.SSPro_semibold, 18.0, Colors.white)),
                                 ),
-                                SizedBox(width: 20),
+                                SizedBox(width: 10),
                               ],
                             )
                           ],

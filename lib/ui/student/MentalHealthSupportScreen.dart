@@ -40,7 +40,7 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
   late Position _currentPosition;
   bool loadedApiCall = false;
   late var tempvalue;
-
+  late var uint8list;
   @override
   void initState() {
     super.initState();
@@ -164,7 +164,7 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
                               errorWidget: (context, url, error) => Image.asset(MyImage.videoUrlImage),
                             ),
                           )*/
-                                    Image.asset(MyImage.videoUrlImage,
+                                    Image.asset(uint8list,
                                         fit: BoxFit.fill),
                               ),
                             ),
@@ -373,23 +373,6 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
         ),
       ),
     );
-  }
-
-  getVideoThumbinail() async {
-    String? fileName;
-    try {
-      fileName = await VideoThumbnail.thumbnailFile(
-        video: _supportResponse.supportDocument,
-        thumbnailPath: (await getTemporaryDirectory()).path,
-        imageFormat: ImageFormat.JPEG,
-        maxHeight: 240,
-        quality: 50,
-      );
-    } catch (e) {
-      print(e);
-      fileName = "";
-    }
-    return fileName;
   }
 
   emptyListView() {
@@ -741,4 +724,47 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
       Utils.showToast(context, LabelStr.connectionError, Colors.red);
     });
   }
+
+  late String path="";
+ /* getVideoThumbinail() async {
+    var status = await Permission.storage.status;
+    if (status.isGranted) {
+      *//*    if (io.Platform.isIOS) {
+        io.Directory appDocDirectory;
+        appDocDirectory = await getApplicationDocumentsDirectory();
+        Directory directory= await new Directory(appDocDirectory.path+'/'+'Download').create(recursive: true);
+        String path=directory.path.toString();
+        File file = new File('$path/$filename');
+        ToastUtils.showToast(context, "Your file save at "+file.toString()+" location", Colors.green);
+        await file.writeAsBytes(bytes);
+        return file;
+      }
+      else{*//*
+      path = await ExtStorage.getExternalStoragePublicDirectory(ExtStorage.DIRECTORY_DOWNLOADS);
+      // File file = new File('$path/$filename');
+      // ToastUtils.showToast(context, "Your file save at "+file.toString()+" location", Colors.green);
+      //await file.writeAsBytes(bytes);
+      // return file;
+    } else {
+      Map<Permission, PermissionStatus> status = await [
+        Permission.storage,
+      ].request();
+      print("Permission status :: $status");
+    }
+
+    String? fileName;
+    try {
+      uint8list = await VideoThumbnail.thumbnailFile(
+        video: "https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4",
+        thumbnailPath: (await getTemporaryDirectory()).path,
+        imageFormat: ImageFormat.WEBP,
+        maxHeight: 64, // specify the height of the thumbnail, let the width auto-scaled to keep the source aspect ratio
+        quality: 75,
+      );
+    } catch (e) {
+      print(e);
+      fileName = "";
+    }
+    return fileName;
+  }*/
 }
