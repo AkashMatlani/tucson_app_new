@@ -147,12 +147,12 @@ class _EducationScreenState extends State<Education> {
                                 children: <Widget>[
                                   Padding(
                                       padding: EdgeInsets.fromLTRB(
-                                          16.0, 12.0, 16.0, 8.0),
+                                          16.0, 10.0, 16.0, 8.0),
                                       child: SvgPicture.asset(
                                           menuItems[index].svgPicture)),
                                   Padding(
                                     padding: EdgeInsets.fromLTRB(
-                                        16.0, 12.0, 16.0, 8.0),
+                                        16.0, 10.0, 16.0, 8.0),
                                     child: Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.center,

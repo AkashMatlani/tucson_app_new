@@ -40,7 +40,8 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
   late Position _currentPosition;
   bool loadedApiCall = false;
   late var tempvalue;
-  late var uint8list;
+  late var uint8list = null;
+
   @override
   void initState() {
     super.initState();
@@ -587,6 +588,8 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
                                         await [
                                       Permission.location,
                                     ].request();
+                                  } else if(tempvalue == PermissionStatus.restricted){
+                                    _getCurrentLocation();
                                   }
                                 }
                               } else {

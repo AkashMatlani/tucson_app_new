@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -6,6 +7,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 import 'package:tucson_app/GeneralUtils/ColorExtension.dart';
 import 'package:tucson_app/GeneralUtils/Constant.dart';
+import 'package:tucson_app/GeneralUtils/CustomDropDownList.dart';
 import 'package:tucson_app/GeneralUtils/HelperWidgets.dart';
 import 'package:tucson_app/GeneralUtils/LabelStr.dart';
 import 'package:tucson_app/GeneralUtils/PrefsUtils.dart';
@@ -33,6 +35,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   var _emailController = TextEditingController();
   var _pwdController = TextEditingController();
   var _confPwdController = TextEditingController();
+  var _filterController = TextEditingController();
   String _userType = 'Student';
   String _formattedDob = "";
   DateTime currentDate = DateTime.now();
@@ -41,9 +44,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
   bool _showConfPwd = true;
 
   List<SchoolListResponse> _schoolList = [];
+  Map<String, SchoolListResponse> selectedValueMap = Map();
   late SchoolListResponse _selectedSchool;
   FocusNode defaultField = FocusNode();
   String? languageCode;
+  String selectedSchoolName = LabelStr.lblSelectSchool;
 
   @override
   void initState() {
@@ -189,7 +194,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             children: [
                               SizedBox(height: 10),
                               Container(
-                                margin: EdgeInsets.only(right: 8),
+                                /*margin: EdgeInsets.only(right: 8),
                                 child: DropdownButton<SchoolListResponse>(
                                   value: _selectedSchool,
                                   isExpanded: true,
@@ -215,6 +220,25 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                       _selectedSchool = value!;
                                     });
                                   },
+                                ),*/
+                                child: InkWell(
+                                  onTap: (){
+                                    //Utils.backWithNoTransition(context, CustomDropDownList(selectedSchoolName, _selectedSchool, _schoolList));
+                                    Navigator.push(context, MaterialPageRoute(builder: (context) => CustomDropDownList(selectedSchoolName, _selectedSchool, _schoolList))).then((value){
+                                      setState(() {
+                                        _selectedSchool = value;
+                                        selectedSchoolName = _selectedSchool.name;
+                                      });
+                                    });
+                                  },
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Expanded(child: Text(selectedSchoolName, style: AppTheme.regularTextStyle())),
+                                      Icon(Icons.arrow_forward_ios, size: 18, color: Colors.black54)
+                                    ],
+                                  ),
                                 ),
                               ),
                               SizedBox(height: 10),
@@ -294,7 +318,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         if (response.body != null) {
           _schoolList = [];
           setState(() {
-            _schoolList.add(SchoolListResponse(id: 0, name: LabelStr.lblSelectSchool, schoolCategoryId: 0, schoolCategoryName: "",  createdBy: 0,  createdOn: "",  updatedBy: 0,  updatedOn: ""));
+            //_schoolList.add(SchoolListResponse(id: 0, name: LabelStr.lblSelectSchool, schoolCategoryId: 0, schoolCategoryName: "",  createdBy: 0,  createdOn: "",  updatedBy: 0,  updatedOn: ""));
             for(var data in response.body){
               _schoolList.add(SchoolListResponse.fromJson(data));
             }

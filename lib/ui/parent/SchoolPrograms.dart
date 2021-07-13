@@ -175,7 +175,7 @@ class _SchoolProgramScreenState extends State<SchoolPrograms> {
                                       )),
                                   Padding(
                                     padding: EdgeInsets.fromLTRB(
-                                        16.0, 12.0, 16.0, 8.0),
+                                        16.0, 10.0, 16.0, 8.0),
                                     child: Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.center,

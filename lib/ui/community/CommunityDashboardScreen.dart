@@ -211,12 +211,12 @@ class _CommunityDashboardScreenState extends State<CommunityDashboardScreen> {
                                 children: <Widget>[
                                   Padding(
                                       padding: EdgeInsets.fromLTRB(
-                                          16.0, 12.0, 16.0, 8.0),
+                                          16.0, 10.0, 16.0, 8.0),
                                       child: SvgPicture.asset(
                                           menuItems[index].svgPicture)),
                                   Padding(
                                     padding: EdgeInsets.fromLTRB(
-                                        16.0, 12.0, 16.0, 8.0),
+                                        16.0, 10.0, 16.0, 8.0),
                                     child: Align(
                                       alignment: Alignment.bottomLeft,
                                       child: Text(

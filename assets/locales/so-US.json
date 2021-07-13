@@ -144,5 +144,8 @@
   "donation_desc" : "Taageerada gaarka ahi waxay noo oggolaanaysaa inaan ku shubno ilo dheeri ah barnaamijyada iyo adeegyada kor u qaada oo kobciya waaya-aragnimada ardayda iyo qoysaska.",
   "mental_health_popup_desc" : "Dugsiga Midaysan ee Tucson wuxuu u hogaansamayaa Sharciga Xuquuqda Waxbarashada Qoyska iyo Qarsoodiga (FERPA - 20 USC § 1232g; 34 CFR Qaybta 99). ) TUSD, iyada oo loo marayo Tucson Unified Connect waxay aruurin kartaa macluumaadka ardayga lagu aqoonsan karo, gaar ahaan, magaca, cinwaanka emaylka iyo lambarrada taleefannada ardayda iyo qoysaskooda. b) Waan fahamsanahay in TUSD aysan dib-u-siideyn doonin macluumaadka ardayga shaqsi ahaan lagu aqoonsan karo haddii aan si gaar ah loogu oggolaan FERPA mooyee. Waxaan fursad u helay in aan dib u eego ogeysiiska xuquuqda ardayda iyo waalidiinta ee TUSD oo hoos yimaada FERPA. \\ N \\ n Ogeysiiska sanadlaha ah ee TUSD ee Xuquuqda Asturnaanta Waalidiinta iyo Ardayda: ",
   "mental_health_url" : "http://tusd1.org/Home/Privacy-Rights",
-  "school_not_support" : "Ma jiro taageero caafimaadka dhimirka ee dugsigan."
+  "school_not_support" : "Ma jiro taageero caafimaadka dhimirka ee dugsigan.",
+  "student_age_error" : "Taageerada Caafimaadka Maskaxda waxaa loo heli karaa oo keliya ardayda da'da ah = = 13 sano",
+  "search_school" : "Iskuulka Raadinta",
+  "no_school" : "Iskuul Ma Lahaa Lama Helin"
 }

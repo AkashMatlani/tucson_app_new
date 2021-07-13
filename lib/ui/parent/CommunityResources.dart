@@ -173,7 +173,7 @@ class _CommunityResourcesScreenState extends State<CommunityResources> {
                                           menuItems[index].svgPicture,height: 50,width: 50,)),
                                   Padding(
                                     padding: EdgeInsets.fromLTRB(
-                                        16.0, 12.0, 16.0, 8.0),
+                                        16.0, 10.0, 16.0, 8.0),
                                     child: Column(
                                       crossAxisAlignment:
                                       CrossAxisAlignment.center,

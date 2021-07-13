@@ -76,6 +76,7 @@ class _CalendarPage2State extends State<CalendarPage2> {
     cHeight = MediaQuery.of(context).size.height;
 
     _calendarCarouselNoHeader = CalendarCarousel<Event>(
+      isScrollable: false,
       onDayPressed: (date, events) {
         this.setState(() => selectedDate = date);
         events.forEach((event) => event.title != null
@@ -201,6 +202,20 @@ class _CalendarPage2State extends State<CalendarPage2> {
                                           _currentMonth = DateFormat.yMMM()
                                               .format(_targetDateTime);
                                         });
+
+                                        if(eventist.isNotEmpty && eventist.length > 0){
+                                          List<EventForMobileResponse> tempList = [];
+                                          for (int i = 0; i < eventist.length; i++) {
+                                            bool isSuccess = _isUpcommingEvent(eventist[i].fromDateTime);
+                                            if (isSuccess) {
+                                              tempList.add(eventist[i]);
+                                            }
+                                          }
+                                          setState(() {
+                                            upcommingEventList = [];
+                                            upcommingEventList.addAll(tempList);
+                                          });
+                                        }
                                       },
                                     ),
                                     Expanded(
@@ -225,7 +240,21 @@ class _CalendarPage2State extends State<CalendarPage2> {
                                           _currentMonth = DateFormat.yMMM()
                                               .format(_targetDateTime);
                                         });
-                                        },
+
+                                        if(eventist.isNotEmpty && eventist.length > 0){
+                                          List<EventForMobileResponse> tempList = [];
+                                          for (int i = 0; i < eventist.length; i++) {
+                                            bool isSuccess = _isUpcommingEvent(eventist[i].fromDateTime);
+                                            if (isSuccess) {
+                                              tempList.add(eventist[i]);
+                                            }
+                                          }
+                                          setState(() {
+                                            upcommingEventList = [];
+                                            upcommingEventList.addAll(tempList);
+                                          });
+                                        }
+                                      },
                                     )
                                   ],
                                 ),
@@ -245,29 +274,29 @@ class _CalendarPage2State extends State<CalendarPage2> {
                       ),
                     ),
                     SizedBox(height: 5),
-                    Padding(
-                        padding: const EdgeInsets.only(top: 8.0),
-                        child: Row(
-                          children: [
-                            Container(
-                              decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: HexColor("#6462AA")),
-                              height: 20,
-                              width: 20,
-                            ),
-                            SizedBox(
-                              width: 5,
-                            ),
-                            Text(
-                              'upcoming_events'.tr(),
-                              style: AppTheme.regularTextStyle().copyWith(
-                                  fontSize: 16,
-                                  color: Color.fromRGBO(11, 11, 11, 1)),
-                            ),
-                          ],
-                        ),
+                    upcommingEventList.length > 0 ? Padding(
+                      padding: const EdgeInsets.only(top: 8.0),
+                      child: Row(
+                        children: [
+                          Container(
+                            decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: HexColor("#6462AA")),
+                            height: 20,
+                            width: 20,
+                          ),
+                          SizedBox(
+                            width: 5,
+                          ),
+                          Text(
+                            'upcoming_events'.tr(),
+                            style: AppTheme.regularTextStyle().copyWith(
+                                fontSize: 16,
+                                color: Color.fromRGBO(11, 11, 11, 1)),
+                          ),
+                        ],
                       ),
+                    ) : Container(),
                     ListView.builder(
                         itemCount: upcommingEventList.length,
                         shrinkWrap: true,
@@ -313,76 +342,55 @@ class _CalendarPage2State extends State<CalendarPage2> {
             }
 
             String formattedDate = DateFormat("yyyy-MM-dd'T'hh:mm:ss").format(selectedDate);
-            finalDateToDate =
-            Utils.convertDate(formattedDate, DateFormat("dd-MM-yyyy hh:mm:ss"));
-
+            finalDateToDate = Utils.convertDate(formattedDate, DateFormat("MM-dd-yyyy hh:mm:ss"));
 
             String toDate = DateFormat("yyyy-MM-dd'T'hh:mm:ss").format( DateTime.parse(eventist[i].toDateTime));
-            toDateFinalDate =
-                Utils.convertDate(toDate, DateFormat("dd-MM-yyyy hh:mm:ss"));
+            toDateFinalDate = Utils.convertDate(toDate, DateFormat("MM-dd-yyyy hh:mm:ss"));
             eventNameTitle = eventist[i].eventName;
-            String date = Utils.convertDate(
-                eventist[i].fromDateTime, DateFormat('yyyy,MM,dd'));
+            String date = Utils.convertDate(eventist[i].fromDateTime, DateFormat('yyyy,MM,dd'));
             print(date);
             var dateInFormatText = date.split(",");
             setState(() {
-              _markedDateMap.add(
-                DateTime(
-                    int.parse(dateInFormatText[0]),
-                    int.parse(dateInFormatText[1]),
-                    int.parse(dateInFormatText[2])),
-                new Event(
-                    date: new DateTime(
-                        int.parse(dateInFormatText[0]),
-                        int.parse(dateInFormatText[1]),
-                        int.parse(dateInFormatText[2])),
-                    title: eventist[i].eventName,
-                    icon: _presentIcon(
-                      dateInFormatText[2],
-                    ),
-                    dot: Padding(
-                      padding: const EdgeInsets.fromLTRB(20.0, 0, 10, 0),
-                      child: Column(
-                        children: [
-                        /*  Container(
-                            child:Text(toDateFinalDate, style: AppTheme.regularTextStyle()
-                          .copyWith(fontSize: 16, color: Colors.black54))
-                               ),*/
-                         Container(
-                            child: Html(
-                                data: 'event_details'.tr()+ ':' + '\n' + eventist[i].eventDetail,
-                                defaultTextStyle: AppTheme.regularTextStyle()
-                                    .copyWith(fontSize: 16, color: Colors.black54)),
-                          ),
-                        ],
-
-                      ),
-                    )),
-              );
-              /*   _markedDateMap.add(
+              var currentDate = DateTime.now();
+              var eventDate = DateTime.parse(eventist[i].fromDateTime);
+              if(currentDate.isBefore(eventDate)){
+                _markedDateMap.add(
                   DateTime(
-                      int.parse(dateInFormatText[2]),
                       int.parse(dateInFormatText[0]),
-                      int.parse(dateInFormatText[1])),
-                  Event(
+                      int.parse(dateInFormatText[1]),
+                      int.parse(dateInFormatText[2])),
+                  new Event(
                       date: new DateTime(
-                          int.parse(dateInFormatText[2]),
                           int.parse(dateInFormatText[0]),
-                          int.parse(dateInFormatText[1])),
+                          int.parse(dateInFormatText[1]),
+                          int.parse(dateInFormatText[2])),
                       title: eventist[i].eventName,
-                      icon: Padding(
+                      icon: _presentIcon(
+                        dateInFormatText[2],
+                      ),
+                      dot: Padding(
                         padding: const EdgeInsets.fromLTRB(20.0, 0, 10, 0),
-                        child: Container(
-                          child: Html(
-                              data: "Event Details:" + "\n" + eventist[i].eventDetail,
-                              defaultTextStyle: AppTheme.regularTextStyle().copyWith(
-                                  fontSize: 16, color: Colors.black54)),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text('event_details'.tr()+ ':', style: AppTheme.regularTextStyle().copyWith(fontSize: 16, color: Colors.black54)),
+                            Container(
+                              child: Html(
+                                  data: eventist[i].eventDetail,
+                                  defaultTextStyle: AppTheme.regularTextStyle()
+                                      .copyWith(fontSize: 16, color: Colors.black54)),
+                            ),
+                          ],
+
                         ),
-                      ))
-              );*/
+                      )),
+                );
+              }
             });
           }
         });
+        _translateEventTitleData();
       } else {
         Utils.showToast(context, message, Colors.red);
       }
@@ -393,9 +401,15 @@ class _CalendarPage2State extends State<CalendarPage2> {
     String calMonth = _currentMonth.substring(0, 3);
     var newDt = Utils.convertDate(fromDateTime, DateFormat("yyyy-MMM-dd"));
     String currentMonth=newDt.split("-")[1];
-    // var eventDate = DateTime.parse(fromDateTime);
+
+    var currentDate = DateTime.now();
+    var eventDate = DateTime.parse(fromDateTime);
     if (currentMonth.compareTo(calMonth)==0) {
-      return true;
+      if(currentDate.isBefore(eventDate)){
+        return true;
+      } else {
+        return false;
+      }
     } else {
       return false;
     }
@@ -405,7 +419,7 @@ class _CalendarPage2State extends State<CalendarPage2> {
     String formattedDate =
         DateFormat("yyyy-MM-dd'T'hh:mm:ss").format(currentDate2);
     String finalDateToDate =
-        Utils.convertDate(formattedDate, DateFormat("dd-MM-yyyy hh:mm:ss"));
+        Utils.convertDate(formattedDate, DateFormat("MM-dd-yyyy hh:mm:ss"));
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
