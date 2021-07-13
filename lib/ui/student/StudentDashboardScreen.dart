@@ -75,8 +75,13 @@ class _StudentDashboardScreenState extends State<StudentDashboardScreen> {
           if (schoolId == null) {
             schoolId = 0;
           }
+
+          if(firstName == null){
+            firstName = "";
+          } else {
+            _getFirstName();
+          }
         });
-        _getFirstName();
       });
     });
   }
@@ -207,7 +212,7 @@ class _StudentDashboardScreenState extends State<StudentDashboardScreen> {
                               setState(() {
                                 // ontap of each card, set the defined int to the grid view index
                                 if (index == 0) {
-                                  getSchoolType();
+                                  getSchoolType(index);
                                 } else if (index == 1) {
                                   Utils.navigateToScreen(context,
                                       BlogScreen('student_blogs'.tr()));
@@ -215,11 +220,7 @@ class _StudentDashboardScreenState extends State<StudentDashboardScreen> {
                                   Utils.navigateToScreen(
                                       context, ScholarshipInfoScreen());
                                 } else if (index == 3) {
-                                  if (schoolCategory!.compareTo("High") == 0) {
-                                    getMentalSupportExistOrNot();
-                                  } else {
-                                    Utils.showToast(context, 'school_not_support'.tr(), Colors.red);
-                                  }
+                                  getSchoolType(index);
                                 } else if (index == 4) {
                                   Utils.navigateToScreen(
                                       context, JobOpeningScreen());
@@ -255,12 +256,12 @@ class _StudentDashboardScreenState extends State<StudentDashboardScreen> {
                                   children: <Widget>[
                                     Padding(
                                         padding: EdgeInsets.fromLTRB(
-                                            16.0, 12.0, 16.0, 8.0),
+                                            16.0, 10.0, 16.0, 8.0),
                                         child: SvgPicture.asset(
                                             menuItems[index].svgPicture)),
                                     Padding(
                                       padding: EdgeInsets.fromLTRB(
-                                          16.0, 12.0, 16.0, 8.0),
+                                          16.0, 10.0, 16.0, 8.0),
                                       child: Align(
                                         alignment: Alignment.bottomLeft,
                                         child: Text(
@@ -309,7 +310,7 @@ class _StudentDashboardScreenState extends State<StudentDashboardScreen> {
     });
   }
 
-  void getSchoolType() {
+  void getSchoolType(int index) {
     Utils.showLoader(true, context);
     var params = {"schoolId": schoolId};
     WebService.postAPICall(WebService.getSchoolCategoryType, params)
@@ -317,7 +318,15 @@ class _StudentDashboardScreenState extends State<StudentDashboardScreen> {
       Utils.showLoader(false, context);
       if (response.statusCode == 1) {
         schoolCategory = response.body["categoryName"];
-        Utils.navigateToScreen(context, CoolStuffScreen(schoolCategory!));
+        if(index == 3){
+          if (schoolCategory!.compareTo("High") == 0) {
+            getMentalSupportExistOrNot();
+          } else {
+            Utils.showToast(context, 'school_not_support'.tr(), Colors.red);
+          }
+        } else {
+          Utils.navigateToScreen(context, CoolStuffScreen(schoolCategory!));
+        }
       } else {
         Utils.showToast(context, response.message, Colors.red);
       }
@@ -365,7 +374,7 @@ class _StudentDashboardScreenState extends State<StudentDashboardScreen> {
           Utils.navigateToScreen(context, MentalHealthSupportScreen());
         } else {
           Utils.showToast(
-              context, LabelStr.lblMentalHealthUnderThirteen, Colors.red);
+              context, 'student_age_error'.tr(), Colors.red);
         }
       } else {
         Utils.showToast(context, LabelStr.lblNoMentalSupport, Colors.red);

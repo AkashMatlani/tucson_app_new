@@ -15,7 +15,7 @@ class Utils {
       showDialog(
           context: context,
           barrierDismissible: false,
-          builder: (BuildContext context) {
+          builder: (BuildContext ctx) {
             return Center(
                 child: SpinKitCircle(
               color: Colors.black,
@@ -24,6 +24,7 @@ class Utils {
           });
     } else {
       Navigator.of(context, rootNavigator: true).pop("");
+      //Navigator.of(dialogContext).pop();
     }
   }
 
