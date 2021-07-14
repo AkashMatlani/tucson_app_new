@@ -146,7 +146,7 @@ class _BlogDetailsScreenState extends State<BlogDetailsScreen> {
                         SizedBox(height: 30),
                         Html(
                           data: contentDesc!,
-                          defaultTextStyle: AppTheme.regularTextStyle(),
+                          defaultTextStyle: AppTheme.regularTextStyle()
                         ),
                         SizedBox(height: 10),
                         imageLink.isNotEmpty ? _contentTypeAction("Image", imageLink) : Container(),

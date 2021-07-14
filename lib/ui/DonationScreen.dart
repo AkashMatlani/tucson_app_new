@@ -78,7 +78,7 @@ class _DonationScreenState extends State<DonationScreen> {
                 SizedBox(height: 5),
                 Html(
                   data: desc,
-                  defaultTextStyle: AppTheme.regularTextStyle(),
+                  defaultTextStyle: AppTheme.regularTextStyle()
                 ),
                 SizedBox(height: MediaQuery.of(context).size.height*0.1),
                 Container(

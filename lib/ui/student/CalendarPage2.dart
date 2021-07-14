@@ -377,8 +377,8 @@ class _CalendarPage2State extends State<CalendarPage2> {
                             Container(
                               child: Html(
                                   data: eventist[i].eventDetail,
-                                  defaultTextStyle: AppTheme.regularTextStyle()
-                                      .copyWith(fontSize: 16, color: Colors.black54)),
+                                /*  style: AppTheme.regularTextStyle()
+                                      .copyWith(fontSize: 16, color: Colors.black54)*/),
                             ),
                           ],
 

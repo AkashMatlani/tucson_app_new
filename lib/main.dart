@@ -1,3 +1,4 @@
+// @dart=2.9
 import 'package:double_back_to_close/double_back_to_close.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
