@@ -34,6 +34,7 @@
   "hi" : "Hi",
   "ok" : "Ok",
   "no" : "No",
+  "yes" : "Yes",
   "found" : "Found",
   "notification" : "Notification",
   "profile" : "Profile",
@@ -147,5 +148,6 @@
   "school_not_support" : "No mental health support for this school.",
   "student_age_error" : "Mental Health Support is available only for Students with age >=13 years",
   "search_school" : "Search School",
-  "no_school" : "No School Found"
+  "no_school" : "No School Found",
+  "signout_alter_msg" : "Are you sure want to sign out ?"
 }

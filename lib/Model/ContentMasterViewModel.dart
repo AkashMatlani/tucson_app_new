@@ -9,8 +9,14 @@ class ContentMasterViewModel{
 
   List<ContentResponse> contentList = [];
 
-  getContentList(BuildContext context, var params, ResponseCallback callback){
-    WebService.postAPICall(WebService.studentContentByType, params).then((response) {
+  getContentList(BuildContext context, var params, String fromScreen, ResponseCallback callback){
+    String webMethod;
+    if(fromScreen.compareTo("Student") == 0){
+      webMethod = WebService.studentContentByType;
+    } else {
+      webMethod = WebService.communityContentByType;
+    }
+    WebService.postAPICall(webMethod, params).then((response) {
       if (response.statusCode == 1) {
         contentList = [];
         for (var data in response.body) {

@@ -34,6 +34,7 @@
   "hi" : "Chào",
   "ok" : "Ok",
   "no" : "Không",
+  "yes" : "Đúng",
   "found" : "Tìm",
   "notification" : "Thông báo",
   "profile" : "Hồ sơ",
@@ -147,5 +148,6 @@
   "school_not_support" : "Không có hỗ trợ sức khỏe tâm thần cho trường này.",
   "student_age_error" : "Hỗ trợ Sức khỏe Tâm thần chỉ dành cho Học sinh> = 13 tuổi",
   "search_school" : "Tìm kiếm trường học",
-  "no_school" : "Không tìm thấy trường học"
+  "no_school" : "Không tìm thấy trường học",
+  "signout_alter_msg" : "Bạn có chắc chắn muốn đăng xuất không?"
 }

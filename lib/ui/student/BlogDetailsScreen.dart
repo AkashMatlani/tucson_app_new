@@ -66,7 +66,9 @@ class _BlogDetailsScreenState extends State<BlogDetailsScreen> {
     if(languageCode == null){
       languageCode = "en";
     }
-    _translateData();
+    if(languageCode!.compareTo("en") == 1){
+      _translateData();
+    }
   }
 
   @override
@@ -191,6 +193,7 @@ class _BlogDetailsScreenState extends State<BlogDetailsScreen> {
   }
 
   void _translateData() {
+    Utils.showLoader(true, context);
     String inputData = widget.contentResponse.contentTitle + "==)" +widget.contentResponse.content;
     WebService.translateApiCall(languageCode!, inputData, (isSuccess, response){
       if(isSuccess){
@@ -201,6 +204,7 @@ class _BlogDetailsScreenState extends State<BlogDetailsScreen> {
       } else {
         Utils.showToast(context, "Page Translation Failed", Colors.red);
       }
+      Utils.showLoader(false, context);
     });
   }
 

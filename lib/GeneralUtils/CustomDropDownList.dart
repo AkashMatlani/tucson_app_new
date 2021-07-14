@@ -52,11 +52,15 @@ class _CustomDropDownListState extends State<CustomDropDownList> {
                     hintStyle: AppTheme.regularTextStyle(),
                     suffixIcon: IconButton(
                       onPressed: (){
-                        setState(() {
-                          _filterController.text = "";
-                          filterList = widget.schoolList;
-                        });
                         FocusScope.of(context).requestFocus(FocusNode());
+                        if(_filterController.text.isEmpty){
+                          Navigator.of(context).pop();
+                        } else {
+                          setState(() {
+                            _filterController.text = "";
+                            filterList = widget.schoolList;
+                          });
+                        }
                       },
                       icon: Icon(Icons.clear, size: 24, color: Colors.black54),
                     )

@@ -31,6 +31,8 @@ class WebService {
   static const supportNotifierMail = "User/SupportNotifierMail";
   static const getMentalSupportExist = "TUSDSupport/IsMentalHealthSupportExists";
 
+  static const communityContentByType = "Community/GetContentByType";
+
   static Future<ServerResponse> getAPICall(String apiName, Map<String, dynamic> params) async {
     var url = baseUrl + apiName;
     print("Get Url :"+url);
@@ -174,13 +176,18 @@ class ServerResponse {
 
   ServerResponse.withJson(Map<String, dynamic> jsonObj) {
     if(jsonObj.containsKey("success")){
-      this.statusCode = 1;
-      if (jsonObj["output"] != null)
+      if (jsonObj["output"] != null){
+        this.statusCode = 1;
+        this.message = "Success";
         this.body = jsonObj["output"];
-      else
-        this.statusCode = 0;
+        if(this.body.toString().compareTo("[]")==0){
+          this.body = null;
+        }
+      } else {
+        this.statusCode = 1;
+        this.message = "Success";
         this.body = jsonObj;
-      this.message = "Success";
+      }
     } else {
       this.statusCode = 0;
       this.message = jsonObj["errorMessage"];

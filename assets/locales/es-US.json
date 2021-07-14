@@ -34,6 +34,7 @@
     "hi" : "Hola",
     "ok" : "Ok",
     "no" : "No",
+    "yes" : "sí",
     "found" : "Encontrada",
     "notification" : "Notificación",
     "profile" : "Perfil",
@@ -147,5 +148,6 @@
     "school_not_support" : "No hay apoyo de salud mental para esta escuela.",
     "student_age_error" : "El apoyo de salud mental está disponible solo para estudiantes con edad> = 13 años",
     "search_school" : "Escuela de búsqueda",
-    "no_school" : "No hay escuela encontrada"
+    "no_school" : "No hay escuela encontrada",
+    "signout_alter_msg" : "¿Estás segura de que quieres cerrar sesión?"
   }

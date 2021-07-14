@@ -14,6 +14,10 @@ import 'package:tucson_app/ui/DisplayWebview.dart';
 
 
 class VolunteerOpportunitiesScreen extends StatefulWidget {
+
+  String fromScreen;
+  VolunteerOpportunitiesScreen(this.fromScreen);
+
   @override
   _VolunteerOpportunitiesScreenState createState() => _VolunteerOpportunitiesScreenState();
 }
@@ -158,7 +162,7 @@ class _VolunteerOpportunitiesScreenState extends State<VolunteerOpportunitiesScr
       "contentTypeName": "Volunteer"
     };
     Utils.showLoader(true, context);
-    _contentViewModel.getContentList(context, params, (isSuccess, message){
+    _contentViewModel.getContentList(context, params, widget.fromScreen, (isSuccess, message){
       if(isSuccess){
         setState(() {
           _volunteerList = [];
@@ -168,7 +172,12 @@ class _VolunteerOpportunitiesScreenState extends State<VolunteerOpportunitiesScr
             }
           }
         });
-        translateListData();
+        if(languageCode!.compareTo("en") == 1){
+          translateListData();
+        } else {
+          Utils.showLoader(false, context);
+          isLoading = false;
+        }
       } else {
         Utils.showLoader(false, context);
         isLoading = false;
