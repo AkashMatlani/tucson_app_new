@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -20,9 +19,6 @@ import 'package:webview_flutter/webview_flutter.dart';
 
 class DonationScreen extends StatefulWidget {
 
-  String fromScreen;
-  DonationScreen(this.fromScreen);
-
   @override
   _DonationScreenState createState() => _DonationScreenState();
 }
@@ -30,8 +26,7 @@ class DonationScreen extends StatefulWidget {
 class _DonationScreenState extends State<DonationScreen> {
 
   String? languageCode;
-  String? title;
-  String? desc;
+  String donationDesc = "";
   late DonationResponse donationDetails;
 
   @override
@@ -48,8 +43,7 @@ class _DonationScreenState extends State<DonationScreen> {
     }
     setState(() {
       context.setLocale(Locale(languageCode!, 'US'));
-      title = 'gifts_donations'.tr();
-      desc = 'donation_desc'.tr();
+      donationDesc = 'donation_desc'.tr();
     });
     getDonationAPICall();
   }
@@ -72,13 +66,18 @@ class _DonationScreenState extends State<DonationScreen> {
                 ),
                 SizedBox(height: 10),
                 Text(
-                    title!,
+                    'gifts_donations'.tr(),
                     style: AppTheme.regularTextStyle().copyWith(fontWeight: FontWeight.w700),
                     textAlign: TextAlign.center),
                 SizedBox(height: 5),
                 Html(
-                  data: desc,
-                  defaultTextStyle: AppTheme.regularTextStyle()
+                  data: donationDesc,
+                  style: {
+                    "body" : Style(
+                      fontFamily: MyFont.SSPro_regular,
+                      fontSize: FontSize.medium
+                    )
+                  },
                 ),
                 SizedBox(height: MediaQuery.of(context).size.height*0.1),
                 Container(
@@ -112,11 +111,7 @@ class _DonationScreenState extends State<DonationScreen> {
                 ),
                 InkWell(
                   onTap: () {
-                   if(widget.fromScreen.compareTo("Splash") == 0){
-                     Utils.navigateReplaceToScreen(context, SignInScreen()); 
-                   } else {
-                     Utils.backWithNoTransition(context, CommunityDashboardScreen());
-                   }
+                    Utils.navigateReplaceToScreen(context, SignInScreen());
                   },
                   child: Container(
                     padding: EdgeInsets.all(10),
@@ -143,8 +138,7 @@ class _DonationScreenState extends State<DonationScreen> {
           translateDonationData();
         } else {
           setState(() {
-            title = donationDetails.objectName;
-            desc = donationDetails.content;
+            donationDesc = donationDetails.content!;
           });
         }
       } else {
@@ -158,12 +152,10 @@ class _DonationScreenState extends State<DonationScreen> {
   }
 
   translateDonationData(){
-    String data = donationDetails.objectName! + "==)" + donationDetails.content!;
-    WebService.translateApiCall(languageCode!, data, (isSuccess, response){
+    WebService.translateApiCall(languageCode!, donationDetails.content!, (isSuccess, response){
       if(isSuccess){
         setState(() {
-          title = response.toString().split("==)")[0];
-          desc = response.toString().split("==)")[1];
+          donationDesc = response.toString();
         });
       } else {
         Utils.showToast(context, "Page Translation Failed", Colors.red);

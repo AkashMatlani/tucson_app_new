@@ -1,5 +1,5 @@
 // @dart=2.9
-import 'package:double_back_to_close/double_back_to_close.dart';
+// @dart=2.9
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -27,7 +27,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  bool allowClose = false;
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +39,7 @@ class _MyAppState extends State<MyApp> {
         theme: ThemeData(
           primarySwatch: Colors.deepPurple,
         ),
-        home: SplashScreen()
+        home:SplashScreen()
     );
   }
 }

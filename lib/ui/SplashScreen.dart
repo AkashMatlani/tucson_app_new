@@ -44,7 +44,7 @@ class _SplashScreenState extends State<SplashScreen> {
           }
           checkUserStatus(userId, role);
         } else {
-          Utils.navigateReplaceToScreen(context, DonationScreen("Splash"));
+          Utils.navigateReplaceToScreen(context, DonationScreen());
         }
       });
     });

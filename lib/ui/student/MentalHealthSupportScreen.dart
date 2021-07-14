@@ -1,14 +1,12 @@
 import 'dart:async';
 import 'dart:convert';
-import 'package:flutter/services.dart';
-import 'package:geocoder/model.dart';
-import 'package:http/http.dart' as http;
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:location/location.dart';
 import 'package:path_provider/path_provider.dart';
@@ -23,11 +21,9 @@ import 'package:tucson_app/GeneralUtils/fetchLocationPostion.dart';
 import 'package:tucson_app/Model/HealthSupportResponse.dart';
 import 'package:tucson_app/WebService/WebService.dart';
 import 'package:tucson_app/ui/DisplayWebview.dart';
-import 'package:tucson_app/ui/VideoPlayer.dart';
 import 'package:tucson_app/ui/VideoPlayerScreen.dart';
 import 'package:tucson_app/ui/student/StudentDashboardScreen.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:video_thumbnail/video_thumbnail.dart';
 
 class MentalHealthSupportScreen extends StatefulWidget {
   @override
@@ -197,8 +193,7 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen>  
                                     .contains("https://www.youtube.com/")) {
                                   Utils.navigateToScreen(
                                       context,
-                                      DisplayWebview(
-                                          _supportResponse.supportDocument));
+                                      DisplayWebview(_supportResponse.supportDocument));
                                 } else {
                                   Utils.navigateToScreen(
                                       context,
@@ -236,8 +231,7 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen>  
                                     onTap: () {
                                       Utils.navigateToScreen(
                                           context,
-                                          DisplayWebview(_supportResponse
-                                              .healthButtonAction));
+                                          DisplayWebview(_supportResponse.healthButtonAction));
                                     },
                                     child: Card(
                                         shape: RoundedRectangleBorder(
@@ -290,8 +284,7 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen>  
                                     onTap: () {
                                       Utils.navigateToScreen(
                                           context,
-                                          DisplayWebview(_supportResponse
-                                              .talkSpaceButtonAction));
+                                          DisplayWebview(_supportResponse.talkSpaceButtonAction));
                                     },
                                     child: Card(
                                         shape: RoundedRectangleBorder(
@@ -419,8 +412,7 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen>  
                                 onPressed: () {
                                   Utils.navigateToScreen(
                                       context,
-                                      DisplayWebview(
-                                          _supportResponse.nsphChatUrl));
+                                      DisplayWebview(_supportResponse.nsphChatUrl));
                                 },
                               ),
                             )
@@ -735,8 +727,8 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen>  
       if (_currentPosition != null) {
         print(
             "${_currentPosition.latitude}, LNG: ${_currentPosition.longitude}");
-        *//* List<Placemark> placemarks = await placemarkFromCoordinates(_currentPosition.latitude, _currentPosition.longitude);
-          print(placemarks.)*//*
+        /* List<Placemark> placemarks = await placemarkFromCoordinates(_currentPosition.latitude, _currentPosition.longitude);
+          print(placemarks.)*/
         Timer(Duration(milliseconds: 200), () {
           _mentalHealthSupportApiCall(schoolId);
         });

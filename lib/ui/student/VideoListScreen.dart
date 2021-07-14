@@ -1,16 +1,10 @@
-import 'dart:io';
 
-import 'package:ext_storage/ext_storage.dart';
 import 'package:easy_localization/easy_localization.dart';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:tucson_app/GeneralUtils/ColorExtension.dart';
 import 'package:tucson_app/GeneralUtils/Constant.dart';
-import 'package:tucson_app/GeneralUtils/LabelStr.dart';
 import 'package:tucson_app/GeneralUtils/PrefsUtils.dart';
 import 'package:tucson_app/GeneralUtils/Utils.dart';
 import 'package:tucson_app/Model/ContentMasterViewModel.dart';
@@ -18,8 +12,6 @@ import 'package:tucson_app/Model/ContentResponse.dart';
 import 'package:tucson_app/WebService/WebService.dart';
 import 'package:tucson_app/ui/DisplayWebview.dart';
 import 'package:tucson_app/ui/VideoPlayerScreen.dart';
-import 'package:tucson_app/ui/community/VideoPlayerScreen.dart';
-import 'package:tucson_app/ui/student/VideoForIOS.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
 
 

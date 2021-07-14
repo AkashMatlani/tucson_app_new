@@ -3,19 +3,26 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:tucson_app/GeneralUtils/ColorExtension.dart';
 import 'package:tucson_app/GeneralUtils/Constant.dart';
 import 'package:tucson_app/GeneralUtils/LabelStr.dart';
+import 'package:tucson_app/GeneralUtils/PrefsUtils.dart';
 import 'package:tucson_app/GeneralUtils/Utils.dart';
 import 'package:tucson_app/Model/GridListItems.dart';
 import 'package:tucson_app/WebService/WebService.dart';
 import 'package:tucson_app/ui/DisplayWebview.dart';
 import 'package:tucson_app/ui/WebViewEmpty.dart';
-import 'package:easy_localization/easy_localization.dart';
+
+
 class CommunityResources extends StatefulWidget {
+
+  String title;
+  CommunityResources(this.title);
+
   @override
   _CommunityResourcesScreenState createState() =>
       _CommunityResourcesScreenState();
 }
 
 class _CommunityResourcesScreenState extends State<CommunityResources> {
+
   List<GridListItems> menuItems = [
     GridListItems(
       name: LabelStr.lblCommunityFoodBank,
@@ -38,6 +45,23 @@ class _CommunityResourcesScreenState extends State<CommunityResources> {
     GridListItems(
         name: LabelStr.lblMckinneyVento, svgPicture: MyImage.blogsIcon),
   ];
+
+  String? languageCode;
+  late int schoolId;
+
+  @override
+  void initState() {
+    super.initState();
+    _getSchoolId();
+  }
+
+  _getSchoolId() async {
+    schoolId = await PrefUtils.getValueFor(PrefUtils.schoolId);
+    languageCode = await PrefUtils.getValueFor(PrefUtils.sortLanguageCode);
+    if(schoolId == null){
+      schoolId = 0;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -91,16 +115,15 @@ class _CommunityResourcesScreenState extends State<CommunityResources> {
             ),
           ),
           Positioned(
-            top: MediaQuery.of(context).size.height * 0.20,
+            top: MediaQuery.of(context).size.height * 0.12,
             left: MediaQuery.of(context).size.height * 0.03,
             right: MediaQuery.of(context).size.height * 0.03,
             child: Container(
-              height: MediaQuery.of(context).size.height * 0.8,
+              height: MediaQuery.of(context).size.height * 0.87,
               child: SingleChildScrollView(
                 child: GridView.builder(
                     physics: ScrollPhysics(),
                     shrinkWrap: true,
-                    padding: EdgeInsets.only(bottom: 20),
                     gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
                         maxCrossAxisExtent: 200,
                         childAspectRatio: 2 / 2,
@@ -112,60 +135,60 @@ class _CommunityResourcesScreenState extends State<CommunityResources> {
                           onTap: () {
                             if (index == 0) {
                               var params = {
-                                "schoolId": 1,
+                                "schoolId": schoolId,
                                 "roleId": 0,
                                 "contentTypeName": "CommunityFoodBank"
                               };
-                              getWebApiFromUrl(context, params,'community_food_bank'.tr());
+                              getWebApiFromUrl(context, params);
                             } else if (index == 1) {
                               var params = {
-                                "schoolId": 1,
+                                "schoolId": schoolId,
                                 "roleId": 0,
                                 "contentTypeName": "AutisumSociety"
                               };
-                              getWebApiFromUrl(context, params,'autisum_society'.tr());
+                              getWebApiFromUrl(context, params);
                             } else if (index == 2) {
                               var params = {
-                                "schoolId": 1,
+                                "schoolId": schoolId,
                                 "roleId": 0,
                                 "contentTypeName": "UACooperativeExtension"
                               };
-                              getWebApiFromUrl(context, params,'cooperative_extension'.tr());
+                              getWebApiFromUrl(context, params);
                             } else if (index == 3) {
                               var params = {
-                                "schoolId": 1,
+                                "schoolId": schoolId,
                                 "roleId": 0,
                                 "contentTypeName": "Scholarship"
                               };
-                              getWebApiFromUrl(context, params,'scholarship'.tr());
+                              getWebApiFromUrl(context, params);
                             } else if (index == 4) {
                               var params = {
-                                "schoolId": 1,
+                                "schoolId": schoolId,
                                 "roleId": 0,
                                 "contentTypeName": "FamilyResourceCenters"
                               };
-                              getWebApiFromUrl(context, params,'family_resources_centers'.tr());
+                              getWebApiFromUrl(context, params);
                             } else if (index == 5) {
                               var params = {
-                                "schoolId": 1,
+                                "schoolId": schoolId,
                                 "roleId": 0,
                                 "contentTypeName": "ClothingBank"
                               };
-                              getWebApiFromUrl(context, params,'clothing_bank'.tr());
+                              getWebApiFromUrl(context, params);
                             } else if (index == 6) {
                               var params = {
-                                "schoolId": 1,
+                                "schoolId": schoolId,
                                 "roleId": 0,
                                 "contentTypeName": "TUSDCounselling"
                               };
-                              getWebApiFromUrl(context, params,'tusd_counselling'.tr());
+                              getWebApiFromUrl(context, params);
                             } else if (index == 7) {
                               var params = {
-                                "schoolId": 1,
+                                "schoolId": schoolId,
                                 "roleId": 0,
                                 "contentTypeName": "McKinneyVento"
                               };
-                              getWebApiFromUrl(context, params,'mckinney_vento'.tr());
+                              getWebApiFromUrl(context, params);
                             }
                           },
                           child: Card(
@@ -216,22 +239,26 @@ class _CommunityResourcesScreenState extends State<CommunityResources> {
     );
   }
 
-  getWebApiFromUrl(BuildContext context, Map<String, Object> params,String title) {
+  getWebApiFromUrl(BuildContext context, Map<String, Object> params) {
     Utils.showLoader(true, context);
-    WebService.postAPICall(WebService.parentContentByType, params)
+    String webMethod;
+    if(widget.title.compareTo("Parent") == 0){
+      webMethod = WebService.parentContentByType;
+    } else {
+      webMethod = WebService.communityContentByType;
+    }
+    WebService.postAPICall(webMethod, params)
         .then((response) {
       Utils.showLoader(false, context);
       if (response.statusCode == 1) {
-        if (response.body != null && response.body[0].toString().length>0) {
-          String webUrl =
-              response.body[0]["contentTransactionTypeJoin"][0]["objectPath"];
-          if (webUrl.isNotEmpty)
-            Utils.navigateToScreen(context, DisplayWebview(webUrl));
+        if (response.body != null) {
+          String webUrl = response.body[0]["contentTransactionTypeJoin"][0]["objectPath"];
+          Utils.navigateToScreen(context, DisplayWebview(webUrl));
         } else {
           Utils.navigateToScreen(context, WebViewEmpty());
         }
-      } else if(response.statusCode==0) {
-        Utils.navigateToScreen(context, WebViewEmpty());
+      } else {
+        Utils.showToast(context, response.message, Colors.red);
       }
     }).catchError((error) {
       Utils.showLoader(false, context);

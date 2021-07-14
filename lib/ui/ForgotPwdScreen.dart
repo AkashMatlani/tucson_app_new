@@ -4,12 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:tucson_app/GeneralUtils/ColorExtension.dart';
 import 'package:tucson_app/GeneralUtils/Constant.dart';
 import 'package:tucson_app/GeneralUtils/HelperWidgets.dart';
-import 'package:tucson_app/GeneralUtils/LabelStr.dart';
 import 'package:tucson_app/GeneralUtils/PrefsUtils.dart';
 import 'package:tucson_app/GeneralUtils/Utils.dart';
 import 'package:tucson_app/Model/AuthViewModel.dart';
 import 'package:tucson_app/WebService/WebService.dart';
-import 'package:tucson_app/ui/DisplayWebview.dart';
 import 'package:tucson_app/ui/SignInScreen.dart';
 
 
@@ -175,6 +173,8 @@ class _ForgotPwdScreenState extends State<ForgotPwdScreen> {
               Utils.showToast(context, "Page Translation Failed", Colors.red);
             }
           });
+        } else {
+          Utils.showToast(context, message, Colors.red);
         }
         print("*************** $message *****************");
       }

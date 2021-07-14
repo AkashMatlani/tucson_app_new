@@ -6,6 +6,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tucson_app/GeneralUtils/ColorExtension.dart';
 import 'package:tucson_app/GeneralUtils/Constant.dart';
@@ -17,11 +18,10 @@ import 'package:tucson_app/WebService/WebService.dart';
 import 'package:tucson_app/ui/SignInScreen.dart';
 import 'package:tucson_app/ui/student/CalendarPage2.dart';
 import 'package:tucson_app/ui/student/CoolStuffScreen.dart';
-import 'package:http/http.dart' as http;
+
 import '../DisplayWebview.dart';
 import '../WebViewEmpty.dart';
 import 'BlogScreen.dart';
-import 'CalenderEvent.dart';
 import 'JobOpeningScreen.dart';
 import 'MentalHealthSupportScreen.dart';
 import 'ScholarshipInfoScreen.dart';
@@ -212,8 +212,7 @@ class _StudentDashboardScreenState extends State<StudentDashboardScreen> {
                                 if (index == 0) {
                                   getSchoolType(index);
                                 } else if (index == 1) {
-                                  Utils.navigateToScreen(context,
-                                      BlogScreen('student_blogs'.tr()));
+                                  Utils.navigateToScreen(context, BlogScreen('student_blogs'.tr()));
                                 } else if (index == 2) {
                                   Utils.navigateToScreen(context,
                                       ScholarshipInfoScreen("Student"));

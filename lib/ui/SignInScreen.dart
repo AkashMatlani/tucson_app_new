@@ -260,6 +260,8 @@ class _SignInScreenState extends State<SignInScreen> {
               Utils.showToast(context, "Page Translation Failed", Colors.red);
             }
           });
+        } else {
+          Utils.showToast(context, message, Colors.red);
         }
         print("*************** $message *****************");
       }
