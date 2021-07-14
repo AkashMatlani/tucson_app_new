@@ -57,8 +57,8 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
     _controller.addListener(videoCallback);
 
     SystemChrome.setPreferredOrientations([
-      DeviceOrientation.landscapeRight,
-      DeviceOrientation.landscapeLeft,
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
     ]);
   }
 
@@ -232,8 +232,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                                             });
                                           },
                                           child: Icon(Icons.fast_rewind,
-                                              size: 30)),
-                                      SizedBox(width: 3),
+                                              size: 25)),
                                       RaisedButton(
                                           padding: EdgeInsets.all(6.0),
                                           color: Colors.transparent,
@@ -249,8 +248,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                                               _controller.value.isPlaying
                                                   ? Icons.pause
                                                   : Icons.play_arrow,
-                                              size: 30)),
-                                      SizedBox(width: 3),
+                                              size: 25)),
                                       RaisedButton(
                                           padding: EdgeInsets.all(6.0),
                                           color: Colors.transparent,
@@ -283,7 +281,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                                             });
                                           },
                                           child: Icon(Icons.fast_forward,
-                                              size: 30))
+                                              size: 25))
                                     ],
                                   ),
                                 ),

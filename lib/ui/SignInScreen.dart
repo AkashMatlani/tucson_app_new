@@ -135,10 +135,10 @@ class _SignInScreenState extends State<SignInScreen> {
                                     child: Text('Spanish'),
                                     value: 'es'
                                 ),
-                                /*DropdownMenuItem(
+                                DropdownMenuItem(
                                     child: Text('Swahili'),
                                     value: 'sw'
-                                ),*/
+                                ),
                                 DropdownMenuItem(
                                     child: Text('Vietnamese'),
                                     value: 'vi'
@@ -157,9 +157,9 @@ class _SignInScreenState extends State<SignInScreen> {
                                     _languageName = "Somali";
                                   } else if(_languageSortCode.compareTo("es") == 0){
                                     _languageName = "Spanish";
-                                  }  /*else if(_languageSortCode.compareTo("sw") == 0){
+                                  }  else if(_languageSortCode.compareTo("sw") == 0){
                                     _languageName = "Swahili";
-                                  }  */else if(_languageSortCode.compareTo("vi") == 0){
+                                  }  else if(_languageSortCode.compareTo("vi") == 0){
                                     _languageName = "Vietnamese";;
                                   }
                                 });
@@ -252,13 +252,15 @@ class _SignInScreenState extends State<SignInScreen> {
         PrefUtils.setStringValue(PrefUtils.sortLanguageCode, _languageSortCode);
         _getUserType();
       } else {
-        WebService.translateApiCall(_languageSortCode, message, (isSuccess, response){
-          if(isSuccess){
-            Utils.showToast(context, response.toString(), Colors.red);
-          } else {
-            Utils.showToast(context, "Page Translation Failed", Colors.red);
-          }
-        });
+        if(_languageSortCode.compareTo("en") == 1){
+          WebService.translateApiCall(_languageSortCode, message, (isSuccess, response){
+            if(isSuccess){
+              Utils.showToast(context, response.toString(), Colors.red);
+            } else {
+              Utils.showToast(context, "Page Translation Failed", Colors.red);
+            }
+          });
+        }
         print("*************** $message *****************");
       }
     });

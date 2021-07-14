@@ -3,19 +3,26 @@ import 'dart:io';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:tucson_app/GeneralUtils/ColorExtension.dart';
 import 'package:tucson_app/GeneralUtils/Constant.dart';
 import 'package:tucson_app/GeneralUtils/PrefsUtils.dart';
 import 'package:tucson_app/GeneralUtils/Utils.dart';
+import 'package:tucson_app/Model/DonationResponse.dart';
 import 'package:tucson_app/WebService/WebService.dart';
 import 'package:tucson_app/ui/DisplayWebview.dart';
 import 'package:tucson_app/ui/SignInScreen.dart';
+import 'package:tucson_app/ui/community/CommunityDashboardScreen.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 
 
 class DonationScreen extends StatefulWidget {
+
+  String fromScreen;
+  DonationScreen(this.fromScreen);
+
   @override
   _DonationScreenState createState() => _DonationScreenState();
 }
@@ -23,6 +30,9 @@ class DonationScreen extends StatefulWidget {
 class _DonationScreenState extends State<DonationScreen> {
 
   String? languageCode;
+  String? title;
+  String? desc;
+  late DonationResponse donationDetails;
 
   @override
   void initState() {
@@ -38,7 +48,10 @@ class _DonationScreenState extends State<DonationScreen> {
     }
     setState(() {
       context.setLocale(Locale(languageCode!, 'US'));
+      title = 'gifts_donations'.tr();
+      desc = 'donation_desc'.tr();
     });
+    getDonationAPICall();
   }
 
   @override
@@ -50,6 +63,8 @@ class _DonationScreenState extends State<DonationScreen> {
           child: Container(
             margin: EdgeInsets.all(20),
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Container(
                   margin: EdgeInsets.fromLTRB(50, 80, 50, 0),
@@ -57,14 +72,14 @@ class _DonationScreenState extends State<DonationScreen> {
                 ),
                 SizedBox(height: 10),
                 Text(
-                    'gifts_donations'.tr(),
+                    title!,
                     style: AppTheme.regularTextStyle().copyWith(fontWeight: FontWeight.w700),
                     textAlign: TextAlign.center),
                 SizedBox(height: 5),
-                Text(
-                    'donation_desc'.tr(),
-                    style: AppTheme.regularTextStyle(),
-                    textAlign: TextAlign.center),
+                Html(
+                  data: desc,
+                  defaultTextStyle: AppTheme.regularTextStyle(),
+                ),
                 SizedBox(height: MediaQuery.of(context).size.height*0.1),
                 Container(
                   decoration: BoxDecoration(
@@ -87,13 +102,21 @@ class _DonationScreenState extends State<DonationScreen> {
                         style: AppTheme.customTextStyle(
                             MyFont.SSPro_bold, 16.0, Colors.white)),
                     onPressed: () {
-                      getDonationAPICall();
+                      if(donationDetails != null) {
+                        Utils.navigateToScreen(context, DisplayWebview(donationDetails.objectPath!));
+                      } else {
+                        getDonationAPICall();
+                      }
                     },
                   ),
                 ),
                 InkWell(
                   onTap: () {
-                    Utils.navigateReplaceToScreen(context, SignInScreen());
+                   if(widget.fromScreen.compareTo("Splash") == 0){
+                     Utils.navigateReplaceToScreen(context, SignInScreen()); 
+                   } else {
+                     Utils.backWithNoTransition(context, CommunityDashboardScreen());
+                   }
                   },
                   child: Container(
                     padding: EdgeInsets.all(10),
@@ -111,16 +134,40 @@ class _DonationScreenState extends State<DonationScreen> {
   }
 
   void getDonationAPICall() {
+    Utils.showLoader(true, context);
     WebService.getAPICallWithoutParmas(WebService.donationURL).then((response) {
+      Utils.showLoader(false, context);
       if (response.statusCode == 1) {
-        Utils.navigateToScreen(context, DisplayWebview(response.body.toString()));
+        donationDetails = DonationResponse.fromJson(response.body);
+        if(languageCode!.compareTo("en") == 1){
+          translateDonationData();
+        } else {
+          setState(() {
+            title = donationDetails.objectName;
+            desc = donationDetails.content;
+          });
+        }
       } else {
         Utils.showToast(context, response.message, Colors.red);
       }
     }).catchError((error) {
+      Utils.showLoader(false, context);
       print(error);
       Utils.showToast(context, 'check_connectivity'.tr(), Colors.red);
     });
   }
 
+  translateDonationData(){
+    String data = donationDetails.objectName! + "==)" + donationDetails.content!;
+    WebService.translateApiCall(languageCode!, data, (isSuccess, response){
+      if(isSuccess){
+        setState(() {
+          title = response.toString().split("==)")[0];
+          desc = response.toString().split("==)")[1];
+        });
+      } else {
+        Utils.showToast(context, "Page Translation Failed", Colors.red);
+      }
+    });
+  }
 }

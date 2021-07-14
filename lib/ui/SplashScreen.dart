@@ -44,7 +44,7 @@ class _SplashScreenState extends State<SplashScreen> {
           }
           checkUserStatus(userId, role);
         } else {
-          Utils.navigateReplaceToScreen(context, DonationScreen());
+          Utils.navigateReplaceToScreen(context, DonationScreen("Splash"));
         }
       });
     });
@@ -94,13 +94,16 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   _translateMessage(String message){
-    WebService.translateApiCall(languageCode!, message, (isSuccess, response){
-      if(isSuccess){
-        Utils.showToast(context, response.toString(), Colors.red);
-        Timer(Duration(seconds: 2), ()=> Navigator.of(context).pop());
-      } else {
-        Utils.showToast(context, "Page Translation Failed", Colors.red);
-      }
-    });
+    if(languageCode!.compareTo("en") == 1) {
+      WebService.translateApiCall(
+          languageCode!, message, (isSuccess, response) {
+        if (isSuccess) {
+          Utils.showToast(context, response.toString(), Colors.red);
+          Timer(Duration(seconds: 2), () => Navigator.of(context).pop());
+        } else {
+          Utils.showToast(context, "Page Translation Failed", Colors.red);
+        }
+      });
+    }
   }
 }

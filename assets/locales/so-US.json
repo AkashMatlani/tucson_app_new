@@ -34,6 +34,7 @@
   "hi" : "Salaan",
   "ok" : "Waayahay",
   "no" : "Maya",
+  "yes" : "Haa",
   "found" : "La helay",
   "notification" : "Ogeysiis",
   "profile" : "Astaan",
@@ -147,5 +148,6 @@
   "school_not_support" : "Ma jiro taageero caafimaadka dhimirka ee dugsigan.",
   "student_age_error" : "Taageerada Caafimaadka Maskaxda waxaa loo heli karaa oo keliya ardayda da'da ah = = 13 sano",
   "search_school" : "Iskuulka Raadinta",
-  "no_school" : "Iskuul Ma Lahaa Lama Helin"
+  "no_school" : "Iskuul Ma Lahaa Lama Helin",
+  "signout_alter_msg" : "Ma hubtaa inaad rabto inaad ka baxdo?"
 }

@@ -202,13 +202,18 @@ class _BlogScreenState extends State<BlogScreen> {
     }
 
     Utils.showLoader(true, context);
-    _contentViewModel.getContentList(context, params, (isSuccess, message){
+    _contentViewModel.getContentList(context, params, "Student", (isSuccess, message){
       if(isSuccess){
         setState(() {
           _contentList = [];
           _contentList = _contentViewModel.contentList;
         });
-        translateListData();
+        if(languageCode!.compareTo("en") == 1){
+          translateListData();
+        } else {
+          Utils.showLoader(false, context);
+          isLoading = false;
+        }
       } else {
         Utils.showLoader(false, context);
         isLoading = false;

@@ -186,7 +186,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               SizedBox(height: 10),
                             ],
                           ) : Container(),
-                          Text('tusd_email'.tr(), style: AppTheme.regularTextStyle().copyWith(fontSize: 14)),
+                          Text(_userType.compareTo(LabelStr.lblStudent)==0?'tusd_email'.tr():'email'.tr(), style: AppTheme.regularTextStyle().copyWith(fontSize: 14)),
                           textFieldFor('tusd_email'.tr(), _emailController, textInputAction: TextInputAction.next, keyboardType: TextInputType.emailAddress),
                           SizedBox(height: 10),
                           Text('school_name'.tr(), style: AppTheme.regularTextStyle().copyWith(fontSize: 14)),
@@ -323,11 +323,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
               _schoolList.add(SchoolListResponse.fromJson(data));
             }
             _selectedSchool = _schoolList[0];
-            _translateData();
+            if(languageCode!.compareTo("en") == 1){
+              _translateData();
+            } else{
+              Utils.showLoader(false, context);
+            }
           });
         }
       } else {
-        Utils.showLoader(false, context);
         Utils.showToast(context, response.message, Colors.red);
         print("******************** ${response.message} ************************");
       }
@@ -406,13 +409,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
           }
         });
       } else {
-        WebService.translateApiCall(languageCode!, message, (isSuccess, response){
-          if(isSuccess){
-            Utils.showToast(context, response.toString(), Colors.red);
-          } else {
-            Utils.showToast(context, "Page Translation Failed", Colors.red);
-          }
-        });
+        if(languageCode!.compareTo("en") == 1) {
+          WebService.translateApiCall(
+              languageCode!, message, (isSuccess, response) {
+            if (isSuccess) {
+              Utils.showToast(context, response.toString(), Colors.red);
+            } else {
+              Utils.showToast(context, "Page Translation Failed", Colors.red);
+            }
+          });
+        }
         print("*************** $message *****************");
       }
     });

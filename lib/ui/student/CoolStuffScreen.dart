@@ -157,7 +157,7 @@ class _CoolStuffScreenScreenState extends State<CoolStuffScreen>
                               labelStyle: AppTheme.regularTextStyle(),
                               tabs: [
                                 Tab(text: 'elementary'.tr()),
-                                Tab(text: 'Middle/High'.tr()),
+                                Tab(text: 'middle_high'.tr()),
                               ],
                             ),
                           ),

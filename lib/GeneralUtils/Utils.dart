@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -63,6 +64,33 @@ class Utils {
           pageBuilder: (_,__, ___) => screen,
           maintainState: true,
           transitionDuration: Duration(milliseconds: 100)),
+    );
+  }
+
+  static signoutAlert(BuildContext context, ResponseCallback callback){
+    AlertDialog alert = AlertDialog(
+      content: Text('signout_alter_msg'.tr(), style: AppTheme.regularTextStyle()),
+      actions: [
+        TextButton(
+          child: Text('yes'.tr(), style: AppTheme.regularTextStyle().copyWith(fontFamily: MyFont.SSPro_semibold)),
+          onPressed: (){
+            callback(true, "");
+          },
+        ),
+        TextButton(
+          child: Text('no'.tr(), style: AppTheme.regularTextStyle().copyWith(fontFamily: MyFont.SSPro_semibold)),
+          onPressed: (){
+            Navigator.of(context).pop();
+            callback(false, "");
+          },
+        )
+      ],
+    );
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
     );
   }
 

@@ -167,13 +167,15 @@ class _ForgotPwdScreenState extends State<ForgotPwdScreen> {
           }
         });
       } else {
-        WebService.translateApiCall(languageCode!, message, (isSuccess, response){
-          if(isSuccess){
-            Utils.showToast(context, response.toString(), Colors.red);
-          } else {
-            Utils.showToast(context, "Page Translation Failed", Colors.red);
-          }
-        });
+        if(languageCode!.compareTo("en") == 1){
+          WebService.translateApiCall(languageCode!, message, (isSuccess, response){
+            if(isSuccess){
+              Utils.showToast(context, response.toString(), Colors.red);
+            } else {
+              Utils.showToast(context, "Page Translation Failed", Colors.red);
+            }
+          });
+        }
         print("*************** $message *****************");
       }
     });

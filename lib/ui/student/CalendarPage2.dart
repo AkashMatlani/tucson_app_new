@@ -328,9 +328,8 @@ class _CalendarPage2State extends State<CalendarPage2> {
   void _getEventDetail(int schoolId) {
 
     Utils.showLoader(true, context);
-    _authViewModel.getAllEventForMobile(schoolId.toString(),
-        (isSuccess, message) {
-      Utils.showLoader(false, context);
+    _authViewModel.getAllEventForMobile(schoolId.toString(), (isSuccess, message) {
+     Utils.showLoader(false, context);
       if (isSuccess) {
         setState(() {
           eventist = _authViewModel.eventForMobileList;
@@ -390,8 +389,11 @@ class _CalendarPage2State extends State<CalendarPage2> {
             });
           }
         });
-        _translateEventTitleData();
+        if(languageCode!.compareTo("en") == 1){
+          _translateEventTitleData();
+        }
       } else {
+        Utils.showLoader(false, context);
         Utils.showToast(context, message, Colors.red);
       }
     });
@@ -577,11 +579,10 @@ class _CalendarPage2State extends State<CalendarPage2> {
               updatedBy: eventist[i].updatedBy,
               updatedOn: eventist[i].updatedOn));
         }
-        Utils.showLoader(false, context);
       } else {
-        Utils.showLoader(false, context);
         Utils.showToast(context, "Page Translation Failed", Colors.red);
       }
+      Utils.showLoader(false, context);
     });
   }
 }

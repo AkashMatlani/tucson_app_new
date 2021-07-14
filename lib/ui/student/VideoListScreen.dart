@@ -179,7 +179,7 @@ class _VideoListScreenState extends State<VideoListScreen> {
     };
 
     Utils.showLoader(true, context);
-    _contentViewModel.getContentList(context, params, (isSuccess, message){
+    _contentViewModel.getContentList(context, params, "Student", (isSuccess, message){
       if(isSuccess){
         setState(() {
           _videoList = [];
@@ -200,7 +200,12 @@ class _VideoListScreenState extends State<VideoListScreen> {
             getVideoThumbinail(tempdat);
           }
 
-        translateListData();
+        if(languageCode!.compareTo("en") == 1) {
+          translateListData();
+        } else {
+          Utils.showLoader(false, context);
+          isLoading = false;
+        }
       } else {
         Utils.showLoader(false, context);
         isLoading = false;

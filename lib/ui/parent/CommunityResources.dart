@@ -212,6 +212,8 @@ class _CommunityResourcesScreenState extends State<CommunityResources> {
           response.body[0]["contentTransactionTypeJoin"][0]["objectPath"];
           if(webUrl.isNotEmpty)
           Utils.navigateToScreen(context, DisplayWebview(webUrl));
+        } else {
+          Utils.navigateToScreen(context, WebViewEmpty());
         }
       } else {
         Utils.showToast(context, response.message, Colors.red);

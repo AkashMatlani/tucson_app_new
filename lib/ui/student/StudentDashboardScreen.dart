@@ -76,9 +76,7 @@ class _StudentDashboardScreenState extends State<StudentDashboardScreen> {
             schoolId = 0;
           }
 
-          if(firstName == null){
-            firstName = "";
-          } else {
+          if (sortLanguageCode!.compareTo("en") == 1) {
             _getFirstName();
           }
         });
@@ -217,19 +215,19 @@ class _StudentDashboardScreenState extends State<StudentDashboardScreen> {
                                   Utils.navigateToScreen(context,
                                       BlogScreen('student_blogs'.tr()));
                                 } else if (index == 2) {
-                                  Utils.navigateToScreen(
-                                      context, ScholarshipInfoScreen());
+                                  Utils.navigateToScreen(context,
+                                      ScholarshipInfoScreen("Student"));
                                 } else if (index == 3) {
                                   getSchoolType(index);
                                 } else if (index == 4) {
                                   Utils.navigateToScreen(
-                                      context, JobOpeningScreen());
+                                      context, JobOpeningScreen("Student"));
                                 } else if (index == 5) {
                                   Utils.navigateToScreen(
                                       context, CalendarPage2());
                                 } else if (index == 6) {
-                                  Utils.navigateToScreen(
-                                      context, VolunteerOpportunitiesScreen());
+                                  Utils.navigateToScreen(context,
+                                      VolunteerOpportunitiesScreen("Student"));
                                 } else if (index == 7) {
                                   var params = {
                                     "schoolId": schoolId,
@@ -238,7 +236,11 @@ class _StudentDashboardScreenState extends State<StudentDashboardScreen> {
                                   };
                                   getWebApiFromUrl(context, params);
                                 } else if (index == 8) {
-                                  _logoutFromApp(context);
+                                  Utils.signoutAlert(context, (isSuccess, response){
+                                    if(isSuccess){
+                                      _logoutFromApp(context);
+                                    }
+                                  });
                                 }
                               });
                             },
@@ -280,11 +282,8 @@ class _StudentDashboardScreenState extends State<StudentDashboardScreen> {
           ],
         ),
         waitForSecondBackPress: 5,
-        textStyle: TextStyle(
-          fontSize: 20,
-          color: Colors.white,
-        ),
-        background: Colors.red,
+        textStyle: AppTheme.regularTextStyle().copyWith(color: Colors.white),
+        background: HexColor("#6462AA"),
         backgroundRadius: 30,
       )),
     );
@@ -318,7 +317,7 @@ class _StudentDashboardScreenState extends State<StudentDashboardScreen> {
       Utils.showLoader(false, context);
       if (response.statusCode == 1) {
         schoolCategory = response.body["categoryName"];
-        if(index == 3){
+        if (index == 3) {
           if (schoolCategory!.compareTo("High") == 0) {
             getMentalSupportExistOrNot();
           } else {
@@ -373,8 +372,7 @@ class _StudentDashboardScreenState extends State<StudentDashboardScreen> {
         if (age >= 13) {
           Utils.navigateToScreen(context, MentalHealthSupportScreen());
         } else {
-          Utils.showToast(
-              context, 'student_age_error'.tr(), Colors.red);
+          Utils.showToast(context, 'student_age_error'.tr(), Colors.red);
         }
       } else {
         Utils.showToast(context, LabelStr.lblNoMentalSupport, Colors.red);
