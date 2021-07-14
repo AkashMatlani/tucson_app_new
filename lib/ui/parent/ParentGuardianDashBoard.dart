@@ -18,7 +18,7 @@ import 'package:tucson_app/ui/WebViewEmpty.dart';
 import 'package:tucson_app/ui/parent/Event.dart';
 import 'package:tucson_app/ui/parent/RequestForServiceScreen.dart';
 import 'package:tucson_app/ui/parent/SchoolPrograms.dart';
-import 'package:easy_localization/easy_localization.dart';
+
 import 'CommunityResources.dart';
 import 'Education.dart';
 
@@ -190,8 +190,7 @@ class _ParentDashBoardScreenState extends State<ParentDashBoardScreen> {
                                     } else if (index == 1) {
                                       Utils.navigateToScreen(context, Event());
                                     } else if (index == 2) {
-                                      Utils.navigateToScreen(
-                                          context, CommunityResources());
+                                      Utils.navigateToScreen(context, CommunityResources("Parent"));
                                     } else if (index == 3) {
                                       var params = {
                                         "schoolId": 1,
@@ -275,24 +274,6 @@ class _ParentDashBoardScreenState extends State<ParentDashBoardScreen> {
             backgroundRadius: 30));
   }
 
-/*  getWebApiFromUrl(BuildContext context, Map<String, Object> params) {
-    Utils.showLoader(true, context);
-    WebService.postAPICall(WebService.contentByType, params).then((response) {
-      Utils.showLoader(false, context);
-      if (response.statusCode == 1) {
-        if(response.body != null){
-          String webUrl = response.body[0]["contentTransactionTypeJoin"][0]["objectPath"];
-          Utils.navigateToScreen(context, DisplayWebview(webUrl));
-        }
-      } else {
-        Utils.showToast(context, response.message, Colors.red);
-      }
-    }).catchError((error) {
-      Utils.showLoader(false, context);
-     Utils.showToast(context, LabelStr.connectionError, Colors.red);
-    });
-  }*/
-
   getWebApiFromUrl(BuildContext context, Map<String, Object> params) {
     Utils.showLoader(true, context);
     WebService.postAPICall(WebService.parentContentByType, params)
@@ -300,8 +281,7 @@ class _ParentDashBoardScreenState extends State<ParentDashBoardScreen> {
       Utils.showLoader(false, context);
       if (response.statusCode == 1) {
         if (response.body != null) {
-          String webUrl =
-              response.body[0]["contentTransactionTypeJoin"][0]["objectPath"];
+          String webUrl = response.body[0]["contentTransactionTypeJoin"][0]["objectPath"];
           Utils.navigateToScreen(context, DisplayWebview(webUrl));
         }
       } else {

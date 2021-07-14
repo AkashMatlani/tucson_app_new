@@ -187,7 +187,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             ],
                           ) : Container(),
                           Text(_userType.compareTo(LabelStr.lblStudent)==0?'tusd_email'.tr():'email'.tr(), style: AppTheme.regularTextStyle().copyWith(fontSize: 14)),
-                          textFieldFor('tusd_email'.tr(), _emailController, textInputAction: TextInputAction.next, keyboardType: TextInputType.emailAddress),
+                          textFieldFor(_userType.compareTo(LabelStr.lblStudent)==0?'tusd_email'.tr():'email'.tr(), _emailController, textInputAction: TextInputAction.next, keyboardType: TextInputType.emailAddress),
                           SizedBox(height: 10),
                           Text('school_name'.tr(), style: AppTheme.regularTextStyle().copyWith(fontSize: 14)),
                           (_schoolList.isNotEmpty && _schoolList.length > 0) ? Column(
@@ -418,6 +418,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
               Utils.showToast(context, "Page Translation Failed", Colors.red);
             }
           });
+        } else {
+          Utils.showToast(context, message, Colors.red);
         }
         print("*************** $message *****************");
       }

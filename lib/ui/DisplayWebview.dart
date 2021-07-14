@@ -1,13 +1,28 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tucson_app/GeneralUtils/ProgressHUD.dart';
+import 'package:tucson_app/GeneralUtils/Utils.dart';
+import 'package:tucson_app/ui/DonationScreen.dart';
+import 'package:tucson_app/ui/community/CommunityDashboardScreen.dart';
+import 'package:tucson_app/ui/community/CommunityEventScreen.dart';
+import 'package:tucson_app/ui/parent/CommunityResources.dart';
+import 'package:tucson_app/ui/parent/ParentGuardianDashBoard.dart';
+import 'package:tucson_app/ui/parent/RequestForServiceScreen.dart';
+import 'package:tucson_app/ui/parent/SchoolPrograms.dart';
+import 'package:tucson_app/ui/student/BlogDetailsScreen.dart';
+import 'package:tucson_app/ui/student/JobOpeningScreen.dart';
+import 'package:tucson_app/ui/student/MentalHealthSupportScreen.dart';
+import 'package:tucson_app/ui/student/ScholarshipInfoScreen.dart';
+import 'package:tucson_app/ui/student/StudentDashboardScreen.dart';
+import 'package:tucson_app/ui/student/VideoListScreen.dart';
+import 'package:tucson_app/ui/student/VolunteerOpportunitiesScreen.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class DisplayWebview extends StatefulWidget {
-  DisplayWebview(this.webViewUrl);
 
   String webViewUrl;
-
+  DisplayWebview(this.webViewUrl);
+  
   @override
   _DisplayWebviewState createState() => _DisplayWebviewState();
 }
@@ -15,7 +30,7 @@ class DisplayWebview extends StatefulWidget {
 class _DisplayWebviewState extends State<DisplayWebview> {
   bool _isLoading = true;
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
-
+  bool isBackPressed = false;
   //late WebViewController _controller;
 
   @override
@@ -45,10 +60,9 @@ class _DisplayWebviewState extends State<DisplayWebview> {
     setState(() {
       _isLoading = false;
     });
-    //readJS(url);
   }
 
-/*void readJS(String url) async{
+  /*void readJS(String url) async{
     String text = await _controller.evaluateJavascript("console.log(document.documentElement.innerHTML);");
     print(text);
     if(html.compareTo("Your password reset successfully.") == 0){

@@ -145,8 +145,13 @@ class _BlogDetailsScreenState extends State<BlogDetailsScreen> {
                         Text(contentTitle!, style: AppTheme.customTextStyle(MyFont.SSPro_semibold, 20.0, Color.fromRGBO(0, 0, 0, 1))),
                         SizedBox(height: 30),
                         Html(
-                          data: contentDesc!,
-                          defaultTextStyle: AppTheme.regularTextStyle()
+                          data: contentDesc,
+                          style: {
+                            "body" : Style(
+                                fontFamily: MyFont.SSPro_regular,
+                                fontSize: FontSize.medium
+                            )
+                          },
                         ),
                         SizedBox(height: 10),
                         imageLink.isNotEmpty ? _contentTypeAction("Image", imageLink) : Container(),

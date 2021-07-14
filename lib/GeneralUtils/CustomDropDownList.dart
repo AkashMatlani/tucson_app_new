@@ -26,12 +26,6 @@ class _CustomDropDownListState extends State<CustomDropDownList> {
   @override
   void initState() {
     super.initState();
-
-    List<String> psrsm = ['Reens', 'Bsnk entrollrer', 'kadam', 'rahul', 'soniya', 'kamlesh', 'reena', 'mahesh'];
-    var temp = psrsm.where((element) => element.contains("een")).toList();
-
-    print("PSRM => ${temp}");
-
     filterList.addAll(widget.schoolList);
   }
 

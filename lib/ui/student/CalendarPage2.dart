@@ -326,7 +326,6 @@ class _CalendarPage2State extends State<CalendarPage2> {
   }
 
   void _getEventDetail(int schoolId) {
-
     Utils.showLoader(true, context);
     _authViewModel.getAllEventForMobile(schoolId.toString(), (isSuccess, message) {
      Utils.showLoader(false, context);
@@ -374,11 +373,14 @@ class _CalendarPage2State extends State<CalendarPage2> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text('event_details'.tr()+ ':', style: AppTheme.regularTextStyle().copyWith(fontSize: 16, color: Colors.black54)),
-                            Container(
-                              child: Html(
-                                  data: eventist[i].eventDetail,
-                                /*  style: AppTheme.regularTextStyle()
-                                      .copyWith(fontSize: 16, color: Colors.black54)*/),
+                            Html(
+                              data: eventist[i].eventDetail,
+                              style: {
+                                "body" : Style(
+                                    fontFamily: MyFont.SSPro_regular,
+                                    fontSize: FontSize.medium
+                                )
+                              },
                             ),
                           ],
 
@@ -418,10 +420,6 @@ class _CalendarPage2State extends State<CalendarPage2> {
   }
 
   void bottomMenu(String eventist, DateTime currentDate2, Widget? abcd) {
-    String formattedDate =
-        DateFormat("yyyy-MM-dd'T'hh:mm:ss").format(currentDate2);
-    String finalDateToDate =
-        Utils.convertDate(formattedDate, DateFormat("MM-dd-yyyy hh:mm:ss"));
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -498,12 +496,16 @@ class _CalendarPage2State extends State<CalendarPage2> {
         var circle = Container(
           padding: EdgeInsets.fromLTRB(20.0, 0, 10, 0),
           child: Html(
-              data: 'event_details'.tr()+ ':' + '\n' + upcommingEventList[position].eventDetail,
-              defaultTextStyle: AppTheme.regularTextStyle()
-                  .copyWith(fontSize: 16, color: Colors.black54)),
+            data: upcommingEventList[position].eventName,
+            style: {
+              "body" : Style(
+                  fontFamily: MyFont.SSPro_regular,
+                  fontSize: FontSize.medium
+              )
+            },
+          ),
         );
-        bottomMenu(upcommingEventList[position].eventName,
-            DateTime.parse(upcommingEventList[position].fromDateTime), circle);
+        bottomMenu(upcommingEventList[position].eventName, DateTime.parse(upcommingEventList[position].fromDateTime), circle);
       },
       child: Container(
         child: Column(

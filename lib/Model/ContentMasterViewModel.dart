@@ -31,7 +31,6 @@ class ContentMasterViewModel{
       contentList = [];
       print(error);
       callback(false,"");
-      Utils.navigateToScreen(context, WebViewEmpty());
     });
   }
 }

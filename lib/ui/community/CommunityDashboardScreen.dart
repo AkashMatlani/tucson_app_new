@@ -14,10 +14,8 @@ import 'package:tucson_app/Model/GridListItems.dart';
 import 'package:tucson_app/PostJobsScreen.dart';
 import 'package:tucson_app/WebService/WebService.dart';
 import 'package:tucson_app/ui/DisplayWebview.dart';
-import 'package:tucson_app/ui/DonationScreen.dart';
 import 'package:tucson_app/ui/SignInScreen.dart';
 import 'package:tucson_app/ui/WebViewEmpty.dart';
-import 'package:tucson_app/ui/parent/Event.dart';
 
 import '../parent/CommunityResources.dart';
 import '../student/VolunteerOpportunitiesScreen.dart';
@@ -184,22 +182,28 @@ class _CommunityDashboardScreenState extends State<CommunityDashboardScreen> {
                             setState(() {
                               // ontap of each card, set the defined int to the grid view index
                               if (index == 0) {
-                                Utils.navigateToScreen(context, Event());
+                                var params = {
+                                  "schoolId": schoolId,
+                                  "roleId": 0,
+                                  "contentTypeName": "TUSDCalendar"
+                                };
+                                getWebApiFromUrl(context, params);
                               } else if (index == 1) {
-                                Utils.navigateToScreen(
-                                    context, PostJobsScreen());
+                                Utils.navigateToScreen(context, PostJobsScreen());
                               } else if (index == 2) {
-                                Utils.navigateToScreen(
-                                    context, CommunityEventScreen());
+                                Utils.navigateToScreen(context, CommunityEventScreen());
                               } else if (index == 3) {
                                 Utils.navigateToScreen(context,
                                     VolunteerOpportunitiesScreen("Community"));
                               } else if (index == 4) {
-                                Utils.navigateToScreen(
-                                    context, DonationScreen("Community"));
+                                var params = {
+                                  "schoolId": schoolId,
+                                  "roleId": 0,
+                                  "contentTypeName": "GivingDonation"
+                                };
+                                getWebApiFromUrl(context, params);
                               } else if (index == 5) {
-                                Utils.navigateToScreen(
-                                    context, CommunityResources());
+                                Utils.navigateToScreen(context, CommunityResources("Community"));
                               } else if (index == 6) {
                                 var params = {
                                   "schoolId": schoolId,
