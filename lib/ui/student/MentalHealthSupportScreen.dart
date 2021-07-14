@@ -1,5 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
+import 'package:flutter/services.dart';
+import 'package:geocoder/model.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:flutter/cupertino.dart';
@@ -8,13 +10,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:intl/intl.dart';
+import 'package:location/location.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:tucson_app/GeneralUtils/ColorExtension.dart';
 import 'package:tucson_app/GeneralUtils/Constant.dart';
 import 'package:tucson_app/GeneralUtils/LabelStr.dart';
+import 'package:tucson_app/GeneralUtils/LocationPermission.dart';
 import 'package:tucson_app/GeneralUtils/PrefsUtils.dart';
 import 'package:tucson_app/GeneralUtils/Utils.dart';
+import 'package:tucson_app/GeneralUtils/fetchLocationPostion.dart';
 import 'package:tucson_app/Model/HealthSupportResponse.dart';
 import 'package:tucson_app/WebService/WebService.dart';
 import 'package:tucson_app/ui/DisplayWebview.dart';
@@ -30,7 +35,7 @@ class MentalHealthSupportScreen extends StatefulWidget {
       _MentalHealthSupportScreenState();
 }
 
-class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
+class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen>  with WidgetsBindingObserver  {
   late HealthSupportResponse _supportResponse;
   bool isLoading = true;
   late double blockSizeVertical;
@@ -41,12 +46,66 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
   bool loadedApiCall = false;
   late var tempvalue;
   late var uint8list = null;
-
+  bool permission = false;
+  late bool _serviceEnabled;
   @override
   void initState() {
     super.initState();
     _getPrefsData();
+    initPermission();
   }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance!.removeObserver(this);
+    super.dispose();
+  }
+
+  late AppLifecycleState _notification;
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    setState(() {
+      _notification = state;
+    });
+    if (_notification == AppLifecycleState.resumed) {
+      initPermission();
+    }
+    print(_notification);
+  }
+
+
+  Future<void> initPermission() async {
+    //RequstPermission();
+    permission = await checkPermisisonForLocation();
+    if (permission) {
+      _serviceEnabled = await checkServiceStatus();
+      if (_serviceEnabled) {
+        getCurrentLocation();
+      } else {
+        askForService();
+      }
+    } else {
+      permission = await RequstPermission();
+      if (permission) {
+        askForService();
+      } else {
+        initPermission();
+      }
+    }
+  }
+
+  askForService() {
+    Location().requestService().then((val) {
+      if (val) {
+        getCurrentLocation() ;
+      } else {
+        askForService();
+      }
+    });
+  }
+
+
 
   _getPrefsData() async {
     schoolId = await PrefUtils.getValueFor(PrefUtils.schoolId);
@@ -59,7 +118,7 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
     if (isPopUpOpenFirst == null || !isPopUpOpenFirst) {
       bottomPopup(context);
     } else {
-      _getCurrentLocation();
+      //_getCurrentLocation();
     }
   }
 
@@ -554,7 +613,7 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
                               PrefUtils.setBoolValue(
                                   PrefUtils.mentalHealthpopUp, true);
                               Navigator.of(context).pop();
-                              int age = Utils.calculateAge(DateTime.parse(dob));
+                             /* int age = Utils.calculateAge(DateTime.parse(dob));
 
                               if (age >= 13) {
                                 var statusResponse =
@@ -574,22 +633,26 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
                                       PermissionStatus.denied) {
                                     print(
                                         'Denied. Show a dialog with a reason and again ask for the permission.');
-                                    Map<Permission, PermissionStatus> status =
+                                   *//* Map<Permission, PermissionStatus> status =
                                         await [
                                       Permission.location,
-                                    ].request();
-
+                                    ].request();*//*
+                                    Navigator.of(context).pop();
                                     // ignore: unrelated_type_equality_checks
                                   } else if (tempvalue ==
                                       PermissionStatus.permanentlyDenied) {
-                                    print(
+                                   *//* print(
                                         'Take the user to the settings page.');
                                     Map<Permission, PermissionStatus> status =
                                         await [
                                       Permission.location,
-                                    ].request();
+                                    ].request();*//*
                                   } else if(tempvalue == PermissionStatus.restricted){
-                                    _getCurrentLocation();
+                                    Navigator.of(context).pop();
+                                  }else if(tempvalue == PermissionStatus.limited){
+                                    Navigator.of(context).pop();
+                                  }else if(tempvalue == PermissionStatus.permanentlyDenied){
+                                    openAppSettings();
                                   }
                                 }
                               } else {
@@ -601,7 +664,7 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
                                     Duration(milliseconds: 100),
                                     () => Utils.backWithNoTransition(
                                         context, StudentDashboardScreen()));
-                              }
+                              }*/
                             },
                           ),
                         ),
@@ -661,7 +724,7 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
     return adultDate.isBefore(today);
   }
 
-  _getCurrentLocation() {
+ /* _getCurrentLocation() {
     isLoading = true;
     Utils.showLoader(true, context);
     Geolocator.getCurrentPosition(
@@ -672,8 +735,8 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
       if (_currentPosition != null) {
         print(
             "${_currentPosition.latitude}, LNG: ${_currentPosition.longitude}");
-        /* List<Placemark> placemarks = await placemarkFromCoordinates(_currentPosition.latitude, _currentPosition.longitude);
-          print(placemarks.)*/
+        *//* List<Placemark> placemarks = await placemarkFromCoordinates(_currentPosition.latitude, _currentPosition.longitude);
+          print(placemarks.)*//*
         Timer(Duration(milliseconds: 200), () {
           _mentalHealthSupportApiCall(schoolId);
         });
@@ -687,7 +750,7 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
       Utils.showLoader(false, context);
       print(e);
     });
-  }
+  }*/
 
   void getValuesFromMap(Map map) {
     // Get all values
@@ -770,4 +833,22 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
     }
     return fileName;
   }*/
+
+
+  getCurrentLocation() async {
+    try {
+      LocationData position = await getCurrentLatLongPosition();
+      var myCoordinates = Coordinates(position.latitude,
+          position.longitude);
+      // Replace with your own location lat, lng.
+      print("coordinates"+myCoordinates.latitude.toString());
+      print("coordinates"+myCoordinates.longitude.toString());
+    } on PlatformException catch (e) {
+      print(e.message);
+    } catch (e) {
+      print("------------------ permission error ----------");
+      print(e.toString());
+    }
+  }
+
 }
