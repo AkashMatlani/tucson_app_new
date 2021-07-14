@@ -8,11 +8,11 @@ import 'package:tucson_app/Model/GridListItems.dart';
 import 'package:tucson_app/WebService/WebService.dart';
 import 'package:tucson_app/ui/DisplayWebview.dart';
 import 'package:tucson_app/ui/WebViewEmpty.dart';
-
-
+import 'package:easy_localization/easy_localization.dart';
 class CommunityResources extends StatefulWidget {
   @override
-  _CommunityResourcesScreenState createState() => _CommunityResourcesScreenState();
+  _CommunityResourcesScreenState createState() =>
+      _CommunityResourcesScreenState();
 }
 
 class _CommunityResourcesScreenState extends State<CommunityResources> {
@@ -24,11 +24,13 @@ class _CommunityResourcesScreenState extends State<CommunityResources> {
     GridListItems(
         name: LabelStr.lblAutisumSocitey, svgPicture: MyImage.videosIcon),
     GridListItems(
-        name: LabelStr.lblUACoopertiveExtension, svgPicture: MyImage.activitesIcon),
+        name: LabelStr.lblUACoopertiveExtension,
+        svgPicture: MyImage.activitesIcon),
     GridListItems(
         name: LabelStr.lblScholarship, svgPicture: MyImage.articlesIcon),
     GridListItems(
-        name: LabelStr.lblFamilyResourcesCenters, svgPicture: MyImage.familyResourcesCenter),
+        name: LabelStr.lblFamilyResourcesCenters,
+        svgPicture: MyImage.familyResourcesCenter),
     GridListItems(
         name: LabelStr.lblClothingBank, svgPicture: MyImage.blogsIcon),
     GridListItems(
@@ -48,13 +50,18 @@ class _CommunityResourcesScreenState extends State<CommunityResources> {
             child: Column(
               children: [
                 Container(
-                  margin: EdgeInsets.fromLTRB(0, MediaQuery.of(context).size.height*0.03, 0, MediaQuery.of(context).size.height*0.03),
+                  margin: EdgeInsets.fromLTRB(
+                      0,
+                      MediaQuery.of(context).size.height * 0.03,
+                      0,
+                      MediaQuery.of(context).size.height * 0.03),
                   child: Row(
                     children: [
                       Container(
                         margin: EdgeInsets.only(top: 10),
                         child: IconButton(
-                            icon: Icon(Icons.arrow_back_ios, color: Colors.white),
+                            icon:
+                                Icon(Icons.arrow_back_ios, color: Colors.white),
                             onPressed: () {
                               Navigator.of(context).pop();
                             }),
@@ -84,11 +91,11 @@ class _CommunityResourcesScreenState extends State<CommunityResources> {
             ),
           ),
           Positioned(
-            top: MediaQuery.of(context).size.height*0.20,
-            left: MediaQuery.of(context).size.height*0.03,
-            right: MediaQuery.of(context).size.height*0.03,
+            top: MediaQuery.of(context).size.height * 0.20,
+            left: MediaQuery.of(context).size.height * 0.03,
+            right: MediaQuery.of(context).size.height * 0.03,
             child: Container(
-              height: MediaQuery.of(context).size.height*0.8,
+              height: MediaQuery.of(context).size.height * 0.8,
               child: SingleChildScrollView(
                 child: GridView.builder(
                     physics: ScrollPhysics(),
@@ -109,49 +116,56 @@ class _CommunityResourcesScreenState extends State<CommunityResources> {
                                 "roleId": 0,
                                 "contentTypeName": "CommunityFoodBank"
                               };
-                              getWebApiFromUrl(context, params);
+                              getWebApiFromUrl(context, params,'community_food_bank'.tr());
                             } else if (index == 1) {
                               var params = {
                                 "schoolId": 1,
                                 "roleId": 0,
                                 "contentTypeName": "AutisumSociety"
                               };
-                              getWebApiFromUrl(context, params);
-                            }else if (index == 2) {
+                              getWebApiFromUrl(context, params,'autisum_society'.tr());
+                            } else if (index == 2) {
                               var params = {
                                 "schoolId": 1,
                                 "roleId": 0,
                                 "contentTypeName": "UACooperativeExtension"
                               };
-                              getWebApiFromUrl(context, params);
-                            }else if (index == 4) {
+                              getWebApiFromUrl(context, params,'cooperative_extension'.tr());
+                            } else if (index == 3) {
+                              var params = {
+                                "schoolId": 1,
+                                "roleId": 0,
+                                "contentTypeName": "Scholarship"
+                              };
+                              getWebApiFromUrl(context, params,'scholarship'.tr());
+                            } else if (index == 4) {
                               var params = {
                                 "schoolId": 1,
                                 "roleId": 0,
                                 "contentTypeName": "FamilyResourceCenters"
                               };
-                              getWebApiFromUrl(context, params);
-                            }else if (index == 5) {
+                              getWebApiFromUrl(context, params,'family_resources_centers'.tr());
+                            } else if (index == 5) {
                               var params = {
                                 "schoolId": 1,
                                 "roleId": 0,
                                 "contentTypeName": "ClothingBank"
                               };
-                              getWebApiFromUrl(context, params);
-                            }else if (index == 6 ){
+                              getWebApiFromUrl(context, params,'clothing_bank'.tr());
+                            } else if (index == 6) {
                               var params = {
                                 "schoolId": 1,
                                 "roleId": 0,
                                 "contentTypeName": "TUSDCounselling"
                               };
-                              getWebApiFromUrl(context, params);
-                            }else if (index == 7) {
+                              getWebApiFromUrl(context, params,'tusd_counselling'.tr());
+                            } else if (index == 7) {
                               var params = {
                                 "schoolId": 1,
                                 "roleId": 0,
                                 "contentTypeName": "McKinneyVento"
                               };
-                              getWebApiFromUrl(context, params);
+                              getWebApiFromUrl(context, params,'mckinney_vento'.tr());
                             }
                           },
                           child: Card(
@@ -163,22 +177,25 @@ class _CommunityResourcesScreenState extends State<CommunityResources> {
                               clipBehavior: Clip.antiAlias,
                               child: Column(
                                 mainAxisAlignment:
-                                MainAxisAlignment.spaceAround,
+                                    MainAxisAlignment.spaceAround,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
                                   Padding(
                                       padding: EdgeInsets.only(
-                                          left: 20,top: 10,right: 20),
+                                          left: 20, top: 10, right: 20),
                                       child: SvgPicture.asset(
-                                          menuItems[index].svgPicture,height: 50,width: 50,)),
+                                        menuItems[index].svgPicture,
+                                        height: 50,
+                                        width: 50,
+                                      )),
                                   Padding(
                                     padding: EdgeInsets.fromLTRB(
                                         16.0, 10.0, 16.0, 8.0),
                                     child: Column(
                                       crossAxisAlignment:
-                                      CrossAxisAlignment.center,
+                                          CrossAxisAlignment.center,
                                       mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
+                                          MainAxisAlignment.spaceAround,
                                       children: <Widget>[
                                         Text(
                                           menuItems[index].name,
@@ -189,9 +206,7 @@ class _CommunityResourcesScreenState extends State<CommunityResources> {
                                     ),
                                   ),
                                 ],
-                              )
-                          )
-                      );
+                              )));
                     }),
               ),
             ),
@@ -201,20 +216,22 @@ class _CommunityResourcesScreenState extends State<CommunityResources> {
     );
   }
 
-  getWebApiFromUrl(BuildContext context, Map<String, Object> params) {
+  getWebApiFromUrl(BuildContext context, Map<String, Object> params,String title) {
     Utils.showLoader(true, context);
     WebService.postAPICall(WebService.parentContentByType, params)
         .then((response) {
       Utils.showLoader(false, context);
       if (response.statusCode == 1) {
-        if (response.body != null) {
+        if (response.body != null && response.body[0].toString().length>0) {
           String webUrl =
-          response.body[0]["contentTransactionTypeJoin"][0]["objectPath"];
-          if(webUrl.isNotEmpty)
-          Utils.navigateToScreen(context, DisplayWebview(webUrl));
+              response.body[0]["contentTransactionTypeJoin"][0]["objectPath"];
+          if (webUrl.isNotEmpty)
+            Utils.navigateToScreen(context, DisplayWebview(webUrl));
+        } else {
+          Utils.navigateToScreen(context, WebViewEmpty());
         }
-      } else {
-        Utils.showToast(context, response.message, Colors.red);
+      } else if(response.statusCode==0) {
+        Utils.navigateToScreen(context, WebViewEmpty());
       }
     }).catchError((error) {
       Utils.showLoader(false, context);

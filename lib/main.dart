@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'package:double_back_to_close/double_back_to_close.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -38,24 +37,9 @@ class _MyAppState extends State<MyApp> {
         supportedLocales: context.supportedLocales,
         locale: context.locale,
         theme: ThemeData(
-          primarySwatch: Colors.blue,
+          primarySwatch: Colors.deepPurple,
         ),
-        home: DoubleBack(
-          condition: allowClose,
-          onConditionFail: () {
-            setState(() {
-              allowClose = true;
-            });
-          },
-          child: SplashScreen(),
-          waitForSecondBackPress: 3,
-          // default 2
-          textStyle: TextStyle(
-            fontSize: 13,
-            color: Colors.white,
-          ),
-          background: Colors.red,
-          backgroundRadius: 30,
-        ));
+        home: SplashScreen()
+    );
   }
 }

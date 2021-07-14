@@ -178,6 +178,7 @@ class ServerResponse {
       if (jsonObj["output"] != null)
         this.body = jsonObj["output"];
       else
+        this.statusCode = 0;
         this.body = jsonObj;
       this.message = "Success";
     } else {

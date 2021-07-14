@@ -18,7 +18,7 @@ import 'package:tucson_app/ui/WebViewEmpty.dart';
 import 'package:tucson_app/ui/parent/Event.dart';
 import 'package:tucson_app/ui/parent/RequestForServiceScreen.dart';
 import 'package:tucson_app/ui/parent/SchoolPrograms.dart';
-
+import 'package:easy_localization/easy_localization.dart';
 import 'CommunityResources.dart';
 import 'Education.dart';
 

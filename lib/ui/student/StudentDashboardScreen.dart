@@ -284,7 +284,7 @@ class _StudentDashboardScreenState extends State<StudentDashboardScreen> {
           fontSize: 20,
           color: Colors.white,
         ),
-        background: Colors.red,
+        background: HexColor("#6462AA"),
         backgroundRadius: 30,
       )),
     );

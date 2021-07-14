@@ -22,13 +22,6 @@ class _DisplayWebviewState extends State<DisplayWebview> {
   Widget build(BuildContext context) {
     print("WebUrl => ${widget.webViewUrl}");
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Color(0xff6462AA),
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios, color: Colors.white),
-          onPressed: () => Navigator.of(context).pop(),
-        ),
-      ),
       body: SafeArea(
         child: ProgressHUD(
           child: WebView(
