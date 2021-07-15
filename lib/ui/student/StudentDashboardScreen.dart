@@ -1,12 +1,15 @@
 import 'dart:async';
 import 'dart:convert';
+import 'package:flutter/foundation.dart';
 
 import 'package:double_back_to_close/double_back_to_close.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:http/http.dart' as http;
+import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tucson_app/GeneralUtils/ColorExtension.dart';
 import 'package:tucson_app/GeneralUtils/Constant.dart';
@@ -59,10 +62,12 @@ class _StudentDashboardScreenState extends State<StudentDashboardScreen> {
   String? firstName;
   String? schoolCategory;
   late int schoolId;
+  bool isBackFromMentalHealthScreen = false;
 
   @override
   void initState() {
     super.initState();
+
     Timer(Duration(milliseconds: 200), () {
       SharedPreferences.getInstance().then((prefs) async {
         PrefUtils.getUserDataFromPref();
@@ -99,6 +104,8 @@ class _StudentDashboardScreenState extends State<StudentDashboardScreen> {
 
   @override
   Widget build(BuildContext context) {
+
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
@@ -212,7 +219,8 @@ class _StudentDashboardScreenState extends State<StudentDashboardScreen> {
                                 if (index == 0) {
                                   getSchoolType(index);
                                 } else if (index == 1) {
-                                  Utils.navigateToScreen(context, BlogScreen('student_blogs'.tr()));
+                                  Utils.navigateToScreen(context,
+                                      BlogScreen('student_blogs'.tr()));
                                 } else if (index == 2) {
                                   Utils.navigateToScreen(context,
                                       ScholarshipInfoScreen("Student"));
@@ -235,8 +243,9 @@ class _StudentDashboardScreenState extends State<StudentDashboardScreen> {
                                   };
                                   getWebApiFromUrl(context, params);
                                 } else if (index == 8) {
-                                  Utils.signoutAlert(context, (isSuccess, response){
-                                    if(isSuccess){
+                                  Utils.signoutAlert(context,
+                                      (isSuccess, response) {
+                                    if (isSuccess) {
                                       _logoutFromApp(context);
                                     }
                                   });

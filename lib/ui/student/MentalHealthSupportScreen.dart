@@ -6,18 +6,15 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:geolocator/geolocator.dart';
+
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
-import 'package:location/location.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:tucson_app/GeneralUtils/ColorExtension.dart';
 import 'package:tucson_app/GeneralUtils/Constant.dart';
 import 'package:tucson_app/GeneralUtils/LabelStr.dart';
-import 'package:tucson_app/GeneralUtils/LocationPermission.dart';
 import 'package:tucson_app/GeneralUtils/PrefsUtils.dart';
 import 'package:tucson_app/GeneralUtils/Utils.dart';
-import 'package:tucson_app/GeneralUtils/fetchLocationPostion.dart';
 import 'package:tucson_app/Model/HealthSupportResponse.dart';
 import 'package:tucson_app/WebService/WebService.dart';
 import 'package:tucson_app/ui/DisplayWebview.dart';
@@ -31,7 +28,7 @@ class MentalHealthSupportScreen extends StatefulWidget {
       _MentalHealthSupportScreenState();
 }
 
-class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen>  with WidgetsBindingObserver  {
+class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
   late HealthSupportResponse _supportResponse;
   bool isLoading = true;
   late double blockSizeVertical;
@@ -42,66 +39,13 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen>  
   bool loadedApiCall = false;
   late var tempvalue;
   late var uint8list = null;
-  bool permission = false;
-  late bool _serviceEnabled;
+  late bool isPopUpOpenFirst;
+
   @override
-  void initState() {
-    super.initState();
+  void didChangeDependencies() {
+    super.didChangeDependencies();
     _getPrefsData();
-    initPermission();
   }
-
-  @override
-  void dispose() {
-    WidgetsBinding.instance!.removeObserver(this);
-    super.dispose();
-  }
-
-  late AppLifecycleState _notification;
-
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    setState(() {
-      _notification = state;
-    });
-    if (_notification == AppLifecycleState.resumed) {
-      initPermission();
-    }
-    print(_notification);
-  }
-
-
-  Future<void> initPermission() async {
-    //RequstPermission();
-    permission = await checkPermisisonForLocation();
-    if (permission) {
-      _serviceEnabled = await checkServiceStatus();
-      if (_serviceEnabled) {
-        getCurrentLocation();
-      } else {
-        askForService();
-      }
-    } else {
-      permission = await RequstPermission();
-      if (permission) {
-        askForService();
-      } else {
-        initPermission();
-      }
-    }
-  }
-
-  askForService() {
-    Location().requestService().then((val) {
-      if (val) {
-        getCurrentLocation() ;
-      } else {
-        askForService();
-      }
-    });
-  }
-
-
 
   _getPrefsData() async {
     schoolId = await PrefUtils.getValueFor(PrefUtils.schoolId);
@@ -109,12 +53,18 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen>  
     if (schoolId == null) {
       schoolId = 0;
     }
-    bool isPopUpOpenFirst =
-        await PrefUtils.getValueFor(PrefUtils.mentalHealthpopUp);
-    if (isPopUpOpenFirst == null || !isPopUpOpenFirst) {
+
+    var statusResponse = await Permission.location.status;
+
+    if (statusResponse.isGranted) {
+      PrefUtils.setBoolValue(PrefUtils.mentalHealthpopUp, false);
+    }
+
+    isPopUpOpenFirst = await PrefUtils.getValueFor(PrefUtils.mentalHealthpopUp);
+    if (isPopUpOpenFirst == null || isPopUpOpenFirst) {
       bottomPopup(context);
     } else {
-      //_getCurrentLocation();
+      _getCurrentLocation();
     }
   }
 
@@ -193,7 +143,8 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen>  
                                     .contains("https://www.youtube.com/")) {
                                   Utils.navigateToScreen(
                                       context,
-                                      DisplayWebview(_supportResponse.supportDocument));
+                                      DisplayWebview(
+                                          _supportResponse.supportDocument));
                                 } else {
                                   Utils.navigateToScreen(
                                       context,
@@ -219,8 +170,7 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen>  
                               errorWidget: (context, url, error) => Image.asset(MyImage.videoUrlImage),
                             ),
                           )*/
-                                    Image.asset(uint8list,
-                                        fit: BoxFit.fill),
+                                    Image.asset(MyImage.videoUrlImage, fit: BoxFit.fill),
                               ),
                             ),
                             SizedBox(height: 20),
@@ -231,7 +181,8 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen>  
                                     onTap: () {
                                       Utils.navigateToScreen(
                                           context,
-                                          DisplayWebview(_supportResponse.healthButtonAction));
+                                          DisplayWebview(_supportResponse
+                                              .healthButtonAction));
                                     },
                                     child: Card(
                                         shape: RoundedRectangleBorder(
@@ -284,7 +235,8 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen>  
                                     onTap: () {
                                       Utils.navigateToScreen(
                                           context,
-                                          DisplayWebview(_supportResponse.talkSpaceButtonAction));
+                                          DisplayWebview(_supportResponse
+                                              .talkSpaceButtonAction));
                                     },
                                     child: Card(
                                         shape: RoundedRectangleBorder(
@@ -412,7 +364,8 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen>  
                                 onPressed: () {
                                   Utils.navigateToScreen(
                                       context,
-                                      DisplayWebview(_supportResponse.nsphChatUrl));
+                                      DisplayWebview(
+                                          _supportResponse.nsphChatUrl));
                                 },
                               ),
                             )
@@ -602,61 +555,75 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen>  
                               /*Timer(Duration(milliseconds: 200), (){
                                 _makingPhoneCall(_supportResponse.nsphPhoneNumber);
                               });*/
-                              PrefUtils.setBoolValue(
-                                  PrefUtils.mentalHealthpopUp, true);
-                              Navigator.of(context).pop();
-                             /* int age = Utils.calculateAge(DateTime.parse(dob));
 
+                              int age = Utils.calculateAge(DateTime.parse(dob));
                               if (age >= 13) {
-                                var statusResponse =
-                                    await Permission.location.status;
-                                if (statusResponse.isGranted) {
-                                  _getCurrentLocation();
-                                } else {
+                                // if (isPopUpOpenFirst == null) {
                                   Map<Permission, PermissionStatus> status =
                                       await [
                                     Permission.location,
                                   ].request();
-                                  print("Permission status :: $status");
-                                  getValuesFromMap(status);
-                                  if (tempvalue == PermissionStatus.granted) {
-                                    _getCurrentLocation();
-                                  } else if (tempvalue ==
-                                      PermissionStatus.denied) {
-                                    print(
-                                        'Denied. Show a dialog with a reason and again ask for the permission.');
-                                   *//* Map<Permission, PermissionStatus> status =
-                                        await [
-                                      Permission.location,
-                                    ].request();*//*
-                                    Navigator.of(context).pop();
-                                    // ignore: unrelated_type_equality_checks
-                                  } else if (tempvalue ==
-                                      PermissionStatus.permanentlyDenied) {
-                                   *//* print(
-                                        'Take the user to the settings page.');
-                                    Map<Permission, PermissionStatus> status =
-                                        await [
-                                      Permission.location,
-                                    ].request();*//*
-                                  } else if(tempvalue == PermissionStatus.restricted){
-                                    Navigator.of(context).pop();
-                                  }else if(tempvalue == PermissionStatus.limited){
-                                    Navigator.of(context).pop();
-                                  }else if(tempvalue == PermissionStatus.permanentlyDenied){
-                                    openAppSettings();
-                                  }
+
+                                  print('Permission Reequest');
+                                // }
+
+                                var statusResponse =
+                                    await Permission.location.status;
+                                print("Permission status :: $statusResponse");
+
+                                if (statusResponse.isGranted) {
+                                  PrefUtils.setBoolValue(
+                                      PrefUtils.mentalHealthpopUp, false);
+                                  _getCurrentLocation();
+                                  Navigator.of(context).pop();
+                                } else if (statusResponse.isDenied ||
+                                    statusResponse.isPermanentlyDenied ||
+                                    statusResponse.isRestricted) {
+                                  PrefUtils.setBoolValue(
+                                      PrefUtils.mentalHealthpopUp, true);
+                                  Navigator.of(context)
+                                    ..pop()
+                                    ..pop();
+                                  // showDialog(
+                                  //     context: context,
+                                  //     builder: (BuildContext context) =>
+                                  //         CupertinoAlertDialog(
+                                  //           title: Text('Location Permission'),
+                                  //           content: Text(
+                                  //               'This app Location  access to take location'),
+                                  //           actions: <Widget>[
+                                  //             CupertinoDialogAction(
+                                  //                 child: Text('Deny'),
+                                  //                 onPressed: () =>
+                                  //                     Navigator.of(context)
+                                  //                       ..pop()
+                                  //                       ..pop()
+                                  //                       ..pop()),
+                                  //             CupertinoDialogAction(
+                                  //                 child: Text('Settings'),
+                                  //                 onPressed: () {
+                                  //                   Navigator.of(context)
+                                  //                     ..pop()
+                                  //                     ..pop()
+                                  //                     ..pop();
+                                  //
+                                  //                   openAppSettings();
+                                  //                   //_getCurrentLocation();
+                                  //                 }),
+                                  //           ],
+                                  //         ));
                                 }
-                              } else {
-                                Utils.showToast(
-                                    context,
-                                    "Mental Health Support is available only for Students with age >=13 years",
-                                    Colors.red);
-                                Timer(
-                                    Duration(milliseconds: 100),
-                                    () => Utils.backWithNoTransition(
-                                        context, StudentDashboardScreen()));
-                              }*/
+                              }
+                              // else {
+                              //   Utils.showToast(
+                              //       context,
+                              //       "Mental Health Support is available only for Students with age >=13 years",
+                              //       Colors.red);
+                              //   Timer(
+                              //       Duration(milliseconds: 100),
+                              //       () => Utils.backWithNoTransition(
+                              //           context, StudentDashboardScreen()));
+                              // }
                             },
                           ),
                         ),
@@ -716,12 +683,11 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen>  
     return adultDate.isBefore(today);
   }
 
- /* _getCurrentLocation() {
+  _getCurrentLocation() async {
+    //PrefUtils.setBoolValue(PrefUtils.mentalHealthpopUp, false);
     isLoading = true;
     Utils.showLoader(true, context);
-    Geolocator.getCurrentPosition(
-            desiredAccuracy: LocationAccuracy.best,
-            forceAndroidLocationManager: true)
+    Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
         .then((Position position) {
       _currentPosition = position;
       if (_currentPosition != null) {
@@ -742,7 +708,7 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen>  
       Utils.showLoader(false, context);
       print(e);
     });
-  }*/
+  }
 
   void getValuesFromMap(Map map) {
     // Get all values
@@ -783,11 +749,11 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen>  
     });
   }
 
-  late String path="";
- /* getVideoThumbinail() async {
+  late String path = "";
+/* getVideoThumbinail() async {
     var status = await Permission.storage.status;
     if (status.isGranted) {
-      *//*    if (io.Platform.isIOS) {
+      */ /*    if (io.Platform.isIOS) {
         io.Directory appDocDirectory;
         appDocDirectory = await getApplicationDocumentsDirectory();
         Directory directory= await new Directory(appDocDirectory.path+'/'+'Download').create(recursive: true);
@@ -797,7 +763,7 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen>  
         await file.writeAsBytes(bytes);
         return file;
       }
-      else{*//*
+      else{*/ /*
       path = await ExtStorage.getExternalStoragePublicDirectory(ExtStorage.DIRECTORY_DOWNLOADS);
       // File file = new File('$path/$filename');
       // ToastUtils.showToast(context, "Your file save at "+file.toString()+" location", Colors.green);
@@ -825,22 +791,4 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen>  
     }
     return fileName;
   }*/
-
-
-  getCurrentLocation() async {
-    try {
-      LocationData position = await getCurrentLatLongPosition();
-      var myCoordinates = Coordinates(position.latitude,
-          position.longitude);
-      // Replace with your own location lat, lng.
-      print("coordinates"+myCoordinates.latitude.toString());
-      print("coordinates"+myCoordinates.longitude.toString());
-    } on PlatformException catch (e) {
-      print(e.message);
-    } catch (e) {
-      print("------------------ permission error ----------");
-      print(e.toString());
-    }
-  }
-
 }
