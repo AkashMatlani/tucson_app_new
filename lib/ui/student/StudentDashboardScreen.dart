@@ -11,9 +11,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tucson_app/GeneralUtils/ColorExtension.dart';
 import 'package:tucson_app/GeneralUtils/Constant.dart';
 import 'package:tucson_app/GeneralUtils/LabelStr.dart';
+import 'package:tucson_app/GeneralUtils/LanguageDropDownList.dart';
 import 'package:tucson_app/GeneralUtils/PrefsUtils.dart';
 import 'package:tucson_app/GeneralUtils/Utils.dart';
 import 'package:tucson_app/Model/GridListItems.dart';
+import 'package:tucson_app/Model/StaticListItems.dart';
 import 'package:tucson_app/WebService/WebService.dart';
 import 'package:tucson_app/ui/SignInScreen.dart';
 import 'package:tucson_app/ui/student/CalendarPage2.dart';
@@ -54,11 +56,22 @@ class _StudentDashboardScreenState extends State<StudentDashboardScreen> {
     GridListItems(name: 'sign_out'.tr(), svgPicture: MyImage.logoutIcon),
   ];
 
-  String? sortLanguageCode;
-  String? language;
-  String? firstName;
+  String sortLanguageCode = "en";
+  String languageName = "English";
+  String firstName = "";
   String? schoolCategory;
   late int schoolId;
+  bool languageChangeRequest = false;
+
+  List<StaticListItems> languageList = [
+    StaticListItems(name: "English", value: "en"),
+    StaticListItems(name: "Arabic", value: "ar"),
+    StaticListItems(name: "Somali", value: "so"),
+    StaticListItems(name: "Spanish", value: "es"),
+    StaticListItems(name: "Swahili", value: "sw"),
+    StaticListItems(name: "Vietnamese", value: "vi")
+  ];
+
 
   @override
   void initState() {
@@ -67,16 +80,15 @@ class _StudentDashboardScreenState extends State<StudentDashboardScreen> {
       SharedPreferences.getInstance().then((prefs) async {
         PrefUtils.getUserDataFromPref();
         setState(() {
-          sortLanguageCode = prefs.getString(PrefUtils.sortLanguageCode);
-          language = prefs.getString(PrefUtils.yourLanguage);
-          firstName = prefs.getString(PrefUtils.userFirstName);
+          sortLanguageCode = prefs.getString(PrefUtils.sortLanguageCode)!;
+          languageName = prefs.getString(PrefUtils.yourLanguage)!;
+          firstName = prefs.getString(PrefUtils.userFirstName)!;
           schoolId = prefs.getInt(PrefUtils.schoolId)!;
           dob = prefs.getString(PrefUtils.userDOB)!;
           if (schoolId == null) {
             schoolId = 0;
           }
-
-          if (sortLanguageCode!.compareTo("en") == 1) {
+          if (firstName.isNotEmpty && sortLanguageCode.compareTo("en") == 1) {
             _getFirstName();
           }
         });
@@ -85,7 +97,7 @@ class _StudentDashboardScreenState extends State<StudentDashboardScreen> {
   }
 
   _getFirstName() {
-    WebService.translateApiCall(sortLanguageCode!, firstName!,
+    WebService.translateApiCall(sortLanguageCode, firstName,
         (isSuccess, response) {
       if (isSuccess) {
         setState(() {
@@ -117,12 +129,12 @@ class _StudentDashboardScreenState extends State<StudentDashboardScreen> {
                 children: [
                   Container(
                     height: MediaQuery.of(context).size.height * 0.25,
+                    alignment: Alignment.center,
                     child: Row(
                       children: [
                         Expanded(
-                          flex: 3,
                           child: Padding(
-                              padding: EdgeInsets.only(left: 10),
+                              padding: EdgeInsets.only(left: 20),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
@@ -132,7 +144,7 @@ class _StudentDashboardScreenState extends State<StudentDashboardScreen> {
                                           25.0,
                                           Colors.white)),
                                   SizedBox(width: 5),
-                                  Text(firstName!,
+                                  Text(firstName,
                                       style: AppTheme.customTextStyle(
                                           MyFont.SSPro_semibold,
                                           25.0,
@@ -142,6 +154,7 @@ class _StudentDashboardScreenState extends State<StudentDashboardScreen> {
                         ),
                         Container(
                           padding: EdgeInsets.only(right: 10),
+                          margin: EdgeInsets.only(right: 15),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.center,
@@ -149,21 +162,25 @@ class _StudentDashboardScreenState extends State<StudentDashboardScreen> {
                               Icon(
                                 Icons.account_circle,
                                 color: Colors.white,
-                                size: 60.0,
+                                size: 50.0,
                               ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
+                              Stack(
                                 children: [
-                                  Icon(
-                                    Icons.circle,
-                                    color: Colors.limeAccent,
-                                    size: 25.0,
-                                  ),
-                                  SizedBox(width: 5),
-                                  Text(language!,
-                                      style: AppTheme.regularTextStyle()
-                                          .copyWith(color: Colors.white))
+                                  InkWell(
+                                    onTap: (){
+                                      Navigator.push(context, MaterialPageRoute(builder: (context) => LanguageDropDownList(languageList, StaticListItems(value: sortLanguageCode, name: languageName)))).then((value){
+                                        setState(() {
+                                          StaticListItems selectedItems = value;
+                                          sortLanguageCode = selectedItems.value;
+                                          languageName = selectedItems.name;
+                                        });
+                                      });
+                                    },
+                                    child: Container(
+                                      padding: EdgeInsets.all(8),
+                                      child: Text(languageName, style: AppTheme.regularTextStyle().copyWith(color: Colors.white)),
+                                    ),
+                                  )
                                 ],
                               )
                             ],
@@ -225,8 +242,7 @@ class _StudentDashboardScreenState extends State<StudentDashboardScreen> {
                                   Utils.navigateToScreen(
                                       context, CalendarPage2());
                                 } else if (index == 6) {
-                                  Utils.navigateToScreen(context,
-                                      VolunteerOpportunitiesScreen("Student"));
+                                  Utils.navigateToScreen(context, VolunteerOpportunitiesScreen("Student"));
                                 } else if (index == 7) {
                                   var params = {
                                     "schoolId": schoolId,
@@ -335,15 +351,15 @@ class _StudentDashboardScreenState extends State<StudentDashboardScreen> {
   }
 
   _logoutFromApp(BuildContext context) async {
+    Utils.showLoader(true, context);
     bool mentalPopUp = await PrefUtils.getValueFor(PrefUtils.mentalHealthpopUp);
     String langCode = await PrefUtils.getValueFor(PrefUtils.sortLanguageCode);
     String langName = await PrefUtils.getValueFor(PrefUtils.yourLanguage);
-    Utils.showLoader(true, context);
     PrefUtils.clearPref();
-    Utils.showLoader(false, context);
     PrefUtils.setBoolValue(PrefUtils.mentalHealthpopUp, mentalPopUp);
     PrefUtils.setStringValue(PrefUtils.sortLanguageCode, langCode);
     PrefUtils.setStringValue(PrefUtils.yourLanguage, langName);
+    Utils.showLoader(false, context);
     Utils.navigateWithClearState(context, SignInScreen());
   }
 

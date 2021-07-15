@@ -271,11 +271,11 @@ class _SignInScreenState extends State<SignInScreen> {
   _getUserType() async{
     String role = await PrefUtils.getValueFor(PrefUtils.userRole);
     if(role.compareTo(LabelStr.lblStudent) == 0){
-      Utils.navigateReplaceToScreen(context, StudentDashboardScreen());
+      Utils.navigateWithClearState(context, StudentDashboardScreen());
     } else if(role.compareTo(LabelStr.lblCommunity) == 0){
-      Utils.navigateReplaceToScreen(context, CommunityDashboardScreen());
+      Utils.navigateWithClearState(context, CommunityDashboardScreen());
     } else {
-      Utils.navigateReplaceToScreen(context, ParentDashBoardScreen());
+      Utils.navigateWithClearState(context, ParentDashBoardScreen());
     }
   }
 }

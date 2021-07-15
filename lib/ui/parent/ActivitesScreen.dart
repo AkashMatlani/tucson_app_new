@@ -1,9 +1,11 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tucson_app/GeneralUtils/Constant.dart';
-import 'package:tucson_app/GeneralUtils/LabelStr.dart';
 import 'package:tucson_app/ui/parent/ActivityElementary.dart';
+
 import '../../GeneralUtils/ColorExtension.dart';
+
 
 class ActivitesScreen extends StatefulWidget {
   @override
@@ -53,7 +55,7 @@ class _ActivitesScreenState extends State<ActivitesScreen> with SingleTickerProv
                       ),
                       Container(
                         margin: EdgeInsets.only(top: 10),
-                        child: Text(LabelStr.lblActivites,
+                        child: Text('activites'.tr(),
                             style: AppTheme.regularTextStyle()
                                 .copyWith(fontSize: 18, color: Colors.white)),
                       )
@@ -124,8 +126,8 @@ class _ActivitesScreenState extends State<ActivitesScreen> with SingleTickerProv
                             unselectedLabelColor: Colors.black54,
                             labelStyle: AppTheme.regularTextStyle(),
                             tabs: [
-                              Tab(text: LabelStr.lblElementary),
-                              Tab(text: LabelStr.lblMiddleHigh),
+                              Tab(text: 'elementary'.tr()),
+                              Tab(text: 'middle_high'.tr()),
                             ],
                           ),
                         ),

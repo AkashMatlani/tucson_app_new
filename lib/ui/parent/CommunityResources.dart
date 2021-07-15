@@ -1,14 +1,15 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:tucson_app/GeneralUtils/ColorExtension.dart';
 import 'package:tucson_app/GeneralUtils/Constant.dart';
-import 'package:tucson_app/GeneralUtils/LabelStr.dart';
 import 'package:tucson_app/GeneralUtils/PrefsUtils.dart';
 import 'package:tucson_app/GeneralUtils/Utils.dart';
 import 'package:tucson_app/Model/GridListItems.dart';
 import 'package:tucson_app/WebService/WebService.dart';
 import 'package:tucson_app/ui/DisplayWebview.dart';
 import 'package:tucson_app/ui/WebViewEmpty.dart';
+import 'package:tucson_app/ui/student/ScholarshipInfoScreen.dart';
 
 
 class CommunityResources extends StatefulWidget {
@@ -25,25 +26,23 @@ class _CommunityResourcesScreenState extends State<CommunityResources> {
 
   List<GridListItems> menuItems = [
     GridListItems(
-      name: LabelStr.lblCommunityFoodBank,
-      svgPicture: MyImage.educationalWebsiteIcon,
+      name: 'community_food_bank'.tr(), svgPicture: MyImage.educationalWebsiteIcon,
     ),
     GridListItems(
-        name: LabelStr.lblAutisumSocitey, svgPicture: MyImage.videosIcon),
+        name: 'autisum_society'.tr(), svgPicture: MyImage.videosIcon),
     GridListItems(
-        name: LabelStr.lblUACoopertiveExtension,
-        svgPicture: MyImage.activitesIcon),
+        name: 'cooperative_extension'.tr(), svgPicture: MyImage.activitesIcon),
     GridListItems(
-        name: LabelStr.lblScholarship, svgPicture: MyImage.articlesIcon),
+        name: 'scholarship'.tr(), svgPicture: MyImage.articlesIcon),
     GridListItems(
-        name: LabelStr.lblFamilyResourcesCenters,
+        name: 'family_resources_centers'.tr(),
         svgPicture: MyImage.familyResourcesCenter),
     GridListItems(
-        name: LabelStr.lblClothingBank, svgPicture: MyImage.blogsIcon),
+        name: 'clothing_bank'.tr(), svgPicture: MyImage.blogsIcon),
     GridListItems(
-        name: LabelStr.lbltusdCounselling, svgPicture: MyImage.blogsIcon),
+        name: 'tusd_counselling'.tr(), svgPicture: MyImage.blogsIcon),
     GridListItems(
-        name: LabelStr.lblMckinneyVento, svgPicture: MyImage.blogsIcon),
+        name: 'mckinney_vento'.tr(), svgPicture: MyImage.blogsIcon),
   ];
 
   String? languageCode;
@@ -92,7 +91,7 @@ class _CommunityResourcesScreenState extends State<CommunityResources> {
                       ),
                       Container(
                         margin: EdgeInsets.only(top: 10),
-                        child: Text(LabelStr.lblResources,
+                        child: Text('resources'.tr(),
                             style: AppTheme.regularTextStyle()
                                 .copyWith(fontSize: 18, color: Colors.white)),
                       )
@@ -155,12 +154,7 @@ class _CommunityResourcesScreenState extends State<CommunityResources> {
                               };
                               getWebApiFromUrl(context, params);
                             } else if (index == 3) {
-                              var params = {
-                                "schoolId": schoolId,
-                                "roleId": 0,
-                                "contentTypeName": "Scholarship"
-                              };
-                              getWebApiFromUrl(context, params);
+                              Utils.navigateToScreen(context, ScholarshipInfoScreen(widget.title));
                             } else if (index == 4) {
                               var params = {
                                 "schoolId": schoolId,

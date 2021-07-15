@@ -155,11 +155,20 @@ class _ScholarshipInfoScreenState extends State<ScholarshipInfoScreen> {
 
   _getScholarshipInfoList(int schoolId) {
     ContentMasterViewModel _contentViewModel = ContentMasterViewModel();
-    var params = {
-      "schoolId": schoolId,
-      "roleId": 0,
-      "contentTypeName": "Scholarship"
-    };
+    var params;
+    if(widget.fromScreen.compareTo("Student") == 0) {
+      params = {
+        "schoolId": schoolId,
+        "roleId": 0,
+        "contentTypeName": "Scholarship"
+      };
+    } else {
+      params = {
+        "schoolId": schoolId,
+        "roleId": 0,
+        "contentTypeName": "Scholarship"
+      };
+    }
     Utils.showLoader(true, context);
     _contentViewModel.getContentList(context, params, widget.fromScreen, (isSuccess, message){
       if(isSuccess){

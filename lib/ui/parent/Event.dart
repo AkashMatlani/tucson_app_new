@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:tucson_app/GeneralUtils/ColorExtension.dart';
@@ -13,14 +14,11 @@ class Event extends StatefulWidget {
 class _EventScreenState extends State<Event> {
   List<GridListItems> menuItems = [
     GridListItems(
-        name: LabelStr.lblTusdCalendar,
-        svgPicture: MyImage.calenderIcon),
+        name: 'tusd_calendar'.tr(), svgPicture: MyImage.calenderIcon),
     GridListItems(
-        name: LabelStr.lblFrcSchedule,
-        svgPicture: MyImage.calenderIcon),
+        name: 'frc_schedule'.tr(), svgPicture: MyImage.calenderIcon),
     GridListItems(
-        name: LabelStr.lblParentUniversity,
-        svgPicture: MyImage.universityIcon),
+        name: 'parent_university'.tr(), svgPicture: MyImage.universityIcon),
   ];
 
   @override
@@ -47,7 +45,7 @@ class _EventScreenState extends State<Event> {
                       ),
                       Container(
                         margin: EdgeInsets.only(top: 10),
-                        child: Text(LabelStr.lblEvents,
+                        child: Text('events'.tr(),
                             style: AppTheme.regularTextStyle()
                                 .copyWith(fontSize: 18, color: Colors.white)),
                       )

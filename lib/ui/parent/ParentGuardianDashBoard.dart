@@ -1,16 +1,18 @@
 import 'dart:async';
 
 import 'package:double_back_to_close/double_back_to_close.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tucson_app/GeneralUtils/ColorExtension.dart';
 import 'package:tucson_app/GeneralUtils/Constant.dart';
-import 'package:tucson_app/GeneralUtils/LabelStr.dart';
+import 'package:tucson_app/GeneralUtils/LanguageDropDownList.dart';
 import 'package:tucson_app/GeneralUtils/PrefsUtils.dart';
 import 'package:tucson_app/GeneralUtils/Utils.dart';
 import 'package:tucson_app/Model/GridListItems.dart';
+import 'package:tucson_app/Model/StaticListItems.dart';
 import 'package:tucson_app/WebService/WebService.dart';
 import 'package:tucson_app/ui/DisplayWebview.dart';
 import 'package:tucson_app/ui/SignInScreen.dart';
@@ -31,28 +33,36 @@ class _ParentDashBoardScreenState extends State<ParentDashBoardScreen> {
   bool allowClose = false;
   late List<GridListItems> menuItems = [
     GridListItems(
-      name: LabelStr.lblEducation,
-      svgPicture: MyImage.educationIcon,
+      name: 'education'.tr(), svgPicture: MyImage.educationIcon,
     ),
-    GridListItems(name: LabelStr.lblEvents, svgPicture: MyImage.eventIcon),
+    GridListItems(name: 'events'.tr(), svgPicture: MyImage.eventIcon),
     GridListItems(
-        name: LabelStr.lblResources, svgPicture: MyImage.resourceIcon),
+        name: 'resources'.tr(), svgPicture: MyImage.resourceIcon),
     GridListItems(
-        name: LabelStr.lblSmartChoice, svgPicture: MyImage.smartChoiceIcon),
+        name: 'smart_choice'.tr(), svgPicture: MyImage.smartChoiceIcon),
     GridListItems(
-        name: LabelStr.lblParentVUE, svgPicture: MyImage.smartChoiceIcon),
+        name: 'parent_vue'.tr(), svgPicture: MyImage.smartChoiceIcon),
     GridListItems(
-        name: LabelStr.lblSchoolPrograms,
-        svgPicture: MyImage.schoolProgramsIcon),
+        name: 'schools_programs'.tr(), svgPicture: MyImage.schoolProgramsIcon),
     GridListItems(
-        name: LabelStr.lblRqForService, svgPicture: MyImage.requestServiceIcon),
-    GridListItems(name: LabelStr.lblAwarity, svgPicture: MyImage.awarityIcon),
-    GridListItems(name: LabelStr.lblLogout, svgPicture: MyImage.logoutIcon)
+        name: 'request_for_services'.tr(), svgPicture: MyImage.requestServiceIcon),
+    GridListItems(name: 'awareity'.tr(), svgPicture: MyImage.awarityIcon),
+    GridListItems(name: 'sign_out'.tr(), svgPicture: MyImage.logoutIcon)
   ];
 
-  String language = "";
-  String userName = "";
+  String sortLanguageCode = "en";
+  String languageName = "English";
+  String firstName = "";
   late int schoolId;
+
+  List<StaticListItems> languageList = [
+    StaticListItems(name: "English", value: "en"),
+    StaticListItems(name: "Arabic", value: "ar"),
+    StaticListItems(name: "Somali", value: "so"),
+    StaticListItems(name: "Spanish", value: "es"),
+    StaticListItems(name: "Swahili", value: "sw"),
+    StaticListItems(name: "Vietnamese", value: "vi")
+  ];
 
   @override
   void initState() {
@@ -61,15 +71,33 @@ class _ParentDashBoardScreenState extends State<ParentDashBoardScreen> {
       SharedPreferences.getInstance().then((prefs) async {
         PrefUtils.getUserDataFromPref();
         setState(() {
-          language = prefs.getString(PrefUtils.yourLanguage)!;
-          userName = prefs.getString(PrefUtils.userFirstName)!;
+          languageName = prefs.getString(PrefUtils.yourLanguage)!;
+          firstName = prefs.getString(PrefUtils.userFirstName)!;
+          sortLanguageCode = prefs.getString(PrefUtils.sortLanguageCode)!;
           schoolId = prefs.getInt(PrefUtils.schoolId)!;
           if (schoolId == null) {
             schoolId = 0;
           }
+
+          if (firstName.isNotEmpty && sortLanguageCode.compareTo("en") == 1) {
+            _getFirstName();
+          }
         });
       });
     });
+  }
+
+  _getFirstName() {
+    WebService.translateApiCall(sortLanguageCode, firstName,
+            (isSuccess, response) {
+          if (isSuccess) {
+            setState(() {
+              firstName = response.toString();
+            });
+          } else {
+            Utils.showToast(context, "Page Translation Failed", Colors.red);
+          }
+        });
   }
 
   @override
@@ -91,22 +119,22 @@ class _ParentDashBoardScreenState extends State<ParentDashBoardScreen> {
                     children: [
                       Container(
                         height: MediaQuery.of(context).size.height * 0.25,
+                        alignment: Alignment.center,
                         child: Row(
                           children: [
                             Expanded(
-                              flex: 3,
                               child: Padding(
-                                  padding: EdgeInsets.only(left: 10),
+                                  padding: EdgeInsets.only(left: 20),
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
-                                      Text(LabelStr.lblHi,
+                                      Text('hi'.tr(),
                                           style: AppTheme.customTextStyle(
                                               MyFont.SSPro_regular,
                                               25.0,
                                               Colors.white)),
                                       SizedBox(width: 5),
-                                      Text(userName,
+                                      Text(firstName,
                                           style: AppTheme.customTextStyle(
                                               MyFont.SSPro_semibold,
                                               25.0,
@@ -116,6 +144,7 @@ class _ParentDashBoardScreenState extends State<ParentDashBoardScreen> {
                             ),
                             Container(
                               padding: EdgeInsets.only(right: 10),
+                              margin: EdgeInsets.only(right: 15),
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -123,22 +152,25 @@ class _ParentDashBoardScreenState extends State<ParentDashBoardScreen> {
                                   Icon(
                                     Icons.account_circle,
                                     color: Colors.white,
-                                    size: 60.0,
+                                    size: 50.0,
                                   ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
+                                  Stack(
                                     children: [
-                                      Icon(
-                                        Icons.circle,
-                                        color: Colors.limeAccent,
-                                        size: 25.0,
-                                      ),
-                                      SizedBox(width: 5),
-                                      Text(language,
-                                          style: AppTheme.regularTextStyle()
-                                              .copyWith(color: Colors.white))
+                                      InkWell(
+                                        onTap: (){
+                                          Navigator.push(context, MaterialPageRoute(builder: (context) => LanguageDropDownList(languageList, StaticListItems(value: sortLanguageCode, name: languageName)))).then((value){
+                                            setState(() {
+                                              StaticListItems selectedItems = value;
+                                              sortLanguageCode = selectedItems.value;
+                                              languageName = selectedItems.name;
+                                            });
+                                          });
+                                        },
+                                        child: Container(
+                                          padding: EdgeInsets.all(8),
+                                          child: Text(languageName, style: AppTheme.regularTextStyle().copyWith(color: Colors.white)),
+                                        ),
+                                      )
                                     ],
                                   )
                                 ],
@@ -185,8 +217,7 @@ class _ParentDashBoardScreenState extends State<ParentDashBoardScreen> {
                                 onTap: () {
                                   setState(() {
                                     if (index == 0) {
-                                      Utils.navigateToScreen(
-                                          context, Education());
+                                      Utils.navigateToScreen(context, Education());
                                     } else if (index == 1) {
                                       Utils.navigateToScreen(context, Event());
                                     } else if (index == 2) {
@@ -206,11 +237,9 @@ class _ParentDashBoardScreenState extends State<ParentDashBoardScreen> {
                                       };
                                       getWebApiFromUrl(context, params);
                                     } else if (index == 5) {
-                                      Utils.navigateToScreen(
-                                          context, SchoolPrograms());
+                                      Utils.navigateToScreen(context, SchoolPrograms());
                                     } else if (index == 6) {
-                                      Utils.navigateToScreen(
-                                          context, RequestForServiceScreen());
+                                      Utils.navigateToScreen(context, RequestForServiceScreen());
                                     } else if (index == 7) {
                                       var params = {
                                         "schoolId": 1,
@@ -294,15 +323,15 @@ class _ParentDashBoardScreenState extends State<ParentDashBoardScreen> {
   }
 
   _logoutFromApp(BuildContext context) async {
+    Utils.showLoader(true, context);
     bool mentalPopUp = await PrefUtils.getValueFor(PrefUtils.mentalHealthpopUp);
     String langCode = await PrefUtils.getValueFor(PrefUtils.sortLanguageCode);
     String langName = await PrefUtils.getValueFor(PrefUtils.yourLanguage);
-    Utils.showLoader(true, context);
     PrefUtils.clearPref();
-    Utils.showLoader(false, context);
     PrefUtils.setBoolValue(PrefUtils.mentalHealthpopUp, mentalPopUp);
     PrefUtils.setStringValue(PrefUtils.sortLanguageCode, langCode);
     PrefUtils.setStringValue(PrefUtils.yourLanguage, langName);
+    Utils.showLoader(false, context);
     Utils.navigateWithClearState(context, SignInScreen());
   }
 }

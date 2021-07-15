@@ -297,14 +297,20 @@ class _CalendarPage2State extends State<CalendarPage2> {
                         ],
                       ),
                     ) : Container(),
-                    ListView.builder(
-                        itemCount: upcommingEventList.length,
-                        shrinkWrap: true,
+                    Container(
+                      height: Platform.isIOS?cHeight * 0.22:cHeight *0.25,
+                      child: SingleChildScrollView(
                         physics: ScrollPhysics(),
-                        padding: EdgeInsets.only(top: 10),
-                        itemBuilder: (BuildContext context, int position) {
-                          return _listRowItem(context, position);
-                        })
+                        child: ListView.builder(
+                            itemCount: upcommingEventList.length,
+                            shrinkWrap: true,
+                            physics: NeverScrollableScrollPhysics(),
+                            padding: EdgeInsets.only(top: 10),
+                            itemBuilder: (BuildContext context, int position) {
+                              return _listRowItem(context, position);
+                            }),
+                      ),
+                    )
                   ],
                 ),
               )),
@@ -340,10 +346,14 @@ class _CalendarPage2State extends State<CalendarPage2> {
             }
 
             String formattedDate = DateFormat("yyyy-MM-dd'T'hh:mm:ss").format(selectedDate);
-            finalDateToDate = Utils.convertDate(formattedDate, DateFormat("MM-dd-yyyy hh:mm:ss"));
+            DateTime utcFromDate = DateTime.parse(formattedDate).toUtc();
+            String strUtcFromDate = DateFormat("yyyy-MM-dd'T'hh:mm:ss").format(utcFromDate);
+            finalDateToDate = Utils.convertDate(strUtcFromDate, DateFormat("MM/dd/yyyy"))+" "+eventist[i].startTime;
 
             String toDate = DateFormat("yyyy-MM-dd'T'hh:mm:ss").format( DateTime.parse(eventist[i].toDateTime));
-            toDateFinalDate = Utils.convertDate(toDate, DateFormat("MM-dd-yyyy hh:mm:ss"));
+            DateTime utcToDate = DateTime.parse(toDate).toUtc();
+            String strUtcToDate = DateFormat("yyyy-MM-dd'T'hh:mm:ss").format(utcToDate);
+            toDateFinalDate = Utils.convertDate(strUtcToDate, DateFormat("MM/dd/yyyy"))+" "+eventist[i].endTime;
             eventNameTitle = eventist[i].eventName;
             String date = Utils.convertDate(eventist[i].fromDateTime, DateFormat('yyyy,MM,dd'));
             print(date);
@@ -377,13 +387,13 @@ class _CalendarPage2State extends State<CalendarPage2> {
                               data: eventist[i].eventDetail,
                               style: {
                                 "body" : Style(
-                                    fontFamily: MyFont.SSPro_regular,
-                                    fontSize: FontSize.medium
+                                  fontFamily: MyFont.SSPro_regular,
+                                  fontSize: FontSize.medium,
+                                  color: Colors.black54
                                 )
                               },
                             ),
                           ],
-
                         ),
                       )),
                 );
@@ -419,7 +429,7 @@ class _CalendarPage2State extends State<CalendarPage2> {
     }
   }
 
-  void bottomMenu(String eventist, DateTime currentDate2, Widget? abcd) {
+  void bottomMenu(String eventName, DateTime currentDate2, Widget? abcd) {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -441,7 +451,7 @@ class _CalendarPage2State extends State<CalendarPage2> {
                 children: [
                   Padding(
                     padding: const EdgeInsets.fromLTRB(20.0, 40, 10, 0),
-                    child: Text(eventist,
+                    child: Text(eventName,
                         style: AppTheme.customTextStyle(MyFont.SSPro_semibold,
                             18.0, Color.fromRGBO(0, 0, 0, 1))),
                   ),
@@ -493,19 +503,28 @@ class _CalendarPage2State extends State<CalendarPage2> {
   _listRowItem(BuildContext context, int position) {
     return InkWell(
       onTap: () {
-        var circle = Container(
-          padding: EdgeInsets.fromLTRB(20.0, 0, 10, 0),
-          child: Html(
-            data: upcommingEventList[position].eventName,
-            style: {
-              "body" : Style(
-                  fontFamily: MyFont.SSPro_regular,
-                  fontSize: FontSize.medium
-              )
-            },
+        var details = Padding(
+          padding: const EdgeInsets.fromLTRB(20.0, 0, 10, 0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text('event_details'.tr()+ ':', style: AppTheme.regularTextStyle().copyWith(fontSize: 16, color: Colors.black54)),
+              Html(
+                data: upcommingEventList[position].eventDetail,
+                style: {
+                  "body" : Style(
+                    fontFamily: MyFont.SSPro_regular,
+                    fontSize: FontSize.medium,
+                    color: Colors.black54
+                  )
+                },
+              ),
+            ],
+
           ),
         );
-        bottomMenu(upcommingEventList[position].eventName, DateTime.parse(upcommingEventList[position].fromDateTime), circle);
+        bottomMenu(upcommingEventList[position].eventName, DateTime.parse(upcommingEventList[position].fromDateTime), details);
       },
       child: Container(
         child: Column(
@@ -515,8 +534,7 @@ class _CalendarPage2State extends State<CalendarPage2> {
             Text(upcommingEventList[position].eventName,
                 style: AppTheme.regularTextStyle()),
             Text(
-                Utils.convertDate(upcommingEventList[position].fromDateTime,
-                    DateFormat("MM-dd-yyyy")),
+                Utils.convertDate(upcommingEventList[position].fromDateTime, DateFormat("MM/dd/yyyy")),
                 style: AppTheme.customTextStyle(
                     MyFont.SSPro_regular, 14.0, Colors.black54)),
             Container(
@@ -579,7 +597,10 @@ class _CalendarPage2State extends State<CalendarPage2> {
               toDateTime: eventist[i].toDateTime,
               tusdEventId: eventist[i].tusdEventId,
               updatedBy: eventist[i].updatedBy,
-              updatedOn: eventist[i].updatedOn));
+              updatedOn: eventist[i].updatedOn,
+              startTime: eventist[i].startTime,
+              endTime: eventist[i].endTime,
+              schoolIds: eventist[i].schoolIds));
         }
       } else {
         Utils.showToast(context, "Page Translation Failed", Colors.red);

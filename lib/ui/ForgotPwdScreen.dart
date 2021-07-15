@@ -101,10 +101,10 @@ class _ForgotPwdScreenState extends State<ForgotPwdScreen> {
                                     MyFont.SSPro_bold, 30.0,
                                     MyColor.darkLblTextColor())),
                             SizedBox(height: 20),
-                            Text('tusd_email'.tr(),
+                            Text('email'.tr(),
                                 style: AppTheme.regularTextStyle().copyWith(
                                     fontSize: 14)),
-                            textFieldFor('tusd_email'.tr(), _emailController,
+                            textFieldFor('email'.tr(), _emailController,
                                 textInputAction: TextInputAction.done,
                                 keyboardType: TextInputType.emailAddress),
                             SizedBox(height: 20),

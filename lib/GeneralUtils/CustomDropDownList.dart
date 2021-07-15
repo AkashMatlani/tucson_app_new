@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tucson_app/GeneralUtils/Constant.dart';
+import 'package:tucson_app/GeneralUtils/Utils.dart';
 import 'package:tucson_app/Model/SchoolListResponse.dart';
 import 'package:easy_localization/easy_localization.dart';
 
@@ -22,7 +23,6 @@ class _CustomDropDownListState extends State<CustomDropDownList> {
   var _filterController = TextEditingController();
   List<SchoolListResponse> filterList = [];
 
-
   @override
   void initState() {
     super.initState();
@@ -35,49 +35,63 @@ class _CustomDropDownListState extends State<CustomDropDownList> {
       body: SafeArea(
         child: Container(
           padding: EdgeInsets.all(10),
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                TextField(
-                  decoration: InputDecoration(
-                    hintText: 'search_school'.tr(),
-                    hintStyle: AppTheme.regularTextStyle(),
-                    suffixIcon: IconButton(
-                      onPressed: (){
-                        FocusScope.of(context).requestFocus(FocusNode());
-                        if(_filterController.text.isEmpty){
-                          Navigator.of(context).pop();
-                        } else {
-                          setState(() {
-                            _filterController.text = "";
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: TextField(
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        hintText: 'search_school'.tr(),
+                        hintStyle: AppTheme.regularTextStyle(),
+                      ),
+                      keyboardType: TextInputType.text,
+                      controller: _filterController,
+                      onChanged: (value){
+                        setState(() {
+                          if(value.length >= 3){
+                            filterList = widget.schoolList.where((itemDetails) {
+                              return itemDetails.name.toLowerCase().contains(value.toLowerCase());
+                            }).toList();
+                            print("Length => ${filterList.length}");
+                          } else {
                             filterList = widget.schoolList;
-                          });
-                        }
+                          }
+                        });
                       },
-                      icon: Icon(Icons.clear, size: 24, color: Colors.black54),
-                    )
+                    ),
                   ),
-                  keyboardType: TextInputType.text,
-                  controller: _filterController,
-                  onChanged: (value){
-                    setState(() {
-                      if(value.length >= 3){
-                        filterList = widget.schoolList.where((itemDetails) {
-                          return itemDetails.name.toLowerCase().contains(value.toLowerCase());
-                        }).toList();
-                        print("Length => ${filterList.length}");
+                  IconButton(
+                    onPressed: (){
+                      if(_filterController.text.isEmpty){
+                        Navigator.of(context).pop();
                       } else {
-                        filterList = widget.schoolList;
+                        FocusScope.of(context).requestFocus(FocusNode());
+                        setState(() {
+                          _filterController.text = "";
+                          filterList = widget.schoolList;
+                        });
                       }
-                    });
-                  },
-                ),
-                filterList.length > 0 ? ListView.builder(
+                    },
+                    icon: Icon(Icons.clear, size: 24, color: Colors.black54),
+                  )
+                ],
+              ),
+              Container(
+                height: 2,
+                color: Colors.black54,
+              ),
+              SizedBox(height: 10),
+              filterList.length > 0 ? Expanded(
+                child: ListView.builder(
+                    physics: ScrollPhysics(),
                     itemCount: filterList.length,
                     shrinkWrap: true,
-                    physics: ScrollPhysics(),
                     padding: EdgeInsets.only(top: 20),
                     itemBuilder: (BuildContext context, int position){
                       return ListTile(
@@ -87,9 +101,9 @@ class _CustomDropDownListState extends State<CustomDropDownList> {
                         },
                       );
                     }
-                ) : emptyListView(),
-              ],
-            ),
+                ),
+              ) : emptyListView(),
+            ],
           ),
         ),
       ),

@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -54,7 +55,7 @@ class _PostJobsScreenState extends State<PostJobsScreen> {
                      ),
                      Container(
                        margin: EdgeInsets.only(top: 10),
-                       child: Text(LabelStr.lblPostJob,
+                       child: Text('post_jobs'.tr(),
                            style: AppTheme.regularTextStyle()
                                .copyWith(fontSize: 18, color: Colors.white)),
                      )
