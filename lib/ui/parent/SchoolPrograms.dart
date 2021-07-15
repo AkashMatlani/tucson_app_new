@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:tucson_app/GeneralUtils/ColorExtension.dart';
@@ -10,6 +11,7 @@ import '../../GeneralUtils/LabelStr.dart';
 import '../../Model/GridListItems.dart';
 import '../DisplayWebview.dart';
 
+
 class SchoolPrograms extends StatefulWidget {
   @override
   _SchoolProgramScreenState createState() => _SchoolProgramScreenState();
@@ -21,12 +23,12 @@ class _SchoolProgramScreenState extends State<SchoolPrograms> {
       name: LabelStr.lblCatlogOfSchools,
       svgPicture: MyImage.websiteIcon,
     ),
-    GridListItems(name: LabelStr.lblMassd, svgPicture: MyImage.massdIcon),
-    GridListItems(name: LabelStr.lblAassd, svgPicture: MyImage.aasdIcon),
-    GridListItems(name: LabelStr.lblNassd, svgPicture: MyImage.nassdIcon),
-    GridListItems(name: LabelStr.lblRssd, svgPicture: MyImage.rssdIcon),
-    GridListItems(name: LabelStr.lblApssd, svgPicture: MyImage.apssdIcon),
-    GridListItems(name: LabelStr.lblFace, svgPicture: MyImage.websiteIcon),
+    GridListItems(name: 'massd'.tr(), svgPicture: MyImage.massdIcon),
+    GridListItems(name: 'aassd'.tr(), svgPicture: MyImage.aasdIcon),
+    GridListItems(name: 'nassd'.tr(), svgPicture: MyImage.nassdIcon),
+    GridListItems(name: 'rssd'.tr(), svgPicture: MyImage.rssdIcon),
+    GridListItems(name: 'apssd'.tr(), svgPicture: MyImage.apssdIcon),
+    GridListItems(name: 'face'.tr(), svgPicture: MyImage.websiteIcon),
   ];
 
   @override
@@ -58,7 +60,7 @@ class _SchoolProgramScreenState extends State<SchoolPrograms> {
                       ),
                       Container(
                         margin: EdgeInsets.only(top: 10),
-                        child: Text(LabelStr.lblSchoolPrograms,
+                        child: Text('schools_programs'.tr(),
                             style: AppTheme.regularTextStyle()
                                 .copyWith(fontSize: 18, color: Colors.white)),
                       )

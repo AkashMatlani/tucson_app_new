@@ -69,16 +69,16 @@ class Utils {
 
   static signoutAlert(BuildContext context, ResponseCallback callback){
     AlertDialog alert = AlertDialog(
-      content: Text('signout_alter_msg'.tr(), style: AppTheme.regularTextStyle()),
+      content: Text('signout_alter_msg'.tr(), style: AppTheme.regularTextStyle().copyWith(fontSize: 18)),
       actions: [
         TextButton(
-          child: Text('yes'.tr(), style: AppTheme.regularTextStyle().copyWith(fontFamily: MyFont.SSPro_semibold)),
+          child: Text('yes'.tr(), style: AppTheme.regularTextStyle().copyWith(fontFamily: MyFont.SSPro_semibold, fontSize: 18)),
           onPressed: (){
             callback(true, "");
           },
         ),
         TextButton(
-          child: Text('no'.tr(), style: AppTheme.regularTextStyle().copyWith(fontFamily: MyFont.SSPro_semibold)),
+          child: Text('no'.tr(), style: AppTheme.regularTextStyle().copyWith(fontFamily: MyFont.SSPro_semibold, fontSize: 18)),
           onPressed: (){
             Navigator.of(context).pop();
             callback(false, "");

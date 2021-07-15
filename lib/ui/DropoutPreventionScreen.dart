@@ -1,8 +1,10 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tucson_app/GeneralUtils/ColorExtension.dart';
 import 'package:tucson_app/GeneralUtils/Constant.dart';
 import 'package:tucson_app/GeneralUtils/LabelStr.dart';
+
 
 class DropoutPreventionScreen extends StatefulWidget {
   @override
@@ -35,7 +37,7 @@ class _DropoutPreventionScreenState extends State<DropoutPreventionScreen> {
                       ),
                       Container(
                         margin: EdgeInsets.only(top: 10),
-                        child: Text(LabelStr.lblDroupOutPrevention,
+                        child: Text('dropout_prevention'.tr(),
                             style: AppTheme.regularTextStyle()
                                 .copyWith(fontSize: 18, color: Colors.white)),
                       )
@@ -218,11 +220,10 @@ class _DropoutPreventionScreenState extends State<DropoutPreventionScreen> {
                     height: 50,
                     width: MediaQuery.of(context).size.width,
                     child: TextButton(
-                      child: Text(LabelStr.lblEnroll,
+                      child: Text('enroll'.tr(),
                           style: AppTheme.customTextStyle(
                               MyFont.SSPro_regular, 16.0, Colors.white)),
                       onPressed: () {
-                        print("Call me");
                         bottomPopup();
                       },
                     ),
@@ -256,14 +257,14 @@ class _DropoutPreventionScreenState extends State<DropoutPreventionScreen> {
           children: [
             Padding(
               padding: const EdgeInsets.fromLTRB(20.0, 40, 10, 10),
-              child: Text(LabelStr.lblHippaStatement,
+              child: Text('hippa_statement'.tr(),
                   style: AppTheme.customTextStyle(
                       MyFont.SSPro_semibold, 18.0, Color.fromRGBO(0, 0, 0, 1))),
             ),
             Padding(
               padding: const EdgeInsets.fromLTRB(20.0, 20, 10, 10),
               child: Text(
-                LabelStr.dummyContentMentalHealth,
+                'mental_health_popup_desc'.tr(),
                 style: AppTheme.regularTextStyle()
                     .copyWith(fontSize: 16, color: Color.fromRGBO(0, 0, 0, 1)),
               ),
@@ -293,7 +294,7 @@ class _DropoutPreventionScreenState extends State<DropoutPreventionScreen> {
                       height: 50,
                       width: MediaQuery.of(context).size.width * 0.4,
                       child: TextButton(
-                        child: Text(LabelStr.lblAgree,
+                        child: Text('agree'.tr(),
                             style: AppTheme.customTextStyle(MyFont.SSPro_bold,
                                 16.0, Color.fromRGBO(255, 255, 255, 1))),
                         onPressed: () {
@@ -310,7 +311,7 @@ class _DropoutPreventionScreenState extends State<DropoutPreventionScreen> {
                     height: 50,
                     width: MediaQuery.of(context).size.width * 0.4,
                     child: TextButton(
-                      child: Text(LabelStr.lblCancel,
+                      child: Text('cancel'.tr(),
                           style: AppTheme.customTextStyle(MyFont.SSPro_bold,
                               16.0, Color.fromRGBO(255, 255, 255, 1))),
                       onPressed: () {
@@ -326,7 +327,4 @@ class _DropoutPreventionScreenState extends State<DropoutPreventionScreen> {
       ),
     );
   }
-
-
-
 }

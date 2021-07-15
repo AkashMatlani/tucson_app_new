@@ -1,9 +1,10 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:tucson_app/GeneralUtils/ColorExtension.dart';
 import 'package:tucson_app/GeneralUtils/Constant.dart';
-import 'package:tucson_app/GeneralUtils/LabelStr.dart';
+
 
 class EducationalWebsiteScreen extends StatefulWidget {
   @override
@@ -35,7 +36,7 @@ class _EducationalWebsiteScreenState extends State<EducationalWebsiteScreen> {
                       ),
                       Container(
                         margin: EdgeInsets.only(top: 10),
-                        child: Text(LabelStr.lblEducationWebstite,
+                        child: Text('educational_website'.tr(),
                             style: AppTheme.regularTextStyle()
                                 .copyWith(fontSize: 18, color: Colors.white)),
                       )
@@ -110,7 +111,7 @@ class _EducationalWebsiteScreenState extends State<EducationalWebsiteScreen> {
     return Container(
       alignment: Alignment.center,
       height: MediaQuery.of(context).size.height*0.88,
-      child: Text(LabelStr.lblNoEducationalWeb, style: AppTheme.regularTextStyle().copyWith(fontSize: 18, color: Colors.red)),
+      child: Text('no_educational'.tr(), style: AppTheme.regularTextStyle().copyWith(fontSize: 18, color: Colors.red)),
     );
   }
 }

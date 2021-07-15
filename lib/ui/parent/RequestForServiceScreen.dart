@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:tucson_app/GeneralUtils/ColorExtension.dart';
@@ -20,22 +21,19 @@ class RequestForServiceScreen extends StatefulWidget {
 class _RequestForServiceScreenState extends State<RequestForServiceScreen> {
   List<GridListItems> menuItems = [
     GridListItems(
-      name: LabelStr.lblMentalHealthSupport,
-      svgPicture: MyImage.mentalHealthIcon,
+      name: 'mental_health_support'.tr(), svgPicture: MyImage.mentalHealthIcon,
     ),
     GridListItems(
-        name: LabelStr.lblStudentServices,
-        svgPicture: MyImage.studentServicesIcon),
-    GridListItems(name: LabelStr.lblTakeItOut, svgPicture: MyImage.takeItOut),
+        name: 'student_services'.tr(), svgPicture: MyImage.studentServicesIcon),
+    GridListItems(name: 'talk_it_out'.tr(), svgPicture: MyImage.takeItOut),
     GridListItems(
-        name: LabelStr.lblDroupOutPrevention, svgPicture: MyImage.dropOut),
+        name: 'dropout_prevention'.tr(), svgPicture: MyImage.dropOut),
     GridListItems(
-        name: LabelStr.lblHealthServices, svgPicture: MyImage.healthService),
+        name: 'health_services'.tr(), svgPicture: MyImage.healthService),
     GridListItems(
-        name: LabelStr.lblTranslationServices,
-        svgPicture: MyImage.translationServiceIcon),
+        name: 'translation_services'.tr(), svgPicture: MyImage.translationServiceIcon),
     GridListItems(
-        name: LabelStr.lblTransporation, svgPicture: MyImage.transporation),
+        name: 'transportation'.tr(), svgPicture: MyImage.transporation),
   ];
 
   @override
@@ -67,7 +65,7 @@ class _RequestForServiceScreenState extends State<RequestForServiceScreen> {
                       ),
                       Container(
                         margin: EdgeInsets.only(top: 10),
-                        child: Text(LabelStr.lblRqForService,
+                        child: Text('request_for_services'.tr(),
                             style: AppTheme.regularTextStyle()
                                 .copyWith(fontSize: 18, color: Colors.white)),
                       )
@@ -119,8 +117,7 @@ class _RequestForServiceScreenState extends State<RequestForServiceScreen> {
                               getWebApiFromUrl(context, params);
                             }
                             else if (index == 3) {
-                              Utils.navigateToScreen(
-                                  context, DropoutPreventionScreen());
+                              Utils.navigateToScreen(context, DropoutPreventionScreen());
                             }
                             else if (index == 4) {
                               var params = {

@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tucson_app/GeneralUtils/Constant.dart';
@@ -13,29 +14,6 @@ class ActivityElementary extends StatefulWidget {
 }
 
 class _ActivityElementaryState extends State<ActivityElementary> {
-  List<GridListItems> menuItems = [
-    GridListItems(
-      name: LabelStr.lblMentalHealthSupport,
-      svgPicture: MyImage.mentalHealthSupport,
-    ),
-    GridListItems(
-        name: LabelStr.lblStudentServices,
-        svgPicture: MyImage.studentServicesIcon),
-    GridListItems(
-        name: LabelStr.lblTakeItOut,
-        svgPicture: MyImage.mentalHealthSupport),
-    GridListItems(
-        name: LabelStr.lblDroupOutPrevention, svgPicture: MyImage.dropOutIcon),
-    GridListItems(
-        name: LabelStr.lblHealthServices,
-        svgPicture: MyImage.healthServiceIcon),
-    GridListItems(
-        name: LabelStr.lblTranslationServices,
-        svgPicture: MyImage.translationServiceIcon),
-    GridListItems(
-        name: LabelStr.lblTransporation,
-        svgPicture: MyImage.transportationIcon),
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -50,12 +28,12 @@ class _ActivityElementaryState extends State<ActivityElementary> {
               height: MediaQuery.of(context).size.height * 0.8,
               child: new ListView.builder(
                   shrinkWrap: true,
-                  itemCount: menuItems.length,
+                  itemCount: 10,
                   itemBuilder: (BuildContext ctxt, int index) {
                     return InkWell(
                       onTap: () {
                         var content = ContentResponse(contentMasterId: 0, schoolId: 0, contentTypeId: 0, contentTitle: "", content: "", createdOn: "", schoolName: "", contentTransactionTypeJoin: []);
-                        Utils.navigateToScreen(context, BlogDetailsScreen(LabelStr.lblElementary, content));
+                        Utils.navigateToScreen(context, BlogDetailsScreen('elementary'.tr(), content));
                       },
                       child: Column(
                           mainAxisAlignment: MainAxisAlignment.start,

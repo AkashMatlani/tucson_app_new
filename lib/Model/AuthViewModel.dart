@@ -157,7 +157,7 @@ class AuthViewModel {
         "profileImageURL": "",
         "schoolId": schoolId,
         "role": userType,
-        "isApprove": false,
+        "isApprove": true,
         "isRejected": false,
       };
     } else if(userType.compareTo(LabelStr.lblCommunity) == 0){
@@ -170,7 +170,7 @@ class AuthViewModel {
         "profileImageURL": "",
         "schoolId": schoolId,
         "role": userType,
-        "isApprove": false,
+        "isApprove": true,
         "isRejected": false,
       };
     } else{
@@ -184,7 +184,7 @@ class AuthViewModel {
         "profileImageURL": "",
         "schoolId": schoolId,
         "role": "ParentGuardian",
-        "isApprove": false,
+        "isApprove": true,
         "isRejected": false,
       };
     }

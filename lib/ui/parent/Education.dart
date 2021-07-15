@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:tucson_app/GeneralUtils/ColorExtension.dart';
@@ -9,9 +10,9 @@ import 'package:tucson_app/GeneralUtils/Utils.dart';
 import 'package:tucson_app/Model/GridListItems.dart';
 import 'package:tucson_app/ui/ArticlesScreen.dart';
 import 'package:tucson_app/ui/EducationalWebsiteScreen.dart';
-import 'ActivitesScreen.dart';
 import 'package:tucson_app/ui/student/BlogScreen.dart';
-import '../../GeneralUtils/LabelStr.dart';
+
+import 'ActivitesScreen.dart';
 
 
 class Education extends StatefulWidget {
@@ -23,14 +24,13 @@ class _EducationScreenState extends State<Education> {
    String schoolId="0";
   List<GridListItems> menuItems = [
     GridListItems(
-      name: LabelStr.lblEducationWebstite,
-      svgPicture: MyImage.educationalWebsiteIcon,
+      name: 'educational_website'.tr(), svgPicture: MyImage.educationalWebsiteIcon,
     ),
-    GridListItems(name: LabelStr.lblVideos, svgPicture: MyImage.videosIcon),
+    GridListItems(name: 'videos'.tr(), svgPicture: MyImage.videosIcon),
     GridListItems(
-        name: LabelStr.lblActivites, svgPicture: MyImage.activitesIcon),
-    GridListItems(name: LabelStr.lblArticles, svgPicture: MyImage.articlesIcon),
-    GridListItems(name: LabelStr.lblBlogs, svgPicture: MyImage.blogsIcon),
+        name: 'activites'.tr(), svgPicture: MyImage.activitesIcon),
+    GridListItems(name: 'articles'.tr(), svgPicture: MyImage.articlesIcon),
+    GridListItems(name: 'blogs'.tr(), svgPicture: MyImage.blogsIcon),
   ];
 
 
@@ -74,7 +74,7 @@ class _EducationScreenState extends State<Education> {
                       ),
                       Container(
                         margin: EdgeInsets.only(top: 10),
-                        child: Text(LabelStr.lblEducation,
+                        child: Text('education'.tr(),
                             style: AppTheme.regularTextStyle()
                                 .copyWith(fontSize: 18, color: Colors.white)),
                       )
@@ -116,21 +116,16 @@ class _EducationScreenState extends State<Education> {
                     itemBuilder: (BuildContext ctx, index) {
                       return GestureDetector(
                           onTap: () {
-                            print("Clicked");
                             if (index == 0) {
-                              Utils.navigateToScreen(
-                                  context, EducationalWebsiteScreen());
+                              Utils.navigateToScreen(context, EducationalWebsiteScreen());
                             } else if (index == 2) {
-                              Utils.navigateToScreen(
-                                  context, ActivitesScreen());
+                              Utils.navigateToScreen(context, ActivitesScreen());
                             }
                             else if (index == 3) {
-                              Utils.navigateToScreen(
-                                  context, ArticlesScreen());
+                              Utils.navigateToScreen(context, ArticlesScreen());
                             }
                             else if (index == 4) {
-                              Utils.navigateToScreen(
-                                  context, BlogScreen(LabelStr.lblEducation));
+                              Utils.navigateToScreen(context, BlogScreen('blogs'.tr()));
                             }
                           },
                           child: Card(
