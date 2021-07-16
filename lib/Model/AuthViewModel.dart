@@ -106,7 +106,7 @@ class AuthViewModel {
       }
     }
 
-    if(userType.compareTo("ParentGuardian") == 0){
+    if(userType.compareTo("Parent-Guardian") == 0){
       if (zipCode.isEmpty) {
         return ValidationResult(false, LabelStr.enterZipCode);
       } else if(zipCode.length !=5){
