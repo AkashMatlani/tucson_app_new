@@ -54,7 +54,6 @@ class _LanguageDropDownListState extends State<LanguageDropDownList> {
                         child: Text(widget.languageList[position].name, style: AppTheme.regularTextStyle().copyWith(fontSize: 18, color: HexColor("#6462AA"))),
                       ),
                       onTap: (){
-                        context.setLocale(Locale(widget.languageList[position].value, 'US'));
                         Navigator.of(context).pop(widget.languageList[position]);
                       },
                     );

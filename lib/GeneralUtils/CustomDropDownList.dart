@@ -27,11 +27,19 @@ class _CustomDropDownListState extends State<CustomDropDownList> {
   void initState() {
     super.initState();
     filterList.addAll(widget.schoolList);
+    setState(() {
+      if(widget.schoolName.compareTo('select_school'.tr()) == 0){
+        _filterController.text = "";
+      } else {
+        _filterController.text = widget.schoolName;
+      }
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: Container(
           padding: EdgeInsets.all(10),
@@ -58,7 +66,6 @@ class _CustomDropDownListState extends State<CustomDropDownList> {
                             filterList = widget.schoolList.where((itemDetails) {
                               return itemDetails.name.toLowerCase().contains(value.toLowerCase());
                             }).toList();
-                            print("Length => ${filterList.length}");
                           } else {
                             filterList = widget.schoolList;
                           }
@@ -69,7 +76,7 @@ class _CustomDropDownListState extends State<CustomDropDownList> {
                   IconButton(
                     onPressed: (){
                       if(_filterController.text.isEmpty){
-                        Navigator.of(context).pop();
+                        Navigator.of(context).pop(null);
                       } else {
                         FocusScope.of(context).requestFocus(FocusNode());
                         setState(() {

@@ -160,6 +160,13 @@ class _CommunityDashboardScreenState extends State<CommunityDashboardScreen> {
                                         StaticListItems selectedItems = value;
                                         sortLanguageCode = selectedItems.value;
                                         languageName = selectedItems.name;
+
+                                        PrefUtils.setStringValue(PrefUtils.yourLanguage, languageName);
+                                        PrefUtils.setStringValue(PrefUtils.sortLanguageCode, sortLanguageCode);
+                                        context.setLocale(Locale(sortLanguageCode, 'US'));
+                                        if (firstName.isNotEmpty && sortLanguageCode.compareTo("en") == 1) {
+                                          _getFirstName();
+                                        }
                                       });
                                     });
                                   },

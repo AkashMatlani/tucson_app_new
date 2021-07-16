@@ -9,6 +9,7 @@ import 'package:flutter_calendar_carousel/flutter_calendar_carousel.dart'
 import 'package:flutter_calendar_carousel/flutter_calendar_carousel.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:intl/intl.dart';
+import 'package:simple_moment/simple_moment.dart';
 import 'package:tucson_app/GeneralUtils/ColorExtension.dart';
 import 'package:tucson_app/GeneralUtils/Constant.dart';
 import 'package:tucson_app/GeneralUtils/LabelStr.dart';
@@ -28,11 +29,9 @@ class _CalendarPage2State extends State<CalendarPage2> {
   List<EventForMobileResponse> eventist = [];
   List<EventForMobileResponse> upcommingEventList = [];
   DateTime selectedDate = DateTime.now();
-  late String eventNameTitle = "";
   DateTime _currentDate = DateTime(2021, 7, 21);
   String _currentMonth = DateFormat.yMMM().format(DateTime(2021, 7, 21));
   DateTime _targetDateTime = DateTime(2021, 7, 21);
-  late String finalDateToDate, toDateFinalDate;
   String? languageCode;
 
   @override
@@ -80,7 +79,7 @@ class _CalendarPage2State extends State<CalendarPage2> {
       onDayPressed: (date, events) {
         this.setState(() => selectedDate = date);
         events.forEach((event) => event.title != null
-            ? bottomMenu(event.title!, selectedDate, event.dot)
+            ? bottomMenu(event.title!, event.dot)
             : Container());
       },
       height: cHeight * 0.54,
@@ -344,24 +343,35 @@ class _CalendarPage2State extends State<CalendarPage2> {
             if (isSuccess) {
               upcommingEventList.add(eventist[i]);
             }
-
-            String formattedDate = DateFormat("yyyy-MM-dd'T'hh:mm:ss").format(selectedDate);
-            DateTime utcFromDate = DateTime.parse(formattedDate).toUtc();
-            String strUtcFromDate = DateFormat("yyyy-MM-dd'T'hh:mm:ss").format(utcFromDate);
-            finalDateToDate = Utils.convertDate(strUtcFromDate, DateFormat("MM/dd/yyyy"))+" "+eventist[i].startTime;
-
-            String toDate = DateFormat("yyyy-MM-dd'T'hh:mm:ss").format( DateTime.parse(eventist[i].toDateTime));
-            DateTime utcToDate = DateTime.parse(toDate).toUtc();
-            String strUtcToDate = DateFormat("yyyy-MM-dd'T'hh:mm:ss").format(utcToDate);
-            toDateFinalDate = Utils.convertDate(strUtcToDate, DateFormat("MM/dd/yyyy"))+" "+eventist[i].endTime;
-            eventNameTitle = eventist[i].eventName;
-            String date = Utils.convertDate(eventist[i].fromDateTime, DateFormat('yyyy,MM,dd'));
-            print(date);
+            DateTime utcFromDate = DateTime.parse(eventist[i].fromDateTime.split('T')[0]).toUtc();
+            String date = DateFormat("yyyy,MM,dd").format(utcFromDate);
             var dateInFormatText = date.split(",");
             setState(() {
               var currentDate = DateTime.now();
               var eventDate = DateTime.parse(eventist[i].fromDateTime);
               if(currentDate.isBefore(eventDate)){
+                /*DateTime utcFromDate = DateTime.parse(eventist[i].fromDateTime).toUtc();
+                String strUtcFromDate = DateFormat("yyyy-MM-dd'T'hh:mm:ss").format(utcFromDate);
+                var fromDate = Utils.convertDate(strUtcFromDate, DateFormat("MM/dd/yyyy"))+" "+eventist[i].startTime;
+
+                DateTime utcToDate = DateTime.parse(eventist[i].toDateTime).toUtc();
+                String strUtcToDate = DateFormat("yyyy-MM-dd'T'hh:mm:ss").format(utcToDate);
+                var toDate = Utils.convertDate(strUtcToDate, DateFormat("MM/dd/yyyy"))+" "+eventist[i].endTime;
+
+                var eventDetails = eventist[i].eventName+"=>"+fromDate+"=>"+toDate;*/
+
+                String localFromDate = eventist[i].fromDateTime.split('T')[0];
+                DateTime utcFromDate = DateTime.parse(localFromDate).toUtc();
+                String strUtcFromDate = DateFormat("MM/dd/yyyy").format(utcFromDate);
+                String fromDate = strUtcFromDate+" "+eventist[i].startTime;
+
+                String localToDate = eventist[i].toDateTime.split('T')[0];
+                DateTime utcToDate = DateTime.parse(localToDate).toUtc();
+                String strUtcToDate = DateFormat("MM/dd/yyyy").format(utcToDate);
+                String toDate = strUtcToDate+" "+eventist[i].endTime;
+
+                var eventDetails = eventist[i].eventName+"=>"+fromDate+"=>"+toDate;
+
                 _markedDateMap.add(
                   DateTime(
                       int.parse(dateInFormatText[0]),
@@ -372,7 +382,7 @@ class _CalendarPage2State extends State<CalendarPage2> {
                           int.parse(dateInFormatText[0]),
                           int.parse(dateInFormatText[1]),
                           int.parse(dateInFormatText[2])),
-                      title: eventist[i].eventName,
+                      title: eventDetails,
                       icon: _presentIcon(
                         dateInFormatText[2],
                       ),
@@ -429,7 +439,8 @@ class _CalendarPage2State extends State<CalendarPage2> {
     }
   }
 
-  void bottomMenu(String eventName, DateTime currentDate2, Widget? abcd) {
+  void bottomMenu(String event, Widget? abcd) {
+    List<String> eventList = event.split("=>");
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -451,14 +462,14 @@ class _CalendarPage2State extends State<CalendarPage2> {
                 children: [
                   Padding(
                     padding: const EdgeInsets.fromLTRB(20.0, 40, 10, 0),
-                    child: Text(eventName,
+                    child: Text(eventList[0],
                         style: AppTheme.customTextStyle(MyFont.SSPro_semibold,
                             18.0, Color.fromRGBO(0, 0, 0, 1))),
                   ),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(20.0, 20, 10, 10),
                     child: Text(
-                      'start_date_time'.tr() + "\n" + finalDateToDate  +"\n"+'end_date_time'.tr()+ "\n" +toDateFinalDate,
+                      'start_date_time'.tr() + "\n" + eventList[1]  +"\n"+'end_date_time'.tr()+ "\n" +eventList[2],
                       style: AppTheme.regularTextStyle()
                           .copyWith(fontSize: 16, color: Colors.black54),
                     ),
@@ -501,6 +512,11 @@ class _CalendarPage2State extends State<CalendarPage2> {
   }
 
   _listRowItem(BuildContext context, int position) {
+
+    String localFromDate = upcommingEventList[position].fromDateTime.split('T')[0];
+    DateTime utcFromDate = DateTime.parse(localFromDate).toUtc();
+    String displayDate = DateFormat("MM/dd/yyyy").format(utcFromDate);
+
     return InkWell(
       onTap: () {
         var details = Padding(
@@ -524,7 +540,32 @@ class _CalendarPage2State extends State<CalendarPage2> {
 
           ),
         );
-        bottomMenu(upcommingEventList[position].eventName, DateTime.parse(upcommingEventList[position].fromDateTime), details);
+
+        //Event From Date from UTC
+        String localFromDate = upcommingEventList[position].fromDateTime.split('T')[0];
+        DateTime utcFromDate = DateTime.parse(localFromDate).toUtc();
+        String strUtcFromDate = DateFormat("MM/dd/yyyy").format(utcFromDate);
+        String fromDate = strUtcFromDate+" "+upcommingEventList[position].startTime;
+
+        //Event To Date from UTC
+        String localToDate = upcommingEventList[position].toDateTime.split('T')[0];
+        DateTime utcToDate = DateTime.parse(localToDate).toUtc();
+        String strUtcToDate = DateFormat("MM/dd/yyyy").format(utcToDate);
+        String toDate = strUtcToDate+" "+upcommingEventList[position].endTime;
+
+        var eventDetails = upcommingEventList[position].eventName+"=>"+fromDate+"=>"+toDate;
+
+        /*DateTime utcFromDate = DateTime.parse(upcommingEventList[position].fromDateTime).toUtc();
+        String strUtcFromDate = DateFormat("yyyy-MM-dd'T'hh:mm:ss").format(utcFromDate);
+        var fromDate = Utils.convertDate(strUtcFromDate, DateFormat("MM/dd/yyyy"))+" "+upcommingEventList[position].startTime;
+
+        DateTime utcToDate = DateTime.parse(upcommingEventList[position].toDateTime).toUtc();
+        String strUtcToDate = DateFormat("yyyy-MM-dd'T'hh:mm:ss").format(utcToDate);
+        var toDate = Utils.convertDate(strUtcToDate, DateFormat("MM/dd/yyyy"))+" "+upcommingEventList[position].endTime;
+
+        var eventDetails = upcommingEventList[position].eventName+"=>"+fromDate+"=>"+toDate;*/
+
+        bottomMenu(eventDetails, details);
       },
       child: Container(
         child: Column(
@@ -534,7 +575,7 @@ class _CalendarPage2State extends State<CalendarPage2> {
             Text(upcommingEventList[position].eventName,
                 style: AppTheme.regularTextStyle()),
             Text(
-                Utils.convertDate(upcommingEventList[position].fromDateTime, DateFormat("MM/dd/yyyy")),
+                displayDate,
                 style: AppTheme.customTextStyle(
                     MyFont.SSPro_regular, 14.0, Colors.black54)),
             Container(

@@ -35,7 +35,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   var _emailController = TextEditingController();
   var _pwdController = TextEditingController();
   var _confPwdController = TextEditingController();
-  var _filterController = TextEditingController();
+
   String _userType = 'Student';
   String _formattedDob = "";
   DateTime currentDate = DateTime.now();
@@ -44,11 +44,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
   bool _showConfPwd = true;
 
   List<SchoolListResponse> _schoolList = [];
-  Map<String, SchoolListResponse> selectedValueMap = Map();
   late SchoolListResponse _selectedSchool;
-  FocusNode defaultField = FocusNode();
   String? languageCode;
-  String selectedSchoolName = LabelStr.lblSelectSchool;
+  String selectedSchoolName = 'select_school'.tr();
 
   @override
   void initState() {
@@ -164,7 +162,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           ),
                           SizedBox(height: 10),
                           Text('first_name'.tr(), style: AppTheme.regularTextStyle().copyWith(fontSize: 14)),
-                          textFieldFor('first_name'.tr(), _fnameController, textInputAction: TextInputAction.next, keyboardType: TextInputType.text, focusNode: defaultField),
+                          textFieldFor('first_name'.tr(), _fnameController, textInputAction: TextInputAction.next, keyboardType: TextInputType.text),
                           SizedBox(height: 10),
                           Text('last_name'.tr(), style: AppTheme.regularTextStyle().copyWith(fontSize: 14)),
                           textFieldFor('last_name'.tr(), _lnameController, textInputAction: TextInputAction.next, keyboardType: TextInputType.text),
@@ -225,10 +223,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   onTap: (){
                                     //Utils.backWithNoTransition(context, CustomDropDownList(selectedSchoolName, _selectedSchool, _schoolList));
                                     Navigator.push(context, MaterialPageRoute(builder: (context) => CustomDropDownList(selectedSchoolName, _selectedSchool, _schoolList))).then((value){
-                                      setState(() {
-                                        _selectedSchool = value;
-                                        selectedSchoolName = _selectedSchool.name;
-                                      });
+                                      if(value == null){
+                                        setState(() {
+                                          selectedSchoolName = 'select_school'.tr();
+                                        });
+                                      } else {
+                                        setState(() {
+                                          _selectedSchool = value;
+                                          selectedSchoolName = _selectedSchool.name;
+                                        });
+                                      }
                                     });
                                   },
                                   child: Row(
@@ -382,8 +386,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
     String confirmPwd = _confPwdController.text;
     String zipCode = _zipController.text;
 
+    int schoolId;
+    if(selectedSchoolName.compareTo('select_school'.tr()) == 0){
+      schoolId = 0;
+    } else {
+      schoolId = _selectedSchool.id;
+    }
+
     Utils.showLoader(true, context);
-    _authViewModel.signUpResult(_userType, fname, lname, _formattedDob, zipCode,  email, password, confirmPwd, _selectedSchool.id, (isSuccess, message) {
+    _authViewModel.signUpResult(_userType, fname, lname, _formattedDob, zipCode,  email, password, confirmPwd, schoolId, (isSuccess, message) {
       Utils.showLoader(false, context);
       if(isSuccess){
         setState(() {
@@ -395,7 +406,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
           _dobController.text = "";
           _selectedSchool = _schoolList[0];
         });
-        FocusScope.of(context).requestFocus(defaultField);
         if (_userType.compareTo(LabelStr.lblStudent) == 0) {
           message = 'student_registered'.tr();
         } else if (_userType.compareTo(LabelStr.lblCommunity) == 0) {
