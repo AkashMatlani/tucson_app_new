@@ -13,7 +13,11 @@ class ContentMasterViewModel{
     String webMethod;
     if(fromScreen.compareTo("Student") == 0){
       webMethod = WebService.studentContentByType;
-    } else {
+    }else if(fromScreen.compareTo("Parent") == 0)
+      {
+        webMethod = WebService.parentContentByType;
+      }
+    else {
       webMethod = WebService.communityContentByType;
     }
     WebService.postAPICall(webMethod, params).then((response) {

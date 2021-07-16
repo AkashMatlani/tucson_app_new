@@ -9,6 +9,7 @@ import 'package:tucson_app/WebService/WebService.dart';
 import 'package:tucson_app/ui/DisplayWebview.dart';
 import 'package:tucson_app/ui/DropoutPreventionScreen.dart';
 import 'package:tucson_app/ui/WebViewEmpty.dart';
+import 'package:tucson_app/ui/student/MentalHealthSupportScreen.dart';
 
 import '../../GeneralUtils/LabelStr.dart';
 
@@ -23,15 +24,15 @@ class _RequestForServiceScreenState extends State<RequestForServiceScreen> {
     GridListItems(
       name: 'mental_health_support'.tr(), svgPicture: MyImage.mentalHealthIcon,
     ),
-    GridListItems(
-        name: 'student_services'.tr(), svgPicture: MyImage.studentServicesIcon),
+   /* GridListItems(
+        name: 'student_services'.tr(), svgPicture: MyImage.studentServicesIcon),*/
     GridListItems(name: 'talk_it_out'.tr(), svgPicture: MyImage.takeItOut),
     GridListItems(
         name: 'dropout_prevention'.tr(), svgPicture: MyImage.dropOut),
     GridListItems(
         name: 'health_services'.tr(), svgPicture: MyImage.healthService),
-    GridListItems(
-        name: 'translation_services'.tr(), svgPicture: MyImage.translationServiceIcon),
+   /* GridListItems(
+        name: 'translation_services'.tr(), svgPicture: MyImage.translationServiceIcon),*/
     GridListItems(
         name: 'transportation'.tr(), svgPicture: MyImage.transporation),
   ];
@@ -108,7 +109,11 @@ class _RequestForServiceScreenState extends State<RequestForServiceScreen> {
                       return GestureDetector(
                           onTap: () {
                             print("Clicked");
-                            if (index == 2) {
+                            if(index==0)
+                              {
+                                Utils.navigateToScreen(context, MentalHealthSupportScreen());
+                              }
+                            else if (index == 1) {
                               var params = {
                                 "schoolId": 1,
                                 "roleId": 0,
@@ -116,17 +121,17 @@ class _RequestForServiceScreenState extends State<RequestForServiceScreen> {
                               };
                               getWebApiFromUrl(context, params);
                             }
-                            else if (index == 3) {
+                            else if (index == 2) {
                               Utils.navigateToScreen(context, DropoutPreventionScreen());
                             }
-                            else if (index == 4) {
+                            else if (index == 3) {
                               var params = {
                                 "schoolId": 1,
                                 "roleId": 0,
                                 "contentTypeName": "HealthServices"
                               };
                               getWebApiFromUrl(context, params);
-                            } else if (index == 6) {
+                            } else if (index == 4) {
                               var params = {
                                 "schoolId": 1,
                                 "roleId": 0,

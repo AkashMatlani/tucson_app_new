@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -16,10 +17,9 @@ import 'package:tucson_app/ui/ImageViewerScreen.dart';
 import 'package:tucson_app/ui/VideoPlayerScreen.dart';
 import '../DocumentViewerScreen.dart';
 
-
 class BlogDetailsScreen extends StatefulWidget {
-
   BlogDetailsScreen(this.title, this.contentResponse);
+
   ContentResponse contentResponse;
   String title;
 
@@ -28,30 +28,44 @@ class BlogDetailsScreen extends StatefulWidget {
 }
 
 class _BlogDetailsScreenState extends State<BlogDetailsScreen> {
-
-  String doclink="";
-  String imageLink="";
-  String videoLink="";
-  String audioLink="";
-  String webLink="";
+  late double blockSizeVertical;
+  late double blockSizeHorizontal;
+  var screenWeight;
+  var screenHeight;
+  String doclink = "";
+  String imageLink = "";
+  String videoLink = "";
+  String audioLink = "";
+  String webLink = "";
   String? languageCode;
   String? contentTitle;
   String? contentDesc;
 
+  List<String> imageList = [];
+  List<String> docList = [];
+  List<String> videoList = [];
+  List<String> audioList = [];
+  List<String> webList = [];
+
   @override
   void initState() {
     super.initState();
-    for(var data in widget.contentResponse.contentTransactionTypeJoin){
-      if(data.contentTransTypeName.compareTo("Image") == 0){
-        imageLink = data.objectPath;
-      } else if(data.contentTransTypeName.compareTo("Files") == 0){
-        doclink = data.objectPath;
-      } else if(data.contentTransTypeName.compareTo("Video") == 0){
-        videoLink = data.objectPath;
-      }else if(data.contentTransTypeName.compareTo("Audio") == 0){
-        audioLink = data.objectPath;
-      } else{
-        webLink = data.objectPath;
+    for (var data in widget.contentResponse.contentTransactionTypeJoin) {
+      if (data.contentTransTypeName.compareTo("Image") == 0) {
+        // imageLink = data.objectPath;
+        imageList.add(data.objectPath);
+      } else if (data.contentTransTypeName.compareTo("Files") == 0) {
+        // doclink = data.objectPath;
+        docList.add(data.objectPath);
+      } else if (data.contentTransTypeName.compareTo("Video") == 0) {
+        //  videoLink = data.objectPath;
+        videoList.add(data.objectPath);
+      } else if (data.contentTransTypeName.compareTo("Audio") == 0) {
+        // audioLink = data.objectPath;
+        audioList.add(data.objectPath);
+      } else {
+        //webLink = data.objectPath;
+        webList.add(data.objectPath);
       }
     }
     setState(() {
@@ -63,16 +77,20 @@ class _BlogDetailsScreenState extends State<BlogDetailsScreen> {
 
   void getPrefsData() async {
     languageCode = await PrefUtils.getValueFor(PrefUtils.sortLanguageCode);
-    if(languageCode == null){
+    if (languageCode == null) {
       languageCode = "en";
     }
-    if(languageCode!.compareTo("en") == 1){
+    if (languageCode!.compareTo("en") == 1) {
       _translateData();
     }
   }
 
   @override
   Widget build(BuildContext context) {
+     screenHeight = MediaQuery.of(context).size.height;
+     screenWeight = MediaQuery.of(context).size.width;
+    blockSizeVertical = screenHeight / 100;
+    blockSizeHorizontal=screenWeight/100;
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
@@ -83,14 +101,19 @@ class _BlogDetailsScreenState extends State<BlogDetailsScreen> {
               child: Column(
                 children: [
                   Container(
-                    margin: EdgeInsets.fromLTRB(0, MediaQuery.of(context).size.height*0.03, 0, MediaQuery.of(context).size.height*0.03),
-                    height: MediaQuery.of(context).size.height*0.06,
+                    margin: EdgeInsets.fromLTRB(
+                        0,
+                        MediaQuery.of(context).size.height * 0.03,
+                        0,
+                        MediaQuery.of(context).size.height * 0.03),
+                    height: MediaQuery.of(context).size.height * 0.06,
                     child: Row(
                       children: [
                         Container(
                           margin: EdgeInsets.only(top: 10),
                           child: IconButton(
-                              icon: Icon(Icons.arrow_back_ios, color: Colors.white),
+                              icon: Icon(Icons.arrow_back_ios,
+                                  color: Colors.white),
                               onPressed: () {
                                 Navigator.of(context).pop();
                               }),
@@ -110,7 +133,7 @@ class _BlogDetailsScreenState extends State<BlogDetailsScreen> {
                             topLeft: Radius.circular(30.0),
                             topRight: Radius.circular(30.0)),
                         color: HexColor("FAFAFA")),
-                    height: MediaQuery.of(context).size.height*0.88,
+                    height: MediaQuery.of(context).size.height * 0.88,
                     width: MediaQuery.of(context).size.width,
                     padding: EdgeInsets.all(10),
                   )
@@ -118,49 +141,55 @@ class _BlogDetailsScreenState extends State<BlogDetailsScreen> {
               ),
             ),
             Positioned(
-              top: MediaQuery.of(context).size.height*0.12,
-              left: MediaQuery.of(context).size.height*0.012,
-              right: MediaQuery.of(context).size.height*0.012,
+              top: MediaQuery.of(context).size.height * 0.12,
+              left: MediaQuery.of(context).size.height * 0.012,
+              right: MediaQuery.of(context).size.height * 0.012,
               child: Container(
-                height: MediaQuery.of(context).size.height*0.88,
+                height: MediaQuery.of(context).size.height * 0.90,
                 child: SingleChildScrollView(
-                  child: Container(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          margin: EdgeInsets.only(top: 30),
-                          height: MediaQuery.of(context).size.height*0.24,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              color: Colors.white
-                          ),
-                          alignment: Alignment.center,
-                          child: Image.asset(MyImage.videoUrlImage, fit: BoxFit.fill),
-                        ),
-                        SizedBox(height: 20),
-                        Text(Utils.convertDate(widget.contentResponse.createdOn, DateFormat("MMM dd, yyyy")), style: AppTheme.regularTextStyle().copyWith(fontSize: 14,color: Color.fromRGBO(111, 111, 111, 1))),
-                        SizedBox(height: 5),
-                        Text(contentTitle!, style: AppTheme.customTextStyle(MyFont.SSPro_semibold, 20.0, Color.fromRGBO(0, 0, 0, 1))),
-                        SizedBox(height: 30),
-                        Html(
-                          data: contentDesc,
-                          style: {
-                            "body" : Style(
-                                fontFamily: MyFont.SSPro_regular,
-                                fontSize: FontSize.medium
-                            )
-                          },
-                        ),
-                        SizedBox(height: 10),
-                        imageLink.isNotEmpty ? _contentTypeAction("Image", imageLink) : Container(),
-                        doclink.isNotEmpty ? _contentTypeAction("Files", doclink) : Container(),
-                        videoLink.isNotEmpty ? _contentTypeAction("Video", videoLink) : Container(),
-                        audioLink.isNotEmpty ? _contentTypeAction("Audio", audioLink) : Container(),
-                        webLink.isNotEmpty ? _contentTypeAction("Links", webLink) : Container(),
-                      ],
-                    ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        margin: EdgeInsets.only(top: 30),
+                        height: MediaQuery.of(context).size.height * 0.24,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            color: Colors.white),
+                        alignment: Alignment.center,
+                        child: Image.asset(MyImage.videoUrlImage,
+                            fit: BoxFit.fill),
+                      ),
+                      SizedBox(height: 20),
+                      Text(
+                          Utils.convertDate(widget.contentResponse.createdOn,
+                              DateFormat("MMM dd, yyyy")),
+                          style: AppTheme.regularTextStyle().copyWith(
+                              fontSize: 14,
+                              color: Color.fromRGBO(111, 111, 111, 1))),
+                      SizedBox(height: 5),
+                      Text(contentTitle!,
+                          style: AppTheme.customTextStyle(
+                              MyFont.SSPro_semibold,
+                              20.0,
+                              Color.fromRGBO(0, 0, 0, 1))),
+                      SizedBox(height: 30),
+                      Html(
+                        data: contentDesc,
+                        style: {
+                          "body": Style(
+                              fontFamily: MyFont.SSPro_regular,
+                              fontSize: FontSize.medium)
+                        },
+                      ),
+                      SizedBox(height: 10),
+                      imageList.length > 0 ? imageWidget() : Container(),
+                      // doclink.length > 0 ? docWidget() : Container(),
+                      videoList.length > 0 ? videoWidget() : Container(),
+                      //  audioList.length > 0 ? audioWidget() : Container(),
+                      webList.length > 0 ? webWidget() : Container(),
+                    ],
                   ),
                 ),
               ),
@@ -171,20 +200,131 @@ class _BlogDetailsScreenState extends State<BlogDetailsScreen> {
     );
   }
 
-  _contentTypeAction(String type, String link){
+  imageWidget() {
+    return Container(
+      child: Wrap(
+        children: [
+      Padding(padding: EdgeInsets.all(10),child: Text("Images" + " (" + imageList.length.toString() + ")")),
+    SizedBox(
+    width:screenWeight,
+    height: (screenWeight-40)/3,
+            child: GridView.builder(
+                scrollDirection: Axis.horizontal,
+                shrinkWrap: true,
+                gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                    maxCrossAxisExtent: (screenWeight-40)/3,
+                    crossAxisSpacing: 10,
+                    mainAxisSpacing: 10),
+                itemCount: imageList.length,
+                itemBuilder: (BuildContext ctx, index) {
+                  return _listRowItem(ctx, index);
+                }),
+          ),
+        ],
+      ),
+    );
+  }
+
+  videoWidget() {
+    return Container(
+      height: double.maxFinite,
+      child: Wrap(
+        children: [
+          Padding(padding: EdgeInsets.all(10),child: Text("Videos" + " (" + videoList.length.toString() + ")")),
+    SizedBox(
+    width:screenWeight,
+    height: (screenWeight-40)/3,
+    child:GridView.builder(
+        scrollDirection: Axis.horizontal,
+              itemCount: videoList.length,
+              shrinkWrap: true,
+              gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                  maxCrossAxisExtent: (screenWeight-40)/3,
+                  crossAxisSpacing: 10,
+                  mainAxisSpacing: 10),
+
+              itemBuilder: (BuildContext ctx, index) {
+                return _listRowItemVideo(ctx, index);
+              })),
+        ],
+      ),
+    );
+  }
+
+  docWidget() {
+    return Container(
+      child: Wrap(
+        children: [
+          Text("Document" + " (" + docList.length.toString() + ")"),
+          GridView.builder(
+              shrinkWrap: true,
+              gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                  maxCrossAxisExtent: 200,
+                  childAspectRatio: 3 / 2,
+                  crossAxisSpacing: 20,
+                  mainAxisSpacing: 20),
+              itemCount: docList.length,
+              itemBuilder: (BuildContext ctx, index) {
+                return _listRowItemDoc(ctx, index);
+              }),
+        ],
+      ),
+    );
+  }
+
+  audioWidget() {
+    return Container(
+      child: Wrap(
+        children: [
+          Text("Audio" + " (" + audioList.length.toString() + ")"),
+          GridView.builder(
+              shrinkWrap: true,
+              gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                  maxCrossAxisExtent: 200,
+                  childAspectRatio: 3 / 2,
+                  crossAxisSpacing: 20,
+                  mainAxisSpacing: 20),
+              itemCount: audioList.length,
+              itemBuilder: (BuildContext ctx, index) {
+                return _listRowAudioDoc(ctx, index);
+              }),
+        ],
+      ),
+    );
+  }
+
+  webWidget() {
+    return Container(
+      child: Wrap(
+        children: [
+          Text("Link" + " (" + webList.length.toString() + ")"),
+          ListView.builder(
+              itemCount: webList.length,
+              shrinkWrap: true,
+              physics: ScrollPhysics(),
+              padding: EdgeInsets.only(top: 20),
+              itemBuilder: (BuildContext context, int position) {
+                return _listWebDoc(context, position);
+              }),
+        ],
+      ),
+    );
+  }
+
+  _contentTypeAction(String type, String link) {
     return InkWell(
-      onTap: (){
-        if(type.compareTo("Image") == 0){
+      onTap: () {
+        if (type.compareTo("Image") == 0) {
           Utils.navigateToScreen(context, ImageViewerScreen(link));
-        } else if(type.compareTo("Files") == 0){
+        } else if (type.compareTo("Files") == 0) {
           Utils.navigateToScreen(context, DocumentViewerScreen(link));
-        } else if(type.compareTo("Video") == 0){
-          if(link.contains("https://www.youtube.com/") == 0){
+        } else if (type.compareTo("Video") == 0) {
+          if (link.contains("https://www.youtube.com/") == 0) {
             Utils.navigateToScreen(context, DisplayWebview(link));
           } else {
             Utils.navigateToScreen(context, VideoPlayerScreen(link));
           }
-        } else if(type.compareTo("Audio") == 0){
+        } else if (type.compareTo("Audio") == 0) {
           Utils.navigateToScreen(context, AudioPlayerScreen(link));
         } else {
           Utils.navigateToScreen(context, DisplayWebview(link));
@@ -192,16 +332,20 @@ class _BlogDetailsScreenState extends State<BlogDetailsScreen> {
       },
       child: Container(
         padding: EdgeInsets.all(5),
-        child: Text(link, style: AppTheme.regularTextStyle().copyWith(color: Colors.blue)),
+        child: Text(link,
+            style: AppTheme.regularTextStyle().copyWith(color: Colors.blue)),
       ),
     );
   }
 
   void _translateData() {
     Utils.showLoader(true, context);
-    String inputData = widget.contentResponse.contentTitle + "==)" +widget.contentResponse.content;
-    WebService.translateApiCall(languageCode!, inputData, (isSuccess, response){
-      if(isSuccess){
+    String inputData = widget.contentResponse.contentTitle +
+        "==)" +
+        widget.contentResponse.content;
+    WebService.translateApiCall(languageCode!, inputData,
+        (isSuccess, response) {
+      if (isSuccess) {
         setState(() {
           contentTitle = response.toString().split("==)")[0];
           contentDesc = response.toString().split("==)")[1];
@@ -213,4 +357,75 @@ class _BlogDetailsScreenState extends State<BlogDetailsScreen> {
     });
   }
 
+  _listRowItem(BuildContext context, int position) {
+    return InkWell(
+      onTap: () {
+        Utils.navigateToScreen(context, ImageViewerScreen(imageList[position]));
+      },
+      child: Container(
+        height: screenWeight-40/3,
+        width: screenWeight-40/3,
+          decoration: new BoxDecoration(
+            shape: BoxShape.circle,
+            image: new DecorationImage(
+              fit: BoxFit.fill,
+              image: new CachedNetworkImageProvider(imageList[position]),
+            ),
+          ),
+        )
+    );
+  }
+
+  _listRowItemVideo(BuildContext context, int position) {
+    return InkWell(
+      onTap: () {
+        Utils.navigateToScreen(context, VideoPlayerScreen(videoList[position]));
+      },
+      child: Container(
+        height:screenHeight*50,
+        width: screenWeight-40/3,
+        child: Image.asset(MyImage.audioUrlImage, fit: BoxFit.fill),
+      ),
+    );
+  }
+
+  _listRowItemDoc(BuildContext context, int position) {
+    return InkWell(
+      onTap: () {
+        Utils.navigateToScreen(
+            context, DocumentViewerScreen(docList[position]));
+      },
+      child: Container(
+        decoration: BoxDecoration(borderRadius: BorderRadius.circular(15)),
+        alignment: Alignment.center,
+        child: Image.asset(MyImage.audioUrlImage, fit: BoxFit.fill),
+      ),
+    );
+  }
+
+  _listRowAudioDoc(BuildContext context, int position) {
+    return InkWell(
+      onTap: () {
+        Utils.navigateToScreen(context, AudioPlayerScreen(audioList[position]));
+      },
+      child: Container(
+        decoration: BoxDecoration(borderRadius: BorderRadius.circular(15)),
+        alignment: Alignment.center,
+        child: Image.asset(MyImage.audioUrlImage, fit: BoxFit.fill),
+      ),
+    );
+  }
+
+  _listWebDoc(BuildContext context, int position) {
+    return InkWell(
+      onTap: () {
+        Utils.navigateToScreen(context, DisplayWebview(webList[position]));
+      },
+      child: Container(
+          child: Text(
+        webList[position],
+        style: TextStyle(color: Colors.blueAccent),
+      )),
+    );
+  }
 }

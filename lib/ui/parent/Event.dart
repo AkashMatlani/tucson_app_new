@@ -4,7 +4,11 @@ import 'package:flutter_svg/svg.dart';
 import 'package:tucson_app/GeneralUtils/ColorExtension.dart';
 import 'package:tucson_app/GeneralUtils/Constant.dart';
 import 'package:tucson_app/GeneralUtils/LabelStr.dart';
+import 'package:tucson_app/GeneralUtils/Utils.dart';
 import 'package:tucson_app/Model/GridListItems.dart';
+import 'package:tucson_app/WebService/WebService.dart';
+import 'package:tucson_app/ui/DisplayWebview.dart';
+import 'package:tucson_app/ui/WebViewEmpty.dart';
 
 class Event extends StatefulWidget {
   @override
@@ -87,7 +91,28 @@ class _EventScreenState extends State<Event> {
                     itemBuilder: (BuildContext ctx, index) {
                       return GestureDetector(
                           onTap: () {
-                            print("Clicked");
+                            if (index == 0) {
+                              var params = {
+                                "schoolId": 1,
+                                "roleId": 0,
+                                "contentTypeName": "TUSDCalendar"
+                              };
+                              getWebApiFromUrl(context, params);
+                            } else if (index == 1) {
+                              var params = {
+                                "schoolId": 1,
+                                "roleId": 0,
+                                "contentTypeName": "FRCSchedule"
+                              };
+                              getWebApiFromUrl(context, params);
+                            } else if (index == 2) {
+                              var params = {
+                                "schoolId": 1,
+                                "roleId": 0,
+                                "contentTypeName": "parentuniversity"
+                              };
+                              getWebApiFromUrl(context, params);
+                            }
                           },
                           child: Card(
                               shape: RoundedRectangleBorder(
@@ -134,5 +159,25 @@ class _EventScreenState extends State<Event> {
         ],
       ),
     );
+  }
+
+  getWebApiFromUrl(BuildContext context, Map<String, Object?> params) {
+    Utils.showLoader(true, context);
+    WebService.postAPICall(WebService.parentContentByType, params)
+        .then((response) {
+      Utils.showLoader(false, context);
+      if (response.statusCode == 1) {
+        if (response.body != null) {
+          String webUrl =
+          response.body[0]["contentTransactionTypeJoin"][0]["objectPath"];
+          Utils.navigateToScreen(context, DisplayWebview(webUrl));
+        }
+      } else {
+        Utils.showToast(context, response.message, Colors.red);
+      }
+    }).catchError((error) {
+      Utils.showLoader(false, context);
+      Utils.navigateToScreen(context, WebViewEmpty());
+    });
   }
 }

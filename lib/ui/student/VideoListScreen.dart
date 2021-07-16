@@ -14,8 +14,6 @@ import 'package:tucson_app/ui/DisplayWebview.dart';
 import 'package:tucson_app/ui/VideoPlayerScreen.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
 
-
-
 class VideoListScreen extends StatefulWidget {
 
   VideoListScreen(this.title);
