@@ -104,7 +104,9 @@ class MyImage {
   static const splashImage="assets/images/bg_images/launch_image.png";
   static const videoUrlImage = "assets/images/bg_images/default_video_thumb.png";
   static const audioUrlImage = "assets/images/bg_images/default_audio_thumb.jpg";
-
+  static const articleThubmail = "assets/images/icons/article.svg";
+  static const blogThubmail = "assets/images/icons/blog.svg";
+  static const storiesThubmail = "assets/images/icons/stories.svg";
 }
 
 class MyColor {

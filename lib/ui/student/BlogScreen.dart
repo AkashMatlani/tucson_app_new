@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 import 'package:tucson_app/GeneralUtils/Constant.dart';
 import 'package:tucson_app/GeneralUtils/LabelStr.dart';
@@ -28,10 +29,17 @@ class _BlogScreenState extends State<BlogScreen> {
   bool isLoading = true;
   List<ContentResponse> _contentList = [];
   String? languageCode;
-
+  String svgPicture="";
   @override
   void initState() {
     super.initState();
+    if (widget.title.compareTo('student_blogs'.tr()) == 0 || widget.title.compareTo('blogs'.tr()) == 0) {
+      svgPicture = MyImage.blogThubmail;
+    } else if (widget.title.compareTo('stories'.tr()) == 0) {
+      svgPicture = MyImage.storiesThubmail;
+    } else if (widget.title.compareTo('articles'.tr()) == 0) {
+      svgPicture = MyImage.articleThubmail;
+    }
     _getSchoolId();
   }
 
@@ -148,7 +156,7 @@ class _BlogScreenState extends State<BlogScreen> {
                             placeholder: (context, url) => Container(height: 40, width: 40, alignment: Alignment.center, child: CircularProgressIndicator()),
                             errorWidget: (context, url, error) => Image.asset(MyImage.videoUrlImage),
                           ),
-                        )*/ Image.asset(MyImage.videoUrlImage, fit: BoxFit.fill),
+                        )*/ SvgPicture.asset(svgPicture, fit: BoxFit.fitWidth,height:  MediaQuery.of(context).size.height*0.24,width: 400,),
             ),
             Padding(
                 padding: EdgeInsets.only(top: 15),

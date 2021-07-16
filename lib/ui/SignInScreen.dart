@@ -43,8 +43,8 @@ class _SignInScreenState extends State<SignInScreen> {
   void initState() {
     super.initState();
     getSharedPrefsData();
-    //_emailController.text="pamela.leeper12@yopmail.com";
-    //_pwdController.text="12345678";
+    _emailController.text="pamela.leeper12@yopmail.com";
+    _pwdController.text="12345678";
   }
 
   getSharedPrefsData() async {

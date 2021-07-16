@@ -1,7 +1,7 @@
-
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:mime/mime.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:tucson_app/GeneralUtils/ColorExtension.dart';
 import 'package:tucson_app/GeneralUtils/Constant.dart';
@@ -12,11 +12,12 @@ import 'package:tucson_app/Model/ContentResponse.dart';
 import 'package:tucson_app/WebService/WebService.dart';
 import 'package:tucson_app/ui/DisplayWebview.dart';
 import 'package:tucson_app/ui/VideoPlayerScreen.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
 
 class VideoListScreen extends StatefulWidget {
-
   VideoListScreen(this.title);
+
   String title;
 
   @override
@@ -24,23 +25,22 @@ class VideoListScreen extends StatefulWidget {
 }
 
 class _VideoListScreenState extends State<VideoListScreen> {
-
   bool isLoading = true;
   String? languageCode;
   List<ContentTransactionResponse> _videoList = [];
- late String imagePath="";
- List<String> _imageLink=[];
+  late String imagePath = "";
+  List<String> _imageLink = [];
+
   @override
   void initState() {
     super.initState();
     _getSchoolId();
-
   }
 
   _getSchoolId() async {
     int schoolId = await PrefUtils.getValueFor(PrefUtils.schoolId);
     languageCode = await PrefUtils.getValueFor(PrefUtils.sortLanguageCode);
-    if(schoolId == null){
+    if (schoolId == null) {
       schoolId = 0;
     }
     _getContentList(schoolId);
@@ -56,14 +56,19 @@ class _VideoListScreenState extends State<VideoListScreen> {
             child: Column(
               children: [
                 Container(
-                  margin: EdgeInsets.fromLTRB(0, MediaQuery.of(context).size.height*0.03, 0, MediaQuery.of(context).size.height*0.03),
-                  height: MediaQuery.of(context).size.height*0.06,
+                  margin: EdgeInsets.fromLTRB(
+                      0,
+                      MediaQuery.of(context).size.height * 0.03,
+                      0,
+                      MediaQuery.of(context).size.height * 0.03),
+                  height: MediaQuery.of(context).size.height * 0.06,
                   child: Row(
                     children: [
                       Container(
                         margin: EdgeInsets.only(top: 10),
                         child: IconButton(
-                            icon: Icon(Icons.arrow_back_ios, color: Colors.white),
+                            icon:
+                                Icon(Icons.arrow_back_ios, color: Colors.white),
                             onPressed: () {
                               Navigator.of(context).pop();
                             }),
@@ -83,7 +88,7 @@ class _VideoListScreenState extends State<VideoListScreen> {
                           topLeft: Radius.circular(30.0),
                           topRight: Radius.circular(30.0)),
                       color: HexColor("FAFAFA")),
-                  height: MediaQuery.of(context).size.height*0.88,
+                  height: MediaQuery.of(context).size.height * 0.88,
                   width: MediaQuery.of(context).size.width,
                   padding: EdgeInsets.all(10),
                 )
@@ -91,21 +96,23 @@ class _VideoListScreenState extends State<VideoListScreen> {
             ),
           ),
           Positioned(
-            top: MediaQuery.of(context).size.height*0.12,
-            left: MediaQuery.of(context).size.height*0.012,
-            right: MediaQuery.of(context).size.height*0.012,
+            top: MediaQuery.of(context).size.height * 0.12,
+            left: MediaQuery.of(context).size.height * 0.012,
+            right: MediaQuery.of(context).size.height * 0.012,
             child: Container(
-              height: MediaQuery.of(context).size.height*0.88,
-              child: _videoList.length == 0 ? emptyListView() : SingleChildScrollView(
-                child:  ListView.builder(
-                    itemCount: _videoList.length,
-                    shrinkWrap: true,
-                    physics: ScrollPhysics(),
-                    padding: EdgeInsets.all(10),
-                    itemBuilder: (BuildContext context, int position){
-                      return _listRowItems(context, position);
-                    }),
-              ),
+              height: MediaQuery.of(context).size.height * 0.88,
+              child: _videoList.length == 0
+                  ? emptyListView()
+                  : SingleChildScrollView(
+                      child: ListView.builder(
+                          itemCount: _videoList.length,
+                          shrinkWrap: true,
+                          physics: ScrollPhysics(),
+                          padding: EdgeInsets.all(10),
+                          itemBuilder: (BuildContext context, int position) {
+                            return _listRowItems(context, position);
+                          }),
+                    ),
             ),
           )
         ],
@@ -114,13 +121,18 @@ class _VideoListScreenState extends State<VideoListScreen> {
   }
 
   _listRowItems(BuildContext context, int index) {
-
     return InkWell(
       onTap: () {
-        if(_videoList[index].objectPath.contains("https://www.youtube.com/")){
-          Utils.navigateToScreen(context, DisplayWebview(_videoList[index].objectPath));
-        }else {
-          Utils.navigateToScreen(context, VideoPlayerScreen(_videoList[index].objectPath));
+        if (_videoList[index].objectPath.contains("https://www.youtube.com/")) {
+         /* Utils.navigateToScreen(
+              context, DisplayWebview(_videoList[index].objectPath));*/
+          _launchYoutubeVideo(_videoList[index].objectPath);
+        } else if (_videoList[index].objectPath.contains("mp4") || _videoList[index].objectPath.contains("mov") ||_videoList[index].objectPath.contains("m4a") ||  _videoList[index].objectPath.contains("3gp") || _videoList[index].objectPath.contains("aac") ||  _videoList[index].objectPath.contains("mkv") ) {
+          Utils.navigateToScreen(
+              context, VideoPlayerScreen(_videoList[index].objectPath));
+        } else {
+          Utils.navigateToScreen(
+              context, DisplayWebview(_videoList[index].objectPath));
         }
       },
       child: Column(
@@ -129,37 +141,36 @@ class _VideoListScreenState extends State<VideoListScreen> {
           children: [
             Container(
               margin: EdgeInsets.only(top: 30),
-              height: MediaQuery.of(context).size.height*0.24,
+              height: MediaQuery.of(context).size.height * 0.24,
               decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  color: Colors.white
-              ),
+                  borderRadius: BorderRadius.circular(20), color: Colors.white),
               alignment: Alignment.center,
               //child: new Image.file(File(imagePath)),
               child: Image.asset(MyImage.videoUrlImage),
             ),
             Padding(
                 padding: EdgeInsets.only(top: 5, bottom: 20),
-                child: Text(
-                    _videoList[index].objectName,
+                child: Text(_videoList[index].objectName,
                     style: AppTheme.customTextStyle(
-                        MyFont.SSPro_bold,
-                        20.0,
-                        Color.fromRGBO(0, 0, 0, 1))))
+                        MyFont.SSPro_bold, 20.0, Color.fromRGBO(0, 0, 0, 1))))
           ]),
     );
-
   }
 
   emptyListView() {
     return Container(
       alignment: Alignment.center,
-      height: MediaQuery.of(context).size.height*0.88,
-      child: isLoading ? Container() : Text('no'.tr()+" "+widget.title+" "+'found'.tr(), style: AppTheme.regularTextStyle().copyWith(fontSize: 18, color: Colors.red)),
+      height: MediaQuery.of(context).size.height * 0.88,
+      child: isLoading
+          ? Container()
+          : Text('no'.tr() + " " + widget.title + " " + 'found'.tr(),
+              style: AppTheme.regularTextStyle()
+                  .copyWith(fontSize: 18, color: Colors.red)),
     );
   }
 
   late String tempdat;
+
   _getContentList(int schoolId) {
     ContentMasterViewModel _contentViewModel = ContentMasterViewModel();
     var params = {
@@ -169,28 +180,28 @@ class _VideoListScreenState extends State<VideoListScreen> {
     };
 
     Utils.showLoader(true, context);
-    _contentViewModel.getContentList(context, params, "Student", (isSuccess, message){
-      if(isSuccess){
+    _contentViewModel.getContentList(context, params, "Student",
+        (isSuccess, message) {
+      if (isSuccess) {
         setState(() {
           _videoList = [];
-          for(var data in _contentViewModel.contentList){
-            for(var innerData in data.contentTransactionTypeJoin){
-              if(innerData.contentTransTypeName.compareTo("Video") == 0){
+          for (var data in _contentViewModel.contentList) {
+            for (var innerData in data.contentTransactionTypeJoin) {
+              if (innerData.contentTransTypeName.compareTo("Video") == 0) {
                 _videoList.add(innerData);
-               _imageLink.add(innerData.objectPath);
+                _imageLink.add(innerData.objectPath);
 
-                tempdat =innerData.objectPath;
-               // getVideoThumbinail(innerData.objectPath);
+                tempdat = innerData.objectPath;
+                // getVideoThumbinail(innerData.objectPath);
               }
             }
           }
         });
-        if(_imageLink.length>=0)
-          {
-            getVideoThumbinail(tempdat);
-          }
+        if (_imageLink.length >= 0) {
+          getVideoThumbinail(tempdat);
+        }
 
-        if(languageCode!.compareTo("en") == 1) {
+        if (languageCode!.compareTo("en") == 1) {
           translateListData();
         } else {
           Utils.showLoader(false, context);
@@ -206,18 +217,19 @@ class _VideoListScreenState extends State<VideoListScreen> {
     });
   }
 
-  translateListData(){
-    List<String> nameList=[];
-    List<ContentTransactionResponse> tempList =[];
-    for(var items in _videoList){
+  translateListData() {
+    List<String> nameList = [];
+    List<ContentTransactionResponse> tempList = [];
+    for (var items in _videoList) {
       nameList.add(items.objectName);
     }
     String nameStr = nameList.join("==)");
-    WebService.translateApiCall(languageCode!, nameStr, (isSuccess, response){
-      if(isSuccess){
+    WebService.translateApiCall(languageCode!, nameStr, (isSuccess, response) {
+      if (isSuccess) {
         List<String> resultArr = response.toString().split("==)");
-        for(int i=0; i< resultArr.length; i++){
-          tempList.add(ContentTransactionResponse(contentTransactionId: _videoList[i].contentTransactionId,
+        for (int i = 0; i < resultArr.length; i++) {
+          tempList.add(ContentTransactionResponse(
+              contentTransactionId: _videoList[i].contentTransactionId,
               contentMasterId: _videoList[i].contentMasterId,
               contentTransTypeId: _videoList[i].contentTransTypeId,
               objectName: resultArr[i],
@@ -236,11 +248,12 @@ class _VideoListScreenState extends State<VideoListScreen> {
     });
   }
 
-  late var  fileName;
+  late var fileName;
+
   getVideoThumbinail(String imageLink) async {
-   /* var status = await Permission.storage.status;
+    /* var status = await Permission.storage.status;
     if (status.isGranted) {
-      *//*    if (io.Platform.isIOS) {
+      */ /*    if (io.Platform.isIOS) {
         io.Directory appDocDirectory;
         appDocDirectory = await getApplicationDocumentsDirectory();
         Directory directory= await new Directory(appDocDirectory.path+'/'+'Download').create(recursive: true);
@@ -250,7 +263,7 @@ class _VideoListScreenState extends State<VideoListScreen> {
         await file.writeAsBytes(bytes);
         return file;
       }
-      else{*//*
+      else{*/ /*
       path = await ExtStorage.getExternalStoragePublicDirectory(ExtStorage.DIRECTORY_DOWNLOADS);
       // File file = new File('$path/$filename');
       // ToastUtils.showToast(context, "Your file save at "+file.toString()+" location", Colors.green);
@@ -278,16 +291,32 @@ class _VideoListScreenState extends State<VideoListScreen> {
     }
     return fileName;*/
 
-     fileName = await VideoThumbnail.thumbnailFile(
+    fileName = await VideoThumbnail.thumbnailFile(
       video: imageLink[0],
       thumbnailPath: (await getApplicationDocumentsDirectory()).path,
       imageFormat: ImageFormat.WEBP,
-      maxHeight: 64, // specify the height of the thumbnail, let the width auto-scaled to keep the source aspect ratio
+      maxHeight: 64,
+      // specify the height of the thumbnail, let the width auto-scaled to keep the source aspect ratio
       quality: 75,
     );
 
-     imagePath=fileName;
-     print("imagePath-->>"+imagePath);
-     return imagePath;
+    imagePath = fileName;
+    print("imagePath-->>" + imagePath);
+    return imagePath;
+  }
+
+  Future<void> _launchYoutubeVideo(String _youtubeUrl) async {
+    if (_youtubeUrl != null && _youtubeUrl.isNotEmpty) {
+      if (await canLaunch(_youtubeUrl)) {
+        final bool _nativeAppLaunchSucceeded = await launch(
+          _youtubeUrl,
+          forceSafariVC: false,
+          universalLinksOnly: true,
+        );
+        if (!_nativeAppLaunchSucceeded) {
+          await launch(_youtubeUrl, forceSafariVC: true);
+        }
+      }
+    }
   }
 }

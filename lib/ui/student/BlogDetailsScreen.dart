@@ -3,6 +3,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 import 'package:tucson_app/GeneralUtils/ColorExtension.dart';
 import 'package:tucson_app/GeneralUtils/Constant.dart';
@@ -47,9 +48,19 @@ class _BlogDetailsScreenState extends State<BlogDetailsScreen> {
   List<String> audioList = [];
   List<String> webList = [];
 
+  String svgPicture="";
+
   @override
   void initState() {
     super.initState();
+    if (widget.title.compareTo('blog_details'.tr()) == 0) {
+      svgPicture = MyImage.blogThubmail;
+    } else if (widget.title.compareTo('story_details'.tr()) == 0) {
+      svgPicture = MyImage.storiesThubmail;
+    } else if (widget.title.compareTo('article_details'.tr()) == 0) {
+      svgPicture = MyImage.articleThubmail;
+    }
+
     for (var data in widget.contentResponse.contentTransactionTypeJoin) {
       if (data.contentTransTypeName.compareTo("Image") == 0) {
         // imageLink = data.objectPath;
@@ -87,10 +98,10 @@ class _BlogDetailsScreenState extends State<BlogDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
-     screenHeight = MediaQuery.of(context).size.height;
-     screenWeight = MediaQuery.of(context).size.width;
+    screenHeight = MediaQuery.of(context).size.height;
+    screenWeight = MediaQuery.of(context).size.width;
     blockSizeVertical = screenHeight / 100;
-    blockSizeHorizontal=screenWeight/100;
+    blockSizeHorizontal = screenWeight / 100;
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
@@ -145,51 +156,51 @@ class _BlogDetailsScreenState extends State<BlogDetailsScreen> {
               left: MediaQuery.of(context).size.height * 0.012,
               right: MediaQuery.of(context).size.height * 0.012,
               child: Container(
-                height: MediaQuery.of(context).size.height * 0.90,
+                height: MediaQuery.of(context).size.height * 0.82,
                 child: SingleChildScrollView(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        margin: EdgeInsets.only(top: 30),
-                        height: MediaQuery.of(context).size.height * 0.24,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            color: Colors.white),
-                        alignment: Alignment.center,
-                        child: Image.asset(MyImage.videoUrlImage,
-                            fit: BoxFit.fill),
-                      ),
-                      SizedBox(height: 20),
-                      Text(
-                          Utils.convertDate(widget.contentResponse.createdOn,
-                              DateFormat("MMM dd, yyyy")),
-                          style: AppTheme.regularTextStyle().copyWith(
-                              fontSize: 14,
-                              color: Color.fromRGBO(111, 111, 111, 1))),
-                      SizedBox(height: 5),
-                      Text(contentTitle!,
-                          style: AppTheme.customTextStyle(
-                              MyFont.SSPro_semibold,
-                              20.0,
-                              Color.fromRGBO(0, 0, 0, 1))),
-                      SizedBox(height: 30),
-                      Html(
-                        data: contentDesc,
-                        style: {
-                          "body": Style(
-                              fontFamily: MyFont.SSPro_regular,
-                              fontSize: FontSize.medium)
-                        },
-                      ),
-                      SizedBox(height: 10),
-                      imageList.length > 0 ? imageWidget() : Container(),
-                      // doclink.length > 0 ? docWidget() : Container(),
-                      videoList.length > 0 ? videoWidget() : Container(),
-                      //  audioList.length > 0 ? audioWidget() : Container(),
-                      webList.length > 0 ? webWidget() : Container(),
-                    ],
+                  child: Container(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          margin: EdgeInsets.only(top: 30),
+                          height: MediaQuery.of(context).size.height * 0.24,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              color: Colors.white),
+                          alignment: Alignment.center,
+                          child: SvgPicture.asset(svgPicture, fit: BoxFit.fitWidth,height:  MediaQuery.of(context).size.height*0.24,width: 400,)),
+                        SizedBox(height: 20),
+                        Text(
+                            Utils.convertDate(widget.contentResponse.createdOn,
+                                DateFormat("MMM dd, yyyy")),
+                            style: AppTheme.regularTextStyle().copyWith(
+                                fontSize: 14,
+                                color: Color.fromRGBO(111, 111, 111, 1))),
+                        SizedBox(height: 5),
+                        Text(contentTitle!,
+                            style: AppTheme.customTextStyle(
+                                MyFont.SSPro_semibold,
+                                20.0,
+                                Color.fromRGBO(0, 0, 0, 1))),
+                        SizedBox(height: 30),
+                        Html(
+                          data: contentDesc,
+                          style: {
+                            "body": Style(
+                                fontFamily: MyFont.SSPro_regular,
+                                fontSize: FontSize.medium)
+                          },
+                        ),
+                        SizedBox(height: 10),
+                        imageList.length > 0 ? imageWidget() : Container(),
+                        // doclink.length > 0 ? docWidget() : Container(),
+                        videoList.length > 0 ? videoWidget() : Container(),
+                          audioList.length > 0 ? audioWidget() : Container(),
+                        // webList.length > 0 ? webWidget() : Container(),
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -204,15 +215,17 @@ class _BlogDetailsScreenState extends State<BlogDetailsScreen> {
     return Container(
       child: Wrap(
         children: [
-      Padding(padding: EdgeInsets.all(10),child: Text("Images" + " (" + imageList.length.toString() + ")")),
-    SizedBox(
-    width:screenWeight,
-    height: (screenWeight-40)/3,
+          Padding(
+              padding: EdgeInsets.all(10),
+              child: Text("Images" + " (" + imageList.length.toString() + ")")),
+          SizedBox(
+            width: screenWeight,
+            height: (screenWeight - 40) / 3,
             child: GridView.builder(
                 scrollDirection: Axis.horizontal,
                 shrinkWrap: true,
                 gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                    maxCrossAxisExtent: (screenWeight-40)/3,
+                    maxCrossAxisExtent: (screenWeight - 40) / 3,
                     crossAxisSpacing: 10,
                     mainAxisSpacing: 10),
                 itemCount: imageList.length,
@@ -227,25 +240,25 @@ class _BlogDetailsScreenState extends State<BlogDetailsScreen> {
 
   videoWidget() {
     return Container(
-      height: double.maxFinite,
       child: Wrap(
         children: [
-          Padding(padding: EdgeInsets.all(10),child: Text("Videos" + " (" + videoList.length.toString() + ")")),
-    SizedBox(
-    width:screenWeight,
-    height: (screenWeight-40)/3,
-    child:GridView.builder(
-        scrollDirection: Axis.horizontal,
-              itemCount: videoList.length,
-              shrinkWrap: true,
-              gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                  maxCrossAxisExtent: (screenWeight-40)/3,
-                  crossAxisSpacing: 10,
-                  mainAxisSpacing: 10),
-
-              itemBuilder: (BuildContext ctx, index) {
-                return _listRowItemVideo(ctx, index);
-              })),
+          Padding(
+              padding: EdgeInsets.all(10),
+              child: Text("Videos" + " (" + videoList.length.toString() + ")")),
+          SizedBox(
+              width: screenWeight,
+              height: (screenWeight - 40) / 3,
+              child: GridView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: videoList.length,
+                  shrinkWrap: true,
+                  gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                      maxCrossAxisExtent: (screenWeight - 40) / 3,
+                      crossAxisSpacing: 10,
+                      mainAxisSpacing: 10),
+                  itemBuilder: (BuildContext ctx, index) {
+                    return _listRowItemVideo(ctx, index);
+                  })),
         ],
       ),
     );
@@ -295,13 +308,12 @@ class _BlogDetailsScreenState extends State<BlogDetailsScreen> {
 
   webWidget() {
     return Container(
-      child: Wrap(
+      child: Column(
         children: [
           Text("Link" + " (" + webList.length.toString() + ")"),
           ListView.builder(
               itemCount: webList.length,
               shrinkWrap: true,
-              physics: ScrollPhysics(),
               padding: EdgeInsets.only(top: 20),
               itemBuilder: (BuildContext context, int position) {
                 return _listWebDoc(context, position);
@@ -359,12 +371,13 @@ class _BlogDetailsScreenState extends State<BlogDetailsScreen> {
 
   _listRowItem(BuildContext context, int position) {
     return InkWell(
-      onTap: () {
-        Utils.navigateToScreen(context, ImageViewerScreen(imageList[position]));
-      },
-      child: Container(
-        height: screenWeight-40/3,
-        width: screenWeight-40/3,
+        onTap: () {
+          Utils.navigateToScreen(
+              context, ImageViewerScreen(imageList[position]));
+        },
+        child: Container(
+          height: screenWeight - 40 / 3,
+          width: screenWeight - 40 / 3,
           decoration: new BoxDecoration(
             shape: BoxShape.circle,
             image: new DecorationImage(
@@ -372,8 +385,7 @@ class _BlogDetailsScreenState extends State<BlogDetailsScreen> {
               image: new CachedNetworkImageProvider(imageList[position]),
             ),
           ),
-        )
-    );
+        ));
   }
 
   _listRowItemVideo(BuildContext context, int position) {
@@ -382,8 +394,8 @@ class _BlogDetailsScreenState extends State<BlogDetailsScreen> {
         Utils.navigateToScreen(context, VideoPlayerScreen(videoList[position]));
       },
       child: Container(
-        height:screenHeight*50,
-        width: screenWeight-40/3,
+        height: screenHeight * 50,
+        width: screenWeight - 40 / 3,
         child: Image.asset(MyImage.audioUrlImage, fit: BoxFit.fill),
       ),
     );
