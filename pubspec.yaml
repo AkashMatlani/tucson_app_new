@@ -58,8 +58,10 @@ dependencies:
   video_thumbnail: ^0.3.3
   location_permissions: ^4.0.0
   location: ^4.3.0
+  extended_masked_text: ^2.2.1
   simple_moment: ^1.1.1
   mime: ^1.0.0
+
 
 dev_dependencies:
   flutter_test:

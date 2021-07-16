@@ -1,12 +1,12 @@
 import 'dart:async';
 import 'dart:convert';
-
+import 'package:easy_localization/easy_localization.dart';
+import 'package:extended_masked_text/extended_masked_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:geolocator/geolocator.dart';
-
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -21,6 +21,7 @@ import 'package:tucson_app/ui/DisplayWebview.dart';
 import 'package:tucson_app/ui/VideoPlayerScreen.dart';
 import 'package:tucson_app/ui/student/StudentDashboardScreen.dart';
 import 'package:url_launcher/url_launcher.dart';
+
 
 class MentalHealthSupportScreen extends StatefulWidget {
   @override
@@ -40,6 +41,9 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
   late var tempvalue;
   late var uint8list = null;
   late bool isPopUpOpenFirst;
+  //int permissionPopUpCount = 0;
+  //var controller = MaskedTextController(mask: '1-800-273-8255', text: '18002738255');
+  var controller = MaskedTextController(mask: '0-000-000-0000', text: '00000000000');
 
   @override
   void didChangeDependencies() {
@@ -54,11 +58,10 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
       schoolId = 0;
     }
 
-    var statusResponse = await Permission.location.status;
-
+    /*var statusResponse = await Permission.location.status;
     if (statusResponse.isGranted) {
       PrefUtils.setBoolValue(PrefUtils.mentalHealthpopUp, false);
-    }
+    }*/
 
     isPopUpOpenFirst = await PrefUtils.getValueFor(PrefUtils.mentalHealthpopUp);
     if (isPopUpOpenFirst == null || isPopUpOpenFirst) {
@@ -102,7 +105,7 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
                         ),
                         Container(
                           margin: EdgeInsets.only(top: 10),
-                          child: Text(LabelStr.lblMentalHealthSupport,
+                          child: Text('mental_health_support'.tr(),
                               style: AppTheme.regularTextStyle()
                                   .copyWith(fontSize: 18, color: Colors.white)),
                         )
@@ -159,18 +162,7 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(20),
                                     color: Colors.white),
-                                child:
-                                    /*ClipRRect(
-                            borderRadius: BorderRadius.circular(10),
-                            child: CachedNetworkImage(
-                              fit: BoxFit.cover,
-                              useOldImageOnUrlChange: false,
-                              imageUrl: getVideoThumbinail(),
-                              placeholder: (context, url) => Container(height: 40, width: 40, alignment: Alignment.center, child: CircularProgressIndicator()),
-                              errorWidget: (context, url, error) => Image.asset(MyImage.videoUrlImage),
-                            ),
-                          )*/
-                                    Image.asset(MyImage.videoUrlImage, fit: BoxFit.fill),
+                                child: Image.asset(MyImage.videoUrlImage, fit: BoxFit.fill),
                               ),
                             ),
                             SizedBox(height: 20),
@@ -214,8 +206,7 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
                                                         .spaceAround,
                                                 children: <Widget>[
                                                   Text(
-                                                    LabelStr
-                                                        .lblBehaviorialHealth,
+                                                    'palo_verde_health'.tr(),
                                                     style: AppTheme
                                                             .regularTextStyle()
                                                         .copyWith(
@@ -269,7 +260,7 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
                                                         .spaceAround,
                                                 children: <Widget>[
                                                   Text(
-                                                    LabelStr.lblTalkSpace,
+                                                    'talk_space'.tr(),
                                                     style: AppTheme
                                                             .regularTextStyle()
                                                         .copyWith(
@@ -310,7 +301,7 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
                                       child: SvgPicture.asset(MyImage.callIcon),
                                     ),
                                     SizedBox(width: 10),
-                                    Text(LabelStr.lblSuicideLifeline,
+                                    Text('prevention_lifeline'.tr(),
                                         style: AppTheme.customTextStyle(
                                             MyFont.SSPro_regular,
                                             16.0,
@@ -324,7 +315,7 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
                               ),
                             ),
                             SizedBox(height: 10),
-                            Text("1-800-273-8255",
+                            Text(controller.text,
                                 style: AppTheme.regularTextStyle()
                                     .copyWith(fontSize: 30)),
                             SizedBox(height: 20),
@@ -354,7 +345,7 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
                                       ),
                                     ),
                                     SizedBox(width: 10),
-                                    Text(LabelStr.lblSuicideLifeline,
+                                    Text('prevention_lifeline'.tr(),
                                         style: AppTheme.customTextStyle(
                                             MyFont.SSPro_regular,
                                             16.0,
@@ -384,13 +375,13 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
     return Container(
         alignment: Alignment.center,
         height: MediaQuery.of(context).size.height * 0.88,
-        child: Text(loadedApiCall ? LabelStr.lblNoMentalHealth : "",
+        child: Text(loadedApiCall ? 'no_mental_health'.tr() : "",
             style: AppTheme.regularTextStyle()
                 .copyWith(fontSize: 18, color: Colors.red)));
   }
 
   _mentalHealthSupportApiCall(int schoolId) {
-    var params = {"schoolId": schoolId};
+    var params = {"schoolId": 19};
     WebService.postAPICall(WebService.tusdSupportBySchoolID, params)
         .then((response) {
       Utils.showLoader(false, context);
@@ -399,8 +390,10 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
           isLoading = false;
           loadedApiCall = true;
           _supportResponse = HealthSupportResponse.fromJson(response.body);
-          getSUpportNotifierMail(
-              _currentPosition.latitude, _currentPosition.longitude);
+          setState(() {
+            controller.updateText(_supportResponse.nsphPhoneNumber);
+          });
+          getSUpportNotifierMail(_currentPosition.latitude, _currentPosition.longitude);
           // mailSend();
           //_launchURL("akash.maltani@dashtechinc.com","test mail from flutter","Testtstststststststststst");
           //sendMail();
@@ -410,7 +403,7 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
       Utils.showLoader(false, context);
       isLoading = false;
       loadedApiCall = true;
-      Utils.showToast(context, LabelStr.connectionError, Colors.red);
+      Utils.showToast(context, 'check_connectivity'.tr(), Colors.red);
     });
   }
 
@@ -471,6 +464,8 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
+      isDismissible: false,
+      enableDrag: false,
       backgroundColor: Colors.transparent,
       builder: (context) => Container(
         decoration: new BoxDecoration(
@@ -496,7 +491,7 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
                   alignment: Alignment.center,
                   child: Padding(
                     padding: const EdgeInsets.fromLTRB(20.0, 20, 10, 10),
-                    child: Text(LabelStr.lblMentalHealthSupport,
+                    child: Text('mental_health_support'.tr(),
                         style: AppTheme.customTextStyle(MyFont.SSPro_bold, 20.0,
                             Color.fromRGBO(0, 0, 0, 1))),
                   ),
@@ -506,12 +501,12 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
                   child: RichText(
                       text: TextSpan(children: [
                     TextSpan(
-                      text: LabelStr.lblHippa,
+                      text: 'mental_health_popup_desc'.tr(),
                       style: AppTheme.regularTextStyle().copyWith(
                           fontSize: 16, color: Color.fromRGBO(0, 0, 0, 1)),
                     ),
                     TextSpan(
-                        text: LabelStr.lblHippLink,
+                        text: 'mental_health_url'.tr(),
                         style: AppTheme.regularTextStyle()
                             .copyWith(fontSize: 16, color: Colors.blueAccent),
                         recognizer: new TapGestureRecognizer()
@@ -546,85 +541,63 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
                           height: blockSizeVertical * 7,
                           width: MediaQuery.of(context).size.width * 0.4,
                           child: TextButton(
-                            child: Text(LabelStr.lblAgree,
+                            child: Text('agree'.tr(),
                                 style: AppTheme.customTextStyle(
                                     MyFont.SSPro_bold,
                                     16.0,
                                     Color.fromRGBO(255, 255, 255, 1))),
                             onPressed: () async {
-                              /*Timer(Duration(milliseconds: 200), (){
-                                _makingPhoneCall(_supportResponse.nsphPhoneNumber);
-                              });*/
-
-                              int age = Utils.calculateAge(DateTime.parse(dob));
-                              if (age >= 13) {
-                                // if (isPopUpOpenFirst == null) {
-                                  Map<Permission, PermissionStatus> status =
+                               Map<Permission, PermissionStatus> status =
                                       await [
                                     Permission.location,
                                   ].request();
+                               print("Popup status :: $status");
 
-                                  print('Permission Reequest');
-                                // }
-
-                                var statusResponse =
-                                    await Permission.location.status;
+                                var statusResponse = await Permission.location.status;
                                 print("Permission status :: $statusResponse");
 
                                 if (statusResponse.isGranted) {
-                                  PrefUtils.setBoolValue(
-                                      PrefUtils.mentalHealthpopUp, false);
-                                  _getCurrentLocation();
                                   Navigator.of(context).pop();
+                                  PrefUtils.setBoolValue(PrefUtils.mentalHealthpopUp, false);
+                                  _getCurrentLocation();
                                 } else if (statusResponse.isDenied ||
                                     statusResponse.isPermanentlyDenied ||
                                     statusResponse.isRestricted) {
-                                  PrefUtils.setBoolValue(
-                                      PrefUtils.mentalHealthpopUp, true);
-                                  Navigator.of(context)
-                                    ..pop()
-                                    ..pop();
-                                  // showDialog(
-                                  //     context: context,
-                                  //     builder: (BuildContext context) =>
-                                  //         CupertinoAlertDialog(
-                                  //           title: Text('Location Permission'),
-                                  //           content: Text(
-                                  //               'This app Location  access to take location'),
-                                  //           actions: <Widget>[
-                                  //             CupertinoDialogAction(
-                                  //                 child: Text('Deny'),
-                                  //                 onPressed: () =>
-                                  //                     Navigator.of(context)
-                                  //                       ..pop()
-                                  //                       ..pop()
-                                  //                       ..pop()),
-                                  //             CupertinoDialogAction(
-                                  //                 child: Text('Settings'),
-                                  //                 onPressed: () {
-                                  //                   Navigator.of(context)
-                                  //                     ..pop()
-                                  //                     ..pop()
-                                  //                     ..pop();
-                                  //
-                                  //                   openAppSettings();
-                                  //                   //_getCurrentLocation();
-                                  //                 }),
-                                  //           ],
-                                  //         ));
+                                  PrefUtils.setBoolValue(PrefUtils.mentalHealthpopUp, true);
+                                  /*permissionPopUpCount++;
+                                  if(permissionPopUpCount > 2){
+                                    showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) =>
+                                            CupertinoAlertDialog(
+                                              title: Text('Location Permission'),
+                                              content: Text(
+                                                  'This app Location  access to take location'),
+                                              actions: <Widget>[
+                                                CupertinoDialogAction(
+                                                    child: Text('Deny'),
+                                                    onPressed: () =>
+                                                    Navigator.of(context)
+                                                      ..pop()
+                                                      ..pop()
+                                                      ..pop()),
+                                                CupertinoDialogAction(
+                                                    child: Text('Settings'),
+                                                    onPressed: () {
+                                                      Navigator.of(context)
+                                                        ..pop()
+                                                        ..pop()
+                                                        ..pop();
+
+                                                      openAppSettings();
+                                                      //_getCurrentLocation();
+                                                    }),
+                                              ],
+                                            ));
+                                  }*/
+                                  //Navigator.of(context)..pop()..pop();
                                 }
                               }
-                              // else {
-                              //   Utils.showToast(
-                              //       context,
-                              //       "Mental Health Support is available only for Students with age >=13 years",
-                              //       Colors.red);
-                              //   Timer(
-                              //       Duration(milliseconds: 100),
-                              //       () => Utils.backWithNoTransition(
-                              //           context, StudentDashboardScreen()));
-                              // }
-                            },
                           ),
                         ),
                       ),
@@ -635,12 +608,11 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
                         height: 50,
                         width: MediaQuery.of(context).size.width * 0.4,
                         child: TextButton(
-                          child: Text(LabelStr.lblCancel,
+                          child: Text('not_agree'.tr(),
                               style: AppTheme.customTextStyle(MyFont.SSPro_bold,
                                   16.0, Color.fromRGBO(255, 255, 255, 1))),
                           onPressed: () {
-                            PrefUtils.setBoolValue(
-                                PrefUtils.mentalHealthpopUp, false);
+                            PrefUtils.setBoolValue(PrefUtils.mentalHealthpopUp, true);
                             Timer(
                                 Duration(milliseconds: 100),
                                 () => Utils.backWithNoTransition(
@@ -691,10 +663,7 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
         .then((Position position) {
       _currentPosition = position;
       if (_currentPosition != null) {
-        print(
-            "${_currentPosition.latitude}, LNG: ${_currentPosition.longitude}");
-        /* List<Placemark> placemarks = await placemarkFromCoordinates(_currentPosition.latitude, _currentPosition.longitude);
-          print(placemarks.)*/
+        print("${_currentPosition.latitude}, LNG: ${_currentPosition.longitude}");
         Timer(Duration(milliseconds: 200), () {
           _mentalHealthSupportApiCall(schoolId);
         });
@@ -702,11 +671,15 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
         isLoading = false;
         Utils.showLoader(false, context);
         Utils.showToast(context, "Location Not Found", Colors.red);
+        Timer(Duration(seconds: 2), (){
+          Navigator.of(context).pop();
+        });
       }
     }).catchError((e) {
       isLoading = false;
       Utils.showLoader(false, context);
       print(e);
+      Navigator.of(context).pop();
     });
   }
 
