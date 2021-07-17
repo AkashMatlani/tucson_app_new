@@ -16,9 +16,9 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
 
 class VideoListScreen extends StatefulWidget {
-  VideoListScreen(this.title);
-
+  VideoListScreen(this.title,this.fromScreen);
   String title;
+  String fromScreen;
 
   @override
   _VideoListScreenState createState() => _VideoListScreenState();
@@ -127,7 +127,7 @@ class _VideoListScreenState extends State<VideoListScreen> {
          /* Utils.navigateToScreen(
               context, DisplayWebview(_videoList[index].objectPath));*/
           _launchYoutubeVideo(_videoList[index].objectPath);
-        } else if (_videoList[index].objectPath.contains("mp4") || _videoList[index].objectPath.contains("mov") ||_videoList[index].objectPath.contains("m4a") ||  _videoList[index].objectPath.contains("3gp") || _videoList[index].objectPath.contains("aac") ||  _videoList[index].objectPath.contains("mkv") ) {
+        } else if (_videoList[index].objectPath.contains("webm")||_videoList[index].objectPath.contains("mp4") || _videoList[index].objectPath.contains("mov") ||_videoList[index].objectPath.contains("m4a") ||  _videoList[index].objectPath.contains("3gp") || _videoList[index].objectPath.contains("aac") ||  _videoList[index].objectPath.contains("mkv") ) {
           Utils.navigateToScreen(
               context, VideoPlayerScreen(_videoList[index].objectPath));
         } else {
@@ -180,7 +180,7 @@ class _VideoListScreenState extends State<VideoListScreen> {
     };
 
     Utils.showLoader(true, context);
-    _contentViewModel.getContentList(context, params, "Student",
+    _contentViewModel.getContentList(context, params, widget.fromScreen,
         (isSuccess, message) {
       if (isSuccess) {
         setState(() {

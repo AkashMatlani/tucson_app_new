@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:tucson_app/GeneralUtils/ColorExtension.dart';
 import 'package:tucson_app/GeneralUtils/Constant.dart';
+import 'package:tucson_app/GeneralUtils/PrefsUtils.dart';
 import 'package:tucson_app/GeneralUtils/Utils.dart';
 import 'package:tucson_app/WebService/WebService.dart';
 import 'package:tucson_app/ui/WebViewEmpty.dart';
@@ -18,6 +19,7 @@ class SchoolPrograms extends StatefulWidget {
 }
 
 class _SchoolProgramScreenState extends State<SchoolPrograms> {
+  late int schoolId;
   List<GridListItems> menuItems = [
     GridListItems(
       name: LabelStr.lblCatlogOfSchools,
@@ -31,6 +33,18 @@ class _SchoolProgramScreenState extends State<SchoolPrograms> {
     GridListItems(name: 'face'.tr(), svgPicture: MyImage.websiteIcon),
   ];
 
+  @override
+  void initState() {
+    super.initState();
+    _getSchoolId();
+  }
+
+  _getSchoolId() async {
+    schoolId = await PrefUtils.getValueFor(PrefUtils.schoolId);
+    if(schoolId == null){
+      schoolId = 0;
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -105,49 +119,49 @@ class _SchoolProgramScreenState extends State<SchoolPrograms> {
                             setState(() {
                               if (index == 0) {
                                 var params = {
-                                  "schoolId": 1,
+                                  "schoolId": schoolId,
                                   "roleId": 0,
                                   "contentTypeName": "CatalogofSchools"
                                 };
                                 getWebApiFromUrl(context, params);
                               } else if (index == 1) {
                                 var params = {
-                                  "schoolId": 1,
+                                  "schoolId": schoolId,
                                   "roleId": 0,
                                   "contentTypeName": "MASSD"
                                 };
                                 getWebApiFromUrl(context, params);
                               } else if (index == 2) {
                                 var params = {
-                                  "schoolId": 1,
+                                  "schoolId": schoolId,
                                   "roleId": 0,
                                   "contentTypeName": "AASSD"
                                 };
                                 getWebApiFromUrl(context, params);
                               } else if (index == 3) {
                                 var params = {
-                                  "schoolId": 1,
+                                  "schoolId": schoolId,
                                   "roleId": 0,
                                   "contentTypeName": "NASSD"
                                 };
                                 getWebApiFromUrl(context, params);
                               } else if (index == 4) {
                                 var params = {
-                                  "schoolId": 1,
+                                  "schoolId": schoolId,
                                   "roleId": 0,
                                   "contentTypeName": "RSSD"
                                 };
                                 getWebApiFromUrl(context, params);
                               } else if (index == 5) {
                                 var params = {
-                                  "schoolId": 1,
+                                  "schoolId": schoolId,
                                   "roleId": 0,
                                   "contentTypeName": "APSSD"
                                 };
                                 getWebApiFromUrl(context, params);
                               } else if (index == 6) {
                                 var params = {
-                                  "schoolId": 1,
+                                  "schoolId": schoolId,
                                   "roleId": 0,
                                   "contentTypeName": "FACE"
                                 };

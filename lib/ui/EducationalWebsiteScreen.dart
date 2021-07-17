@@ -147,7 +147,7 @@ class _EducationalWebsiteScreenState extends State<EducationalWebsiteScreen> {
   _getEducationalWebsite(int schoolId) {
     ContentMasterViewModel _contentViewModel = ContentMasterViewModel();
     var params = {
-      "schoolId": 1,
+      "schoolId": schoolId,
       "roleId": 0,
       "contentTypeName": "EducationalWebsites"
     };

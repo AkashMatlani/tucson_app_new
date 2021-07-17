@@ -129,7 +129,7 @@ class _VolunteerOpportunitiesScreenState extends State<VolunteerOpportunitiesScr
             children: [
               Card(
                 margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                child: Padding(padding:EdgeInsets.all(10),child: SvgPicture.asset(MyImage.dummyIcon)),
+                child: Padding(padding:EdgeInsets.all(10),child: SvgPicture.asset(MyImage.volunteerOpportunities)),
               ),
               Expanded(
                 child: Text(_volunteerList[position].objectName, style: AppTheme.regularTextStyle()),

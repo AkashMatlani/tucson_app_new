@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:tucson_app/GeneralUtils/ColorExtension.dart';
 import 'package:tucson_app/GeneralUtils/Constant.dart';
 import 'package:tucson_app/GeneralUtils/LabelStr.dart';
+import 'package:tucson_app/GeneralUtils/PrefsUtils.dart';
 import 'package:tucson_app/GeneralUtils/Utils.dart';
 import 'package:tucson_app/Model/GridListItems.dart';
 import 'package:tucson_app/WebService/WebService.dart';
@@ -16,6 +17,8 @@ class Event extends StatefulWidget {
 }
 
 class _EventScreenState extends State<Event> {
+
+  late int schoolId;
   List<GridListItems> menuItems = [
     GridListItems(
         name: 'tusd_calendar'.tr(), svgPicture: MyImage.calenderIcon),
@@ -25,6 +28,18 @@ class _EventScreenState extends State<Event> {
         name: 'parent_university'.tr(), svgPicture: MyImage.universityIcon),
   ];
 
+  @override
+  void initState() {
+    super.initState();
+    _getSchoolId();
+  }
+
+  _getSchoolId() async {
+     schoolId = await PrefUtils.getValueFor(PrefUtils.schoolId);
+    if(schoolId == null){
+      schoolId = 0;
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -93,21 +108,21 @@ class _EventScreenState extends State<Event> {
                           onTap: () {
                             if (index == 0) {
                               var params = {
-                                "schoolId": 1,
+                                "schoolId": schoolId,
                                 "roleId": 0,
                                 "contentTypeName": "TUSDCalendar"
                               };
                               getWebApiFromUrl(context, params);
                             } else if (index == 1) {
                               var params = {
-                                "schoolId": 1,
+                                "schoolId": schoolId,
                                 "roleId": 0,
                                 "contentTypeName": "FRCSchedule"
                               };
                               getWebApiFromUrl(context, params);
                             } else if (index == 2) {
                               var params = {
-                                "schoolId": 1,
+                                "schoolId": schoolId,
                                 "roleId": 0,
                                 "contentTypeName": "parentuniversity"
                               };

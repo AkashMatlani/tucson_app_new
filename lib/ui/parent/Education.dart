@@ -11,6 +11,7 @@ import 'package:tucson_app/Model/GridListItems.dart';
 import 'package:tucson_app/ui/ArticlesScreen.dart';
 import 'package:tucson_app/ui/EducationalWebsiteScreen.dart';
 import 'package:tucson_app/ui/student/BlogScreen.dart';
+import 'package:tucson_app/ui/student/VideoListScreen.dart';
 
 import 'ActivitesScreen.dart';
 
@@ -118,14 +119,18 @@ class _EducationScreenState extends State<Education> {
                           onTap: () {
                             if (index == 0) {
                               Utils.navigateToScreen(context, EducationalWebsiteScreen());
-                            } else if (index == 2) {
-                              Utils.navigateToScreen(context, ActivitesScreen());
+                            }
+                            else if (index == 1) {
+                              Utils.navigateToScreen(context, VideoListScreen('videos'.tr(),"Parent"));
+                            }
+                            else if (index == 2) {
+                              Utils.navigateToScreen(context, BlogScreen('activites'.tr(),"Parent"));
                             }
                             else if (index == 3) {
-                              Utils.navigateToScreen(context, ArticlesScreen());
+                              Utils.navigateToScreen(context, BlogScreen('articles'.tr(),"Parent"));
                             }
                             else if (index == 4) {
-                              Utils.navigateToScreen(context, BlogScreen('blogs'.tr()));
+                              Utils.navigateToScreen(context, BlogScreen('blogs'.tr(),"Parent"));
                             }
                           },
                           child: Card(

@@ -132,14 +132,14 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   audio_session: c6d2ee773340776a1af7a6220fba59eef35f99ef
-  connectivity_plus: d9d47defdfa7f4f0a98f8534564ddb03f11dece8
+  connectivity_plus: 5f0eb61093bec56935f21a1699dd2758bc895587
   ext_storage: 2ecd81e79e88a61cb449ad6b187fe8c713d86aa1
   Flutter: 434fef37c0980e73bb6479ef766c45957d4b510c
   flutter_filereader: 81301904585db712048acc997cd41a5a7b833500
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
   geocoder: 3cfab70531a0b367e917bafe82df4c30f6d4c45a
   geocoding: 72e4928b0ec58a108a0b5e1668ac15793a50aa1c
-  geolocator: 760500d4a56745758ce5db6de5c0ed326f6ac25d
+  geolocator: f5e3de65e241caba7ce3e8a618803387bda73384
   just_audio: 0f209479814b75793b5855bb96be1c5b335de554
   libwebp: e90b9c01d99205d03b6bb8f2c8c415e5a4ef66f0
   location: 3a2eed4dd2fab25e7b7baf2a9efefe82b512d740

@@ -59,6 +59,8 @@ class _BlogDetailsScreenState extends State<BlogDetailsScreen> {
       svgPicture = MyImage.storiesThubmail;
     } else if (widget.title.compareTo('article_details'.tr()) == 0) {
       svgPicture = MyImage.articleThubmail;
+    }else if (widget.title.compareTo('activite_details'.tr()) == 0) {
+      svgPicture = MyImage.articleThubmail;
     }
 
     for (var data in widget.contentResponse.contentTransactionTypeJoin) {

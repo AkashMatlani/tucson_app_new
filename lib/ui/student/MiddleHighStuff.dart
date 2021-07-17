@@ -53,14 +53,14 @@ class _MiddleHighStuffState extends State<MiddleHighStuff> {
                   return GestureDetector(
                       onTap: () {
                         if(index == 0){
-                          Utils.navigateToScreen(context, VideoListScreen('videos'.tr()));
+                          Utils.navigateToScreen(context, VideoListScreen('videos'.tr(),"Student"));
                           //Utils.navigateToScreen(context, VideoPlayerScreen("https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4"));
 
                           // Utils.navigateToScreen(context, VideoPlayerScreen());
                         } else if(index == 1){
-                          Utils.navigateToScreen(context, BlogScreen('articles'.tr()));
+                          Utils.navigateToScreen(context, BlogScreen('articles'.tr(),"Student"));
                         } else {
-                          Utils.navigateToScreen(context, BlogScreen('stories'.tr()));
+                          Utils.navigateToScreen(context, BlogScreen('stories'.tr(),"Student"));
                         }
                       },
                       child: Card(

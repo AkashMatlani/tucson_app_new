@@ -5,19 +5,17 @@ import 'package:tucson_app/ui/WebViewEmpty.dart';
 
 import 'ContentResponse.dart';
 
-class ContentMasterViewModel{
-
+class ContentMasterViewModel {
   List<ContentResponse> contentList = [];
 
-  getContentList(BuildContext context, var params, String fromScreen, ResponseCallback callback){
+  getContentList(BuildContext context, var params, String fromScreen,
+      ResponseCallback callback) {
     String webMethod;
-    if(fromScreen.compareTo("Student") == 0){
+    if (fromScreen.compareTo("Student") == 0) {
       webMethod = WebService.studentContentByType;
-    }else if(fromScreen.compareTo("Parent") == 0)
-      {
-        webMethod = WebService.parentContentByType;
-      }
-    else {
+    } else if (fromScreen.compareTo("Parent") == 0) {
+      webMethod = WebService.parentContentByType;
+    } else {
       webMethod = WebService.communityContentByType;
     }
     WebService.postAPICall(webMethod, params).then((response) {
@@ -34,7 +32,7 @@ class ContentMasterViewModel{
     }).catchError((error) {
       contentList = [];
       print(error);
-      callback(false,"");
+      callback(false, "");
     });
   }
 }

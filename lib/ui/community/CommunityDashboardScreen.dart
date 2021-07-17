@@ -33,13 +33,13 @@ class _CommunityDashboardScreenState extends State<CommunityDashboardScreen> {
   bool allowClose = false;
   late List<GridListItems> menuItems = [
     GridListItems(
-        name: 'tusd_calendar'.tr(), svgPicture: MyImage.studentIcon),
+        name: 'tusd_calendar'.tr(), svgPicture: MyImage.calenderIcon),
     GridListItems(
-        name: 'post_jobs'.tr(), svgPicture: MyImage.scholarshipIcon),
+        name: 'post_jobs'.tr(), svgPicture: MyImage.jobsOpening),
     GridListItems(
-        name: 'commmunity_events'.tr(), svgPicture: MyImage.mentalHealthIcon),
+        name: 'commmunity_events'.tr(), svgPicture: MyImage.calenderIcon),
     GridListItems(
-        name: 'volunteer_opportunity'.tr(), svgPicture: MyImage.jobsIcon),
+        name: 'volunteer_opportunity'.tr(), svgPicture: MyImage.volunteerOpportunities),
     GridListItems(name: 'giving_donation'.tr(), svgPicture: MyImage.eventIcon),
     GridListItems(
         name: 'resources'.tr(), svgPicture: MyImage.resourceIcon),
@@ -275,7 +275,7 @@ class _CommunityDashboardScreenState extends State<CommunityDashboardScreen> {
                                       padding: EdgeInsets.fromLTRB(
                                           16.0, 10.0, 16.0, 8.0),
                                       child: SvgPicture.asset(
-                                          menuItems[index].svgPicture)),
+                                          menuItems[index].svgPicture,height: 60,width: 60,)),
                                   Padding(
                                     padding: EdgeInsets.fromLTRB(
                                         16.0, 10.0, 16.0, 8.0),

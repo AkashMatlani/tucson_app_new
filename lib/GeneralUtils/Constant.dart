@@ -52,6 +52,7 @@ class MyImage {
   static const coolStuffIcon = "assets/images/icons/ic_cool_stuff.svg";
   static const eventIcon = "assets/images/icons/ic_event.svg";
   static const jobsIcon = "assets/images/icons/ic_jobs.svg";
+  static const jobsOpening = "assets/images/icons/job_opnings.svg";
   static const logoutIcon = "assets/images/icons/ic_logout.svg";
   static const mentalHealthIcon = "assets/images/icons/ic_mental_health.svg";
   static const scholarshipIcon = "assets/images/icons/ic_scholarship.svg";
@@ -96,6 +97,7 @@ class MyImage {
 
   static const listForwordIcon="assets/images/icons/ic_list_forword.svg";
   static const dummyIcon="assets/images/icons/ic_dummy.svg";
+  static const volunteerOpportunities="assets/images/icons/volunteer_opportunities.svg";
   static const callIcon="assets/images/icons/ic_call.svg";
   static const messageIcon="assets/images/icons/ic_message.svg";
   static const healthSupportIcon="assets/images/icons/ic_health_support.svg";

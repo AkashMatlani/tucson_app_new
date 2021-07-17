@@ -21,7 +21,9 @@ class _DisplayWebviewState extends State<DisplayWebview> {
   @override
   Widget build(BuildContext context) {
     print("WebUrl => ${widget.webViewUrl}");
-    return Scaffold(
+    return WillPopScope(
+        onWillPop: () async => false,
+        child:  Scaffold(
       body: SafeArea(
         child: ProgressHUD(
           child: WebView(
@@ -38,7 +40,7 @@ class _DisplayWebviewState extends State<DisplayWebview> {
           valueColor: new AlwaysStoppedAnimation<Color>(Colors.blue),
         ),
       ),
-    );
+    ));
   }
 
   void pageFinishedLoading(String url) {

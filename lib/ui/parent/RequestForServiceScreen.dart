@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:tucson_app/GeneralUtils/ColorExtension.dart';
 import 'package:tucson_app/GeneralUtils/Constant.dart';
+import 'package:tucson_app/GeneralUtils/PrefsUtils.dart';
 import 'package:tucson_app/GeneralUtils/Utils.dart';
 import 'package:tucson_app/Model/GridListItems.dart';
 import 'package:tucson_app/WebService/WebService.dart';
@@ -20,6 +21,7 @@ class RequestForServiceScreen extends StatefulWidget {
 }
 
 class _RequestForServiceScreenState extends State<RequestForServiceScreen> {
+  late int schoolId;
   List<GridListItems> menuItems = [
     GridListItems(
       name: 'mental_health_support'.tr(), svgPicture: MyImage.mentalHealthIcon,
@@ -37,6 +39,19 @@ class _RequestForServiceScreenState extends State<RequestForServiceScreen> {
         name: 'transportation'.tr(), svgPicture: MyImage.transporation),
   ];
 
+
+  @override
+  void initState() {
+    super.initState();
+    _getSchoolId();
+  }
+
+  _getSchoolId() async {
+    schoolId = await PrefUtils.getValueFor(PrefUtils.schoolId);
+    if(schoolId == null){
+      schoolId = 0;
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -115,7 +130,7 @@ class _RequestForServiceScreenState extends State<RequestForServiceScreen> {
                               }
                             else if (index == 1) {
                               var params = {
-                                "schoolId": 1,
+                                "schoolId": schoolId,
                                 "roleId": 0,
                                 "contentTypeName": "TalkItOut"
                               };
@@ -126,14 +141,14 @@ class _RequestForServiceScreenState extends State<RequestForServiceScreen> {
                             }
                             else if (index == 3) {
                               var params = {
-                                "schoolId": 1,
+                                "schoolId": schoolId,
                                 "roleId": 0,
                                 "contentTypeName": "HealthServices"
                               };
                               getWebApiFromUrl(context, params);
                             } else if (index == 4) {
                               var params = {
-                                "schoolId": 1,
+                                "schoolId": schoolId,
                                 "roleId": 0,
                                 "contentTypeName": "Transportation"
                               };

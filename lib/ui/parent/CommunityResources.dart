@@ -26,19 +26,19 @@ class _CommunityResourcesScreenState extends State<CommunityResources> {
 
   List<GridListItems> menuItems = [
     GridListItems(
-      name: 'community_food_bank'.tr(), svgPicture: MyImage.educationalWebsiteIcon,
+      name: 'community_food_bank'.tr(), svgPicture: MyImage.communityFoodBankIcon,
     ),
     GridListItems(
-        name: 'autisum_society'.tr(), svgPicture: MyImage.videosIcon),
+        name: 'autisum_society'.tr(), svgPicture: MyImage.autisumSocietyIcon),
     GridListItems(
-        name: 'cooperative_extension'.tr(), svgPicture: MyImage.activitesIcon),
+        name: 'cooperative_extension'.tr(), svgPicture: MyImage.uaCooperativeIcon),
     GridListItems(
-        name: 'scholarship'.tr(), svgPicture: MyImage.articlesIcon),
+        name: 'scholarship'.tr(), svgPicture: MyImage.scholarshipIcon),
     GridListItems(
         name: 'family_resources_centers'.tr(),
         svgPicture: MyImage.familyResourcesCenter),
     GridListItems(
-        name: 'clothing_bank'.tr(), svgPicture: MyImage.blogsIcon),
+        name: 'clothing_bank'.tr(), svgPicture: MyImage.clothingBankIcon),
     GridListItems(
         name: 'tusd_counselling'.tr(), svgPicture: MyImage.blogsIcon),
     GridListItems(
