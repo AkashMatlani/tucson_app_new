@@ -47,7 +47,7 @@ class _SignInScreenState extends State<SignInScreen> {
     _pwdController.text="12345678";*/
    /* _emailController.text="akash.maltani@dashtechinc.com";
     _pwdController.text="12345678";*/
-  /*  _emailController.text="Test@gmail.com";
+   /* _emailController.text="Test@gmail.com";
     _pwdController.text="12345678";*/
   }
 
