@@ -1,9 +1,13 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tucson_app/GeneralUtils/Constant.dart';
 import 'package:tucson_app/GeneralUtils/Utils.dart';
 import 'package:tucson_app/Model/SchoolListResponse.dart';
 import 'package:easy_localization/easy_localization.dart';
+
+import 'ColorExtension.dart';
 
 
 class CustomDropDownList extends StatefulWidget {
@@ -22,6 +26,7 @@ class _CustomDropDownListState extends State<CustomDropDownList> {
 
   var _filterController = TextEditingController();
   List<SchoolListResponse> filterList = [];
+  int selectPosition = -1;
 
   @override
   void initState() {
@@ -32,6 +37,15 @@ class _CustomDropDownListState extends State<CustomDropDownList> {
         _filterController.text = "";
       } else {
         _filterController.text = widget.schoolName;
+        Timer(Duration(milliseconds: 50), (){
+          for(int i=0; i<widget.schoolList.length; i++){
+            if(widget.schoolList[i].name.compareTo(widget.schoolName) == 0){
+              setState(() {
+                selectPosition = i;
+              });
+            }
+          }
+        });
       }
     });
   }
@@ -82,6 +96,7 @@ class _CustomDropDownListState extends State<CustomDropDownList> {
                         setState(() {
                           _filterController.text = "";
                           filterList = widget.schoolList;
+                          selectPosition = -1;
                         });
                       }
                     },
@@ -102,7 +117,7 @@ class _CustomDropDownListState extends State<CustomDropDownList> {
                     padding: EdgeInsets.only(top: 20),
                     itemBuilder: (BuildContext context, int position){
                       return ListTile(
-                        title: Text(filterList[position].name, style: AppTheme.regularTextStyle()),
+                        title: Text(filterList[position].name, style: selectPosition == position ? AppTheme.customTextStyle(MyFont.SSPro_bold, 16.0, HexColor("#323643")) :AppTheme.regularTextStyle()),
                         onTap: (){
                           Navigator.of(context).pop(filterList[position]);
                         },
