@@ -343,8 +343,8 @@ class _CalendarPage2State extends State<CalendarPage2> {
             if (isSuccess) {
               upcommingEventList.add(eventist[i]);
             }
-            //DateTime utcFromDate = DateTime.parse(eventist[i].fromDateTime.split('T')[0]).toUtc();
-            DateTime utcFromDate = DateTime.parse(eventist[i].fromDateTime).toUtc();
+            DateTime utcFromDate = DateTime.parse(eventist[i].fromDateTime.split('T')[0]).toUtc();
+            //DateTime utcFromDate = DateTime.parse(eventist[i].fromDateTime).toUtc();
             final convertLocal = utcFromDate.toLocal();
             String date = DateFormat("yyyy,MM,dd").format(convertLocal);
             var dateInFormatText = date.split(",");
@@ -352,7 +352,7 @@ class _CalendarPage2State extends State<CalendarPage2> {
               var currentDate = DateTime.now();
               var eventDate = DateTime.parse(eventist[i].fromDateTime);
               if(currentDate.isBefore(eventDate)){
-                DateTime utcFromDate = DateTime.parse(eventist[i].fromDateTime).toUtc();
+                /*DateTime utcFromDate = DateTime.parse(eventist[i].fromDateTime).toUtc();
                 var localFromDate = utcFromDate.toLocal();
                 String strUtcFromDate = DateFormat("yyyy-MM-dd'T'hh:mm:ss").format(localFromDate);
                 var fromDate = Utils.convertDate(strUtcFromDate, DateFormat("MM/dd/yyyy"))+" "+eventist[i].startTime;
@@ -362,19 +362,21 @@ class _CalendarPage2State extends State<CalendarPage2> {
                 String strUtcToDate = DateFormat("yyyy-MM-dd'T'hh:mm:ss").format(localToDate);
                 var toDate = Utils.convertDate(strUtcToDate, DateFormat("MM/dd/yyyy"))+" "+eventist[i].endTime;
 
-                var eventDetails = eventist[i].eventName+"=>"+fromDate+"=>"+toDate;
+                var eventDetails = eventist[i].eventName+"=>"+fromDate+"=>"+toDate;*/
 
-                /*String localFromDate = eventist[i].fromDateTime.split('T')[0];
-                DateTime utcFromDate = DateTime.parse(localFromDate).toUtc();
-                String strUtcFromDate = DateFormat("MM/dd/yyyy").format(utcFromDate);
+                String resFromDate = eventist[i].fromDateTime.split('T')[0];
+                DateTime utcFromDate = DateTime.parse(resFromDate).toUtc();
+                var localFromDate = utcFromDate.toLocal();
+                String strUtcFromDate = DateFormat("MM/dd/yyyy").format(localFromDate);
                 String fromDate = strUtcFromDate+" "+eventist[i].startTime;
 
-                String localToDate = eventist[i].toDateTime.split('T')[0];
-                DateTime utcToDate = DateTime.parse(localToDate).toUtc();
-                String strUtcToDate = DateFormat("MM/dd/yyyy").format(utcToDate);
+                String resToDate = eventist[i].toDateTime.split('T')[0];
+                DateTime utcToDate = DateTime.parse(resToDate).toUtc();
+                var localToDate = utcToDate.toLocal();
+                String strUtcToDate = DateFormat("MM/dd/yyyy").format(localToDate);
                 String toDate = strUtcToDate+" "+eventist[i].endTime;
 
-                var eventDetails = eventist[i].eventName+"=>"+fromDate+"=>"+toDate;*/
+                var eventDetails = eventist[i].eventName+"=>"+fromDate+"=>"+toDate;
 
 
                 _markedDateMap.add(
@@ -518,8 +520,8 @@ class _CalendarPage2State extends State<CalendarPage2> {
 
   _listRowItem(BuildContext context, int position) {
 
-    //String localFromDate = upcommingEventList[position].fromDateTime.split('T')[0];
-    String localFromDate = upcommingEventList[position].fromDateTime;
+    String localFromDate = upcommingEventList[position].fromDateTime.split('T')[0];
+    //String localFromDate = upcommingEventList[position].fromDateTime;
     DateTime utcFromDate = DateTime.parse(localFromDate).toUtc();
     var fromDate = utcFromDate.toLocal();
     String displayDate = DateFormat("MM/dd/yyyy").format(fromDate);
@@ -548,33 +550,21 @@ class _CalendarPage2State extends State<CalendarPage2> {
           ),
         );
 
-        //Event From Date from UTC
-        /*String localFromDate = upcommingEventList[position].fromDateTime.split('T')[0];
-        DateTime utcFromDate = DateTime.parse(localFromDate).toUtc();
-        String strUtcFromDate = DateFormat("MM/dd/yyyy").format(utcFromDate);
+        String resFromDate = upcommingEventList[position].fromDateTime.split('T')[0];
+        DateTime utcFromDate = DateTime.parse(resFromDate).toUtc();
+        var localFromDate = utcFromDate.toLocal();
+        String strUtcFromDate = DateFormat("MM/dd/yyyy").format(localFromDate);
         String fromDate = strUtcFromDate+" "+upcommingEventList[position].startTime;
 
-        //Event To Date from UTC
-        String localToDate = upcommingEventList[position].toDateTime.split('T')[0];
-        DateTime utcToDate = DateTime.parse(localToDate).toUtc();
-        String strUtcToDate = DateFormat("MM/dd/yyyy").format(utcToDate);
+        String resToDate = upcommingEventList[position].toDateTime.split('T')[0];
+        DateTime utcToDate = DateTime.parse(resToDate).toUtc();
+        var localToDate = utcToDate.toLocal();
+        String strUtcToDate = DateFormat("MM/dd/yyyy").format(localToDate);
         String toDate = strUtcToDate+" "+upcommingEventList[position].endTime;
 
-        var eventDetails = upcommingEventList[position].eventName+"=>"+fromDate+"=>"+toDate;*/
+        var eventDetails = upcommingEventList[position].eventName+"=>"+fromDate+"=>"+toDate;
 
-        //String date = "2021-07-19T18:30:00";
-        String date = "2021-07-20T13:00:00Z";
-        var strToDateTime = DateTime.parse(date.toString()).toUtc();
-        final convertLocal = strToDateTime.toLocal();
-        print("CurrDateUtc 2 => ${convertLocal.toString()}");
-        var newFormat = DateFormat("yy-MM-dd hh:mm:ss aaa");
-        String updatedDt = newFormat.format(convertLocal);
-        print("updatedDt  => ${updatedDt}");
-
-        Moment rawDate = Moment.parse(date);
-        rawDate.format("dd-MM-yyyy HH:mm");
-
-        DateTime utcFromDate = DateTime.parse(upcommingEventList[position].fromDateTime).toUtc();
+        /*DateTime utcFromDate = DateTime.parse(upcommingEventList[position].fromDateTime).toUtc();
         var localFromDate = utcFromDate.toLocal();
         String strUtcFromDate = DateFormat("yyyy-MM-dd'T'hh:mm:ss").format(localFromDate);
         var fromDate = Utils.convertDate(strUtcFromDate, DateFormat("MM/dd/yyyy"))+" "+upcommingEventList[position].startTime;
@@ -584,7 +574,7 @@ class _CalendarPage2State extends State<CalendarPage2> {
         String strUtcToDate = DateFormat("yyyy-MM-dd'T'hh:mm:ss").format(localToDate);
         var toDate = Utils.convertDate(strUtcToDate, DateFormat("MM/dd/yyyy"))+" "+upcommingEventList[position].endTime;
 
-        var eventDetails = upcommingEventList[position].eventName+"=>"+fromDate+"=>"+toDate;
+        var eventDetails = upcommingEventList[position].eventName+"=>"+fromDate+"=>"+toDate;*/
 
         bottomMenu(eventDetails, details);
       },

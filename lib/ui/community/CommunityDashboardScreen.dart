@@ -155,20 +155,7 @@ class _CommunityDashboardScreenState extends State<CommunityDashboardScreen> {
                               children: [
                                 InkWell(
                                   onTap: (){
-                                    Navigator.push(context, MaterialPageRoute(builder: (context) => LanguageDropDownList(languageList, StaticListItems(value: sortLanguageCode, name: languageName)))).then((value){
-                                      setState(() {
-                                        StaticListItems selectedItems = value;
-                                        sortLanguageCode = selectedItems.value;
-                                        languageName = selectedItems.name;
-
-                                        PrefUtils.setStringValue(PrefUtils.yourLanguage, languageName);
-                                        PrefUtils.setStringValue(PrefUtils.sortLanguageCode, sortLanguageCode);
-                                        context.setLocale(Locale(sortLanguageCode, 'US'));
-                                        if (firstName.isNotEmpty && sortLanguageCode.compareTo("en") == 1) {
-                                          _getFirstName();
-                                        }
-                                      });
-                                    });
+                                    Utils.backWithNoTransition(context, LanguageDropDownList(languageList, "Community", StaticListItems(name: languageName, value: sortLanguageCode)));
                                   },
                                   child: Container(
                                     padding: EdgeInsets.all(8),
