@@ -185,7 +185,7 @@ class _VolunteerOpportunitiesScreenState extends State<VolunteerOpportunitiesScr
             }
           }
         });
-        if(languageCode!.compareTo("en") == 1){
+        if(languageCode!.compareTo("en") != 0){
           translateListData();
         } else {
           Utils.showLoader(false, context);
@@ -219,10 +219,11 @@ class _VolunteerOpportunitiesScreenState extends State<VolunteerOpportunitiesScr
               objectPath: _volunteerList[i].objectPath,
               contentTransTypeName: _volunteerList[i].contentTransTypeName));
         }
-        setState(() {
-          _volunteerList = [];
-          _volunteerList.addAll(tempList);
-        });
+        if(_volunteerList.length == tempList.length){
+          setState(() {
+            _volunteerList = tempList;
+          });
+        }
       } else {
         Utils.showToast(context, "Page Translation Failed", Colors.red);
       }

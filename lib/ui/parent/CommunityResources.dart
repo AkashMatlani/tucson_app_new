@@ -15,8 +15,8 @@ import 'package:url_launcher/url_launcher.dart';
 
 class CommunityResources extends StatefulWidget {
 
-  String title;
-  CommunityResources(this.title);
+  String fromScreen;
+  CommunityResources(this.fromScreen);
 
   @override
   _CommunityResourcesScreenState createState() =>
@@ -155,7 +155,7 @@ class _CommunityResourcesScreenState extends State<CommunityResources> {
                               };
                               getWebApiFromUrl(context, params);
                             } else if (index == 3) {
-                              Utils.navigateToScreen(context, ScholarshipInfoScreen(widget.title));
+                              Utils.navigateToScreen(context, ScholarshipInfoScreen(widget.fromScreen));
                             } else if (index == 4) {
                               var params = {
                                 "schoolId": schoolId,
@@ -237,7 +237,7 @@ class _CommunityResourcesScreenState extends State<CommunityResources> {
   getWebApiFromUrl(BuildContext context, Map<String, Object> params) {
     Utils.showLoader(true, context);
     String webMethod;
-    if(widget.title.compareTo("Parent") == 0){
+    if(widget.fromScreen.compareTo("Parent") == 0){
       webMethod = WebService.parentContentByType;
     } else {
       webMethod = WebService.communityContentByType;

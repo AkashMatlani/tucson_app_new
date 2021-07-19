@@ -33,7 +33,7 @@ class _DonationScreenState extends State<DonationScreen> {
   @override
   void initState() {
     super.initState();
-    if (Platform.isAndroid) WebView.platform = SurfaceAndroidWebView();
+    //if (Platform.isAndroid) WebView.platform = SurfaceAndroidWebView();
     getSharedPrefsData();
   }
 
@@ -136,7 +136,7 @@ class _DonationScreenState extends State<DonationScreen> {
       Utils.showLoader(false, context);
       if (response.statusCode == 1) {
         donationDetails = DonationResponse.fromJson(response.body);
-        if(languageCode!.compareTo("en") == 1){
+        if(languageCode!.compareTo("en") != 0){
           translateDonationData();
         } else {
           setState(() {

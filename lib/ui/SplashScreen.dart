@@ -94,7 +94,7 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   _translateMessage(String message){
-    if(languageCode!.compareTo("en") == 1) {
+    if(languageCode!.compareTo("en") != 0) {
       WebService.translateApiCall(
           languageCode!, message, (isSuccess, response) {
         if (isSuccess) {

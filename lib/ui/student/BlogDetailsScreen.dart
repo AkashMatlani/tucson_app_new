@@ -94,7 +94,7 @@ class _BlogDetailsScreenState extends State<BlogDetailsScreen> {
     if (languageCode == null) {
       languageCode = "en";
     }
-    if (languageCode!.compareTo("en") == 1) {
+    if (languageCode!.compareTo("en") != 0) {
       _translateData();
     }
   }
