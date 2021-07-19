@@ -140,12 +140,12 @@ SPEC CHECKSUMS:
   geocoder: 3cfab70531a0b367e917bafe82df4c30f6d4c45a
   geocoding: 72e4928b0ec58a108a0b5e1668ac15793a50aa1c
   geolocator: f5e3de65e241caba7ce3e8a618803387bda73384
-  just_audio: 0f209479814b75793b5855bb96be1c5b335de554
+  just_audio: baa7252489dbcf47a4c7cc9ca663e9661c99aafa
   libwebp: e90b9c01d99205d03b6bb8f2c8c415e5a4ef66f0
   location: 3a2eed4dd2fab25e7b7baf2a9efefe82b512d740
   location_permissions: 7e0f9aa0f60deb8ff93ddf0e2a164c7e8197bc94
   path_provider: 5649827555480620ceb7348a3611f72e09b79faf
-  permission_handler: c3cce3f7f77ee7906d10b0b8ad0532e50b8a2bf6
+  permission_handler: ccb20a9fad0ee9b1314a52b70b76b473c5f8dab0
   Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
   shared_preferences: 691d31afece1512d5100f38cb429e9952267c340
   sqflite: 53d1d5c1282c659a4c5339c701a5c4211e4fc536
