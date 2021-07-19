@@ -20,6 +20,7 @@ import 'package:tucson_app/ui/WebViewEmpty.dart';
 import 'package:tucson_app/ui/parent/Event.dart';
 import 'package:tucson_app/ui/parent/RequestForServiceScreen.dart';
 import 'package:tucson_app/ui/parent/SchoolPrograms.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'CommunityResources.dart';
 import 'Education.dart';
@@ -305,7 +306,8 @@ class _ParentDashBoardScreenState extends State<ParentDashBoardScreen> {
       if (response.statusCode == 1) {
         if (response.body != null) {
           String webUrl = response.body[0]["contentTransactionTypeJoin"][0]["objectPath"];
-          Utils.navigateToScreen(context, DisplayWebview(webUrl));
+        //  Utils.navigateToScreen(context, DisplayWebview(webUrl));
+          _launchURL(webUrl);
         }
       } else {
         Utils.showToast(context, response.message, Colors.red);
@@ -328,4 +330,7 @@ class _ParentDashBoardScreenState extends State<ParentDashBoardScreen> {
     Utils.showLoader(false, context);
     Utils.navigateWithClearState(context, SignInScreen());
   }
+
+  void _launchURL(String path) async =>
+      await canLaunch(path) ? await launch(path) : throw 'Could not launch $path';
 }

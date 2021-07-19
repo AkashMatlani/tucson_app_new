@@ -1,13 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tucson_app/GeneralUtils/ProgressHUD.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class DisplayWebview extends StatefulWidget {
-
   String webViewUrl;
   DisplayWebview(this.webViewUrl);
-  
   @override
   _DisplayWebviewState createState() => _DisplayWebviewState();
 }
@@ -22,7 +21,10 @@ class _DisplayWebviewState extends State<DisplayWebview> {
   Widget build(BuildContext context) {
     print("WebUrl => ${widget.webViewUrl}");
     return WillPopScope(
-        onWillPop: () async => false,
+        onWillPop: () {
+          Navigator.pop(context, false);
+          return new Future(() => false);
+        },
         child:  Scaffold(
       body: SafeArea(
         child: ProgressHUD(
@@ -61,4 +63,7 @@ class _DisplayWebviewState extends State<DisplayWebview> {
       Utils.showToast(context, "Failed", Colors.green);
     }
   }*/
+
+  void _launchURL() async =>
+      await canLaunch(widget.webViewUrl) ? await launch(widget.webViewUrl) : throw 'Could not launch $widget.webViewUrl';
 }

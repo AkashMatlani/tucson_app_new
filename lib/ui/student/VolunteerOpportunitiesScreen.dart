@@ -13,6 +13,7 @@ import 'package:tucson_app/WebService/WebService.dart';
 import 'package:tucson_app/ui/DisplayWebview.dart';
 import 'package:tucson_app/ui/community/CommunityDashboardScreen.dart';
 import 'package:tucson_app/ui/student/StudentDashboardScreen.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 
 class VolunteerOpportunitiesScreen extends StatefulWidget {
@@ -118,7 +119,8 @@ class _VolunteerOpportunitiesScreenState extends State<VolunteerOpportunitiesScr
   _listRowItem(BuildContext context, int position) {
     return InkWell(
       onTap: (){
-        Utils.navigateToScreen(context, DisplayWebview(_volunteerList[position].objectPath));
+       // Utils.navigateToScreen(context, DisplayWebview(_volunteerList[position].objectPath));
+        _launchURL(_volunteerList[position].objectPath);
       },
       child: Card(
         elevation: 1,
@@ -228,4 +230,6 @@ class _VolunteerOpportunitiesScreenState extends State<VolunteerOpportunitiesScr
       Utils.showLoader(false, context);
     });
   }
+  void _launchURL(String path) async =>
+      await canLaunch(path) ? await launch(path) : throw 'Could not launch $path';
 }

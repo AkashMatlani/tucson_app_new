@@ -1,7 +1,8 @@
+import 'dart:io';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mime/mime.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:tucson_app/GeneralUtils/ColorExtension.dart';
 import 'package:tucson_app/GeneralUtils/Constant.dart';
@@ -16,7 +17,8 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
 
 class VideoListScreen extends StatefulWidget {
-  VideoListScreen(this.title,this.fromScreen);
+  VideoListScreen(this.title, this.fromScreen);
+
   String title;
   String fromScreen;
 
@@ -124,15 +126,22 @@ class _VideoListScreenState extends State<VideoListScreen> {
     return InkWell(
       onTap: () {
         if (_videoList[index].objectPath.contains("https://www.youtube.com/")) {
-         /* Utils.navigateToScreen(
+          /* Utils.navigateToScreen(
               context, DisplayWebview(_videoList[index].objectPath));*/
           _launchYoutubeVideo(_videoList[index].objectPath);
-        } else if (_videoList[index].objectPath.contains("webm")||_videoList[index].objectPath.contains("mp4") || _videoList[index].objectPath.contains("mov") ||_videoList[index].objectPath.contains("m4a") ||  _videoList[index].objectPath.contains("3gp") || _videoList[index].objectPath.contains("aac") ||  _videoList[index].objectPath.contains("mkv") ) {
+        } else if (_videoList[index].objectPath.contains("webm") ||
+            _videoList[index].objectPath.contains("mp4") ||
+            _videoList[index].objectPath.contains("mov") ||
+            _videoList[index].objectPath.contains("m4a") ||
+            _videoList[index].objectPath.contains("3gp") ||
+            _videoList[index].objectPath.contains("aac") ||
+            _videoList[index].objectPath.contains("mkv")) {
           Utils.navigateToScreen(
               context, VideoPlayerScreen(_videoList[index].objectPath));
         } else {
-          Utils.navigateToScreen(
-              context, DisplayWebview(_videoList[index].objectPath));
+          /* Utils.navigateToScreen(
+              context, DisplayWebview(_videoList[index].objectPath));*/
+          _launchURL(_videoList[index].objectPath);
         }
       },
       child: Column(
@@ -140,14 +149,31 @@ class _VideoListScreenState extends State<VideoListScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              margin: EdgeInsets.only(top: 30),
-              height: MediaQuery.of(context).size.height * 0.24,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20), color: Colors.white),
-              alignment: Alignment.center,
-              //child: new Image.file(File(imagePath)),
-              child: Image.asset(MyImage.videoUrlImage),
-            ),
+                margin: EdgeInsets.only(top: 30),
+                height: MediaQuery.of(context).size.height * 0.24,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    color: Colors.white),
+                //child: new Image.file(File(imagePath)),
+                // child: Image.asset(MyImage.videoUrlImage),
+                child: FutureBuilder(
+                  builder: (ctx, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.done) {
+                      if (snapshot.hasData) {
+                        // Extracting data from snapshot object
+                        final data = snapshot.data as String;
+                        return Container(  decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            color: Colors.white), height: MediaQuery.of(context).size.height * 0.24,width: 400,child: ClipRRect(
+                            borderRadius:BorderRadius.circular(20),child: Image(image: FileImage(File(data)),fit: BoxFit.fill)));
+                      }
+                    }
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  },
+                  future: getThumbNail(_videoList[index].objectPath),
+                )),
             Padding(
                 padding: EdgeInsets.only(top: 5, bottom: 20),
                 child: Text(_videoList[index].objectName,
@@ -318,5 +344,21 @@ class _VideoListScreenState extends State<VideoListScreen> {
         }
       }
     }
+  }
+
+  void _launchURL(String path) async => await canLaunch(path)
+      ? await launch(path)
+      : throw 'Could not launch $path';
+
+  Future getThumbNail(String image) async {
+    var fileName = await VideoThumbnail.thumbnailFile(
+      video: image,
+      thumbnailPath: (await getTemporaryDirectory()).path,
+      imageFormat: ImageFormat.WEBP,
+      // specify the height of the thumbnail, let the width auto-scaled to keep the source aspect ratio
+      quality: 75,
+    );
+
+    return fileName;
   }
 }

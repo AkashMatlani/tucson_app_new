@@ -13,6 +13,7 @@ import 'package:tucson_app/WebService/WebService.dart';
 import 'package:tucson_app/ui/DisplayWebview.dart';
 import 'package:tucson_app/ui/SignInScreen.dart';
 import 'package:tucson_app/ui/community/CommunityDashboardScreen.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 
@@ -102,7 +103,8 @@ class _DonationScreenState extends State<DonationScreen> {
                             MyFont.SSPro_bold, 16.0, Colors.white)),
                     onPressed: () {
                       if(donationDetails != null) {
-                        Utils.navigateToScreen(context, DisplayWebview(donationDetails.objectPath!));
+                       // Utils.navigateToScreen(context, DisplayWebview(donationDetails.objectPath!));
+                        _launchURL(donationDetails.objectPath!);
                       } else {
                         getDonationAPICall();
                       }
@@ -162,4 +164,7 @@ class _DonationScreenState extends State<DonationScreen> {
       }
     });
   }
+
+  void _launchURL(String path) async =>
+      await canLaunch(path) ? await launch(path) : throw 'Could not launch $path';
 }

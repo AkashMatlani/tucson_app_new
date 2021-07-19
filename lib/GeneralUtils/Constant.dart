@@ -51,6 +51,9 @@ class MyImage {
   static const awarityIcon = "assets/images/icons/ic_awarity.svg";
   static const coolStuffIcon = "assets/images/icons/ic_cool_stuff.svg";
   static const eventIcon = "assets/images/icons/ic_event.svg";
+  static const givingDonationIcon = "assets/images/icons/ic_donation.svg";
+  static const tusdCounslingIcon = "assets/images/icons/ic_tusd_counsling.svg";
+  static const tusdMcVenttoIcon = "assets/images/icons/ic_mcventto.svg";
   static const jobsIcon = "assets/images/icons/ic_jobs.svg";
   static const jobsOpening = "assets/images/icons/job_opnings.svg";
   static const logoutIcon = "assets/images/icons/ic_logout.svg";

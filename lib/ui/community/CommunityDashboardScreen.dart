@@ -18,6 +18,7 @@ import 'package:tucson_app/WebService/WebService.dart';
 import 'package:tucson_app/ui/DisplayWebview.dart';
 import 'package:tucson_app/ui/SignInScreen.dart';
 import 'package:tucson_app/ui/WebViewEmpty.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../parent/CommunityResources.dart';
 import '../student/VolunteerOpportunitiesScreen.dart';
@@ -40,7 +41,7 @@ class _CommunityDashboardScreenState extends State<CommunityDashboardScreen> {
         name: 'commmunity_events'.tr(), svgPicture: MyImage.calenderIcon),
     GridListItems(
         name: 'volunteer_opportunity'.tr(), svgPicture: MyImage.volunteerOpportunities),
-    GridListItems(name: 'giving_donation'.tr(), svgPicture: MyImage.eventIcon),
+    GridListItems(name: 'giving_donation'.tr(), svgPicture: MyImage.givingDonationIcon),
     GridListItems(
         name: 'resources'.tr(), svgPicture: MyImage.resourceIcon),
     GridListItems(name: 'awareity'.tr(), svgPicture: MyImage.awarityIcon),
@@ -300,7 +301,8 @@ class _CommunityDashboardScreenState extends State<CommunityDashboardScreen> {
         if (response.body != null) {
           String webUrl =
               response.body[0]["contentTransactionTypeJoin"][0]["objectPath"];
-          Utils.navigateToScreen(context, DisplayWebview(webUrl));
+         // Utils.navigateToScreen(context, DisplayWebview(webUrl));
+          _launchURL(webUrl);
         }
       } else {
         Utils.showToast(context, response.message, Colors.red);
@@ -323,4 +325,7 @@ class _CommunityDashboardScreenState extends State<CommunityDashboardScreen> {
     Utils.showLoader(false, context);
     Utils.navigateWithClearState(context, SignInScreen());
   }
+
+  void _launchURL(String path) async =>
+      await canLaunch(path) ? await launch(path) : throw 'Could not launch $path';
 }

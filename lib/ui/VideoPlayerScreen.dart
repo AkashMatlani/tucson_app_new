@@ -10,8 +10,8 @@ import 'package:volume/volume.dart';
 import 'package:wakelock/wakelock.dart';
 
 class VideoPlayerScreen extends StatefulWidget {
-
   VideoPlayerScreen(this.videoUrl);
+
   String videoUrl;
 
   @override
@@ -34,6 +34,8 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
   Offset _touchPoint = Offset.zero;
   String _currentPositionString = "", _remainingString = "";
 
+  int fullScreenCount = 0;
+  bool isPortrait=true;
   @override
   void initState() {
     super.initState();
@@ -59,6 +61,8 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
+      DeviceOrientation.landscapeLeft,
+      DeviceOrientation.landscapeRight,
     ]);
   }
 
@@ -166,9 +170,41 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
     SystemChrome.setEnabledSystemUIOverlays([]);
     return OrientationBuilder(
       builder: (context, orientation) {
+        isPortrait = orientation == Orientation.portrait;
         return Scaffold(
           backgroundColor: Colors.black,
+        /*  appBar: AppBar(
+            leading: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Expanded(
+                    child: IconButton(
+                        icon: Icon(Icons.arrow_back_ios, color: Colors.white),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        })),
+                IconButton(
+                    icon: Icon(Icons.fullscreen, color: Colors.white),
+                    onPressed: () {
+                      fullScreenCount++;
+                      if (fullScreenCount % 2 == 0) {
+                        SystemChrome.setPreferredOrientations([
+                          DeviceOrientation.portraitUp,
+                          DeviceOrientation.portraitDown,
+                        ]);
+                      } else {
+                        SystemChrome.setPreferredOrientations([
+                          DeviceOrientation.landscapeLeft,
+                          DeviceOrientation.landscapeRight,
+                        ]);
+                      }
+                    })
+              ],
+            ),
+          ),*/
           body: Stack(
+            fit: isPortrait ? StackFit.loose : StackFit.expand,
             children: <Widget>[
               Center(
                 child: _controller.value.isInitialized
@@ -202,7 +238,10 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                                   padding: EdgeInsets.all(6),
                                   color: Colors.transparent,
                                   child: Text(_currentPositionString,
-                                      style: AppTheme.customTextStyle(MyFont.SSPro_semibold, 16.0, Colors.white)),
+                                      style: AppTheme.customTextStyle(
+                                          MyFont.SSPro_semibold,
+                                          16.0,
+                                          Colors.white)),
                                 ),
                                 Expanded(
                                   child: Row(
@@ -289,7 +328,10 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                                   padding: EdgeInsets.all(6),
                                   color: Colors.transparent,
                                   child: Text(_remainingString,
-                                      style: AppTheme.customTextStyle(MyFont.SSPro_semibold, 16.0, Colors.white)),
+                                      style: AppTheme.customTextStyle(
+                                          MyFont.SSPro_semibold,
+                                          16.0,
+                                          Colors.white)),
                                 ),
                                 SizedBox(width: 10),
                               ],
@@ -308,18 +350,17 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                 },
               ),
               SafeArea(
-                child:  BackButton(
-                        color: Colors.white,
-                        onPressed: () {
-                          _controller.pause();
-                          Navigator.pop(context);
-                        },
-                      ),
-
+                child: BackButton(
+                  color: Colors.white,
+                  onPressed: () {
+                    _controller.pause();
+                    Navigator.pop(context);
+                  },
+                ),
               )
             ],
-          ),
-        );
+          )
+          );
       },
     );
   }
@@ -366,11 +407,21 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
     seconds = seconds % 3600;
     var minutes = seconds ~/ 60;
     seconds = seconds % 60;
-    final hoursString = hours >= 10 ? '$hours' : hours == 0 ? '00' : '0$hours';
-    final minutesString =
-        minutes >= 10 ? '$minutes' : minutes == 0 ? '00' : '0$minutes';
-    final secondsString =
-        seconds >= 10 ? '$seconds' : seconds == 0 ? '00' : '0$seconds';
+    final hoursString = hours >= 10
+        ? '$hours'
+        : hours == 0
+            ? '00'
+            : '0$hours';
+    final minutesString = minutes >= 10
+        ? '$minutes'
+        : minutes == 0
+            ? '00'
+            : '0$minutes';
+    final secondsString = seconds >= 10
+        ? '$seconds'
+        : seconds == 0
+            ? '00'
+            : '0$seconds';
     final formattedTime =
         '${hoursString == '00' ? '' : hoursString + ':'}$minutesString:$secondsString';
     return formattedTime;

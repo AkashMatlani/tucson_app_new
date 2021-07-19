@@ -42,7 +42,7 @@ class _BlogScreenState extends State<BlogScreen> {
     } else if (widget.title.compareTo('articles'.tr()) == 0||  widget.title.compareTo('parent'.tr()) == 0) {
       svgPicture = MyImage.articleThubmail;
     }else if (widget.title.compareTo('activites'.tr()) == 0) {
-      svgPicture = MyImage.articleThubmail;
+      svgPicture = MyImage.activitesIcon;
     }
     _getSchoolId();
   }

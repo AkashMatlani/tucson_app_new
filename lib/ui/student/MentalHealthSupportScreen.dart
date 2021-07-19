@@ -144,10 +144,11 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
                                       context, LabelStr.lblNoVideo, Colors.red);
                                 } else if (_supportResponse.supportDocument
                                     .contains("https://www.youtube.com/")) {
-                                  Utils.navigateToScreen(
+                                /*  Utils.navigateToScreen(
                                       context,
                                       DisplayWebview(
-                                          _supportResponse.supportDocument));
+                                          _supportResponse.supportDocument));*/
+                                  _launchURL(_supportResponse.supportDocument);
                                 } else {
                                   Utils.navigateToScreen(
                                       context,
@@ -171,10 +172,11 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
                                 Expanded(
                                   child: InkWell(
                                     onTap: () {
-                                      Utils.navigateToScreen(
+                                     /* Utils.navigateToScreen(
                                           context,
                                           DisplayWebview(_supportResponse
-                                              .healthButtonAction));
+                                              .healthButtonAction));*/
+                                      _launchURL(_supportResponse.healthButtonAction);
                                     },
                                     child: Card(
                                         shape: RoundedRectangleBorder(
@@ -224,10 +226,12 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
                                 Expanded(
                                   child: InkWell(
                                     onTap: () {
-                                      Utils.navigateToScreen(
+                                      /*Utils.navigateToScreen(
                                           context,
                                           DisplayWebview(_supportResponse
-                                              .talkSpaceButtonAction));
+                                              .talkSpaceButtonAction));*/
+                                      _launchURL(_supportResponse
+                                          .talkSpaceButtonAction);
                                     },
                                     child: Card(
                                         shape: RoundedRectangleBorder(
@@ -353,10 +357,11 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
                                   ],
                                 ),
                                 onPressed: () {
-                                  Utils.navigateToScreen(
+                                /*  Utils.navigateToScreen(
                                       context,
                                       DisplayWebview(
-                                          _supportResponse.nsphChatUrl));
+                                          _supportResponse.nsphChatUrl));*/
+                                  _launchURL(_supportResponse.nsphChatUrl);
                                 },
                               ),
                             )
@@ -511,8 +516,9 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
                             .copyWith(fontSize: 16, color: Colors.blueAccent),
                         recognizer: new TapGestureRecognizer()
                           ..onTap = () {
-                            Utils.navigateToScreen(
-                                context, DisplayWebview(LabelStr.lblHippLink));
+                            /*Utils.navigateToScreen(
+                                context, DisplayWebview(LabelStr.lblHippLink));*/
+                            _launchURL(LabelStr.lblHippLink);
                           }),
                   ])),
                 ),
@@ -765,5 +771,6 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
     return fileName;
   }*/
 
-
+  void _launchURL(String path) async =>
+      await canLaunch(path) ? await launch(path) : throw 'Could not launch $path';
 }

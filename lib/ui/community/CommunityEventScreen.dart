@@ -10,6 +10,7 @@ import 'package:tucson_app/Model/ContentMasterViewModel.dart';
 import 'package:tucson_app/Model/ContentResponse.dart';
 import 'package:tucson_app/WebService/WebService.dart';
 import 'package:tucson_app/ui/DisplayWebview.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 
 class CommunityEventScreen extends StatefulWidget {
@@ -112,7 +113,8 @@ class _CommunityEventScreenState extends State<CommunityEventScreen> {
   _listRowItem(BuildContext context, int position) {
     return InkWell(
       onTap: (){
-        Utils.navigateToScreen(context, DisplayWebview(_communityEventList[position].objectPath));
+       // Utils.navigateToScreen(context, DisplayWebview(_communityEventList[position].objectPath));
+        _launchURL(_communityEventList[position].objectPath);
       },
       child: Card(
         elevation: 1,
@@ -213,4 +215,7 @@ class _CommunityEventScreenState extends State<CommunityEventScreen> {
       Utils.showLoader(false, context);
     });
   }
+
+  void _launchURL(String path) async =>
+      await canLaunch(path) ? await launch(path) : throw 'Could not launch $path';
 }

@@ -11,6 +11,7 @@ import 'package:tucson_app/Model/ContentMasterViewModel.dart';
 import 'package:tucson_app/Model/ContentResponse.dart';
 import 'package:tucson_app/WebService/WebService.dart';
 import 'package:tucson_app/ui/DisplayWebview.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ScholarshipInfoScreen extends StatefulWidget {
 
@@ -115,7 +116,8 @@ class _ScholarshipInfoScreenState extends State<ScholarshipInfoScreen> {
   _listRowItem(BuildContext context, int position) {
     return InkWell(
       onTap: (){
-        Utils.navigateToScreen(context, DisplayWebview(_scholarshipInfoList[position].objectPath));
+        _launchURL(_scholarshipInfoList[position].objectPath);
+       // Utils.navigateToScreen(context, DisplayWebview(_scholarshipInfoList[position].objectPath));
       },
       child: Card(
         elevation: 1,
@@ -225,4 +227,7 @@ class _ScholarshipInfoScreenState extends State<ScholarshipInfoScreen> {
       Utils.showLoader(false, context);
     });
   }
+
+  void _launchURL(String path) async =>
+      await canLaunch(path) ? await launch(path) : throw 'Could not launch $path';
 }

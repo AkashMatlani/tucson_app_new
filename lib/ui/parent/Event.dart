@@ -10,6 +10,7 @@ import 'package:tucson_app/Model/GridListItems.dart';
 import 'package:tucson_app/WebService/WebService.dart';
 import 'package:tucson_app/ui/DisplayWebview.dart';
 import 'package:tucson_app/ui/WebViewEmpty.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class Event extends StatefulWidget {
   @override
@@ -185,7 +186,8 @@ class _EventScreenState extends State<Event> {
         if (response.body != null) {
           String webUrl =
           response.body[0]["contentTransactionTypeJoin"][0]["objectPath"];
-          Utils.navigateToScreen(context, DisplayWebview(webUrl));
+         // Utils.navigateToScreen(context, DisplayWebview(webUrl));
+          _launchURL(webUrl);
         }
       } else {
         Utils.showToast(context, response.message, Colors.red);
@@ -195,4 +197,7 @@ class _EventScreenState extends State<Event> {
       Utils.navigateToScreen(context, WebViewEmpty());
     });
   }
+
+  void _launchURL(String path) async =>
+      await canLaunch(path) ? await launch(path) : throw 'Could not launch $path';
 }

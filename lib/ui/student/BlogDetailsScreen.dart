@@ -16,6 +16,7 @@ import 'package:tucson_app/ui/AudioPlayerScreen.dart';
 import 'package:tucson_app/ui/DisplayWebview.dart';
 import 'package:tucson_app/ui/ImageViewerScreen.dart';
 import 'package:tucson_app/ui/VideoPlayerScreen.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../DocumentViewerScreen.dart';
 
 class BlogDetailsScreen extends StatefulWidget {
@@ -334,14 +335,16 @@ class _BlogDetailsScreenState extends State<BlogDetailsScreen> {
           Utils.navigateToScreen(context, DocumentViewerScreen(link));
         } else if (type.compareTo("Video") == 0) {
           if (link.contains("https://www.youtube.com/") == 0) {
-            Utils.navigateToScreen(context, DisplayWebview(link));
+           // Utils.navigateToScreen(context, DisplayWebview(link));
+            _launchURL(link);
           } else {
             Utils.navigateToScreen(context, VideoPlayerScreen(link));
           }
         } else if (type.compareTo("Audio") == 0) {
           Utils.navigateToScreen(context, AudioPlayerScreen(link));
         } else {
-          Utils.navigateToScreen(context, DisplayWebview(link));
+         // Utils.navigateToScreen(context, DisplayWebview(link));
+          _launchURL(link);
         }
       },
       child: Container(
@@ -433,7 +436,8 @@ class _BlogDetailsScreenState extends State<BlogDetailsScreen> {
   _listWebDoc(BuildContext context, int position) {
     return InkWell(
       onTap: () {
-        Utils.navigateToScreen(context, DisplayWebview(webList[position]));
+       // Utils.navigateToScreen(context, DisplayWebview(webList[position]));
+        _launchURL(webList[position]);
       },
       child: Container(
           child: Text(
@@ -442,4 +446,7 @@ class _BlogDetailsScreenState extends State<BlogDetailsScreen> {
       )),
     );
   }
+
+  void _launchURL(String path) async =>
+      await canLaunch(path) ? await launch(path) : throw 'Could not launch $path';
 }
