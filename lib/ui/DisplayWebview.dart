@@ -1,7 +1,9 @@
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tucson_app/GeneralUtils/ProgressHUD.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+
 
 class DisplayWebview extends StatefulWidget {
 
@@ -20,27 +22,22 @@ class _DisplayWebviewState extends State<DisplayWebview> {
 
   @override
   Widget build(BuildContext context) {
-    print("WebUrl => ${widget.webViewUrl}");
-    return WillPopScope(
-        onWillPop: () async => false,
-        child:  Scaffold(
-      body: SafeArea(
+    return SafeArea(
         child: ProgressHUD(
           child: WebView(
-            initialUrl: widget.webViewUrl,
-            javascriptMode: JavascriptMode.unrestricted,
-            onPageFinished: pageFinishedLoading,
-            /*onWebViewCreated: (WebViewController webViewController) {
-               _controller = webViewController;
-             }*/
+              initialUrl: widget.webViewUrl,
+              javascriptMode: JavascriptMode.unrestricted,
+              onPageFinished: pageFinishedLoading,
+              /*onWebViewCreated: (WebViewController webViewController) {
+                _controller = webViewController;
+              }*/
           ),
           inAsyncCall: _isLoading,
           opacity: 0.0,
           key: _scaffoldKey,
           valueColor: new AlwaysStoppedAnimation<Color>(Colors.blue),
-        ),
-      ),
-    ));
+        )
+    );
   }
 
   void pageFinishedLoading(String url) {
@@ -48,6 +45,21 @@ class _DisplayWebviewState extends State<DisplayWebview> {
       _isLoading = false;
     });
   }
+
+  /*backToPrev(BuildContext context) async{
+    print('activated');
+    if (await _controller.canGoBack()) {
+      Scaffold.of(context).showSnackBar(
+        const SnackBar(content: Text("Munching....")),
+      );
+      print("onwill goback");
+      _controller.goBack();
+    }
+    else {
+      SystemChannels.platform.invokeMethod('SystemNavigator.pop');
+      return Future.value(false);
+    }
+  }*/
 
   /*void readJS(String url) async{
     String text = await _controller.evaluateJavascript("console.log(document.documentElement.innerHTML);");

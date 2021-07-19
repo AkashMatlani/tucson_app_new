@@ -170,7 +170,7 @@ class _JobOpeningScreenState extends State<JobOpeningScreen> {
             }
           }
         });
-        if(languageCode!.compareTo("en") == 1){
+        if(languageCode!.compareTo("en") != 0){
           translateListData();
         } else {
           Utils.showLoader(false, context);
@@ -204,10 +204,11 @@ class _JobOpeningScreenState extends State<JobOpeningScreen> {
               objectPath: _jobList[i].objectPath,
               contentTransTypeName: _jobList[i].contentTransTypeName));
         }
-        setState(() {
-          _jobList = [];
-          _jobList.addAll(tempList);
-        });
+        if(_jobList.length == tempList.length){
+          setState(() {
+            _jobList = tempList;
+          });
+        }
       } else {
         Utils.showToast(context, "Page Translation Failed", Colors.red);
       }

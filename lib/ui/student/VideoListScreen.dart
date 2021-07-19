@@ -201,7 +201,7 @@ class _VideoListScreenState extends State<VideoListScreen> {
           getVideoThumbinail(tempdat);
         }
 
-        if (languageCode!.compareTo("en") == 1) {
+        if (languageCode!.compareTo("en") != 0) {
           translateListData();
         } else {
           Utils.showLoader(false, context);
@@ -236,10 +236,11 @@ class _VideoListScreenState extends State<VideoListScreen> {
               objectPath: _videoList[i].objectPath,
               contentTransTypeName: _videoList[i].contentTransTypeName));
         }
-        setState(() {
-          _videoList = [];
-          _videoList.addAll(tempList);
-        });
+        if(_videoList.length == tempList.length){
+          setState(() {
+            _videoList = tempList;
+          });
+        }
       } else {
         Utils.showToast(context, "Page Translation Failed", Colors.red);
       }

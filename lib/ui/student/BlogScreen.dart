@@ -14,6 +14,7 @@ import 'BlogDetailsScreen.dart';
 
 import '../../GeneralUtils/ColorExtension.dart';
 
+
 class BlogScreen extends StatefulWidget {
   BlogScreen(this.title, this.fromScreen);
 
@@ -33,13 +34,11 @@ class _BlogScreenState extends State<BlogScreen> {
   @override
   void initState() {
     super.initState();
-    if (widget.title.compareTo('student_blogs'.tr()) == 0 ||
-        widget.title.compareTo('blogs'.tr()) == 0 ||
-        widget.title.compareTo('parent'.tr()) == 0) {
+    if (widget.title.compareTo('student_blogs'.tr()) == 0 || widget.title.compareTo('blogs'.tr()) == 0 ) {
       svgPicture = MyImage.blogThubmail;
     } else if (widget.title.compareTo('stories'.tr()) == 0) {
       svgPicture = MyImage.storiesThubmail;
-    } else if (widget.title.compareTo('articles'.tr()) == 0||  widget.title.compareTo('parent'.tr()) == 0) {
+    } else if (widget.title.compareTo('articles'.tr()) == 0) {
       svgPicture = MyImage.articleThubmail;
     }else if (widget.title.compareTo('activites'.tr()) == 0) {
       svgPicture = MyImage.articleThubmail;
@@ -211,26 +210,31 @@ class _BlogScreenState extends State<BlogScreen> {
   _getContentList(int schoolId) {
     ContentMasterViewModel _contentViewModel = ContentMasterViewModel();
     var params;
-    if (widget.title.compareTo(LabelStr.lblStudentBlogs) == 0 ||
-        widget.title.compareTo(LabelStr.lblBlogs) == 0) {
-      params = {"schoolId": schoolId, "roleId": 0, "contentTypeName": "blog"};
-    } else if (widget.title.compareTo(LabelStr.lblArticles) == 0) {
+
+
+    if (widget.title.compareTo('student_blogs'.tr()) == 0 || widget.title.compareTo('blogs'.tr()) == 0) {
+      params = {
+        "schoolId": schoolId,
+        "roleId": 0,
+        "contentTypeName": "blog"
+      };
+    } else if (widget.title.compareTo('articles'.tr()) == 0) {
       params = {
         "schoolId": schoolId,
         "roleId": 0,
         "contentTypeName": "Article"
       };
-    } else if (widget.title.compareTo(LabelStr.lblStories) == 0) {
-      params = {
-        "schoolId": schoolId,
-        "roleId": 0,
-        "contentTypeName": "Stories"
-      };
-    }else if (widget.title.compareTo(LabelStr.lblActivites) == 0) {
+    }else if (widget.title.compareTo('activites'.tr()) == 0) {
       params = {
         "schoolId": schoolId,
         "roleId": 0,
         "contentTypeName": "Activities"
+      };
+    } else if (widget.title.compareTo('stories'.tr()) == 0) {
+      params = {
+        "schoolId": schoolId,
+        "roleId": 0,
+        "contentTypeName": "Stories"
       };
     }
 
@@ -242,7 +246,7 @@ class _BlogScreenState extends State<BlogScreen> {
           _contentList = [];
           _contentList = _contentViewModel.contentList;
         });
-        if (languageCode!.compareTo("en") == 1) {
+        if (languageCode!.compareTo("en") != 0) {
           translateListData();
         } else {
           Utils.showLoader(false, context);
@@ -259,7 +263,7 @@ class _BlogScreenState extends State<BlogScreen> {
   }
 
   translateListData() {
-    List<ContentResponse> tempLList = [];
+    List<ContentResponse> tempList = [];
     List<String> blogNameList = [];
     for (var itemName in _contentList) {
       blogNameList.add(itemName.contentTitle);
@@ -269,21 +273,22 @@ class _BlogScreenState extends State<BlogScreen> {
       if (isSuccess) {
         List<String> resultArr = response.toString().split("==)");
         for (int i = 0; i < resultArr.length; i++) {
-          tempLList.add(ContentResponse(
+          tempList.add(ContentResponse(
               contentMasterId: _contentList[i].contentMasterId,
               schoolId: _contentList[i].schoolId,
               contentTypeId: _contentList[i].contentTypeId,
-              contentTitle: _contentList[i].contentTitle,
+              contentTitle: resultArr[i],
               content: _contentList[i].content,
               createdOn: _contentList[i].createdOn,
               schoolName: _contentList[i].schoolName,
               contentTransactionTypeJoin:
                   _contentList[i].contentTransactionTypeJoin));
         }
-        setState(() {
-          _contentList = [];
-          _contentList.addAll(tempLList);
-        });
+        if(_contentList.length == tempList.length){
+          setState(() {
+            _contentList = tempList;
+          });
+        }
       } else {
         Utils.showToast(context, "Page Translation Failed", Colors.red);
       }

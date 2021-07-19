@@ -229,8 +229,7 @@ class _StudentDashboardScreenState extends State<StudentDashboardScreen> {
                                 if (index == 0) {
                                   getSchoolType(index);
                                 } else if (index == 1) {
-                                  Utils.navigateToScreen(context,
-                                      BlogScreen('student_blogs'.tr(),"Student"));
+                                  Utils.navigateToScreen(context, BlogScreen('student_blogs'.tr(), "Student"));
                                 } else if (index == 2) {
                                   Utils.navigateToScreen(context,
                                       ScholarshipInfoScreen("Student"));

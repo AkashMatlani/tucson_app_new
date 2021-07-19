@@ -327,7 +327,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               _schoolList.add(SchoolListResponse.fromJson(data));
             }
             _selectedSchool = _schoolList[0];
-            if(languageCode!.compareTo("en") == 1){
+            if(languageCode!.compareTo("en") != 0){
               _translateData();
             } else{
               Utils.showLoader(false, context);
@@ -365,11 +365,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
               updatedBy: _schoolList[i].updatedBy,
               updatedOn: _schoolList[i].updatedOn));
         }
-        setState(() {
-          _schoolList = [];
-          _schoolList.addAll(tempList);
-          _selectedSchool = _schoolList[0];
-        });
+
+        if(_schoolList.length == tempList.length){
+          setState(() {
+            _schoolList = tempList;
+            _selectedSchool = _schoolList[0];
+          });
+        }
       } else {
         Utils.showToast(context, "Page Translation Failed", Colors.red);
       }
@@ -419,7 +421,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
           }
         });
       } else {
-        if(languageCode!.compareTo("en") == 1) {
+        if(languageCode!.compareTo("en") != 0) {
           WebService.translateApiCall(
               languageCode!, message, (isSuccess, response) {
             if (isSuccess) {

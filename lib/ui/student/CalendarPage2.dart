@@ -9,7 +9,6 @@ import 'package:flutter_calendar_carousel/flutter_calendar_carousel.dart'
 import 'package:flutter_calendar_carousel/flutter_calendar_carousel.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:intl/intl.dart';
-import 'package:simple_moment/simple_moment.dart';
 import 'package:tucson_app/GeneralUtils/ColorExtension.dart';
 import 'package:tucson_app/GeneralUtils/Constant.dart';
 import 'package:tucson_app/GeneralUtils/LabelStr.dart';
@@ -18,6 +17,7 @@ import 'package:tucson_app/GeneralUtils/Utils.dart';
 import 'package:tucson_app/Model/AuthViewModel.dart';
 import 'package:tucson_app/Model/EventForMobileResponse.dart';
 import 'package:tucson_app/WebService/WebService.dart';
+
 
 class CalendarPage2 extends StatefulWidget {
   @override
@@ -378,7 +378,6 @@ class _CalendarPage2State extends State<CalendarPage2> {
 
                 var eventDetails = eventist[i].eventName+"=>"+fromDate+"=>"+toDate;
 
-
                 _markedDateMap.add(
                   DateTime(
                       int.parse(dateInFormatText[0]),
@@ -418,7 +417,7 @@ class _CalendarPage2State extends State<CalendarPage2> {
             });
           }
         });
-        if(languageCode!.compareTo("en") == 1){
+        if(languageCode!.compareTo("en") != 0){
           _translateEventTitleData();
         }
       } else {
@@ -653,6 +652,20 @@ class _CalendarPage2State extends State<CalendarPage2> {
               startTime: eventist[i].startTime,
               endTime: eventist[i].endTime,
               schoolIds: eventist[i].schoolIds));
+        }
+        if(eventist.length == tempList.length){
+          setState(() {
+            eventist = tempList;
+
+            List<EventForMobileResponse> tempUpcommingList = [];
+            for (int i = 0; i < eventist.length; i++) {
+              bool isSuccess = _isUpcommingEvent(eventist[i].fromDateTime);
+              if (isSuccess) {
+                tempUpcommingList.add(eventist[i]);
+              }
+            }
+            upcommingEventList = tempUpcommingList;
+          });
         }
       } else {
         Utils.showToast(context, "Page Translation Failed", Colors.red);

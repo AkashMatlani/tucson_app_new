@@ -180,7 +180,7 @@ class _ScholarshipInfoScreenState extends State<ScholarshipInfoScreen> {
             }
           }
         });
-        if(languageCode!.compareTo("en") == 1){
+        if(languageCode!.compareTo("en") != 0){
           translateListData();
         } else {
           Utils.showLoader(false, context);
@@ -214,10 +214,12 @@ class _ScholarshipInfoScreenState extends State<ScholarshipInfoScreen> {
               objectPath: _scholarshipInfoList[i].objectPath,
               contentTransTypeName: _scholarshipInfoList[i].contentTransTypeName));
         }
-        setState(() {
-          _scholarshipInfoList = [];
-          _scholarshipInfoList.addAll(tempList);
-        });
+
+        if(_scholarshipInfoList.length == tempList.length){
+          setState(() {
+            _scholarshipInfoList = tempList;
+          });
+        }
       } else {
         Utils.showToast(context, "Page Translation Failed", Colors.red);
       }

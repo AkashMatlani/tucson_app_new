@@ -165,7 +165,7 @@ class _ForgotPwdScreenState extends State<ForgotPwdScreen> {
           }
         });
       } else {
-        if(languageCode!.compareTo("en") == 1){
+        if(languageCode!.compareTo("en") != 0){
           WebService.translateApiCall(languageCode!, message, (isSuccess, response){
             if(isSuccess){
               Utils.showToast(context, response.toString(), Colors.red);
