@@ -36,6 +36,7 @@ class WebService {
 
   static const communityContentByType = "Community/GetContentByType";
 
+
   static Future<ServerResponse> getAPICall(String apiName, Map<String, dynamic> params) async {
     var url = baseUrl + apiName;
     print("Get Url :"+url);

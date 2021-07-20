@@ -7,6 +7,7 @@ class PrefUtils {
   static const String userId = "com.TucsonApp.userId";
   static const String userRole = "com.TucsonApp.userRole";
   static const String userEmail = "com.TucsonApp.userEmail";
+  static const String userProfile = "com.TucsonApp.userProfile";
   static const String userFirstName = "com.TucsonApp.userFirstName";
   static const String userLastName = "com.TucsonApp.userLastName";
   static const String userDOB = "com.TucsonApp.userDOB";
@@ -14,7 +15,8 @@ class PrefUtils {
   static const String schoolId = "com.TucsonApp.schoolId";
   static const String yourLanguage = "com.TucsonApp.yourLanguage";
   static const String sortLanguageCode = "com.TucsonApp.sortLanguageCode";
-  static const String mentalHealthpopUp = "com.TucsonApp.healthPopUp";
+  static const String mentalHealthpopUpForStudent = "com.TucsonApp.healthPopUpForStudent";
+  static const String mentalHealthpopUpForParent = "com.TucsonApp.healthPopUpForParent";
 
 
   static setStringValue(String key, String defaultValue) async {
@@ -51,6 +53,7 @@ class PrefUtils {
     PrefUtils.setStringValue(PrefUtils.userEmail, userDetails.email);
     PrefUtils.setStringValue(PrefUtils.userFirstName, userDetails.firstName);
     PrefUtils.setStringValue(PrefUtils.userLastName, userDetails.lastName);
+    PrefUtils.setStringValue(PrefUtils.userProfile, userDetails.image);
     PrefUtils.setStringValue(PrefUtils.userDOB, userDetails.dob);
     PrefUtils.setStringValue(PrefUtils.userToken, userDetails.accessToken);
     if(userDetails.schoolId == null){
@@ -68,6 +71,7 @@ class PrefUtils {
     await getValueFor(PrefUtils.userEmail);
     await getValueFor(PrefUtils.userFirstName);
     await getValueFor(PrefUtils.userLastName);
+    await getValueFor(PrefUtils.userProfile);
     await getValueFor(PrefUtils.userDOB);
     await getValueFor(PrefUtils.schoolId);
     await getValueFor(PrefUtils.yourLanguage);

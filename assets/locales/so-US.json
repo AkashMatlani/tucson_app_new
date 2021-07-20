@@ -151,5 +151,6 @@
   "search_school" : "Iskuulka Raadinta",
   "no_school" : "Iskuul Ma Lahaa Lama Helin",
   "signout_alter_msg" : "Ma hubtaa inaad rabto inaad ka baxdo?",
-  "total_day": "Tirada maalmaha"
+  "total_day": "Tirada maalmaha",
+  "no_school_selected": "Maad dooran dugsi"
 }

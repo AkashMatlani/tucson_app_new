@@ -2,16 +2,17 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tucson_app/GeneralUtils/Constant.dart';
+import 'package:tucson_app/GeneralUtils/PrefsUtils.dart';
 import 'package:tucson_app/GeneralUtils/Utils.dart';
 import 'package:tucson_app/Model/ContentMasterViewModel.dart';
 import 'package:tucson_app/Model/ContentResponse.dart';
 import 'package:tucson_app/ui/student/BlogScreenForParent.dart';
-
 import '../../GeneralUtils/ColorExtension.dart';
 
-class ActivitesScreen extends StatefulWidget {
-  ActivitesScreen(this.schoolCategory);
 
+class ActivitesScreen extends StatefulWidget {
+
+  ActivitesScreen(this.schoolCategory);
   String schoolCategory;
 
   @override
@@ -26,7 +27,8 @@ class _ActivitesScreenState extends State<ActivitesScreen>
   List<ContentResponse> _contentList = [];
   List<ContentResponse> _elementryList = [];
   List<ContentResponse> _middleHighList = [];
-  bool isLoading = true;
+
+  String? languageCode;
 
   @override
   void initState() {
@@ -40,8 +42,6 @@ class _ActivitesScreenState extends State<ActivitesScreen>
     } else {
       _isDisabled = [true, true];
     }
-
-    _getContentList(13);
 
     activeTabIndex = (widget.schoolCategory.compareTo("Middle") == 0 ||
             widget.schoolCategory.compareTo("High") == 0)
@@ -57,6 +57,17 @@ class _ActivitesScreenState extends State<ActivitesScreen>
       vsync: this,
     );
     _tabController.addListener(onTap);
+
+    _getSchoolId();
+  }
+
+  _getSchoolId() async {
+    int schoolId = await PrefUtils.getValueFor(PrefUtils.schoolId);
+    languageCode = await PrefUtils.getValueFor(PrefUtils.sortLanguageCode);
+    if (schoolId == null) {
+      schoolId = 0;
+    }
+    _getContentList(schoolId);
   }
 
   onTap() {
@@ -107,7 +118,7 @@ class _ActivitesScreenState extends State<ActivitesScreen>
                         ),
                         Container(
                           margin: EdgeInsets.only(top: 10),
-                          child: Text('cool_stuff'.tr(),
+                          child: Text('activites'.tr(),
                               style: AppTheme.regularTextStyle()
                                   .copyWith(fontSize: 18, color: Colors.white)),
                         )
@@ -128,11 +139,11 @@ class _ActivitesScreenState extends State<ActivitesScreen>
               ),
             ),
             Positioned(
-              top: MediaQuery.of(context).size.height * 0.20,
-              left: MediaQuery.of(context).size.height * 0.015,
-              right: MediaQuery.of(context).size.height * 0.015,
+              top: MediaQuery.of(context).size.height*0.20,
+              left: MediaQuery.of(context).size.height*0.03,
+              right: MediaQuery.of(context).size.height*0.03,
               child: Container(
-                  height: 500,
+                  height: MediaQuery.of(context).size.height*0.8,
                   width: MediaQuery.of(context).size.width,
                   margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
                   child: Column(
@@ -194,12 +205,8 @@ class _ActivitesScreenState extends State<ActivitesScreen>
                               : NeverScrollableScrollPhysics(),
                           controller: _tabController,
                           children: <Widget>[
-                            BlogScreenForParent(
-                                'activites'.tr(), "Parent", _elementryList),
-                            BlogScreenForParent(
-                                'activites'.tr(), "Parent", _elementryList)
-                            /* ElementaryStuff(),
-                                MiddleHighStuff()*/
+                            BlogScreenForParent('activites'.tr(), "Parent", _elementryList),
+                            BlogScreenForParent('activites'.tr(), "Parent", _middleHighList)
                           ],
                         ),
                       ))
@@ -222,8 +229,8 @@ class _ActivitesScreenState extends State<ActivitesScreen>
     };
 
     Utils.showLoader(true, context);
-    _contentViewModel.getContentList(context, params, "Parent",
-        (isSuccess, message) {
+    _contentViewModel.getContentList(context, params, "Parent", (isSuccess, message) {
+      Utils.showLoader(false, context);
       if (isSuccess) {
         setState(() {
           _contentList = [];
@@ -232,20 +239,15 @@ class _ActivitesScreenState extends State<ActivitesScreen>
           for (int i = 0; i < _contentList.length; i++) {
             if (_contentList[i].contentTitle.compareTo("Elementary")==0) {
               _elementryList.add(_contentList[i]);
-            }
-            else if (_contentList[i].contentTitle.compareTo("Middle")==0 || _contentList[i].contentTitle.compareTo("High")==0) {
+            } else if (_contentList[i].contentTitle.compareTo("Middle")==0 || _contentList[i].contentTitle.compareTo("High")==0) {
               _middleHighList.add(_contentList[i]);
+            } else {
+              _middleHighList.add(_contentList[i]);
+              _elementryList.add(_contentList[i]);
             }
-            else
-              {
-                _middleHighList.add(_contentList[i]);
-                _elementryList.add(_contentList[i]);
-              }
           }
         });
       } else {
-        Utils.showLoader(false, context);
-        isLoading = false;
         setState(() {
           _contentList = [];
           _elementryList = [];

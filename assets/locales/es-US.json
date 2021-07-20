@@ -151,5 +151,6 @@
     "search_school" : "Escuela de búsqueda",
     "no_school" : "No hay escuela encontrada",
     "signout_alter_msg" : "¿Estás segura de que quieres cerrar sesión?",
-    "total_day": "Número de días"
+    "total_day": "Número de días",
+    "no_school_selected": "No has seleccionado ninguna escuela"
   }

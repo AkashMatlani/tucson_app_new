@@ -151,5 +151,6 @@
   "search_school" : "Tìm kiếm trường học",
   "no_school" : "Không tìm thấy trường học",
   "signout_alter_msg" : "Bạn có chắc chắn muốn đăng xuất không?",
-  "total_day": "Số ngày"
+  "total_day": "Số ngày",
+  "no_school_selected": "Bạn chưa chọn trường nào"
 }
