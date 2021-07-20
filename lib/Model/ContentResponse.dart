@@ -9,6 +9,7 @@ class ContentResponse {
   late int _contentMasterId;
   late int _schoolId;
   late int _contentTypeId;
+  late String _categoryName;
   late String _contentTitle;
   late String _contents;
   late String _createdOn;
@@ -18,6 +19,7 @@ class ContentResponse {
   int get contentMasterId => _contentMasterId;
   int get schoolId => _schoolId;
   int get contentTypeId => _contentTypeId;
+  String get categoryName => _categoryName;
   String get contentTitle => _contentTitle;
   String get content => _contents;
   String get createdOn => _createdOn;
@@ -28,6 +30,7 @@ class ContentResponse {
     required int contentMasterId,
     required int schoolId,
     required int contentTypeId,
+    required String categoryName,
     required String contentTitle,
     required String content,
     required String createdOn,
@@ -36,6 +39,7 @@ class ContentResponse {
     _contentMasterId = contentMasterId;
     _schoolId = schoolId;
     _contentTypeId = contentTypeId;
+    _categoryName = categoryName;
     _contentTitle = contentTitle;
     _contents = content;
     _createdOn = createdOn;
@@ -47,6 +51,7 @@ class ContentResponse {
     _contentMasterId = json["contentMasterId"];
     _schoolId = json["schoolId"];
     _contentTypeId = json["contentTypeId"];
+    _categoryName = json["categoryName"];
     _contentTitle = json["contentTitle"];
     _contents = json["contents"];
     _createdOn = json["createdOn"];
@@ -64,6 +69,7 @@ class ContentResponse {
     map["contentMasterId"] = _contentMasterId;
     map["schoolId"] = _schoolId;
     map["contentTypeId"] = _contentTypeId;
+    map["categoryName"] = _categoryName;
     map["contentTitle"] = _contentTitle;
     map["contents"] = _contents;
     map["createdOn"] = _createdOn;

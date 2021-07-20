@@ -3,11 +3,13 @@ import 'dart:async';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tucson_app/GeneralUtils/ColorExtension.dart';
 import 'package:tucson_app/GeneralUtils/Constant.dart';
 import 'package:tucson_app/GeneralUtils/PrefsUtils.dart';
 import 'package:tucson_app/GeneralUtils/Utils.dart';
 import 'package:tucson_app/Model/GridListItems.dart';
+import 'package:tucson_app/WebService/WebService.dart';
 import 'package:tucson_app/ui/ArticlesScreen.dart';
 import 'package:tucson_app/ui/EducationalWebsiteScreen.dart';
 import 'package:tucson_app/ui/student/BlogScreen.dart';
@@ -17,12 +19,14 @@ import 'ActivitesScreen.dart';
 
 
 class Education extends StatefulWidget {
+
+
   @override
   _EducationScreenState createState() => _EducationScreenState();
 }
 
 class _EducationScreenState extends State<Education> {
-   String schoolId="0";
+   int schoolId=0;
   List<GridListItems> menuItems = [
     GridListItems(
       name: 'educational_website'.tr(), svgPicture: MyImage.educationalWebsiteIcon,
@@ -34,14 +38,31 @@ class _EducationScreenState extends State<Education> {
     GridListItems(name: 'blogs'.tr(), svgPicture: MyImage.blogsIcon),
   ];
 
-
+   String? schoolCategory;
   @override
   void initState() {
     super.initState();
+/*
 
     Timer(Duration(milliseconds: 100), () async {
      // schoolId=PrefUtils.getValueFor(PrefUtils.schoolId) as String;
       print("schoolId-"+PrefUtils.getValueFor(PrefUtils.schoolId).toString());
+      schoolId = PrefUtils.getInt(PrefUtils.schoolId)!;
+      getSchoolType(0);
+    });
+*/
+
+    Timer(Duration(milliseconds: 200), () {
+      SharedPreferences.getInstance().then((prefs) async {
+        PrefUtils.getUserDataFromPref();
+        setState(() {
+          schoolId = prefs.getInt(PrefUtils.schoolId)!;
+          if (schoolId == null) {
+            schoolId = 0;
+          }
+          getSchoolType();
+        });
+      });
     });
 
   }
@@ -124,7 +145,8 @@ class _EducationScreenState extends State<Education> {
                               Utils.navigateToScreen(context, VideoListScreen('videos'.tr(),"Parent"));
                             }
                             else if (index == 2) {
-                              Utils.navigateToScreen(context, BlogScreen('activites'.tr(),"Parent"));
+                             // Utils.navigateToScreen(context, BlogScreen('activites'.tr(),"Parent"));
+                              Utils.navigateToScreen(context, ActivitesScreen(schoolCategory!));
                             }
                             else if (index == 3) {
                               Utils.navigateToScreen(context, BlogScreen('articles'.tr(),"Parent"));
@@ -177,4 +199,31 @@ class _EducationScreenState extends State<Education> {
       ),
     );
   }
+
+   void getSchoolType() {
+     Utils.showLoader(true, context);
+     var params = {"schoolId": 13};
+     WebService.postAPICall(WebService.getSchoolCategoryType, params)
+         .then((response) {
+       Utils.showLoader(false, context);
+       if (response.statusCode == 1) {
+         schoolCategory = response.body["categoryName"];
+         print("category Type-->>"+schoolCategory.toString());
+     /*    if (index == 3) {
+           if (schoolCategory!.compareTo("High") == 0) {
+             getMentalSupportExistOrNot();
+           } else {
+             Utils.showToast(context, 'school_not_support'.tr(), Colors.red);
+           }
+         } else {
+           Utils.navigateToScreen(context, CoolStuffScreen(schoolCategory!));
+         }*/
+       } else {
+         Utils.showToast(context, response.message, Colors.red);
+       }
+     }).catchError((onError) {
+       Utils.showLoader(false, context);
+       Utils.showToast(context, 'check_connectivity'.tr(), Colors.red);
+     });
+   }
 }

@@ -11,7 +11,6 @@ import 'package:tucson_app/GeneralUtils/Utils.dart';
 import 'package:tucson_app/Model/ContentMasterViewModel.dart';
 import 'package:tucson_app/Model/ContentResponse.dart';
 import 'package:tucson_app/WebService/WebService.dart';
-import 'package:tucson_app/ui/DisplayWebview.dart';
 import 'package:tucson_app/ui/VideoPlayerScreen.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
@@ -162,10 +161,17 @@ class _VideoListScreenState extends State<VideoListScreen> {
                       if (snapshot.hasData) {
                         // Extracting data from snapshot object
                         final data = snapshot.data as String;
-                        return Container(  decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            color: Colors.white), height: MediaQuery.of(context).size.height * 0.24,width: 400,child: ClipRRect(
-                            borderRadius:BorderRadius.circular(20),child: Image(image: FileImage(File(data)),fit: BoxFit.fill)));
+                        return Container(
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(20),
+                                color: Colors.white),
+                            height: MediaQuery.of(context).size.height * 0.24,
+                            width: 400,
+                            child: ClipRRect(
+                                borderRadius: BorderRadius.circular(20),
+                                child: Image(
+                                    image: FileImage(File(data)),
+                                    fit: BoxFit.fill)));
                       }
                     }
                     return Center(
@@ -223,9 +229,6 @@ class _VideoListScreenState extends State<VideoListScreen> {
             }
           }
         });
-        if (_imageLink.length >= 0) {
-          getVideoThumbinail(tempdat);
-        }
 
         if (languageCode!.compareTo("en") != 0) {
           translateListData();
@@ -262,7 +265,7 @@ class _VideoListScreenState extends State<VideoListScreen> {
               objectPath: _videoList[i].objectPath,
               contentTransTypeName: _videoList[i].contentTransTypeName));
         }
-        if(_videoList.length == tempList.length){
+        if (_videoList.length == tempList.length) {
           setState(() {
             _videoList = tempList;
           });
@@ -276,61 +279,6 @@ class _VideoListScreenState extends State<VideoListScreen> {
   }
 
   late var fileName;
-
-  getVideoThumbinail(String imageLink) async {
-    /* var status = await Permission.storage.status;
-    if (status.isGranted) {
-      */ /*    if (io.Platform.isIOS) {
-        io.Directory appDocDirectory;
-        appDocDirectory = await getApplicationDocumentsDirectory();
-        Directory directory= await new Directory(appDocDirectory.path+'/'+'Download').create(recursive: true);
-        String path=directory.path.toString();
-        File file = new File('$path/$filename');
-        ToastUtils.showToast(context, "Your file save at "+file.toString()+" location", Colors.green);
-        await file.writeAsBytes(bytes);
-        return file;
-      }
-      else{*/ /*
-      path = await ExtStorage.getExternalStoragePublicDirectory(ExtStorage.DIRECTORY_DOWNLOADS);
-      // File file = new File('$path/$filename');
-      // ToastUtils.showToast(context, "Your file save at "+file.toString()+" location", Colors.green);
-      //await file.writeAsBytes(bytes);
-      // return file;
-    } else {
-      Map<Permission, PermissionStatus> status = await [
-        Permission.storage,
-      ].request();
-      print("Permission status :: $status");
-    }
-
-    String? fileName;
-    try {
-      fileName = await VideoThumbnail.thumbnailFile(
-        video: _videoList[0].objectPath,
-        thumbnailPath: path,
-        imageFormat: ImageFormat.JPEG,
-        maxHeight: 240,
-        quality: 50,
-      );
-    } catch (e) {
-      print(e);
-      fileName = "";
-    }
-    return fileName;*/
-
-    fileName = await VideoThumbnail.thumbnailFile(
-      video: imageLink[0],
-      thumbnailPath: (await getApplicationDocumentsDirectory()).path,
-      imageFormat: ImageFormat.WEBP,
-      maxHeight: 64,
-      // specify the height of the thumbnail, let the width auto-scaled to keep the source aspect ratio
-      quality: 75,
-    );
-
-    imagePath = fileName;
-    print("imagePath-->>" + imagePath);
-    return imagePath;
-  }
 
   Future<void> _launchYoutubeVideo(String _youtubeUrl) async {
     if (_youtubeUrl != null && _youtubeUrl.isNotEmpty) {

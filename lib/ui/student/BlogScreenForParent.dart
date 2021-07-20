@@ -1,33 +1,31 @@
-import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:intl/intl.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:tucson_app/GeneralUtils/ColorExtension.dart';
 import 'package:tucson_app/GeneralUtils/Constant.dart';
-import 'package:tucson_app/GeneralUtils/LabelStr.dart';
 import 'package:tucson_app/GeneralUtils/PrefsUtils.dart';
 import 'package:tucson_app/GeneralUtils/Utils.dart';
 import 'package:tucson_app/Model/ContentMasterViewModel.dart';
 import 'package:tucson_app/Model/ContentResponse.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:tucson_app/WebService/WebService.dart';
-import 'BlogDetailsScreen.dart';
+import 'package:tucson_app/ui/student/BlogDetailsScreen.dart';
 
-import '../../GeneralUtils/ColorExtension.dart';
+class BlogScreenForParent extends StatefulWidget {
+  BlogScreenForParent(this.title, this.fromScreen, [elementryList]);
 
-
-class BlogScreen extends StatefulWidget {
-  BlogScreen(this.title, this.fromScreen);
-
+  late List<ContentResponse>elementryList;
   String title;
   String fromScreen;
 
   @override
-  _BlogScreenState createState() => _BlogScreenState();
+  _BlogScreenForParentState createState() => _BlogScreenForParentState();
 }
 
-class _BlogScreenState extends State<BlogScreen> {
+class _BlogScreenForParentState extends State<BlogScreenForParent> {
   bool isLoading = true;
   List<ContentResponse> _contentList = [];
+  List<ContentResponse> _elementryList = [];
+  List<ContentResponse> _highList = [];
   String? languageCode;
   String svgPicture = "";
 
@@ -52,7 +50,7 @@ class _BlogScreenState extends State<BlogScreen> {
     if (schoolId == null) {
       schoolId = 0;
     }
-    _getContentList(schoolId);
+    _getContentList(13);
   }
 
   @override
@@ -66,7 +64,7 @@ class _BlogScreenState extends State<BlogScreen> {
               color: HexColor("#6462AA"),
               child: Column(
                 children: [
-                  Container(
+                /*  Container(
                     margin: EdgeInsets.fromLTRB(
                         0,
                         MediaQuery.of(context).size.height * 0.03,
@@ -92,8 +90,8 @@ class _BlogScreenState extends State<BlogScreen> {
                         )
                       ],
                     ),
-                  ),
-                  Container(
+                  ),*/
+                 /* Container(
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.only(
                             topLeft: Radius.circular(30.0),
@@ -102,29 +100,28 @@ class _BlogScreenState extends State<BlogScreen> {
                     height: MediaQuery.of(context).size.height * 0.88,
                     width: MediaQuery.of(context).size.width,
                     padding: EdgeInsets.all(10),
-                  )
+                  )*/
                 ],
               ),
             ),
-            Positioned(
+           /* Positioned(
               top: MediaQuery.of(context).size.height * 0.12,
               left: MediaQuery.of(context).size.height * 0.012,
               right: MediaQuery.of(context).size.height * 0.012,
-              child: Container(
+              child:*/ Container(
                 height: MediaQuery.of(context).size.height * 0.88,
-                child: _contentList.length == 0
+                child: widget.elementryList.length == 0
                     ? emptyListView()
                     : SingleChildScrollView(
-                        child: ListView.builder(
-                            itemCount: _contentList.length,
-                            shrinkWrap: true,
-                            physics: ScrollPhysics(),
-                            padding: EdgeInsets.all(10),
-                            itemBuilder: (BuildContext context, int position) {
-                              return _listRowItems(context, position);
-                            }),
-                      ),
-              ),
+                  child: ListView.builder(
+                      itemCount: widget.elementryList.length,
+                      shrinkWrap: true,
+                      physics: ScrollPhysics(),
+                      padding: EdgeInsets.all(10),
+                      itemBuilder: (BuildContext context, int position) {
+                        return _listRowItems(context, position);
+                      }),
+                ),
             )
           ],
         ),
@@ -161,17 +158,7 @@ class _BlogScreenState extends State<BlogScreen> {
                   borderRadius: BorderRadius.circular(20), color: Colors.white),
               alignment: Alignment.center,
               child:
-                  /*ClipRRect(
-                          borderRadius: BorderRadius.circular(10),
-                          child: CachedNetworkImage(
-                            fit: BoxFit.cover,
-                            useOldImageOnUrlChange: false,
-                            imageUrl: getVideoThumbinail(),
-                            placeholder: (context, url) => Container(height: 40, width: 40, alignment: Alignment.center, child: CircularProgressIndicator()),
-                            errorWidget: (context, url, error) => Image.asset(MyImage.videoUrlImage),
-                          ),
-                        )*/
-                  SvgPicture.asset(
+              SvgPicture.asset(
                 svgPicture,
                 fit: BoxFit.fitWidth,
                 height: MediaQuery.of(context).size.height * 0.24,
@@ -202,8 +189,8 @@ class _BlogScreenState extends State<BlogScreen> {
       child: isLoading
           ? Container()
           : Text('no'.tr() + " " + widget.title + " " + 'found'.tr(),
-              style: AppTheme.regularTextStyle()
-                  .copyWith(fontSize: 18, color: Colors.red)),
+          style: AppTheme.regularTextStyle()
+              .copyWith(fontSize: 18, color: Colors.red)),
     );
   }
 
@@ -240,26 +227,35 @@ class _BlogScreenState extends State<BlogScreen> {
 
     Utils.showLoader(true, context);
     _contentViewModel.getContentList(context, params, widget.fromScreen,
-        (isSuccess, message) {
-      if (isSuccess) {
-        setState(() {
-          _contentList = [];
-          _contentList = _contentViewModel.contentList;
+            (isSuccess, message) {
+          if (isSuccess) {
+            setState(() {
+              _contentList = [];
+              _contentList = _contentViewModel.contentList;
+              _elementryList=[];
+              for(int i=0;i<_contentList.length;i++)
+                {
+                  if(_contentList[i].contentTitle=="Elementary")
+                    {
+                      _elementryList=_contentViewModel.contentList;
+                    }
+                }
+            });
+            if (languageCode!.compareTo("en") != 0) {
+              translateListData();
+            } else {
+              Utils.showLoader(false, context);
+              isLoading = false;
+            }
+          } else {
+            Utils.showLoader(false, context);
+            isLoading = false;
+            setState(() {
+              _contentList = [];
+              _elementryList=[];
+            });
+          }
         });
-        if (languageCode!.compareTo("en") != 0) {
-          translateListData();
-        } else {
-          Utils.showLoader(false, context);
-          isLoading = false;
-        }
-      } else {
-        Utils.showLoader(false, context);
-        isLoading = false;
-        setState(() {
-          _contentList = [];
-        });
-      }
-    });
   }
 
   translateListData() {
@@ -283,7 +279,7 @@ class _BlogScreenState extends State<BlogScreen> {
               createdOn: _contentList[i].createdOn,
               schoolName: _contentList[i].schoolName,
               contentTransactionTypeJoin:
-                  _contentList[i].contentTransactionTypeJoin));
+              _contentList[i].contentTransactionTypeJoin));
         }
         if(_contentList.length == tempList.length){
           setState(() {

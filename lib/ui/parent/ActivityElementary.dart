@@ -32,7 +32,7 @@ class _ActivityElementaryState extends State<ActivityElementary> {
                   itemBuilder: (BuildContext ctxt, int index) {
                     return InkWell(
                       onTap: () {
-                        var content = ContentResponse(contentMasterId: 0, schoolId: 0, contentTypeId: 0, contentTitle: "", content: "", createdOn: "", schoolName: "", contentTransactionTypeJoin: []);
+                        var content = ContentResponse(contentMasterId: 0, schoolId: 0, contentTypeId: 0,categoryName: "", contentTitle: "", content: "", createdOn: "", schoolName: "", contentTransactionTypeJoin: []);
                         Utils.navigateToScreen(context, BlogDetailsScreen('elementary'.tr(), content));
                       },
                       child: Column(
