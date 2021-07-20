@@ -192,33 +192,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             children: [
                               SizedBox(height: 10),
                               Container(
-                                /*margin: EdgeInsets.only(right: 8),
-                                child: DropdownButton<SchoolListResponse>(
-                                  value: _selectedSchool,
-                                  isExpanded: true,
-                                  itemHeight: 50,
-                                  isDense: true,
-                                  underline: Container(
-                                    height: 0,
-                                    color: Colors.white,
-                                  ),
-                                  style: AppTheme.regularTextStyle(),
-                                  icon: Icon(                // Add this
-                                    Icons.keyboard_arrow_down,
-                                    color: HexColor("#CCCCCC"),// Add this
-                                  ),
-                                  items: _schoolList.map<DropdownMenuItem<SchoolListResponse>>((SchoolListResponse schoolDetails){
-                                    return DropdownMenuItem(
-                                        child: Text(schoolDetails.name),
-                                        value: schoolDetails
-                                    );
-                                  }).toList(),
-                                  onChanged: (value){
-                                    setState(() {
-                                      _selectedSchool = value!;
-                                    });
-                                  },
-                                ),*/
                                 child: InkWell(
                                   onTap: (){
                                     //Utils.backWithNoTransition(context, CustomDropDownList(selectedSchoolName, _selectedSchool, _schoolList));

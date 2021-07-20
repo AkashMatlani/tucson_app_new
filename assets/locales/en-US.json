@@ -149,6 +149,18 @@
   "school_not_support" : "No mental health support for this school.",
   "student_age_error" : "Mental Health Support is available only for Students with age >=13 years",
   "search_school" : "Search School",
+  "search_service_request" : "Search Service Request",
   "no_school" : "No School Found",
-  "signout_alter_msg" : "Are you sure want to sign out ?"
+  "no_service_request" : "No Service Request Found",
+  "signout_alter_msg" : "Are you sure want to sign out ?",
+  "drop_out_prevention_enroll_form" : "Dropout Prevention Enroll From",
+  "first_name" : "First Name",
+  "last_name" : "Last Name",
+  "contact_phone" : "Contact Phone",
+  "student_information" : "Student Information:",
+  "tusd_matric_number" : "TUSD Matric Number",
+  "grade" : "Grade",
+  "school" : "School",
+  "reason_fro_service_request" : "Reason For Service Request",
+  "select_reason_for_service_request" : "Reason For Service Request"
 }

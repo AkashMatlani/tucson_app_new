@@ -1,10 +1,19 @@
+import 'dart:async';
+import 'dart:convert';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tucson_app/GeneralUtils/ColorExtension.dart';
 import 'package:tucson_app/GeneralUtils/Constant.dart';
 import 'package:tucson_app/GeneralUtils/LabelStr.dart';
-
+import 'package:tucson_app/GeneralUtils/Utils.dart';
+import 'package:tucson_app/Model/ContentResponse.dart';
+import 'package:tucson_app/Model/DropOutPreventionEmailsModel.dart';
+import 'package:tucson_app/Model/SchoolListResponse.dart';
+import 'package:tucson_app/WebService/WebService.dart';
+import 'package:http/http.dart' as http;
+import 'package:tucson_app/ui/parent/DropOutPostScreen.dart';
 
 class DropoutPreventionScreen extends StatefulWidget {
   @override
@@ -13,6 +22,17 @@ class DropoutPreventionScreen extends StatefulWidget {
 }
 
 class _DropoutPreventionScreenState extends State<DropoutPreventionScreen> {
+  bool isLoading = true;
+  List<DropOutPreventionEmailsModel> _dropOutModelList = [];
+
+  @override
+  void initState() {
+    super.initState();
+    Timer(Duration(milliseconds: 200), () {
+      _getSchoolList();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,13 +44,18 @@ class _DropoutPreventionScreenState extends State<DropoutPreventionScreen> {
             child: Column(
               children: [
                 Container(
-                  margin: EdgeInsets.fromLTRB(0, MediaQuery.of(context).size.height*0.03, 0, MediaQuery.of(context).size.height*0.03),
+                  margin: EdgeInsets.fromLTRB(
+                      0,
+                      MediaQuery.of(context).size.height * 0.03,
+                      0,
+                      MediaQuery.of(context).size.height * 0.03),
                   child: Row(
                     children: [
                       Container(
                         margin: EdgeInsets.only(top: 10),
                         child: IconButton(
-                            icon: Icon(Icons.arrow_back_ios, color: Colors.white),
+                            icon:
+                                Icon(Icons.arrow_back_ios, color: Colors.white),
                             onPressed: () {
                               Navigator.of(context).pop();
                             }),
@@ -110,100 +135,18 @@ class _DropoutPreventionScreenState extends State<DropoutPreventionScreen> {
                     ),
                   ),
                   SizedBox(height: 15),
-                  Card(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10)),
-                    child: Container(
-                      padding: EdgeInsets.all(10),
-                      child: Column(
-                        children: [
-                          Row(
-                            children: [
-                              Expanded(
-                                  flex: 4,
-                                  child: Text("Talitha Byarse",
-                                      style: AppTheme.regularTextStyle()
-                                          .copyWith(
-                                              fontFamily:
-                                                  MyFont.SSPro_semibold))),
-                              Expanded(
-                                  flex: 6,
-                                  child: Text("talitha.byarse@tusd1.org",
-                                      style: AppTheme.regularTextStyle()
-                                          .copyWith(color: Colors.blueAccent)))
-                            ],
-                          ),
-                          SizedBox(height: 5),
-                          Row(
-                            children: [
-                              Expanded(
-                                  flex: 4,
-                                  child: Text("Talitha Byarse",
-                                      style: AppTheme.regularTextStyle()
-                                          .copyWith(
-                                              fontFamily:
-                                                  MyFont.SSPro_semibold))),
-                              Expanded(
-                                  flex: 6,
-                                  child: Text("talitha.byarse@tusd1.org",
-                                      style: AppTheme.regularTextStyle()
-                                          .copyWith(color: Colors.blueAccent)))
-                            ],
-                          ),
-                          SizedBox(height: 5),
-                          Row(
-                            children: [
-                              Expanded(
-                                  flex: 4,
-                                  child: Text("Talitha Byarse",
-                                      style: AppTheme.regularTextStyle()
-                                          .copyWith(
-                                              fontFamily:
-                                                  MyFont.SSPro_semibold))),
-                              Expanded(
-                                  flex: 6,
-                                  child: Text("talitha.byarse@tusd1.org",
-                                      style: AppTheme.regularTextStyle()
-                                          .copyWith(color: Colors.blueAccent)))
-                            ],
-                          ),
-                          SizedBox(height: 5),
-                          Row(
-                            children: [
-                              Expanded(
-                                  flex: 4,
-                                  child: Text("Talitha Byarse",
-                                      style: AppTheme.regularTextStyle()
-                                          .copyWith(
-                                              fontFamily:
-                                                  MyFont.SSPro_semibold))),
-                              Expanded(
-                                  flex: 6,
-                                  child: Text("talitha.byarse@tusd1.org",
-                                      style: AppTheme.regularTextStyle()
-                                          .copyWith(color: Colors.blueAccent)))
-                            ],
-                          ),
-                          SizedBox(height: 5),
-                          Row(
-                            children: [
-                              Expanded(
-                                  flex: 4,
-                                  child: Text("Talitha Byarse",
-                                      style: AppTheme.regularTextStyle()
-                                          .copyWith(
-                                              fontFamily:
-                                                  MyFont.SSPro_semibold))),
-                              Expanded(
-                                  flex: 6,
-                                  child: Text("talitha.byarse@tusd1.org",
-                                      style: AppTheme.regularTextStyle()
-                                          .copyWith(color: Colors.blueAccent)))
-                            ],
-                          )
-                        ],
-                      ),
-                    ),
+
+            ConstrainedBox(
+                constraints:BoxConstraints(minHeight: 80,maxHeight: MediaQuery.of(context).size.height*0.30),
+                    child:  ListView.builder(
+                        itemCount: _dropOutModelList.length,
+                        shrinkWrap: true,
+                        physics: ScrollPhysics(),
+                        padding: EdgeInsets.only(top: 20),
+                        itemBuilder:
+                            (BuildContext context, int position) {
+                          return _listRowItem(context, position);
+                        }),
                   ),
                   SizedBox(height: 20),
                   Container(
@@ -224,10 +167,10 @@ class _DropoutPreventionScreenState extends State<DropoutPreventionScreen> {
                           style: AppTheme.customTextStyle(
                               MyFont.SSPro_regular, 16.0, Colors.white)),
                       onPressed: () {
-                        bottomPopup();
+                        Utils.navigateToScreen(context, DropOutPostScreen());
                       },
                     ),
-                  )
+                  ),
                 ],
               ),
             ),
@@ -323,6 +266,86 @@ class _DropoutPreventionScreenState extends State<DropoutPreventionScreen> {
               ),
             )
           ],
+        ),
+      ),
+    );
+  }
+
+  _getSchoolList() {
+    Utils.showLoader(true, context);
+    WebService.getAPICallWithoutParmas(WebService.getAllDropoutSpeciality)
+        .then((response) {
+      if (response.statusCode == 1) {
+        if (response.body != null) {
+          setState(() {
+            isLoading = false;
+            Utils.showLoader(false, context);
+            _dropOutModelList = [];
+            //_schoolList.add(SchoolListResponse(id: 0, name: LabelStr.lblSelectSchool, schoolCategoryId: 0, schoolCategoryName: "",  createdBy: 0,  createdOn: "",  updatedBy: 0,  updatedOn: ""));
+            for (var data in response.body) {
+              _dropOutModelList
+                  .add(DropOutPreventionEmailsModel.fromJson(data));
+            }
+          });
+        } else {
+          isLoading = false;
+          Utils.showLoader(false, context);
+        }
+      } else {
+        isLoading = false;
+        Utils.showToast(context, response.message, Colors.red);
+        print(
+            "******************** ${response.message} ************************");
+      }
+    }).catchError((error) {
+      isLoading = false;
+      Utils.showLoader(false, context);
+      print(error);
+      Utils.showToast(context, 'check_connectivity'.tr(), Colors.red);
+    });
+  }
+
+  emptyListView() {
+    return Container(
+      alignment: Alignment.center,
+      height: MediaQuery.of(context).size.height * 0.88,
+      child: isLoading
+          ? Container()
+          : Text('no_educational'.tr(),
+              style: AppTheme.regularTextStyle()
+                  .copyWith(fontSize: 18, color: Colors.red)),
+    );
+  }
+
+  _listRowItem(BuildContext context, int position) {
+    return InkWell(
+      onTap: () {
+        // Utils.navigateToScreen(context, DisplayWebview(_communityEventList[position].objectPath));
+        // _launchURL(_communityEventList[position].objectPath);
+      },
+      child: Card(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        child: Container(
+          padding: EdgeInsets.all(10),
+          child: Column(
+            children: [
+              Row(
+                children: [
+                  Expanded(
+                      flex: 4,
+                      child: Text(_dropOutModelList[position].specialistName,
+                          style: AppTheme.regularTextStyle()
+                              .copyWith(fontFamily: MyFont.SSPro_semibold))),
+                  Expanded(
+                      flex: 6,
+                      child: Text(_dropOutModelList[position].specialistEmail,
+                          style: AppTheme.regularTextStyle()
+                              .copyWith(color: Colors.blueAccent)))
+                ],
+              ),
+              SizedBox(height: 5),
+            ],
+          ),
         ),
       ),
     );

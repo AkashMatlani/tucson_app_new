@@ -30,6 +30,9 @@ class WebService {
   static const getSchoolCategoryType = "ContentMaster/GetSchoolCategoryType";
   static const supportNotifierMail = "User/SupportNotifierMail";
   static const getMentalSupportExist = "TUSDSupport/IsMentalHealthSupportExists";
+  static const getAllDropoutSpeciality = "TUSDConfiguration/GetAllDropoutSpecialist";
+  static const getAllReason = "TUSDConfiguration/GetAllReasons";
+  static const sendDropOutPrevantionEmail = "TUSDConfiguration/SendDropoutPreventionEmail";
 
   static const communityContentByType = "Community/GetContentByType";
 
