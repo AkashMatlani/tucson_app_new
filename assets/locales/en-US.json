@@ -93,7 +93,7 @@
   "blogs" : "Blogs",
   "blog_details" : "Blog Details",
   "article_details" : "Article Details",
-  "activite_details" : "Activite Details",
+  "activity_details" : "Activity Details",
   "story_details" : "Stories Details",
   "tusd_calendar" : "TUSD Calendar",
   "frc_schedule" : "FRC Schedule",
@@ -150,5 +150,6 @@
   "student_age_error" : "Mental Health Support is available only for Students with age >=13 years",
   "search_school" : "Search School",
   "no_school" : "No School Found",
-  "signout_alter_msg" : "Are you sure want to sign out ?"
+  "signout_alter_msg" : "Are you sure want to sign out ?",
+  "total_day": "Number of days"
 }

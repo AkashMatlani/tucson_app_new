@@ -2,8 +2,10 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:html/dom.dart' as dom;
 import 'package:intl/intl.dart';
 import 'package:tucson_app/GeneralUtils/ColorExtension.dart';
 import 'package:tucson_app/GeneralUtils/Constant.dart';
@@ -15,6 +17,7 @@ import 'package:tucson_app/ui/AudioPlayerScreen.dart';
 import 'package:tucson_app/ui/ImageViewerScreen.dart';
 import 'package:tucson_app/ui/VideoPlayerScreen.dart';
 import 'package:url_launcher/url_launcher.dart';
+
 import '../DocumentViewerScreen.dart';
 
 class BlogDetailsScreen extends StatefulWidget {
@@ -47,7 +50,7 @@ class _BlogDetailsScreenState extends State<BlogDetailsScreen> {
   List<String> audioList = [];
   List<String> webList = [];
 
-  String svgPicture="";
+  String svgPicture = "";
 
   @override
   void initState() {
@@ -58,7 +61,7 @@ class _BlogDetailsScreenState extends State<BlogDetailsScreen> {
       svgPicture = MyImage.storiesThubmail;
     } else if (widget.title.compareTo('article_details'.tr()) == 0) {
       svgPicture = MyImage.articleThubmail;
-    }else if (widget.title.compareTo('activite_details'.tr()) == 0) {
+    } else if (widget.title.compareTo('activity_details'.tr()) == 0) {
       svgPicture = MyImage.articleThubmail;
     }
 
@@ -165,13 +168,18 @@ class _BlogDetailsScreenState extends State<BlogDetailsScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Container(
-                          margin: EdgeInsets.only(top: 30),
-                          height: MediaQuery.of(context).size.height * 0.24,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              color: Colors.white),
-                          alignment: Alignment.center,
-                          child: SvgPicture.asset(svgPicture, fit: BoxFit.fitWidth,height:  MediaQuery.of(context).size.height*0.24,width: 400,)),
+                            margin: EdgeInsets.only(top: 30),
+                            height: MediaQuery.of(context).size.height * 0.24,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(20),
+                                color: Colors.white),
+                            alignment: Alignment.center,
+                            child: SvgPicture.asset(
+                              svgPicture,
+                              fit: BoxFit.fitWidth,
+                              height: MediaQuery.of(context).size.height * 0.24,
+                              width: 400,
+                            )),
                         SizedBox(height: 20),
                         Text(
                             Utils.convertDate(widget.contentResponse.createdOn,
@@ -186,20 +194,26 @@ class _BlogDetailsScreenState extends State<BlogDetailsScreen> {
                                 20.0,
                                 Color.fromRGBO(0, 0, 0, 1))),
                         SizedBox(height: 30),
-                        Html(
+                        SelectableHtml(
                           data: contentDesc,
                           style: {
                             "body": Style(
                                 fontFamily: MyFont.SSPro_regular,
                                 fontSize: FontSize.medium)
                           },
+                          onLinkTap: (String? url,
+                              RenderContext ctx,
+                              Map<String, String> attributes,
+                              dom.Element? element) {
+                            _launchURL(url!);
+                          },
                         ),
                         SizedBox(height: 10),
                         imageList.length > 0 ? imageWidget() : Container(),
                         // doclink.length > 0 ? docWidget() : Container(),
                         videoList.length > 0 ? videoWidget() : Container(),
-                          audioList.length > 0 ? audioWidget() : Container(),
-                        // webList.length > 0 ? webWidget() : Container(),
+                        //audioList.length > 0 ? audioWidget() : Container(),
+                        webList.length > 0 ? webWidget() : Container(),
                       ],
                     ),
                   ),
@@ -310,12 +324,14 @@ class _BlogDetailsScreenState extends State<BlogDetailsScreen> {
   webWidget() {
     return Container(
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text("Link" + " (" + webList.length.toString() + ")"),
+          Padding(
+              padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
+              child: Text("Link" + " (" + webList.length.toString() + ")")),
           ListView.builder(
               itemCount: webList.length,
               shrinkWrap: true,
-              padding: EdgeInsets.only(top: 20),
               itemBuilder: (BuildContext context, int position) {
                 return _listWebDoc(context, position);
               }),
@@ -333,7 +349,7 @@ class _BlogDetailsScreenState extends State<BlogDetailsScreen> {
           Utils.navigateToScreen(context, DocumentViewerScreen(link));
         } else if (type.compareTo("Video") == 0) {
           if (link.contains("https://www.youtube.com/") == 0) {
-           // Utils.navigateToScreen(context, DisplayWebview(link));
+            // Utils.navigateToScreen(context, DisplayWebview(link));
             _launchURL(link);
           } else {
             Utils.navigateToScreen(context, VideoPlayerScreen(link));
@@ -341,7 +357,7 @@ class _BlogDetailsScreenState extends State<BlogDetailsScreen> {
         } else if (type.compareTo("Audio") == 0) {
           Utils.navigateToScreen(context, AudioPlayerScreen(link));
         } else {
-         // Utils.navigateToScreen(context, DisplayWebview(link));
+          // Utils.navigateToScreen(context, DisplayWebview(link));
           _launchURL(link);
         }
       },
@@ -434,10 +450,11 @@ class _BlogDetailsScreenState extends State<BlogDetailsScreen> {
   _listWebDoc(BuildContext context, int position) {
     return InkWell(
       onTap: () {
-       // Utils.navigateToScreen(context, DisplayWebview(webList[position]));
+        // Utils.navigateToScreen(context, DisplayWebview(webList[position]));
         _launchURL(webList[position]);
       },
       child: Container(
+        margin: EdgeInsets.only(bottom: 10),
           child: Text(
         webList[position],
         style: TextStyle(color: Colors.blueAccent),
@@ -445,6 +462,7 @@ class _BlogDetailsScreenState extends State<BlogDetailsScreen> {
     );
   }
 
-  void _launchURL(String path) async =>
-      await canLaunch(path) ? await launch(path) : throw 'Could not launch $path';
+  void _launchURL(String path) async => await canLaunch(path)
+      ? await launch(path)
+      : throw 'Could not launch $path';
 }

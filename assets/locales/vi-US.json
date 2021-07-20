@@ -93,7 +93,7 @@
   "blogs" : "Blog",
   "blog_details" : "Chi tiết Blog",
   "article_details" : "Chi tiết bài viết",
-  "activite_details" : "Chi tiết về Activite",
+  "activity_details" : "Chi tiết hoạt động",
   "story_details" : "Chi tiết câu chuyện",
   "tusd_calendar" : "Lịch TUSD",
   "frc_schedule" : "Lịch trình FRC",
@@ -150,5 +150,6 @@
   "student_age_error" : "Hỗ trợ Sức khỏe Tâm thần chỉ dành cho Học sinh> = 13 tuổi",
   "search_school" : "Tìm kiếm trường học",
   "no_school" : "Không tìm thấy trường học",
-  "signout_alter_msg" : "Bạn có chắc chắn muốn đăng xuất không?"
+  "signout_alter_msg" : "Bạn có chắc chắn muốn đăng xuất không?",
+  "total_day": "Số ngày"
 }

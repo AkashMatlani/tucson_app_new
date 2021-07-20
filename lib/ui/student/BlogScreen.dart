@@ -144,7 +144,7 @@ class _BlogScreenState extends State<BlogScreen> {
         } else if (widget.title.compareTo('blogs'.tr()) == 0) {
           widget.title = 'blog_details'.tr();
         }else if (widget.title.compareTo('activites'.tr()) == 0) {
-          widget.title = 'activite_details'.tr();
+          widget.title = 'activity_details'.tr();
         }
 
         Utils.navigateToScreen(

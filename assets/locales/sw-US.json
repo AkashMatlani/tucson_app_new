@@ -93,7 +93,7 @@
   "blogs" : "Blogi",
   "blog_details" : "Maelezo ya Blogi",
   "article_details" : "Maelezo ya Kifungu",
-  "activite_details" : "Maelezo ya Utekelezaji",
+  "activity_details" : "Maelezo ya Shughuli",
   "story_details" : "Maelezo ya Hadithi",
   "tusd_calendar" : "Kalenda ya TUSD",
   "frc_schedule" : "Ratiba ya FRC",
@@ -150,5 +150,6 @@
   "student_age_error" : "Msaada wa Afya ya Akili unapatikana tu kwa Wanafunzi walio na umri> = miaka 13",
   "search_school" : "Tafuta Shule",
   "no_school" : "Hakuna Shule Iliyopatikana",
-  "signout_alter_msg" : "Je! Una uhakika unataka kutoka?"
+  "signout_alter_msg" : "Je! Una uhakika unataka kutoka?",
+  "total_day": "Idadi ya siku"
 }

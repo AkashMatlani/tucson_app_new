@@ -501,7 +501,7 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
                   alignment: Alignment.center,
                   child: Padding(
                     padding: const EdgeInsets.fromLTRB(20.0, 20, 10, 10),
-                    child: Text('mental_health_support'.tr(),
+                    child: Text('privacy_notice'.tr(),
                         style: AppTheme.customTextStyle(MyFont.SSPro_bold, 20.0,
                             Color.fromRGBO(0, 0, 0, 1))),
                   ),

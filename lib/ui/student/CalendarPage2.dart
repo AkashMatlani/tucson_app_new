@@ -297,17 +297,20 @@ class _CalendarPage2State extends State<CalendarPage2> {
                       ),
                     ) : Container(),
                     Container(
-                      height: Platform.isIOS?cHeight * 0.22:cHeight *0.25,
-                      child: SingleChildScrollView(
-                        physics: ScrollPhysics(),
-                        child: ListView.builder(
-                            itemCount: upcommingEventList.length,
-                            shrinkWrap: true,
-                            physics: NeverScrollableScrollPhysics(),
-                            padding: EdgeInsets.only(top: 10),
-                            itemBuilder: (BuildContext context, int position) {
-                              return _listRowItem(context, position);
-                            }),
+                      height: Platform.isIOS?cHeight * 0.24:cHeight *0.26,
+                      child: Scrollbar(
+                        thickness: 5,
+                        child: SingleChildScrollView(
+                          physics: ScrollPhysics(),
+                          child: ListView.builder(
+                              itemCount: upcommingEventList.length,
+                              shrinkWrap: true,
+                              physics: NeverScrollableScrollPhysics(),
+                              padding: EdgeInsets.only(top: 10),
+                              itemBuilder: (BuildContext context, int position) {
+                                return _listRowItem(context, position);
+                              }),
+                        ),
                       ),
                     )
                   ],
@@ -398,6 +401,8 @@ class _CalendarPage2State extends State<CalendarPage2> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+                            Text('total_day'.tr()+ ': '+getDayCount(localFromDate, localToDate), style: AppTheme.regularTextStyle().copyWith(fontSize: 16, color: Colors.black54)),
+                            SizedBox(height: 10),
                             Text('event_details'.tr()+ ':', style: AppTheme.regularTextStyle().copyWith(fontSize: 16, color: Colors.black54)),
                             Html(
                               data: eventist[i].eventDetail,
@@ -475,7 +480,7 @@ class _CalendarPage2State extends State<CalendarPage2> {
                   Padding(
                     padding: const EdgeInsets.fromLTRB(20.0, 20, 10, 10),
                     child: Text(
-                      'start_date_time'.tr() + "\n" + eventList[1]  +"\n"+'end_date_time'.tr()+ "\n" +eventList[2],
+                      'start_date_time'.tr() +": "+ eventList[1]  +"\n"+'end_date_time'.tr() +": "+ eventList[2],
                       style: AppTheme.regularTextStyle()
                           .copyWith(fontSize: 16, color: Colors.black54),
                     ),
@@ -527,27 +532,6 @@ class _CalendarPage2State extends State<CalendarPage2> {
 
     return InkWell(
       onTap: () {
-        var details = Padding(
-          padding: const EdgeInsets.fromLTRB(20.0, 0, 10, 0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text('event_details'.tr()+ ':', style: AppTheme.regularTextStyle().copyWith(fontSize: 16, color: Colors.black54)),
-              Html(
-                data: upcommingEventList[position].eventDetail,
-                style: {
-                  "body" : Style(
-                    fontFamily: MyFont.SSPro_regular,
-                    fontSize: FontSize.medium,
-                    color: Colors.black54
-                  )
-                },
-              ),
-            ],
-
-          ),
-        );
 
         String resFromDate = upcommingEventList[position].fromDateTime.split('T')[0];
         DateTime utcFromDate = DateTime.parse(resFromDate).toUtc();
@@ -563,6 +547,29 @@ class _CalendarPage2State extends State<CalendarPage2> {
 
         var eventDetails = upcommingEventList[position].eventName+"=>"+fromDate+"=>"+toDate;
 
+        var details = Padding(
+          padding: const EdgeInsets.fromLTRB(20.0, 0, 10, 0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text('total_day'.tr()+ ': '+getDayCount(localFromDate, localToDate), style: AppTheme.regularTextStyle().copyWith(fontSize: 16, color: Colors.black54)),
+              SizedBox(height: 10),
+              Text('event_details'.tr()+ ':', style: AppTheme.regularTextStyle().copyWith(fontSize: 16, color: Colors.black54)),
+              Html(
+                data: upcommingEventList[position].eventDetail,
+                style: {
+                  "body" : Style(
+                    fontFamily: MyFont.SSPro_regular,
+                    fontSize: FontSize.medium,
+                    color: Colors.black54
+                  )
+                },
+              ),
+            ],
+          ),
+        );
+
         /*DateTime utcFromDate = DateTime.parse(upcommingEventList[position].fromDateTime).toUtc();
         var localFromDate = utcFromDate.toLocal();
         String strUtcFromDate = DateFormat("yyyy-MM-dd'T'hh:mm:ss").format(localFromDate);
@@ -574,6 +581,7 @@ class _CalendarPage2State extends State<CalendarPage2> {
         var toDate = Utils.convertDate(strUtcToDate, DateFormat("MM/dd/yyyy"))+" "+upcommingEventList[position].endTime;
 
         var eventDetails = upcommingEventList[position].eventName+"=>"+fromDate+"=>"+toDate;*/
+
 
         bottomMenu(eventDetails, details);
       },
@@ -598,6 +606,16 @@ class _CalendarPage2State extends State<CalendarPage2> {
         ),
       ),
     );
+  }
+
+  getDayCount(DateTime startDate, DateTime endDate){
+    var from = DateTime(startDate.year, startDate.month, startDate.day);
+    var to = DateTime(endDate.year, endDate.month, endDate.day);
+    var count = (to.difference(from).inHours / 24).round();
+    if(count.toString().length == 1){
+      return "0"+count.toString();
+    }
+    return count.toString();
   }
 
   _translateEventTitleData(){
@@ -672,5 +690,13 @@ class _CalendarPage2State extends State<CalendarPage2> {
       }
       Utils.showLoader(false, context);
     });
+  }
+
+  List<DateTime> getDaysInBeteween(DateTime startDate, DateTime endDate) {
+    List<DateTime> days = [];
+    for (int i = 0; i <= endDate.difference(startDate).inDays; i++) {
+      days.add(startDate.add(Duration(days: i)));
+    }
+    return days;
   }
 }
