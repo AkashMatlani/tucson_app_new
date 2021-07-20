@@ -151,5 +151,6 @@
   "search_school" : "Search School",
   "no_school" : "No School Found",
   "signout_alter_msg" : "Are you sure want to sign out ?",
-  "total_day": "Number of days"
+  "total_day": "Number of days",
+  "no_school_selected": "You have not selected any school"
 }

@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:tucson_app/GeneralUtils/ColorExtension.dart';
 import 'package:tucson_app/GeneralUtils/Constant.dart';
@@ -7,13 +10,10 @@ import 'package:tucson_app/GeneralUtils/PrefsUtils.dart';
 import 'package:tucson_app/GeneralUtils/Utils.dart';
 import 'package:tucson_app/Model/GridListItems.dart';
 import 'package:tucson_app/WebService/WebService.dart';
-import 'package:tucson_app/ui/DisplayWebview.dart';
 import 'package:tucson_app/ui/DropoutPreventionScreen.dart';
 import 'package:tucson_app/ui/WebViewEmpty.dart';
 import 'package:tucson_app/ui/student/MentalHealthSupportScreen.dart';
 import 'package:url_launcher/url_launcher.dart';
-
-import '../../GeneralUtils/LabelStr.dart';
 
 class RequestForServiceScreen extends StatefulWidget {
   @override
@@ -25,21 +25,23 @@ class _RequestForServiceScreenState extends State<RequestForServiceScreen> {
   late int schoolId;
   List<GridListItems> menuItems = [
     GridListItems(
-      name: 'mental_health_support'.tr(), svgPicture: MyImage.mentalHealthIcon,
+      name: 'mental_health_support'.tr(),
+      svgPicture: MyImage.mentalHealthIcon,
     ),
-   /* GridListItems(
+    /* GridListItems(
         name: 'student_services'.tr(), svgPicture: MyImage.studentServicesIcon),*/
     GridListItems(name: 'talk_it_out'.tr(), svgPicture: MyImage.takeItOut),
-    GridListItems(
-        name: 'dropout_prevention'.tr(), svgPicture: MyImage.dropOut),
+    GridListItems(name: 'dropout_prevention'.tr(), svgPicture: MyImage.dropOut),
     GridListItems(
         name: 'health_services'.tr(), svgPicture: MyImage.healthService),
-   /* GridListItems(
+    /* GridListItems(
         name: 'translation_services'.tr(), svgPicture: MyImage.translationServiceIcon),*/
     GridListItems(
         name: 'transportation'.tr(), svgPicture: MyImage.transporation),
   ];
 
+  String? schoolCategory;
+  String _languageSortCode = "en";
 
   @override
   void initState() {
@@ -49,10 +51,12 @@ class _RequestForServiceScreenState extends State<RequestForServiceScreen> {
 
   _getSchoolId() async {
     schoolId = await PrefUtils.getValueFor(PrefUtils.schoolId);
-    if(schoolId == null){
+    _languageSortCode = await PrefUtils.getValueFor(PrefUtils.sortLanguageCode);
+    if (schoolId == null) {
       schoolId = 0;
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -105,9 +109,9 @@ class _RequestForServiceScreenState extends State<RequestForServiceScreen> {
             ),
           ),
           Positioned(
-            top: MediaQuery.of(context).size.height * 0.20,
-            left: MediaQuery.of(context).size.height * 0.03,
-            right: MediaQuery.of(context).size.height * 0.03,
+            top: MediaQuery.of(context).size.height*0.20,
+            left: MediaQuery.of(context).size.height*0.03,
+            right: MediaQuery.of(context).size.height*0.03,
             child: Container(
               height: MediaQuery.of(context).size.height * 0.8,
               child: SingleChildScrollView(
@@ -125,22 +129,19 @@ class _RequestForServiceScreenState extends State<RequestForServiceScreen> {
                       return GestureDetector(
                           onTap: () {
                             print("Clicked");
-                            if(index==0)
-                              {
-                                Utils.navigateToScreen(context, MentalHealthSupportScreen());
-                              }
-                            else if (index == 1) {
+                            if (index == 0) {
+                              getSchoolType();
+                            } else if (index == 1) {
                               var params = {
                                 "schoolId": schoolId,
                                 "roleId": 0,
                                 "contentTypeName": "TalkItOut"
                               };
                               getWebApiFromUrl(context, params);
-                            }
-                            else if (index == 2) {
-                              Utils.navigateToScreen(context, DropoutPreventionScreen());
-                            }
-                            else if (index == 3) {
+                            } else if (index == 2) {
+                              Utils.navigateToScreen(
+                                  context, DropoutPreventionScreen());
+                            } else if (index == 3) {
                               var params = {
                                 "schoolId": schoolId,
                                 "roleId": 0,
@@ -213,11 +214,11 @@ class _RequestForServiceScreenState extends State<RequestForServiceScreen> {
         if (response.body != null) {
           String webUrl =
               response.body[0]["contentTransactionTypeJoin"][0]["objectPath"];
-        //  Utils.navigateToScreen(context, DisplayWebview(webUrl));
+          //  Utils.navigateToScreen(context, DisplayWebview(webUrl));
           _launchURL(webUrl);
         }
       } else {
-        Utils.showToast(context, response.message, Colors.red);
+        translateData(response.message, Colors.red);
       }
     }).catchError((error) {
       Utils.showLoader(false, context);
@@ -225,6 +226,72 @@ class _RequestForServiceScreenState extends State<RequestForServiceScreen> {
     });
   }
 
-  void _launchURL(String path) async =>
-      await canLaunch(path) ? await launch(path) : throw 'Could not launch $path';
+  getSchoolType() {
+    Utils.showLoader(true, context);
+    var params = {"schoolId": schoolId};
+    WebService.postAPICall(WebService.getSchoolCategoryType, params)
+        .then((response) {
+      Utils.showLoader(false, context);
+      if (response.statusCode == 1) {
+        schoolCategory = response.body["categoryName"];
+        if (schoolCategory == null) {
+          Utils.showToast(context, 'no_school_selected'.tr(), Colors.red);
+        } else if (schoolCategory!.compareTo("High") == 0) {
+          getMentalSupportExistOrNot();
+        } else {
+          Utils.showToast(context, 'school_not_support'.tr(), Colors.red);
+        }
+      } else {
+        translateData(response.message, Colors.red);
+      }
+    }).catchError((onError) {
+      Utils.showLoader(false, context);
+      Utils.showToast(context, 'check_connectivity'.tr(), Colors.red);
+    });
+  }
+
+  getMentalSupportExistOrNot() async {
+    var url = WebService.baseUrl +
+        WebService.getMentalSupportExist +
+        "?id=" +
+        '$schoolId';
+    print("Get Url :" + url);
+    var postUri = Uri.parse(url);
+    var headers = {"Content-Type": 'application/json'};
+    var response;
+
+    response = await http.get(postUri, headers: headers);
+
+    var result = response.body;
+    if (response.statusCode == 200) {
+      var jsValue = json.decode(result);
+      bool value = jsValue["output"];
+      if (value) {
+        Utils.navigateToScreen(context, MentalHealthSupportScreen("Parent"));
+      } else {
+        Utils.showToast(context, 'school_not_support'.tr(), Colors.red);
+      }
+    } else {
+      var jsValue = json.decode(response.body);
+      translateData(jsValue["errorMessage"], Colors.red);
+    }
+  }
+
+  translateData(String message, MaterialColor color){
+    if(_languageSortCode.compareTo("en") == 1){
+      WebService.translateApiCall(_languageSortCode, message, (isSuccess, response){
+        if(isSuccess){
+          Utils.showToast(context, response.toString(), color);
+        } else {
+          Utils.showToast(context, "Page Translation Failed", Colors.red);
+        }
+      });
+    } else {
+      Utils.showToast(context, message, Colors.red);
+    }
+  }
+
+  void _launchURL(String path) async => await canLaunch(path)
+      ? await launch(path)
+      : throw 'Could not launch $path';
 }

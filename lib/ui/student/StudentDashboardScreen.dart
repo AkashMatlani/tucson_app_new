@@ -1,19 +1,16 @@
 import 'dart:async';
 import 'dart:convert';
 
-
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:double_back_to_close/double_back_to_close.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:http/http.dart' as http;
-import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tucson_app/GeneralUtils/ColorExtension.dart';
 import 'package:tucson_app/GeneralUtils/Constant.dart';
-import 'package:tucson_app/GeneralUtils/LabelStr.dart';
 import 'package:tucson_app/GeneralUtils/LanguageDropDownList.dart';
 import 'package:tucson_app/GeneralUtils/PrefsUtils.dart';
 import 'package:tucson_app/GeneralUtils/Utils.dart';
@@ -25,7 +22,6 @@ import 'package:tucson_app/ui/student/CalendarPage2.dart';
 import 'package:tucson_app/ui/student/CoolStuffScreen.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../DisplayWebview.dart';
 import '../WebViewEmpty.dart';
 import 'BlogScreen.dart';
 import 'JobOpeningScreen.dart';
@@ -63,6 +59,7 @@ class _StudentDashboardScreenState extends State<StudentDashboardScreen> {
   String sortLanguageCode = "en";
   String languageName = "English";
   String firstName = "";
+  String userProfile = "";
   String? schoolCategory;
   late int schoolId;
   bool languageChangeRequest = false;
@@ -88,36 +85,20 @@ class _StudentDashboardScreenState extends State<StudentDashboardScreen> {
           sortLanguageCode = prefs.getString(PrefUtils.sortLanguageCode)!;
           languageName = prefs.getString(PrefUtils.yourLanguage)!;
           firstName = prefs.getString(PrefUtils.userFirstName)!;
-          schoolId = prefs.getInt(PrefUtils.schoolId)!;
+          userProfile = prefs.getString(PrefUtils.userProfile)!;
           dob = prefs.getString(PrefUtils.userDOB)!;
+          schoolId = prefs.getInt(PrefUtils.schoolId)!;
           if (schoolId == null) {
             schoolId = 0;
           }
-          if (firstName.isNotEmpty && sortLanguageCode.compareTo("en") == 1) {
-            _getFirstName();
-          }
+          translateData(firstName, true);
         });
       });
     });
   }
 
-  _getFirstName() {
-    WebService.translateApiCall(sortLanguageCode, firstName,
-        (isSuccess, response) {
-      if (isSuccess) {
-        setState(() {
-          firstName = response.toString();
-        });
-      } else {
-        Utils.showToast(context, "Page Translation Failed", Colors.red);
-      }
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-
-
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
@@ -166,10 +147,15 @@ class _StudentDashboardScreenState extends State<StudentDashboardScreen> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              Icon(
-                                Icons.account_circle,
-                                color: Colors.white,
-                                size: 50.0,
+                              ClipOval(
+                                child: CachedNetworkImage(
+                                  width: 60,
+                                  height: 60,
+                                  fit: BoxFit.fill,
+                                  imageUrl: userProfile,
+                                  placeholder: (context, url) => new CircularProgressIndicator(),
+                                  errorWidget: (context, url, error) => Icon(Icons.account_circle, color: Colors.white, size: 50),
+                                ),
                               ),
                               Stack(
                                 children: [
@@ -319,7 +305,7 @@ class _StudentDashboardScreenState extends State<StudentDashboardScreen> {
           _launchURL(webUrl);
         }
       } else {
-        Utils.showToast(context, response.message, Colors.red);
+        translateData(response.message, false);
       }
     }).catchError((error) {
       Utils.showLoader(false, context);
@@ -345,7 +331,7 @@ class _StudentDashboardScreenState extends State<StudentDashboardScreen> {
           Utils.navigateToScreen(context, CoolStuffScreen(schoolCategory!));
         }
       } else {
-        Utils.showToast(context, response.message, Colors.red);
+        translateData(response.message, false);
       }
     }).catchError((onError) {
       Utils.showLoader(false, context);
@@ -353,13 +339,33 @@ class _StudentDashboardScreenState extends State<StudentDashboardScreen> {
     });
   }
 
+  translateData(String text, bool isUserName) {
+    if(sortLanguageCode.compareTo("en") != 0) {
+      WebService.translateApiCall(sortLanguageCode, text, (isSuccess, response) {
+        if (isSuccess) {
+          if(isUserName) {
+            setState(() {
+              firstName = response.toString();
+            });
+          } else {
+            Utils.showToast(context, response.toString(), Colors.red);
+          }
+        } else {
+          Utils.showToast(context, "Page Translation Failed", Colors.red);
+        }
+      });
+    }
+  }
+
   _logoutFromApp(BuildContext context) async {
     Utils.showLoader(true, context);
-    bool mentalPopUp = await PrefUtils.getValueFor(PrefUtils.mentalHealthpopUp);
+    bool mentalPopUpStudent = await PrefUtils.getValueFor(PrefUtils.mentalHealthpopUpForStudent);
+    bool mentalPopUpParent = await PrefUtils.getValueFor(PrefUtils.mentalHealthpopUpForParent);
     String langCode = await PrefUtils.getValueFor(PrefUtils.sortLanguageCode);
     String langName = await PrefUtils.getValueFor(PrefUtils.yourLanguage);
     PrefUtils.clearPref();
-    PrefUtils.setBoolValue(PrefUtils.mentalHealthpopUp, mentalPopUp);
+    PrefUtils.setBoolValue(PrefUtils.mentalHealthpopUpForStudent, mentalPopUpStudent);
+    PrefUtils.setBoolValue(PrefUtils.mentalHealthpopUpForParent, mentalPopUpParent);
     PrefUtils.setStringValue(PrefUtils.sortLanguageCode, langCode);
     PrefUtils.setStringValue(PrefUtils.yourLanguage, langName);
     Utils.showLoader(false, context);
@@ -376,9 +382,6 @@ class _StudentDashboardScreenState extends State<StudentDashboardScreen> {
     var headers = {"Content-Type": 'application/json'};
     var response;
 
-    // String queryString = Uri().query;
-    //var requestUrl = url + '?' + queryString;
-    //var postUri = Uri.parse(url);
     response = await http.get(postUri, headers: headers);
 
     var result = response.body;
@@ -388,17 +391,16 @@ class _StudentDashboardScreenState extends State<StudentDashboardScreen> {
       if (value) {
         int age = Utils.calculateAge(DateTime.parse(dob));
         if (age >= 13) {
-          Utils.navigateToScreen(context, MentalHealthSupportScreen());
+          Utils.navigateToScreen(context, MentalHealthSupportScreen("Student"));
         } else {
           Utils.showToast(context, 'student_age_error'.tr(), Colors.red);
         }
       } else {
-        Utils.showToast(context, LabelStr.lblNoMentalSupport, Colors.red);
+        Utils.showToast(context, 'school_not_support'.tr(), Colors.red);
       }
     } else {
       var jsValue = json.decode(response.body);
-      var message = jsValue["errorMessage"];
-      Utils.showToast(context, message, Colors.red);
+      translateData(jsValue["errorMessage"], false);
     }
   }
 

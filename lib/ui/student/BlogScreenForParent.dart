@@ -1,19 +1,17 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:tucson_app/GeneralUtils/ColorExtension.dart';
 import 'package:tucson_app/GeneralUtils/Constant.dart';
 import 'package:tucson_app/GeneralUtils/PrefsUtils.dart';
 import 'package:tucson_app/GeneralUtils/Utils.dart';
-import 'package:tucson_app/Model/ContentMasterViewModel.dart';
 import 'package:tucson_app/Model/ContentResponse.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:tucson_app/WebService/WebService.dart';
 import 'package:tucson_app/ui/student/BlogDetailsScreen.dart';
 
 class BlogScreenForParent extends StatefulWidget {
-  BlogScreenForParent(this.title, this.fromScreen, [elementryList]);
 
-  late List<ContentResponse>elementryList;
+  BlogScreenForParent(this.title, this.fromScreen, this.contentList);
+  List<ContentResponse> contentList;
   String title;
   String fromScreen;
 
@@ -22,25 +20,13 @@ class BlogScreenForParent extends StatefulWidget {
 }
 
 class _BlogScreenForParentState extends State<BlogScreenForParent> {
-  bool isLoading = true;
-  List<ContentResponse> _contentList = [];
-  List<ContentResponse> _elementryList = [];
-  List<ContentResponse> _highList = [];
+
   String? languageCode;
-  String svgPicture = "";
+  String svgPicture = MyImage.activitesIcon;
 
   @override
   void initState() {
     super.initState();
-    if (widget.title.compareTo('student_blogs'.tr()) == 0 || widget.title.compareTo('blogs'.tr()) == 0 ) {
-      svgPicture = MyImage.blogThubmail;
-    } else if (widget.title.compareTo('stories'.tr()) == 0) {
-      svgPicture = MyImage.storiesThubmail;
-    } else if (widget.title.compareTo('articles'.tr()) == 0) {
-      svgPicture = MyImage.articleThubmail;
-    }else if (widget.title.compareTo('activites'.tr()) == 0) {
-      svgPicture = MyImage.activitesIcon;
-    }
     _getSchoolId();
   }
 
@@ -50,7 +36,6 @@ class _BlogScreenForParentState extends State<BlogScreenForParent> {
     if (schoolId == null) {
       schoolId = 0;
     }
-    _getContentList(13);
   }
 
   @override
@@ -58,63 +43,12 @@ class _BlogScreenForParentState extends State<BlogScreenForParent> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        body: Stack(
-          children: [
-            Container(
-              color: HexColor("#6462AA"),
-              child: Column(
-                children: [
-                /*  Container(
-                    margin: EdgeInsets.fromLTRB(
-                        0,
-                        MediaQuery.of(context).size.height * 0.03,
-                        0,
-                        MediaQuery.of(context).size.height * 0.03),
-                    height: MediaQuery.of(context).size.height * 0.06,
-                    child: Row(
-                      children: [
-                        Container(
-                          margin: EdgeInsets.only(top: 10),
-                          child: IconButton(
-                              icon: Icon(Icons.arrow_back_ios,
-                                  color: Colors.white),
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              }),
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(top: 10),
-                          child: Text(widget.title,
-                              style: AppTheme.regularTextStyle()
-                                  .copyWith(fontSize: 18, color: Colors.white)),
-                        )
-                      ],
-                    ),
-                  ),*/
-                 /* Container(
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(30.0),
-                            topRight: Radius.circular(30.0)),
-                        color: HexColor("FAFAFA")),
-                    height: MediaQuery.of(context).size.height * 0.88,
-                    width: MediaQuery.of(context).size.width,
-                    padding: EdgeInsets.all(10),
-                  )*/
-                ],
-              ),
-            ),
-           /* Positioned(
-              top: MediaQuery.of(context).size.height * 0.12,
-              left: MediaQuery.of(context).size.height * 0.012,
-              right: MediaQuery.of(context).size.height * 0.012,
-              child:*/ Container(
-                height: MediaQuery.of(context).size.height * 0.88,
-                child: widget.elementryList.length == 0
-                    ? emptyListView()
-                    : SingleChildScrollView(
+        body: Container(
+          child: widget.contentList.length == 0
+              ? emptyListView()
+              : SingleChildScrollView(
                   child: ListView.builder(
-                      itemCount: widget.elementryList.length,
+                      itemCount: widget.contentList.length,
                       shrinkWrap: true,
                       physics: ScrollPhysics(),
                       padding: EdgeInsets.all(10),
@@ -122,8 +56,6 @@ class _BlogScreenForParentState extends State<BlogScreenForParent> {
                         return _listRowItems(context, position);
                       }),
                 ),
-            )
-          ],
         ),
       ),
     );
@@ -132,20 +64,8 @@ class _BlogScreenForParentState extends State<BlogScreenForParent> {
   _listRowItems(BuildContext context, int index) {
     return InkWell(
       onTap: () {
-        if (widget.title.compareTo('student_blogs'.tr()) == 0) {
-          widget.title = 'blog_details'.tr();
-        } else if (widget.title.compareTo('articles'.tr()) == 0) {
-          widget.title = 'article_details'.tr();
-        } else if (widget.title.compareTo('stories'.tr()) == 0) {
-          widget.title = 'story_details'.tr();
-        } else if (widget.title.compareTo('blogs'.tr()) == 0) {
-          widget.title = 'blog_details'.tr();
-        }else if (widget.title.compareTo('activites'.tr()) == 0) {
-          widget.title = 'activite_details'.tr();
-        }
-
-        Utils.navigateToScreen(
-            context, BlogDetailsScreen(widget.title, _contentList[index]));
+        widget.title = 'activite_details'.tr();
+        Utils.navigateToScreen(context, BlogDetailsScreen(widget.title, widget.contentList[index]));
       },
       child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -157,8 +77,7 @@ class _BlogScreenForParentState extends State<BlogScreenForParent> {
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20), color: Colors.white),
               alignment: Alignment.center,
-              child:
-              SvgPicture.asset(
+              child: SvgPicture.asset(
                 svgPicture,
                 fit: BoxFit.fitWidth,
                 height: MediaQuery.of(context).size.height * 0.24,
@@ -168,14 +87,14 @@ class _BlogScreenForParentState extends State<BlogScreenForParent> {
             Padding(
                 padding: EdgeInsets.only(top: 15),
                 child: Text(
-                  Utils.convertDate(_contentList[index].createdOn,
+                  Utils.convertDate(widget.contentList[index].createdOn,
                       DateFormat("MMM dd, yyyy")),
                   style: AppTheme.regularTextStyle().copyWith(
                       fontSize: 14, color: Color.fromRGBO(111, 111, 111, 1)),
                 )),
             Padding(
                 padding: EdgeInsets.only(top: 5, bottom: 20),
-                child: Text(_contentList[index].contentTitle,
+                child: Text(widget.contentList[index].contentTitle,
                     style: AppTheme.customTextStyle(
                         MyFont.SSPro_bold, 20.0, Color.fromRGBO(0, 0, 0, 1))))
           ]),
@@ -186,82 +105,14 @@ class _BlogScreenForParentState extends State<BlogScreenForParent> {
     return Container(
       alignment: Alignment.center,
       height: MediaQuery.of(context).size.height * 0.88,
-      child: isLoading
-          ? Container()
-          : Text('no'.tr() + " " + widget.title + " " + 'found'.tr(),
-          style: AppTheme.regularTextStyle()
-              .copyWith(fontSize: 18, color: Colors.red)),
+      child: Text('no'.tr() + " " + widget.title + " " + 'found'.tr(), style: AppTheme.regularTextStyle().copyWith(fontSize: 18, color: Colors.red))
     );
-  }
-
-  _getContentList(int schoolId) {
-    ContentMasterViewModel _contentViewModel = ContentMasterViewModel();
-    var params;
-
-
-    if (widget.title.compareTo('student_blogs'.tr()) == 0 || widget.title.compareTo('blogs'.tr()) == 0) {
-      params = {
-        "schoolId": schoolId,
-        "roleId": 0,
-        "contentTypeName": "blog"
-      };
-    } else if (widget.title.compareTo('articles'.tr()) == 0) {
-      params = {
-        "schoolId": schoolId,
-        "roleId": 0,
-        "contentTypeName": "Article"
-      };
-    }else if (widget.title.compareTo('activites'.tr()) == 0) {
-      params = {
-        "schoolId": schoolId,
-        "roleId": 0,
-        "contentTypeName": "Activities"
-      };
-    } else if (widget.title.compareTo('stories'.tr()) == 0) {
-      params = {
-        "schoolId": schoolId,
-        "roleId": 0,
-        "contentTypeName": "Stories"
-      };
-    }
-
-    Utils.showLoader(true, context);
-    _contentViewModel.getContentList(context, params, widget.fromScreen,
-            (isSuccess, message) {
-          if (isSuccess) {
-            setState(() {
-              _contentList = [];
-              _contentList = _contentViewModel.contentList;
-              _elementryList=[];
-              for(int i=0;i<_contentList.length;i++)
-                {
-                  if(_contentList[i].contentTitle=="Elementary")
-                    {
-                      _elementryList=_contentViewModel.contentList;
-                    }
-                }
-            });
-            if (languageCode!.compareTo("en") != 0) {
-              translateListData();
-            } else {
-              Utils.showLoader(false, context);
-              isLoading = false;
-            }
-          } else {
-            Utils.showLoader(false, context);
-            isLoading = false;
-            setState(() {
-              _contentList = [];
-              _elementryList=[];
-            });
-          }
-        });
   }
 
   translateListData() {
     List<ContentResponse> tempList = [];
     List<String> blogNameList = [];
-    for (var itemName in _contentList) {
+    for (var itemName in widget.contentList) {
       blogNameList.add(itemName.contentTitle);
     }
     String listStr = blogNameList.join("==)");
@@ -270,27 +121,26 @@ class _BlogScreenForParentState extends State<BlogScreenForParent> {
         List<String> resultArr = response.toString().split("==)");
         for (int i = 0; i < resultArr.length; i++) {
           tempList.add(ContentResponse(
-              contentMasterId: _contentList[i].contentMasterId,
-              schoolId: _contentList[i].schoolId,
-              contentTypeId: _contentList[i].contentTypeId,
-              categoryName: _contentList[i].categoryName,
+              contentMasterId: widget.contentList[i].contentMasterId,
+              schoolId: widget.contentList[i].schoolId,
+              contentTypeId: widget.contentList[i].contentTypeId,
+              categoryName: widget.contentList[i].categoryName,
               contentTitle: resultArr[i],
-              content: _contentList[i].content,
-              createdOn: _contentList[i].createdOn,
-              schoolName: _contentList[i].schoolName,
+              content: widget.contentList[i].content,
+              createdOn: widget.contentList[i].createdOn,
+              schoolName: widget.contentList[i].schoolName,
               contentTransactionTypeJoin:
-              _contentList[i].contentTransactionTypeJoin));
+              widget.contentList[i].contentTransactionTypeJoin));
         }
-        if(_contentList.length == tempList.length){
+        if (widget.contentList.length == tempList.length) {
           setState(() {
-            _contentList = tempList;
+            widget.contentList = tempList;
           });
         }
       } else {
         Utils.showToast(context, "Page Translation Failed", Colors.red);
       }
     });
-    isLoading = false;
     Utils.showLoader(false, context);
   }
 }

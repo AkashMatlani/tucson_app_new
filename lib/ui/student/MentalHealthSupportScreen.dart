@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:extended_masked_text/extended_masked_text.dart';
 import 'package:flutter/cupertino.dart';
@@ -18,12 +19,17 @@ import 'package:tucson_app/GeneralUtils/PrefsUtils.dart';
 import 'package:tucson_app/GeneralUtils/Utils.dart';
 import 'package:tucson_app/Model/HealthSupportResponse.dart';
 import 'package:tucson_app/WebService/WebService.dart';
-import 'package:tucson_app/ui/DisplayWebview.dart';
 import 'package:tucson_app/ui/VideoPlayerScreen.dart';
+import 'package:tucson_app/ui/parent/RequestForServiceScreen.dart';
 import 'package:tucson_app/ui/student/StudentDashboardScreen.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+
 class MentalHealthSupportScreen extends StatefulWidget {
+
+  MentalHealthSupportScreen(this.fromScreen);
+  String fromScreen;
+
   @override
   _MentalHealthSupportScreenState createState() =>
       _MentalHealthSupportScreenState();
@@ -41,6 +47,7 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
   late var tempvalue;
   late var uint8list = null;
   late bool isPopUpOpenFirst;
+  String _languageSortCode = "en";
 
   //int permissionPopUpCount = 0;
   //var controller = MaskedTextController(mask: '1-800-273-8255', text: '18002738255');
@@ -56,6 +63,7 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
   _getPrefsData() async {
     schoolId = await PrefUtils.getValueFor(PrefUtils.schoolId);
     dob = await PrefUtils.getValueFor(PrefUtils.userDOB);
+    _languageSortCode = await PrefUtils.getValueFor(PrefUtils.sortLanguageCode);
     if (schoolId == null) {
       schoolId = 0;
     }
@@ -65,7 +73,11 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
       PrefUtils.setBoolValue(PrefUtils.mentalHealthpopUp, false);
     }*/
 
-    isPopUpOpenFirst = await PrefUtils.getValueFor(PrefUtils.mentalHealthpopUp);
+    if(widget.fromScreen.compareTo("Student") == 0){
+      isPopUpOpenFirst = await PrefUtils.getValueFor(PrefUtils.mentalHealthpopUpForStudent);
+    } else {
+      isPopUpOpenFirst = await PrefUtils.getValueFor(PrefUtils.mentalHealthpopUpForParent);
+    }
     if (isPopUpOpenFirst == null || isPopUpOpenFirst) {
       bottomPopup(context);
     } else {
@@ -78,8 +90,14 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
     var screenHeight = MediaQuery.of(context).size.height;
     blockSizeVertical = screenHeight / 100;
     return WillPopScope(
-      onWillPop: () =>
-          Utils.backWithNoTransition(context, StudentDashboardScreen()),
+      onWillPop: () async {
+        if(widget.fromScreen.compareTo("Student") == 0){
+          Utils.backWithNoTransition(context, StudentDashboardScreen());
+        } else {
+          Utils.backWithNoTransition(context, RequestForServiceScreen());
+        }
+        return true;
+      },
       child: Scaffold(
         body: Stack(
           children: [
@@ -571,14 +589,20 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
 
                                   if (statusResponse.isGranted) {
                                     Navigator.of(context).pop();
-                                    PrefUtils.setBoolValue(
-                                        PrefUtils.mentalHealthpopUp, false);
+                                    if(widget.fromScreen.compareTo("Student") == 0){
+                                      PrefUtils.setBoolValue(PrefUtils.mentalHealthpopUpForStudent, false);
+                                    } else {
+                                      PrefUtils.setBoolValue(PrefUtils.mentalHealthpopUpForParent, false);
+                                    }
                                     _getCurrentLocation();
                                   } else if (statusResponse.isDenied ||
                                       statusResponse.isPermanentlyDenied ||
                                       statusResponse.isRestricted) {
-                                    PrefUtils.setBoolValue(
-                                        PrefUtils.mentalHealthpopUp, true);
+                                    if(widget.fromScreen.compareTo("Student") == 0){
+                                      PrefUtils.setBoolValue(PrefUtils.mentalHealthpopUpForStudent, true);
+                                    } else {
+                                      PrefUtils.setBoolValue(PrefUtils.mentalHealthpopUpForParent, true);
+                                    }
                                     showDialog(
                                         context: context,
                                         builder: (BuildContext context) =>
@@ -622,14 +646,20 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
 
                                   if (statusResponse.isGranted) {
                                     Navigator.of(context).pop();
-                                    PrefUtils.setBoolValue(
-                                        PrefUtils.mentalHealthpopUp, false);
+                                    if(widget.fromScreen.compareTo("Student") == 0){
+                                      PrefUtils.setBoolValue(PrefUtils.mentalHealthpopUpForStudent, false);
+                                    } else {
+                                      PrefUtils.setBoolValue(PrefUtils.mentalHealthpopUpForParent, false);
+                                    }
                                     _getCurrentLocation();
                                   } else if (statusResponse.isDenied ||
                                       statusResponse.isPermanentlyDenied ||
                                       statusResponse.isRestricted) {
-                                    PrefUtils.setBoolValue(
-                                        PrefUtils.mentalHealthpopUp, true);
+                                    if(widget.fromScreen.compareTo("Student") == 0){
+                                      PrefUtils.setBoolValue(PrefUtils.mentalHealthpopUpForStudent, true);
+                                    } else {
+                                      PrefUtils.setBoolValue(PrefUtils.mentalHealthpopUpForParent, true);
+                                    }
                                     /*permissionPopUpCount++;
                                   if(permissionPopUpCount > 2){
                                     showDialog(
@@ -678,12 +708,19 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
                               style: AppTheme.customTextStyle(MyFont.SSPro_bold,
                                   16.0, Color.fromRGBO(255, 255, 255, 1))),
                           onPressed: () {
-                            PrefUtils.setBoolValue(
-                                PrefUtils.mentalHealthpopUp, true);
-                            Timer(
-                                Duration(milliseconds: 100),
-                                () => Utils.backWithNoTransition(
-                                    context, StudentDashboardScreen()));
+                            if(widget.fromScreen.compareTo("Student") == 0){
+                              PrefUtils.setBoolValue(PrefUtils.mentalHealthpopUpForStudent, true);
+                            } else {
+                              PrefUtils.setBoolValue(PrefUtils.mentalHealthpopUpForParent, true);
+                            }
+
+                            Timer(Duration(milliseconds: 100), (){
+                              if(widget.fromScreen.compareTo("Student") == 0){
+                                Utils.backWithNoTransition(context, StudentDashboardScreen());
+                              } else {
+                                Utils.backWithNoTransition(context, RequestForServiceScreen());
+                              }
+                            });
                           },
                         ),
                       ),
@@ -778,16 +815,32 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
         var result = response.body;
         var jsValue = json.decode(result);
         var message = jsValue["messages"][0]["messageText"];
-        Utils.showToast(context, message, Colors.green);
-        Utils.showLoader(false, context);
+        translateData(message, Colors.green);
       } else {
         var jsValue = json.decode(response.body);
         var message = jsValue[0]["errorMessage"];
-        Utils.showToast(context, message, Colors.red);
+        translateData(message, Colors.red);
       }
     }).catchError((error) {
-      Utils.showToast(context, LabelStr.connectionError, Colors.red);
+      Utils.showLoader(false, context);
+      Utils.showToast(context, 'check_connectivity'.tr(), Colors.red);
     });
+  }
+
+  void translateData(message, MaterialColor color) {
+    if(_languageSortCode.compareTo("en") != 0){
+      WebService.translateApiCall(_languageSortCode, message, (isSuccess, message){
+        Utils.showLoader(false, context);
+        if (isSuccess) {
+          Utils.showToast(context, message.toString(), color);
+        } else {
+          Utils.showToast(context, "Page Translation Failed", Colors.red);
+        }
+      });
+    } else {
+      Utils.showLoader(false, context);
+      Utils.showToast(context, message, color);
+    }
   }
 
   late String path = "";

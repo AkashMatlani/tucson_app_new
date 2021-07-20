@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:double_back_to_close/double_back_to_close.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
@@ -54,6 +55,7 @@ class _ParentDashBoardScreenState extends State<ParentDashBoardScreen> {
   String sortLanguageCode = "en";
   String languageName = "English";
   String firstName = "";
+  String userProfile = "";
   late int schoolId;
 
   List<StaticListItems> languageList = [
@@ -75,6 +77,7 @@ class _ParentDashBoardScreenState extends State<ParentDashBoardScreen> {
           languageName = prefs.getString(PrefUtils.yourLanguage)!;
           firstName = prefs.getString(PrefUtils.userFirstName)!;
           sortLanguageCode = prefs.getString(PrefUtils.sortLanguageCode)!;
+          userProfile = prefs.getString(PrefUtils.userProfile)!;
           schoolId = prefs.getInt(PrefUtils.schoolId)!;
           if (schoolId == null) {
             schoolId = 0;
@@ -150,10 +153,15 @@ class _ParentDashBoardScreenState extends State<ParentDashBoardScreen> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  Icon(
-                                    Icons.account_circle,
-                                    color: Colors.white,
-                                    size: 50.0,
+                                  ClipOval(
+                                    child: CachedNetworkImage(
+                                      width: 60,
+                                      height: 60,
+                                      fit: BoxFit.fill,
+                                      imageUrl: userProfile,
+                                      placeholder: (context, url) => new CircularProgressIndicator(),
+                                      errorWidget: (context, url, error) => Icon(Icons.account_circle, color: Colors.white, size: 50),
+                                    ),
                                   ),
                                   Stack(
                                     children: [
@@ -320,11 +328,13 @@ class _ParentDashBoardScreenState extends State<ParentDashBoardScreen> {
 
   _logoutFromApp(BuildContext context) async {
     Utils.showLoader(true, context);
-    bool mentalPopUp = await PrefUtils.getValueFor(PrefUtils.mentalHealthpopUp);
+    bool mentalPopUpStudent = await PrefUtils.getValueFor(PrefUtils.mentalHealthpopUpForStudent);
+    bool mentalPopUpParent = await PrefUtils.getValueFor(PrefUtils.mentalHealthpopUpForParent);
     String langCode = await PrefUtils.getValueFor(PrefUtils.sortLanguageCode);
     String langName = await PrefUtils.getValueFor(PrefUtils.yourLanguage);
     PrefUtils.clearPref();
-    PrefUtils.setBoolValue(PrefUtils.mentalHealthpopUp, mentalPopUp);
+    PrefUtils.setBoolValue(PrefUtils.mentalHealthpopUpForStudent, mentalPopUpStudent);
+    PrefUtils.setBoolValue(PrefUtils.mentalHealthpopUpForParent, mentalPopUpParent);
     PrefUtils.setStringValue(PrefUtils.sortLanguageCode, langCode);
     PrefUtils.setStringValue(PrefUtils.yourLanguage, langName);
     Utils.showLoader(false, context);

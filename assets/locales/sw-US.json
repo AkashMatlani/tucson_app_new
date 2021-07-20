@@ -151,5 +151,6 @@
   "search_school" : "Tafuta Shule",
   "no_school" : "Hakuna Shule Iliyopatikana",
   "signout_alter_msg" : "Je! Una uhakika unataka kutoka?",
-  "total_day": "Idadi ya siku"
+  "total_day": "Idadi ya siku",
+  "no_school_selected": "Hujachagua shule yoyote"
 }
