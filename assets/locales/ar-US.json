@@ -93,7 +93,7 @@
   "blogs" : "المدونات",
   "blog_details" : "تفاصيل المدونة",
   "article_details" : "تفاصيل المادة",
-  "activite_details" : "تفاصيل النشاط",
+  "activity_details" : "تفاصيل النشاط",
   "story_details" : "تفاصيل القصص",
   "tusd_calendar" : "تقويم TUSD",
   "frc_schedule" : "FRC جدول",
@@ -150,5 +150,6 @@
   "student_age_error" : "يتوفر دعم الصحة العقلية فقط للطلاب الذين تزيد أعمارهم عن 13 عامًا",
   "search_school" : "ابحث عن المدرسة",
   "no_school" : "لم يتم العثور على مدرسة",
-  "signout_alter_msg" : "هل أنت متأكد أنك تريد تسجيل الخروج؟"
+  "signout_alter_msg" : "هل أنت متأكد أنك تريد تسجيل الخروج؟",
+  "total_day": "عدد الأيام"
 }

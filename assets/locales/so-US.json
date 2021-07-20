@@ -93,7 +93,7 @@
   "blogs" : "Blogs",
   "blog_details" : "Faahfaahinta Blog",
   "article_details" : "Faahfaahinta Qodobka",
-  "activite_details" : "Faahfaahin firfircoon",
+  "activity_details" : "Faahfaahinta Waxqabadka",
   "story_details" : "Faahfaahinta Sheekooyinka",
   "tusd_calendar" : "Kalandarka TUSD",
   "frc_schedule" : "Jadwalka FRC",
@@ -150,5 +150,6 @@
   "student_age_error" : "Taageerada Caafimaadka Maskaxda waxaa loo heli karaa oo keliya ardayda da'da ah = = 13 sano",
   "search_school" : "Iskuulka Raadinta",
   "no_school" : "Iskuul Ma Lahaa Lama Helin",
-  "signout_alter_msg" : "Ma hubtaa inaad rabto inaad ka baxdo?"
+  "signout_alter_msg" : "Ma hubtaa inaad rabto inaad ka baxdo?",
+  "total_day": "Tirada maalmaha"
 }

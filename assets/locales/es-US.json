@@ -93,7 +93,7 @@
     "blogs" : "Blogs",
     "blog_details" : "Detalles del blog",
     "article_details" : "Detalles del artículo",
-    "activite_details" : "Detalles de la actividad",
+    "activity_details" : "Detalles de la actividad",
     "story_details" : "Detalles de las historias",
     "tusd_calendar" : "Calendario de TUSD",
     "frc_schedule" : "Horario de FRC",
@@ -150,5 +150,6 @@
     "student_age_error" : "El apoyo de salud mental está disponible solo para estudiantes con edad> = 13 años",
     "search_school" : "Escuela de búsqueda",
     "no_school" : "No hay escuela encontrada",
-    "signout_alter_msg" : "¿Estás segura de que quieres cerrar sesión?"
+    "signout_alter_msg" : "¿Estás segura de que quieres cerrar sesión?",
+    "total_day": "Número de días"
   }
