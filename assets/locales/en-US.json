@@ -162,5 +162,7 @@
   "grade" : "Grade",
   "school" : "School",
   "reason_fro_service_request" : "Reason For Service Request",
-  "select_reason_for_service_request" : "Reason For Service Request"
+  "select_reason_for_service_request" : "Reason For Service Request",
+  "signout_alter_msg" : "Are you sure want to sign out ?",
+  "total_day": "Number of days"
 }
