@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_email_sender/flutter_email_sender.dart';
 import 'package:tucson_app/GeneralUtils/ColorExtension.dart';
 import 'package:tucson_app/GeneralUtils/Constant.dart';
 import 'package:tucson_app/GeneralUtils/LabelStr.dart';
@@ -14,6 +15,8 @@ import 'package:tucson_app/Model/SchoolListResponse.dart';
 import 'package:tucson_app/WebService/WebService.dart';
 import 'package:http/http.dart' as http;
 import 'package:tucson_app/ui/parent/DropOutPostScreen.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class DropoutPreventionScreen extends StatefulWidget {
   @override
@@ -24,6 +27,18 @@ class DropoutPreventionScreen extends StatefulWidget {
 class _DropoutPreventionScreenState extends State<DropoutPreventionScreen> {
   bool isLoading = true;
   List<DropOutPreventionEmailsModel> _dropOutModelList = [];
+  bool isHTML = false;
+  late YoutubePlayerController _controller;
+  late TextEditingController _idController;
+  late TextEditingController _seekToController;
+  late YoutubeMetaData _videoMetaData;
+  bool _isPlayerReady = false;
+
+  String youTubeId ="bJTpz1fL4k4";
+  late PlayerState _playerState;
+  final List<String> _ids = [
+    'bJTpz1fL4k4',
+  ];
 
   @override
   void initState() {
@@ -31,6 +46,23 @@ class _DropoutPreventionScreenState extends State<DropoutPreventionScreen> {
     Timer(Duration(milliseconds: 200), () {
       _getSchoolList();
     });
+
+    _controller = YoutubePlayerController(
+      initialVideoId: _ids.first,
+      flags: const YoutubePlayerFlags(
+        mute: false,
+        autoPlay: true,
+        disableDragSeek: false,
+        loop: false,
+        isLive: false,
+        forceHD: false,
+        enableCaption: true,
+      ),
+    )..addListener(listener);
+    _idController = TextEditingController();
+    _seekToController = TextEditingController();
+    _videoMetaData = const YoutubeMetaData();
+    _playerState = PlayerState.unknown;
   }
 
   @override
@@ -92,11 +124,48 @@ class _DropoutPreventionScreenState extends State<DropoutPreventionScreen> {
               margin: EdgeInsets.all(10),
               child: Column(
                 children: [
-                  Container(
+                 // _launchYoutubeVideo("https://youtu.be/bJTpz1fL4k4"),
+                 /* Container(
                     height: MediaQuery.of(context).size.height * 0.3,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
                         color: Colors.blue),
+                  ),*/
+                  YoutubePlayer(
+                    controller: _controller,
+                    showVideoProgressIndicator: true,
+                    progressIndicatorColor: Colors.blueAccent,
+                    topActions: <Widget>[
+                      const SizedBox(width: 8.0),
+                      Expanded(
+                        child: Text(
+                          _controller.metadata.title,
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 18.0,
+                          ),
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                        ),
+                      ),
+                      IconButton(
+                        icon: const Icon(
+                          Icons.settings,
+                          color: Colors.white,
+                          size: 25.0,
+                        ),
+                        onPressed: () {
+                         // log('Settings Tapped!');
+                        },
+                      ),
+                    ],
+                    onReady: () {
+                      _isPlayerReady = true;
+                    },
+                    onEnded: (data) {
+                      _controller
+                          .load(_ids[(_ids.indexOf(data.videoId) + 1) % _ids.length]);
+                    },
                   ),
                   SizedBox(height: 30),
                   Container(
@@ -322,6 +391,7 @@ class _DropoutPreventionScreenState extends State<DropoutPreventionScreen> {
       onTap: () {
         // Utils.navigateToScreen(context, DisplayWebview(_communityEventList[position].objectPath));
         // _launchURL(_communityEventList[position].objectPath);
+        send(_dropOutModelList[position].specialistEmail);
       },
       child: Card(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
@@ -349,5 +419,54 @@ class _DropoutPreventionScreenState extends State<DropoutPreventionScreen> {
         ),
       ),
     );
+  }
+
+  Future<void> send(String emailTo) async {
+    final Email email = Email(
+      body: "Hello Tucson Team",
+      subject: "This is testing mail for dropout prevantion",
+      recipients: [emailTo],
+      isHTML: isHTML,
+    );
+    String platformResponse;
+
+    try {
+      await FlutterEmailSender.send(email);
+     // platformResponse = 'success';
+    } catch (error) {
+     // platformResponse = error.toString();
+    }
+
+    if (!mounted) return;
+
+   /* ScaffoldMessenger.of(context).showSnackBar(
+     *//* SnackBar(
+        content: Text(platformResponse),
+      ),*//*
+    );*/
+  }
+
+  _launchYoutubeVideo(String _youtubeUrl) async {
+    if (_youtubeUrl != null && _youtubeUrl.isNotEmpty) {
+      if (await canLaunch(_youtubeUrl)) {
+        final bool _nativeAppLaunchSucceeded = await launch(
+          _youtubeUrl,
+          forceSafariVC: false,
+          universalLinksOnly: true,
+        );
+        if (!_nativeAppLaunchSucceeded) {
+          await launch(_youtubeUrl, forceSafariVC: true);
+        }
+      }
+    }
+  }
+
+  void listener() {
+    if (_isPlayerReady && mounted && !_controller.value.isFullScreen) {
+      setState(() {
+        _playerState = _controller.value.playerState;
+        _videoMetaData = _controller.metadata;
+      });
+    }
   }
 }

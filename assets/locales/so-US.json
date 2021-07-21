@@ -152,5 +152,12 @@
   "no_school" : "Iskuul Ma Lahaa Lama Helin",
   "signout_alter_msg" : "Ma hubtaa inaad rabto inaad ka baxdo?",
   "total_day": "Tirada maalmaha",
-  "no_school_selected": "Maad dooran dugsi"
+  "no_school_selected": "Maad dooran dugsi",
+  "enter_first_name": "Fadlan qor magaca hore",
+  "enter_last_name": "Fadlan qor magaca dambe",
+  "enter_contact_phone": "Ijaar soo gal taleefanka xiriirka",
+  "enter_student_first_name": "Fadlan qor magaca hore ee ardayg",
+  "enter_student_last_name": "Fadlan gali magaca dambe ee ardayga",
+  "enter_tusd_matric_number": "Fadlan qor lambar tusd tusd ah",
+  "enter_grade": "Fadlan qor darajada"
 }

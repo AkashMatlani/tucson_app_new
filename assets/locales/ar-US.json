@@ -152,5 +152,12 @@
   "no_school" : "لم يتم العثور على مدرسة",
   "signout_alter_msg" : "هل أنت متأكد أنك تريد تسجيل الخروج؟",
   "total_day": "عدد الأيام",
-  "no_school_selected": "لم تقم بتحديد أي مدرسة"
+  "no_school_selected": "لم تقم بتحديد أي مدرسة",
+  "enter_first_name": "الرجاء إدخال الاسم الأول",
+  "enter_last_name": "الرجاء إدخال الاسم الأخير",
+  "enter_contact_phone": "الرجاء إدخال رقم الهاتف",
+  "enter_student_first_name": "الرجاء إدخال الاسم الأول للطالب",
+  "enter_student_last_name": "الرجاء إدخال الاسم الأخير للطالب",
+  "enter_tusd_matric_number": "الرجاء إدخال tusd matric number",
+  "enter_grade": "الرجاء إدخال الدرجة"
 }

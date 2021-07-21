@@ -1,6 +1,7 @@
 import 'dart:async';
-
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_email_sender/flutter_email_sender.dart';
 import 'package:tucson_app/GeneralUtils/ColorExtension.dart';
 import 'package:tucson_app/GeneralUtils/Constant.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -33,12 +34,14 @@ class _DropOutPostScreenState extends State<DropOutPostScreen> {
   late SchoolListResponse _selectedSchool;
   String selectedSchoolName = 'select_school'.tr();
   String selectedReasonForServiceRequest =
-      'select_reason_for_service_request'.tr();
+  'select_reason_for_service_request'.tr();
   String? languageCode;
-  List<MailForDropOut> _mailForDropDown = [];
+
+  //List<MailForDropOut> _mailForDropDown = [];
   bool isLoading = true;
   int schoolId = 0;
   int reasonRequest = 0;
+  bool isHTML = false;
 
   @override
   void initState() {
@@ -68,16 +71,22 @@ class _DropOutPostScreenState extends State<DropOutPostScreen> {
                 Container(
                   margin: EdgeInsets.fromLTRB(
                       0,
-                      MediaQuery.of(context).size.height * 0.03,
+                      MediaQuery
+                          .of(context)
+                          .size
+                          .height * 0.03,
                       0,
-                      MediaQuery.of(context).size.height * 0.03),
+                      MediaQuery
+                          .of(context)
+                          .size
+                          .height * 0.03),
                   child: Row(
                     children: [
                       Container(
                         margin: EdgeInsets.only(top: 10),
                         child: IconButton(
                             icon:
-                                Icon(Icons.arrow_back_ios, color: Colors.white),
+                            Icon(Icons.arrow_back_ios, color: Colors.white),
                             onPressed: () {
                               Navigator.of(context).pop();
                             }),
@@ -98,8 +107,14 @@ class _DropOutPostScreenState extends State<DropOutPostScreen> {
                             topLeft: Radius.circular(30.0),
                             topRight: Radius.circular(30.0)),
                         color: HexColor("FAFAFA")),
-                    height: MediaQuery.of(context).size.height,
-                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery
+                        .of(context)
+                        .size
+                        .height,
+                    width: MediaQuery
+                        .of(context)
+                        .size
+                        .width,
                     padding: EdgeInsets.all(10),
                   ),
                 )
@@ -107,7 +122,10 @@ class _DropOutPostScreenState extends State<DropOutPostScreen> {
             ),
           ),
           Positioned(
-            top: MediaQuery.of(context).size.height * 0.15,
+            top: MediaQuery
+                .of(context)
+                .size
+                .height * 0.15,
             left: 15,
             right: 15,
             child: Container(
@@ -154,113 +172,119 @@ class _DropOutPostScreenState extends State<DropOutPostScreen> {
                   SizedBox(height: 10),
                   (_schoolList.isNotEmpty && _schoolList.length > 0)
                       ? Column(
-                          children: [
-                            SizedBox(height: 10),
-                            Container(
-                              child: InkWell(
-                                onTap: () {
-                                  //Utils.backWithNoTransition(context, CustomDropDownList(selectedSchoolName, _selectedSchool, _schoolList));
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              CustomDropDownList(
-                                                  selectedSchoolName,
-                                                  _selectedSchool,
-                                                  _schoolList))).then((value) {
-                                    if (value == null) {
-                                      setState(() {
-                                        selectedSchoolName =
-                                            'select_school'.tr();
-                                      });
-                                    } else {
-                                      setState(() {
-                                        _selectedSchool = value;
-                                        selectedSchoolName =
-                                            _selectedSchool.name;
-                                      });
-                                    }
-                                  });
-                                },
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Expanded(
-                                        child: Text(selectedSchoolName,
-                                            style:
-                                                AppTheme.regularTextStyle())),
-                                    Icon(Icons.keyboard_arrow_down_sharp,
-                                        size: 30, color: Colors.black54)
-                                  ],
-                                ),
-                              ),
-                            ),
-                            SizedBox(height: 10),
-                            Container(
-                              height: 1.3,
-                              width: MediaQuery.of(context).size.width,
-                              color: Colors.black45,
-                            ),
-                          ],
-                        )
+                    children: [
+                      SizedBox(height: 10),
+                      Container(
+                        child: InkWell(
+                          onTap: () {
+                            //Utils.backWithNoTransition(context, CustomDropDownList(selectedSchoolName, _selectedSchool, _schoolList));
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        CustomDropDownList(
+                                            selectedSchoolName,
+                                            _selectedSchool,
+                                            _schoolList))).then((value) {
+                              if (value == null) {
+                                setState(() {
+                                  selectedSchoolName =
+                                      'select_school'.tr();
+                                });
+                              } else {
+                                setState(() {
+                                  _selectedSchool = value;
+                                  selectedSchoolName =
+                                      _selectedSchool.name;
+                                });
+                              }
+                            });
+                          },
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Expanded(
+                                  child: Text(selectedSchoolName,
+                                      style:
+                                      AppTheme.regularTextStyle())),
+                              Icon(Icons.keyboard_arrow_down_sharp,
+                                  size: 30, color: Colors.black54)
+                            ],
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 10),
+                      Container(
+                        height: 1.3,
+                        width: MediaQuery
+                            .of(context)
+                            .size
+                            .width,
+                        color: Colors.black45,
+                      ),
+                    ],
+                  )
                       : Container(),
                   SizedBox(height: 20),
                   (_allReasonList.isNotEmpty && _allReasonList.length > 0)
                       ? Column(
-                          children: [
-                            SizedBox(height: 10),
-                            Container(
-                              child: InkWell(
-                                onTap: () {
-                                  //Utils.backWithNoTransition(context, CustomDropDownList(selectedSchoolName, _selectedSchool, _schoolList));
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              CustomDropDownListTwo(
-                                                  selectedReasonForServiceRequest,
-                                                  getAllReasonModel,
-                                                  _allReasonList))).then(
-                                      (value) {
-                                    if (value == null) {
-                                      setState(() {
-                                        selectedReasonForServiceRequest =
-                                            'select_reason_for_service_request'
-                                                .tr();
-                                      });
-                                    } else {
-                                      setState(() {
-                                        getAllReasonModel = value;
-                                        selectedReasonForServiceRequest =
-                                            getAllReasonModel.reason;
-                                      });
-                                    }
-                                  });
-                                },
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Expanded(
-                                        child: Text(
+                    children: [
+                      SizedBox(height: 10),
+                      Container(
+                        child: InkWell(
+                          onTap: () {
+                            //Utils.backWithNoTransition(context, CustomDropDownList(selectedSchoolName, _selectedSchool, _schoolList));
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        CustomDropDownListTwo(
                                             selectedReasonForServiceRequest,
-                                            style:
-                                                AppTheme.regularTextStyle())),
-                                    Icon(Icons.keyboard_arrow_down_sharp,
-                                        size: 30, color: Colors.black54)
-                                  ],
-                                ),
-                              ),
-                            ),
-                            SizedBox(height: 10),
-                            Container(
-                              height: 1.3,
-                              width: MediaQuery.of(context).size.width,
-                              color: Colors.black45,
-                            ),
-                          ],
-                        )
+                                            getAllReasonModel,
+                                            _allReasonList))).then(
+                                    (value) {
+                                  if (value == null) {
+                                    setState(() {
+                                      selectedReasonForServiceRequest =
+                                          'select_reason_for_service_request'
+                                              .tr();
+                                    });
+                                  } else {
+                                    setState(() {
+                                      getAllReasonModel = value;
+                                      selectedReasonForServiceRequest =
+                                          getAllReasonModel.reason;
+                                    });
+                                  }
+                                });
+                          },
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Expanded(
+                                  child: Text(
+                                      selectedReasonForServiceRequest,
+                                      style:
+                                      AppTheme.regularTextStyle())),
+                              Icon(Icons.keyboard_arrow_down_sharp,
+                                  size: 30, color: Colors.black54)
+                            ],
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 10),
+                      Container(
+                        height: 1.3,
+                        width: MediaQuery
+                            .of(context)
+                            .size
+                            .width,
+                        color: Colors.black45,
+                      ),
+                    ],
+                  )
                       : Container(),
                   SizedBox(
                     height: 20,
@@ -277,7 +301,10 @@ class _DropOutPostScreenState extends State<DropOutPostScreen> {
                       ),
                     ),
                     height: 50,
-                    width: MediaQuery.of(context).size.width,
+                    width: MediaQuery
+                        .of(context)
+                        .size
+                        .width,
                     child: TextButton(
                       child: Text('submit'.tr(),
                           style: AppTheme.customTextStyle(
@@ -285,45 +312,25 @@ class _DropOutPostScreenState extends State<DropOutPostScreen> {
                       onPressed: () {
                         if (_firstNameRefredByController.text.isEmpty) {
                           Utils.showToast(
-                              context, "Please enter first name", Colors.red);
+                              context, 'enter_first_name'.tr(), Colors.red);
                         } else if (_lastNameRefredByController.text.isEmpty) {
                           Utils.showToast(
-                              context, "Please enter last name", Colors.red);
+                              context, 'enter_last_name'.tr(), Colors.red);
                         } else if (_contactRefredByController.text.isEmpty) {
                           Utils.showToast(context,
-                              "Please enter contact  phone", Colors.red);
+                             'enter_contact_phone'.tr(), Colors.red);
                         } else if (_firstNameStudentController.text.isEmpty) {
                           Utils.showToast(context,
-                              "Please enter student first name", Colors.red);
+                              'enter_student_first_name'.tr(), Colors.red);
                         } else if (_lastNameStudentController.text.isEmpty) {
                           Utils.showToast(context,
-                              "Please enter student last name", Colors.red);
+                              'enter_student_last_name'.tr(), Colors.red);
                         } else if (_lastNameStudentController.text.isEmpty) {
                           Utils.showToast(context,
-                              "Please enter tusd matric number", Colors.red);
+                              'enter_tusd_matric_number'.tr(), Colors.red);
                         } else if (_gradeController.text.isEmpty) {
                           Utils.showToast(
-                              context, "Please enter grade", Colors.red);
-                        } else if (selectedSchoolName.isEmpty ||
-                            selectedSchoolName == "") {
-                         /* if (selectedSchoolName
-                                  .compareTo('select_school'.tr()) ==
-                              0) {
-                            schoolId = 0;
-                          } else {
-                            schoolId = _selectedSchool.id;
-                          }*/
-                          Utils.showToast(
-                              context, "Select School", Colors.red);
-                        } else if (selectedReasonForServiceRequest.isEmpty ||
-                            selectedReasonForServiceRequest == "") {
-                        /*  if (selectedReasonForServiceRequest.compareTo(
-                                  'select_reason_for_service_request'.tr()) ==
-                              0) {
-                            reasonRequest = 0;
-                          } else {
-                            reasonRequest = getAllReasonModel.id;
-                          }*/
+                              context, 'enter_grade'.tr(), Colors.red);
                         } else {
                           getWebApiFromUrl(context);
                         }
@@ -361,7 +368,8 @@ class _DropOutPostScreenState extends State<DropOutPostScreen> {
       } else {
         Utils.showToast(context, response.message, Colors.red);
         print(
-            "******************** ${response.message} ************************");
+            "******************** ${response
+                .message} ************************");
       }
     }).catchError((error) {
       Utils.showLoader(false, context);
@@ -393,7 +401,8 @@ class _DropOutPostScreenState extends State<DropOutPostScreen> {
       } else {
         Utils.showToast(context, response.message, Colors.red);
         print(
-            "******************** ${response.message} ************************");
+            "******************** ${response
+                .message} ************************");
       }
     }).catchError((error) {
       Utils.showLoader(false, context);
@@ -409,33 +418,33 @@ class _DropOutPostScreenState extends State<DropOutPostScreen> {
     }
     String schoolName = schoolNameList.join("==)");
     WebService.translateApiCall(languageCode!, schoolName,
-        (isSuccess, response) {
-      if (isSuccess) {
-        var resultArr = response.toString().split("==)");
-        List<SchoolListResponse> tempList = [];
-        for (int i = 0; i < resultArr.length; i++) {
-          tempList.add(SchoolListResponse(
-              id: _schoolList[i].id,
-              schoolCategoryId: _schoolList[i].schoolCategoryId,
-              schoolCategoryName: _schoolList[i].schoolCategoryName,
-              name: resultArr[i],
-              createdBy: _schoolList[i].createdBy,
-              createdOn: _schoolList[i].createdOn,
-              updatedBy: _schoolList[i].updatedBy,
-              updatedOn: _schoolList[i].updatedOn));
-        }
+            (isSuccess, response) {
+          if (isSuccess) {
+            var resultArr = response.toString().split("==)");
+            List<SchoolListResponse> tempList = [];
+            for (int i = 0; i < resultArr.length; i++) {
+              tempList.add(SchoolListResponse(
+                  id: _schoolList[i].id,
+                  schoolCategoryId: _schoolList[i].schoolCategoryId,
+                  schoolCategoryName: _schoolList[i].schoolCategoryName,
+                  name: resultArr[i],
+                  createdBy: _schoolList[i].createdBy,
+                  createdOn: _schoolList[i].createdOn,
+                  updatedBy: _schoolList[i].updatedBy,
+                  updatedOn: _schoolList[i].updatedOn));
+            }
 
-        if (_schoolList.length == tempList.length) {
-          setState(() {
-            _schoolList = tempList;
-            _selectedSchool = _schoolList[0];
-          });
-        }
-      } else {
-        Utils.showToast(context, "Page Translation Failed", Colors.red);
-      }
-      Utils.showLoader(false, context);
-    });
+            if (_schoolList.length == tempList.length) {
+              setState(() {
+                _schoolList = tempList;
+                _selectedSchool = _schoolList[0];
+              });
+            }
+          } else {
+            Utils.showToast(context, "Page Translation Failed", Colors.red);
+          }
+          Utils.showLoader(false, context);
+        });
   }
 
   getWebApiFromUrl(BuildContext context) {
@@ -459,15 +468,16 @@ class _DropOutPostScreenState extends State<DropOutPostScreen> {
           setState(() {
             isLoading = false;
             Utils.showLoader(false, context);
-            _mailForDropDown = [];
+            //  _mailForDropDown = [];
             //_schoolList.add(SchoolListResponse(id: 0, name: LabelStr.lblSelectSchool, schoolCategoryId: 0, schoolCategoryName: "",  createdBy: 0,  createdOn: "",  updatedBy: 0,  updatedOn: ""));
-           /* for (var data in response.body["messages"]) {
+            /* for (var data in response.body["messages"]) {
               _mailForDropDown.add(MailForDropOut.fromJson(data));
             }*/
 
-           // response.body[0]["messages"][0]["messageText"];
+            // response.body[0]["messages"][0]["messageText"];
             Utils.showToast(
-                context,  response.body["messages"][0]["messageText"], Colors.black45);
+                context, response.body["messages"][0]["messageText"],
+                Colors.black45);
           });
         }
       } else {

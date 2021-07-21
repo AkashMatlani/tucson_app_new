@@ -152,5 +152,12 @@
     "no_school" : "No hay escuela encontrada",
     "signout_alter_msg" : "¿Estás segura de que quieres cerrar sesión?",
     "total_day": "Número de días",
-    "no_school_selected": "No has seleccionado ninguna escuela"
+    "no_school_selected": "No has seleccionado ninguna escuela",
+    "enter_first_name": "Por favor ingrese su nombre",
+    "enter_last_name": "Por favor ingrese su apellido",
+    "enter_contact_phone": "Por favor ingrese el teléfono de contacto",
+    "enter_student_first_name": "Por favor ingrese el nombre del estudiante",
+    "enter_student_last_name": "Ingrese el apellido del estudiante",
+    "enter_tusd_matric_number": "Ingrese el número de matrícula de tusd",
+    "enter_grade": "arrendamiento ingrese el grado"
   }

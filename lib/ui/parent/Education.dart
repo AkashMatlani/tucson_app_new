@@ -19,8 +19,6 @@ import 'ActivitesScreen.dart';
 
 
 class Education extends StatefulWidget {
-
-
   @override
   _EducationScreenState createState() => _EducationScreenState();
 }

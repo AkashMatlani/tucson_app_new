@@ -845,48 +845,6 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
 
   late String path = "";
 
-/* getVideoThumbinail() async {
-    var status = await Permission.storage.status;
-    if (status.isGranted) {
-      */ /*    if (io.Platform.isIOS) {
-        io.Directory appDocDirectory;
-        appDocDirectory = await getApplicationDocumentsDirectory();
-        Directory directory= await new Directory(appDocDirectory.path+'/'+'Download').create(recursive: true);
-        String path=directory.path.toString();
-        File file = new File('$path/$filename');
-        ToastUtils.showToast(context, "Your file save at "+file.toString()+" location", Colors.green);
-        await file.writeAsBytes(bytes);
-        return file;
-      }
-      else{*/ /*
-      path = await ExtStorage.getExternalStoragePublicDirectory(ExtStorage.DIRECTORY_DOWNLOADS);
-      // File file = new File('$path/$filename');
-      // ToastUtils.showToast(context, "Your file save at "+file.toString()+" location", Colors.green);
-      //await file.writeAsBytes(bytes);
-      // return file;
-    } else {
-      Map<Permission, PermissionStatus> status = await [
-        Permission.storage,
-      ].request();
-      print("Permission status :: $status");
-    }
-
-    String? fileName;
-    try {
-      uint8list = await VideoThumbnail.thumbnailFile(
-        video: "https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4",
-        thumbnailPath: (await getTemporaryDirectory()).path,
-        imageFormat: ImageFormat.WEBP,
-        maxHeight: 64, // specify the height of the thumbnail, let the width auto-scaled to keep the source aspect ratio
-        quality: 75,
-      );
-    } catch (e) {
-      print(e);
-      fileName = "";
-    }
-    return fileName;
-  }*/
-
   void _launchURL(String path) async => await canLaunch(path)
       ? await launch(path)
       : throw 'Could not launch $path';

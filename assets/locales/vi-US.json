@@ -152,5 +152,12 @@
   "no_school" : "Không tìm thấy trường học",
   "signout_alter_msg" : "Bạn có chắc chắn muốn đăng xuất không?",
   "total_day": "Số ngày",
-  "no_school_selected": "Bạn chưa chọn trường nào"
+  "no_school_selected": "Bạn chưa chọn trường nào",
+  "enter_first_name": "Vui lòng nhập tên",
+  "enter_last_name": "Vui lòng nhập họ",
+  "enter_contact_phone": "Vui lòng nhập số điện thoại liên hệ",
+  "enter_student_first_name": "Vui lòng nhập tên học sinh",
+  "enter_student_last_name": "Vui lòng nhập họ của sinh viên",
+  "enter_tusd_matric_number": "Vui lòng nhập số matric tusd",
+  "enter_grade": "Vui lòng nhập điểm"
 }

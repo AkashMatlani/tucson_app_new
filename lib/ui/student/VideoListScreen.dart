@@ -147,6 +147,9 @@ class _VideoListScreenState extends State<VideoListScreen> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+         /*   _videoList[index].objectPath.contains("https://www.youtube.com/")
+            ?Image.network(_videoList[index].objectPath+"0.jpg"):
+            //?Image.network('https://img.youtube.com/vi/6cwnBBAVIwE/0.jpg'):*/
             Container(
                 margin: EdgeInsets.only(top: 30),
                 height: MediaQuery.of(context).size.height * 0.24,
@@ -302,10 +305,12 @@ class _VideoListScreenState extends State<VideoListScreen> {
   Future getThumbNail(String image) async {
     var fileName = await VideoThumbnail.thumbnailFile(
       video: image,
-      thumbnailPath: (await getTemporaryDirectory()).path,
-      imageFormat: ImageFormat.WEBP,
+      thumbnailPath: (await getApplicationDocumentsDirectory()).path,
+      imageFormat: ImageFormat.JPEG,
+      maxHeight: 100,
+      maxWidth: 200,
       // specify the height of the thumbnail, let the width auto-scaled to keep the source aspect ratio
-      quality: 75,
+      quality: 50,
     );
 
     return fileName;
