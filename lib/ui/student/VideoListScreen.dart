@@ -147,9 +147,9 @@ class _VideoListScreenState extends State<VideoListScreen> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-         /*   _videoList[index].objectPath.contains("https://www.youtube.com/")
-            ?Image.network(_videoList[index].objectPath+"0.jpg"):
-            //?Image.network('https://img.youtube.com/vi/6cwnBBAVIwE/0.jpg'):*/
+           /* _videoList[index].objectPath.contains("https://www.youtube.com/")
+            ?Image.network():*/
+            //?Image.network('https://img.youtube.com/vi/6cwnBBAVIwE/0.jpg'):
             Container(
                 margin: EdgeInsets.only(top: 30),
                 height: MediaQuery.of(context).size.height * 0.24,
@@ -314,5 +314,15 @@ class _VideoListScreenState extends State<VideoListScreen> {
     );
 
     return fileName;
+  }
+
+
+  String? getYoutubeThumbnail(String videoUrl) {
+    final Uri? uri = Uri.tryParse(videoUrl);
+    if (uri == null) {
+      return null;
+    }
+
+    return 'https://img.youtube.com/vi/${uri.queryParameters['v']}/0.jpg';
   }
 }
