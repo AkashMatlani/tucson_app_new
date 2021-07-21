@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +10,7 @@ import 'package:tucson_app/GeneralUtils/PrefsUtils.dart';
 import 'package:tucson_app/GeneralUtils/Utils.dart';
 import 'package:tucson_app/Model/AuthViewModel.dart';
 import 'package:tucson_app/WebService/WebService.dart';
+import 'package:tucson_app/ui/ResetPwdScreen.dart';
 import 'package:tucson_app/ui/SignInScreen.dart';
 
 
@@ -155,15 +158,7 @@ class _ForgotPwdScreenState extends State<ForgotPwdScreen> {
     _authViewModel.forgotPwdResult(email, (isSuccess, message) {
       Utils.showLoader(false, context);
       if (isSuccess) {
-        setState(() {
-          _emailController.text = "";
-        });
-
-        Utils.showAlertDialog(context, 'check_mail_for_reset_pwd'.tr(), (success, response) {
-          if (success) {
-            Utils.navigateWithClearState(context, SignInScreen());
-          }
-        });
+        Utils.navigateWithClearState(context, ResetPwdScreen(email));
       } else {
         if(languageCode!.compareTo("en") != 0){
           WebService.translateApiCall(languageCode!, message, (isSuccess, response){

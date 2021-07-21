@@ -163,11 +163,10 @@
   "drop_out_prevention_enroll_form" : "Dropout Prevention Enroll Form",
   "total_day": "Number of days",
   "no_school_selected": "You have not selected any school",
-  "enter_first_name": "Please enter first name",
-  "enter_last_name": "Please enter last name",
   "enter_contact_phone": "Please enter contact phone",
   "enter_student_first_name": "Please enter student first name",
   "enter_student_last_name": "Please enter student last name",
   "enter_tusd_matric_number": "Please enter tusd matric number",
-  "enter_grade": "Please enter grade"
+  "enter_grade": "Please enter grade",
+  "reset_successfully": "Password Reset Successfully"
 }

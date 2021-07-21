@@ -154,11 +154,10 @@
     "drop_out_prevention_enroll_form" : "Formulario de inscripción para la prevención de deserción escola",
     "total_day": "Número de días",
     "no_school_selected": "No has seleccionado ninguna escuela",
-    "enter_first_name": "Por favor ingrese su nombre",
-    "enter_last_name": "Por favor ingrese su apellido",
     "enter_contact_phone": "Por favor ingrese el teléfono de contacto",
     "enter_student_first_name": "Por favor ingrese el nombre del estudiante",
     "enter_student_last_name": "Ingrese el apellido del estudiante",
     "enter_tusd_matric_number": "Ingrese el número de matrícula de tusd",
-    "enter_grade": "arrendamiento ingrese el grado"
+    "enter_grade": "arrendamiento ingrese el grado",
+    "reset_successfully": "Restablecimiento de contraseña con éxito"
   }

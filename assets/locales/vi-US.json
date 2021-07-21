@@ -154,11 +154,10 @@
   "drop_out_prevention_enroll_form" : "Biểu mẫu ghi danh phòng chống bỏ học",
   "total_day": "Số ngày",
   "no_school_selected": "Bạn chưa chọn trường nào",
-  "enter_first_name": "Vui lòng nhập tên",
-  "enter_last_name": "Vui lòng nhập họ",
   "enter_contact_phone": "Vui lòng nhập số điện thoại liên hệ",
   "enter_student_first_name": "Vui lòng nhập tên học sinh",
   "enter_student_last_name": "Vui lòng nhập họ của sinh viên",
   "enter_tusd_matric_number": "Vui lòng nhập số matric tusd",
-  "enter_grade": "Vui lòng nhập điểm"
+  "enter_grade": "Vui lòng nhập điểm",
+  "reset_successfully": "Đặt lại mật khẩu thành công"
 }

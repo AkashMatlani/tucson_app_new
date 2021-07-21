@@ -86,6 +86,45 @@ class AuthViewModel {
     }
   }
 
+  ValidationResult validateResetPwd(String newPwd, String confirmPwd) {
+    if (newPwd.isEmpty) {
+      return ValidationResult(false, LabelStr.enterUserPwd);
+    } else if (newPwd.length < 8) {
+      return ValidationResult(false, LabelStr.invalidPassword);
+    } else if (newPwd.length > 15) {
+      return ValidationResult(false, LabelStr.invalidPasswordMax);
+    }
+
+    if (confirmPwd.isEmpty) {
+      return ValidationResult(false, LabelStr.enterConfirmPwd);
+    } else if (newPwd.compareTo(confirmPwd) != 0) {
+      return ValidationResult(false, LabelStr.pwdNotMatchError1);
+    }
+    return ValidationResult(true, "success");
+  }
+
+  void resetPwdResult(String email, String newPwd, String confirmPwd, ResponseCallback callback) {
+    var params = {"newPassword": newPwd, "email": email};
+
+    var validateResult = validateResetPwd(newPwd, confirmPwd);
+    if (validateResult.isValid){
+      WebService.postAPICall(WebService.resetPassword, params).then((response) {
+        if (response.statusCode == 1) {
+          if (response.body != null) {
+            callback(true, "");
+          }
+        } else {
+          callback(false, response.message);
+        }
+      }).catchError((error) {
+        print(error);
+        callback(false, LabelStr.serverError);
+      });
+    } else {
+      callback(false, validateResult.message);
+    }
+  }
+
   ValidationResult validateSignUp(String userType, String fname, String lname, String dob, String zipCode, String email, String password, String confirmPwd) {
 
     if (fname.isEmpty) {
@@ -134,8 +173,6 @@ class AuthViewModel {
       return ValidationResult(false, LabelStr.enterConfirmPwd);
     } else if (password.compareTo(confirmPwd) != 0) {
       return ValidationResult(false, LabelStr.pwdNotMatchError1);
-    } else if (password.length > 15) {
-      return ValidationResult(false, LabelStr.invalidPasswordMax);
     }
     return ValidationResult(true, "success");
   }

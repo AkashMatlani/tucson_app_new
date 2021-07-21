@@ -191,7 +191,7 @@ class _EducationScreenState extends State<Education> {
 
    void getSchoolType() {
      Utils.showLoader(true, context);
-     var params = {"schoolId": 13};
+     var params = {"schoolId": schoolId};
      WebService.postAPICall(WebService.getSchoolCategoryType, params)
          .then((response) {
        Utils.showLoader(false, context);
