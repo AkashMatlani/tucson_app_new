@@ -108,11 +108,11 @@ class _CoolStuffScreenScreenState extends State<CoolStuffScreen>
               ),
             ),
             Positioned(
-              top: MediaQuery.of(context).size.height*0.20,
+              top: MediaQuery.of(context).size.height*0.17,
               left: MediaQuery.of(context).size.height*0.015,
               right: MediaQuery.of(context).size.height*0.015,
               child: Container(
-                height:500,
+                height:MediaQuery.of(context).size.height*0.83,
                 width: MediaQuery.of(context).size.width,
                 margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
                 child: Column(

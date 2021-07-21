@@ -1,4 +1,4 @@
-import 'dart:io' show Platform, stdout;
+import 'dart:io' show Platform;
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -611,7 +611,7 @@ class _CalendarPage2State extends State<CalendarPage2> {
   getDayCount(DateTime startDate, DateTime endDate){
     var from = DateTime(startDate.year, startDate.month, startDate.day);
     var to = DateTime(endDate.year, endDate.month, endDate.day);
-    var count = (to.difference(from).inHours / 24).round();
+    var count = (to.difference(from).inHours / 24).round()+1;
     if(count.toString().length == 1){
       return "0"+count.toString();
     }

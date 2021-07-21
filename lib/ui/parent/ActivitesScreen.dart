@@ -2,11 +2,8 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tucson_app/GeneralUtils/Constant.dart';
-import 'package:tucson_app/GeneralUtils/PrefsUtils.dart';
-import 'package:tucson_app/GeneralUtils/Utils.dart';
-import 'package:tucson_app/Model/ContentMasterViewModel.dart';
-import 'package:tucson_app/Model/ContentResponse.dart';
-import 'package:tucson_app/ui/student/BlogScreenForParent.dart';
+import 'BlogScreenForParent.dart';
+
 import '../../GeneralUtils/ColorExtension.dart';
 
 
@@ -24,11 +21,6 @@ class _ActivitesScreenState extends State<ActivitesScreen>
   late TabController _tabController;
   int activeTabIndex = 0;
   late List<bool> _isDisabled;
-  List<ContentResponse> _contentList = [];
-  List<ContentResponse> _elementryList = [];
-  List<ContentResponse> _middleHighList = [];
-
-  String? languageCode;
 
   @override
   void initState() {
@@ -57,17 +49,6 @@ class _ActivitesScreenState extends State<ActivitesScreen>
       vsync: this,
     );
     _tabController.addListener(onTap);
-
-    _getSchoolId();
-  }
-
-  _getSchoolId() async {
-    int schoolId = await PrefUtils.getValueFor(PrefUtils.schoolId);
-    languageCode = await PrefUtils.getValueFor(PrefUtils.sortLanguageCode);
-    if (schoolId == null) {
-      schoolId = 0;
-    }
-    _getContentList(schoolId);
   }
 
   onTap() {
@@ -139,19 +120,19 @@ class _ActivitesScreenState extends State<ActivitesScreen>
               ),
             ),
             Positioned(
-              top: MediaQuery.of(context).size.height*0.20,
-              left: MediaQuery.of(context).size.height*0.03,
-              right: MediaQuery.of(context).size.height*0.03,
+              top: MediaQuery.of(context).size.height*0.17,
+              left: MediaQuery.of(context).size.height*0.015,
+              right: MediaQuery.of(context).size.height*0.015,
               child: Container(
-                  height: MediaQuery.of(context).size.height*0.8,
+                  height: MediaQuery.of(context).size.height*0.83,
                   width: MediaQuery.of(context).size.width,
-                  margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
                   child: Column(
                     children: <Widget>[
                       Stack(
                         children: [
                           Container(
                             height: tabHeight,
+                            margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10),
                                 border: Border.all(
@@ -160,6 +141,7 @@ class _ActivitesScreenState extends State<ActivitesScreen>
                           Positioned(
                             child: Container(
                               height: tabHeight,
+                              margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(10)),
                               child: TabBar(
@@ -205,8 +187,8 @@ class _ActivitesScreenState extends State<ActivitesScreen>
                               : NeverScrollableScrollPhysics(),
                           controller: _tabController,
                           children: <Widget>[
-                            BlogScreenForParent('activites'.tr(), "Parent", _elementryList),
-                            BlogScreenForParent('activites'.tr(), "Parent", _middleHighList)
+                            BlogScreenForParent('activites'.tr(), "Parent", "Elementary"),
+                            BlogScreenForParent('activites'.tr(), "Parent", "Middle")
                           ],
                         ),
                       ))
@@ -217,43 +199,5 @@ class _ActivitesScreenState extends State<ActivitesScreen>
         ),
       ),
     );
-  }
-
-  _getContentList(int schoolId) {
-    ContentMasterViewModel _contentViewModel = ContentMasterViewModel();
-    var params;
-    params = {
-      "schoolId": schoolId,
-      "roleId": 0,
-      "contentTypeName": "Activities"
-    };
-
-    Utils.showLoader(true, context);
-    _contentViewModel.getContentList(context, params, "Parent", (isSuccess, message) {
-      Utils.showLoader(false, context);
-      if (isSuccess) {
-        setState(() {
-          _contentList = [];
-          _contentList = _contentViewModel.contentList;
-          _elementryList = [];
-          for (int i = 0; i < _contentList.length; i++) {
-            if (_contentList[i].contentTitle.compareTo("Elementary")==0) {
-              _elementryList.add(_contentList[i]);
-            } else if (_contentList[i].contentTitle.compareTo("Middle")==0 || _contentList[i].contentTitle.compareTo("High")==0) {
-              _middleHighList.add(_contentList[i]);
-            } else {
-              _middleHighList.add(_contentList[i]);
-              _elementryList.add(_contentList[i]);
-            }
-          }
-        });
-      } else {
-        setState(() {
-          _contentList = [];
-          _elementryList = [];
-          _middleHighList=[];
-        });
-      }
-    });
   }
 }

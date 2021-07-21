@@ -76,7 +76,8 @@ class _DonationScreenState extends State<DonationScreen> {
                   style: {
                     "body" : Style(
                       fontFamily: MyFont.SSPro_regular,
-                      fontSize: FontSize.medium
+                      fontSize: FontSize.medium,
+                      color: Colors.black54
                     )
                   },
                 ),

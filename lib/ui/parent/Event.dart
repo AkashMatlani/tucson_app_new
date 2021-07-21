@@ -52,13 +52,18 @@ class _EventScreenState extends State<Event> {
             child: Column(
               children: [
                 Container(
-                  margin: EdgeInsets.fromLTRB(0, MediaQuery.of(context).size.height*0.03, 0, MediaQuery.of(context).size.height*0.03),
+                  margin: EdgeInsets.fromLTRB(
+                      0,
+                      MediaQuery.of(context).size.height * 0.03,
+                      0,
+                      MediaQuery.of(context).size.height * 0.03),
                   child: Row(
                     children: [
                       Container(
                         margin: EdgeInsets.only(top: 10),
                         child: IconButton(
-                            icon: Icon(Icons.arrow_back_ios, color: Colors.white),
+                            icon:
+                            Icon(Icons.arrow_back_ios, color: Colors.white),
                             onPressed: () {
                               Navigator.of(context).pop();
                             }),
@@ -88,16 +93,15 @@ class _EventScreenState extends State<Event> {
             ),
           ),
           Positioned(
-            top: MediaQuery.of(context).size.height*0.20,
-            left: MediaQuery.of(context).size.height*0.03,
-            right: MediaQuery.of(context).size.height*0.03,
+            top: MediaQuery.of(context).size.height * 0.12,
+            left: MediaQuery.of(context).size.height * 0.03,
+            right: MediaQuery.of(context).size.height * 0.03,
             child: Container(
-              height: MediaQuery.of(context).size.height*0.8,
+              height: MediaQuery.of(context).size.height * 0.87,
               child: SingleChildScrollView(
                 child: GridView.builder(
                     physics: ScrollPhysics(),
                     shrinkWrap: true,
-                    padding: EdgeInsets.only(bottom: 20),
                     gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
                         maxCrossAxisExtent: 200,
                         childAspectRatio: 2 / 2,
@@ -143,10 +147,13 @@ class _EventScreenState extends State<Event> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
                                   Padding(
-                                      padding: EdgeInsets.fromLTRB(
-                                          16.0, 10.0, 16.0, 8.0),
+                                      padding: EdgeInsets.only(
+                                          left: 20, top: 10, right: 20),
                                       child: SvgPicture.asset(
-                                          menuItems[index].svgPicture)),
+                                        menuItems[index].svgPicture,
+                                        height: 50,
+                                        width: 50,
+                                      )),
                                   Padding(
                                     padding: EdgeInsets.fromLTRB(
                                         16.0, 10.0, 16.0, 8.0),
@@ -165,9 +172,7 @@ class _EventScreenState extends State<Event> {
                                     ),
                                   ),
                                 ],
-                              )
-                          )
-                      );
+                              )));
                     }),
               ),
             ),
