@@ -130,215 +130,217 @@ class _DropOutPostScreenState extends State<DropOutPostScreen> {
                 .height * 0.15,
             left: 15,
             right: 15,
-            child: Container(
-              margin: EdgeInsets.all(10),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text("Referred by: ",
-                      style: AppTheme.customTextStyle(
-                          MyFont.SSPro_bold, 18.0, MyColor.darkLblTextColor())),
-                  SizedBox(height: 20),
-                  textFieldFor('first_name'.tr(), _firstNameRefredByController,
-                      textInputAction: TextInputAction.next,
-                      keyboardType: TextInputType.name),
-                  SizedBox(height: 10),
-                  textFieldFor('last_name'.tr(), _lastNameRefredByController,
-                      textInputAction: TextInputAction.next,
-                      keyboardType: TextInputType.name),
-                  SizedBox(height: 10),
-                  textFieldFor('contact_phone'.tr(), _contactRefredByController,
-                      textInputAction: TextInputAction.next, keyboardType: TextInputType.number),
-                  SizedBox(height: 40),
-                  Text('student_information'.tr(),
-                      style: AppTheme.customTextStyle(
-                          MyFont.SSPro_bold, 18.0, MyColor.darkLblTextColor())),
-                  textFieldFor('first_name'.tr(), _firstNameStudentController,
-                      textInputAction: TextInputAction.next,
-                      keyboardType: TextInputType.name),
-                  SizedBox(height: 10),
-                  textFieldFor('last_name'.tr(), _lastNameStudentController,
-                      textInputAction: TextInputAction.next,
-                      keyboardType: TextInputType.name),
-                  SizedBox(height: 10),
-                  textFieldFor(
-                      'tusd_matric_number'.tr(), _tusdMaticNumberController,
-                      textInputAction: TextInputAction.next,
-                      keyboardType: TextInputType.name),
-                  SizedBox(height: 10),
-                  textFieldFor('grade'.tr(), _gradeController,
-                      textInputAction: TextInputAction.next,
-                      keyboardType: TextInputType.name),
-                  SizedBox(height: 10),
-                  (_schoolList.isNotEmpty && _schoolList.length > 0)
-                      ? Column(
-                    children: [
-                      SizedBox(height: 10),
-                      Container(
-                        child: InkWell(
-                          onTap: () {
-                            //Utils.backWithNoTransition(context, CustomDropDownList(selectedSchoolName, _selectedSchool, _schoolList));
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        CustomDropDownList(
-                                            selectedSchoolName,
-                                            _selectedSchool,
-                                            _schoolList))).then((value) {
-                              if (value == null) {
-                                setState(() {
-                                  selectedSchoolName =
-                                      'select_school'.tr();
-                                });
-                              } else {
-                                setState(() {
-                                  _selectedSchool = value;
-                                  selectedSchoolName =
-                                      _selectedSchool.name;
-                                });
-                              }
-                            });
-                          },
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Expanded(
-                                  child: Text(selectedSchoolName,
-                                      style:
-                                      AppTheme.regularTextStyle())),
-                              Icon(Icons.keyboard_arrow_down_sharp,
-                                  size: 30, color: Colors.black54)
-                            ],
+            child: SingleChildScrollView(
+              child: Container(
+                margin: EdgeInsets.all(10),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text("Referred by: ",
+                        style: AppTheme.customTextStyle(
+                            MyFont.SSPro_bold, 18.0, MyColor.darkLblTextColor())),
+                    SizedBox(height: 20),
+                    textFieldFor('first_name'.tr(), _firstNameRefredByController,
+                        textInputAction: TextInputAction.next,
+                        keyboardType: TextInputType.name),
+                    SizedBox(height: 10),
+                    textFieldFor('last_name'.tr(), _lastNameRefredByController,
+                        textInputAction: TextInputAction.next,
+                        keyboardType: TextInputType.name),
+                    SizedBox(height: 10),
+                    textFieldFor('contact_phone'.tr(), _contactRefredByController,
+                        textInputAction: TextInputAction.next, keyboardType: TextInputType.number),
+                    SizedBox(height: 40),
+                    Text('student_information'.tr(),
+                        style: AppTheme.customTextStyle(
+                            MyFont.SSPro_bold, 18.0, MyColor.darkLblTextColor())),
+                    textFieldFor('first_name'.tr(), _firstNameStudentController,
+                        textInputAction: TextInputAction.next,
+                        keyboardType: TextInputType.name),
+                    SizedBox(height: 10),
+                    textFieldFor('last_name'.tr(), _lastNameStudentController,
+                        textInputAction: TextInputAction.next,
+                        keyboardType: TextInputType.name),
+                    SizedBox(height: 10),
+                    textFieldFor(
+                        'tusd_matric_number'.tr(), _tusdMaticNumberController,
+                        textInputAction: TextInputAction.next,
+                        keyboardType: TextInputType.name),
+                    SizedBox(height: 10),
+                    textFieldFor('grade'.tr(), _gradeController,
+                        textInputAction: TextInputAction.next,
+                        keyboardType: TextInputType.name),
+                    SizedBox(height: 10),
+                    (_schoolList.isNotEmpty && _schoolList.length > 0)
+                        ? Column(
+                      children: [
+                        SizedBox(height: 10),
+                        Container(
+                          child: InkWell(
+                            onTap: () {
+                              //Utils.backWithNoTransition(context, CustomDropDownList(selectedSchoolName, _selectedSchool, _schoolList));
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          CustomDropDownList(
+                                              selectedSchoolName,
+                                              _selectedSchool,
+                                              _schoolList))).then((value) {
+                                if (value == null) {
+                                  setState(() {
+                                    selectedSchoolName =
+                                        'select_school'.tr();
+                                  });
+                                } else {
+                                  setState(() {
+                                    _selectedSchool = value;
+                                    selectedSchoolName =
+                                        _selectedSchool.name;
+                                  });
+                                }
+                              });
+                            },
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Expanded(
+                                    child: Text(selectedSchoolName,
+                                        style:
+                                        AppTheme.regularTextStyle())),
+                                Icon(Icons.keyboard_arrow_down_sharp,
+                                    size: 30, color: Colors.black54)
+                              ],
+                            ),
                           ),
                         ),
-                      ),
-                      SizedBox(height: 10),
-                      Container(
-                        height: 1.3,
-                        width: MediaQuery
-                            .of(context)
-                            .size
-                            .width,
-                        color: Colors.black45,
-                      ),
-                    ],
-                  )
-                      : Container(),
-                  SizedBox(height: 20),
-                  (_allReasonList.isNotEmpty && _allReasonList.length > 0)
-                      ? Column(
-                    children: [
-                      SizedBox(height: 10),
-                      Container(
-                        child: InkWell(
-                          onTap: () {
-                            //Utils.backWithNoTransition(context, CustomDropDownList(selectedSchoolName, _selectedSchool, _schoolList));
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        CustomDropDownListTwo(
-                                            selectedReasonForServiceRequest,
-                                            getAllReasonModel,
-                                            _allReasonList))).then(
-                                    (value) {
-                                  if (value == null) {
-                                    setState(() {
-                                      selectedReasonForServiceRequest =
-                                          'select_reason_for_service_request'
-                                              .tr();
-                                    });
-                                  } else {
-                                    setState(() {
-                                      getAllReasonModel = value;
-                                      selectedReasonForServiceRequest =
-                                          getAllReasonModel.reason;
-                                    });
-                                  }
-                                });
-                          },
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Expanded(
-                                  child: Text(
-                                      selectedReasonForServiceRequest,
-                                      style:
-                                      AppTheme.regularTextStyle())),
-                              Icon(Icons.keyboard_arrow_down_sharp,
-                                  size: 30, color: Colors.black54)
-                            ],
+                        SizedBox(height: 10),
+                        Container(
+                          height: 1.3,
+                          width: MediaQuery
+                              .of(context)
+                              .size
+                              .width,
+                          color: Colors.black45,
+                        ),
+                      ],
+                    )
+                        : Container(),
+                    SizedBox(height: 20),
+                    (_allReasonList.isNotEmpty && _allReasonList.length > 0)
+                        ? Column(
+                      children: [
+                        SizedBox(height: 10),
+                        Container(
+                          child: InkWell(
+                            onTap: () {
+                              //Utils.backWithNoTransition(context, CustomDropDownList(selectedSchoolName, _selectedSchool, _schoolList));
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          CustomDropDownListTwo(
+                                              selectedReasonForServiceRequest,
+                                              getAllReasonModel,
+                                              _allReasonList))).then(
+                                      (value) {
+                                    if (value == null) {
+                                      setState(() {
+                                        selectedReasonForServiceRequest =
+                                            'select_reason_for_service_request'
+                                                .tr();
+                                      });
+                                    } else {
+                                      setState(() {
+                                        getAllReasonModel = value;
+                                        selectedReasonForServiceRequest =
+                                            getAllReasonModel.reason;
+                                      });
+                                    }
+                                  });
+                            },
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Expanded(
+                                    child: Text(
+                                        selectedReasonForServiceRequest,
+                                        style:
+                                        AppTheme.regularTextStyle())),
+                                Icon(Icons.keyboard_arrow_down_sharp,
+                                    size: 30, color: Colors.black54)
+                              ],
+                            ),
                           ),
                         ),
-                      ),
-                      SizedBox(height: 10),
-                      Container(
-                        height: 1.3,
-                        width: MediaQuery
-                            .of(context)
-                            .size
-                            .width,
-                        color: Colors.black45,
-                      ),
-                    ],
-                  )
-                      : Container(),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      gradient: LinearGradient(
-                        colors: [
-                          HexColor("#6462AA"),
-                          HexColor("#4CA7DA"),
-                          HexColor("#20B69E"),
-                        ],
-                      ),
+                        SizedBox(height: 10),
+                        Container(
+                          height: 1.3,
+                          width: MediaQuery
+                              .of(context)
+                              .size
+                              .width,
+                          color: Colors.black45,
+                        ),
+                      ],
+                    )
+                        : Container(),
+                    SizedBox(
+                      height: 20,
                     ),
-                    height: 50,
-                    width: MediaQuery
-                        .of(context)
-                        .size
-                        .width,
-                    child: TextButton(
-                      child: Text('submit'.tr(),
-                          style: AppTheme.customTextStyle(
-                              MyFont.SSPro_regular, 16.0, Colors.white)),
-                      onPressed: () {
-                        if (_firstNameRefredByController.text.isEmpty) {
-                          Utils.showToast(
-                              context, 'enter_first_name'.tr(), Colors.red);
-                        } else if (_lastNameRefredByController.text.isEmpty) {
-                          Utils.showToast(
-                              context, 'enter_last_name'.tr(), Colors.red);
-                        } else if (_contactRefredByController.text.isEmpty) {
-                          Utils.showToast(context,
-                             'enter_contact_phone'.tr(), Colors.red);
-                        } else if (_firstNameStudentController.text.isEmpty) {
-                          Utils.showToast(context,
-                              'enter_student_first_name'.tr(), Colors.red);
-                        } else if (_lastNameStudentController.text.isEmpty) {
-                          Utils.showToast(context,
-                              'enter_student_last_name'.tr(), Colors.red);
-                        } else if (_lastNameStudentController.text.isEmpty) {
-                          Utils.showToast(context,
-                              'enter_tusd_matric_number'.tr(), Colors.red);
-                        } else if (_gradeController.text.isEmpty) {
-                          Utils.showToast(
-                              context, 'enter_grade'.tr(), Colors.red);
-                        } else {
-                          getWebApiFromUrl(context);
-                        }
-                      },
-                    ),
-                  )
-                ],
+                    Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        gradient: LinearGradient(
+                          colors: [
+                            HexColor("#6462AA"),
+                            HexColor("#4CA7DA"),
+                            HexColor("#20B69E"),
+                          ],
+                        ),
+                      ),
+                      height: 50,
+                      width: MediaQuery
+                          .of(context)
+                          .size
+                          .width,
+                      child: TextButton(
+                        child: Text('submit'.tr(),
+                            style: AppTheme.customTextStyle(
+                                MyFont.SSPro_regular, 16.0, Colors.white)),
+                        onPressed: () {
+                          if (_firstNameRefredByController.text.isEmpty) {
+                            Utils.showToast(
+                                context, 'enter_first_name'.tr(), Colors.red);
+                          } else if (_lastNameRefredByController.text.isEmpty) {
+                            Utils.showToast(
+                                context, 'enter_last_name'.tr(), Colors.red);
+                          } else if (_contactRefredByController.text.isEmpty) {
+                            Utils.showToast(context,
+                               'enter_contact_phone'.tr(), Colors.red);
+                          } else if (_firstNameStudentController.text.isEmpty) {
+                            Utils.showToast(context,
+                                'enter_student_first_name'.tr(), Colors.red);
+                          } else if (_lastNameStudentController.text.isEmpty) {
+                            Utils.showToast(context,
+                                'enter_student_last_name'.tr(), Colors.red);
+                          } else if (_lastNameStudentController.text.isEmpty) {
+                            Utils.showToast(context,
+                                'enter_tusd_matric_number'.tr(), Colors.red);
+                          } else if (_gradeController.text.isEmpty) {
+                            Utils.showToast(
+                                context, 'enter_grade'.tr(), Colors.red);
+                          } else {
+                            getWebApiFromUrl(context);
+                          }
+                        },
+                      ),
+                    )
+                  ],
+                ),
               ),
             ),
           )
