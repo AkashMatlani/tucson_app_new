@@ -13,7 +13,6 @@ import 'package:tucson_app/Model/ContentMasterViewModel.dart';
 import 'package:tucson_app/Model/ContentResponse.dart';
 import 'package:tucson_app/WebService/WebService.dart';
 import 'package:tucson_app/ui/VideoPlayerScreen.dart';
-import 'package:tucson_app/ui/student/videoPlayerStuff/SamplePlayer.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
 
@@ -137,7 +136,7 @@ class _VideoListScreenState extends State<VideoListScreen> {
             _videoList[index].objectPath.contains("aac") ||
             _videoList[index].objectPath.contains("mkv")) {
           Utils.navigateToScreen(
-              context, SamplePlayer(_videoList[index].objectPath));
+              context, VideoPlayerScreen(_videoList[index].objectPath));
         } else {
           /* Utils.navigateToScreen(
               context, DisplayWebview(_videoList[index].objectPath));*/

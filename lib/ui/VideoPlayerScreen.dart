@@ -5,13 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:tucson_app/GeneralUtils/ColorExtension.dart';
 import 'package:tucson_app/GeneralUtils/Constant.dart';
+import 'package:tucson_app/GeneralUtils/Utils.dart';
 import 'package:video_player/video_player.dart';
 import 'package:volume/volume.dart';
 import 'package:wakelock/wakelock.dart';
 
 class VideoPlayerScreen extends StatefulWidget {
-  VideoPlayerScreen(this.videoUrl);
 
+  VideoPlayerScreen(this.videoUrl);
   String videoUrl;
 
   @override
@@ -30,12 +31,12 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
   bool noForward = false;
   bool _touchDown = false;
   bool _userTouchedToScreen = false;
+  bool isPortrait = true;
 
   Offset _touchPoint = Offset.zero;
   String _currentPositionString = "", _remainingString = "";
 
-  int fullScreenCount = 0;
-  bool isPortrait=true;
+
   @override
   void initState() {
     super.initState();
@@ -58,12 +59,12 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
       });
     _controller.addListener(videoCallback);
 
-    SystemChrome.setPreferredOrientations([
+    /*SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
       DeviceOrientation.landscapeLeft,
       DeviceOrientation.landscapeRight,
-    ]);
+    ]);*/
   }
 
   Future<void> initAudioStreamType() async {
@@ -173,36 +174,44 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
         isPortrait = orientation == Orientation.portrait;
         return Scaffold(
           backgroundColor: Colors.black,
-        /*  appBar: AppBar(
-            leading: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Expanded(
-                    child: IconButton(
-                        icon: Icon(Icons.arrow_back_ios, color: Colors.white),
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        })),
-                IconButton(
-                    icon: Icon(Icons.fullscreen, color: Colors.white),
-                    onPressed: () {
-                      fullScreenCount++;
-                      if (fullScreenCount % 2 == 0) {
-                        SystemChrome.setPreferredOrientations([
-                          DeviceOrientation.portraitUp,
-                          DeviceOrientation.portraitDown,
-                        ]);
+          appBar: AppBar(
+            automaticallyImplyLeading: false,
+            actions: [
+              Container(
+                padding: EdgeInsets.all(10),
+                alignment: Alignment.topLeft,
+                child: IconButton(
+                  onPressed: (){
+                    if(_controller.value.isInitialized){
+                      _controller.pause();
+                      Navigator.of(context).pop();
+                    }
+                  },
+                  icon: Icon(Icons.arrow_back_ios, size: 30, color: Colors.white),
+                ),
+              ),
+              Expanded(child: Container()),
+              Container(
+                padding: EdgeInsets.all(10),
+                margin: EdgeInsets.only(right: 10),
+                child: IconButton(
+                    onPressed: (){
+                      if(isPortrait){
+                        setState(() {
+                          isPortrait = false;
+                        });
                       } else {
-                        SystemChrome.setPreferredOrientations([
-                          DeviceOrientation.landscapeLeft,
-                          DeviceOrientation.landscapeRight,
-                        ]);
+                        setState(() {
+                          isPortrait = true;
+                        });
                       }
-                    })
-              ],
-            ),
-          ),*/
+                    },
+                    icon: Icon(Icons.screen_rotation, size: 32, color: Colors.white)
+                ),
+              )
+            ],
+            backgroundColor: Colors.transparent,
+          ),
           body: Stack(
             fit: isPortrait ? StackFit.loose : StackFit.expand,
             children: <Widget>[
@@ -349,18 +358,9 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                   });
                 },
               ),
-              SafeArea(
-                child: BackButton(
-                  color: Colors.white,
-                  onPressed: () {
-                    _controller.pause();
-                    Navigator.pop(context);
-                  },
-                ),
-              )
             ],
           )
-          );
+        );
       },
     );
   }

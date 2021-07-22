@@ -246,7 +246,8 @@ class _DropoutPreventionScreenState extends State<DropoutPreventionScreen> {
                               MyFont.SSPro_regular, 16.0, Colors.white)),
                       onPressed: () {
                         _controller.pause();
-                        Utils.navigateToScreen(context, DropOutPostScreen());
+                        _controller.dispose();
+                        Utils.backWithNoTransition(context, DropOutPostScreen());
                       },
                     ),
                   ),
