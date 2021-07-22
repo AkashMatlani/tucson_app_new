@@ -24,6 +24,8 @@ class Education extends StatefulWidget {
 
 class _EducationScreenState extends State<Education> {
    int schoolId=0;
+   String? schoolCategory;
+
   List<GridListItems> menuItems = [
     GridListItems(
       name: 'educational_website'.tr(), svgPicture: MyImage.educationalWebsiteIcon,
@@ -35,7 +37,7 @@ class _EducationScreenState extends State<Education> {
     GridListItems(name: 'blogs'.tr(), svgPicture: MyImage.blogsIcon),
   ];
 
-   String? schoolCategory;
+
   @override
   void initState() {
     super.initState();
@@ -47,8 +49,8 @@ class _EducationScreenState extends State<Education> {
           if (schoolId == null) {
             schoolId = 0;
           }
-          getSchoolType();
         });
+        getSchoolType();
       });
     });
 
@@ -84,8 +86,7 @@ class _EducationScreenState extends State<Education> {
                       Container(
                         margin: EdgeInsets.only(top: 10),
                         child: Text('education'.tr(),
-                            style: AppTheme.regularTextStyle()
-                                .copyWith(fontSize: 18, color: Colors.white)),
+                            style: AppTheme.customTextStyle(MyFont.SSPro_semibold, 18.0, Colors.white)),
                       )
                     ],
                   ),

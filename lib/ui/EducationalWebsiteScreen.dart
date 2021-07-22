@@ -62,8 +62,7 @@ class _EducationalWebsiteScreenState extends State<EducationalWebsiteScreen> {
                       Container(
                         margin: EdgeInsets.only(top: 10),
                         child: Text('educational_website'.tr(),
-                            style: AppTheme.regularTextStyle()
-                                .copyWith(fontSize: 18, color: Colors.white)),
+                            style: AppTheme.customTextStyle(MyFont.SSPro_semibold, 18.0, Colors.white)),
                       )
                     ],
                   ),

@@ -29,7 +29,6 @@ class _CalendarEventScreenState extends State<CalendarEventScreen> {
   AuthViewModel _authViewModel = AuthViewModel();
   List<EventForMobileResponse> eventist = [];
   List<EventForMobileResponse> upcommingEventList = [];
-  List<EventForMobileResponse> sameDayEventList = [];
   DateTime selectedDate = DateTime.now();
   DateTime _currentDate = DateTime(2021, 7, 21);
   String _currentMonth = DateFormat.yMMM().format(DateTime(2021, 7, 21));
@@ -80,10 +79,10 @@ class _CalendarEventScreenState extends State<CalendarEventScreen> {
       onDayPressed: (date, events) {
         this.setState(() => selectedDate = date);
         events.forEach((event) => event.title != null
-            ? (sameDayEventList.length > 0 ?  Utils.navigateToScreen(context, EventDetailsScreen(sameDayEventList)) : bottomMenu(event.title!, event.dot))
+            ? Utils.navigateToScreen(context, EventDetailsScreen(event, upcommingEventList))
             : Container());
       },
-      height: cHeight * 0.54,
+      height: Platform.isIOS?cHeight * 0.40:cHeight *0.50,
       onCalendarChanged: (DateTime date) {
         this.setState(() {
           _targetDateTime = date;
@@ -140,8 +139,7 @@ class _CalendarEventScreenState extends State<CalendarEventScreen> {
                       Container(
                         margin: EdgeInsets.only(top: 10),
                         child: Text('events'.tr(),
-                            style: AppTheme.regularTextStyle()
-                                .copyWith(fontSize: 18, color: Colors.white)),
+                            style: AppTheme.customTextStyle(MyFont.SSPro_semibold, 18.0, Colors.white)),
                       )
                     ],
                   ),
@@ -343,14 +341,6 @@ class _CalendarEventScreenState extends State<CalendarEventScreen> {
           eventist = _authViewModel.eventForMobileList;
           for (int i = 0; i < eventist.length; i++) {
             selectedDate = DateTime.parse(eventist[i].fromDateTime);
-
-            sameDayEventList = [];
-            for(int j=0; j<eventist.length; j++){
-              var newDate = DateTime.parse(eventist[j].fromDateTime);
-              if(selectedDate.isSameDate(newDate)){
-                sameDayEventList.add(eventist[j]);
-              }
-            }
 
             bool isSuccess = _isUpcommingEvent(eventist[i].fromDateTime);
             if (isSuccess) {
@@ -712,12 +702,5 @@ class _CalendarEventScreenState extends State<CalendarEventScreen> {
       }
       Utils.showLoader(false, context);
     });
-  }
-}
-
-extension DateOnlyCompare on DateTime {
-  bool isSameDate(DateTime other) {
-    return this.year == other.year && this.month == other.month
-        && this.day == other.day;
   }
 }

@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_email_sender/flutter_email_sender.dart';
 import 'package:tucson_app/GeneralUtils/ColorExtension.dart';
@@ -96,8 +97,7 @@ class _DropOutPostScreenState extends State<DropOutPostScreen> {
                       Container(
                         margin: EdgeInsets.only(top: 10),
                         child: Text('drop_out_prevention_enroll_form'.tr(),
-                            style: AppTheme.regularTextStyle()
-                                .copyWith(fontSize: 18, color: Colors.white)),
+                            style: AppTheme.customTextStyle(MyFont.SSPro_semibold, 18.0, Colors.white)),
                       )
                     ],
                   ),
@@ -124,15 +124,13 @@ class _DropOutPostScreenState extends State<DropOutPostScreen> {
             ),
           ),
           Positioned(
-            top: MediaQuery
-                .of(context)
-                .size
-                .height * 0.15,
-            left: 15,
-            right: 15,
-            child: SingleChildScrollView(
-              child: Container(
-                margin: EdgeInsets.all(10),
+            top: MediaQuery.of(context).size.height*0.15,
+            left: MediaQuery.of(context).size.height*0.012,
+            right: MediaQuery.of(context).size.height*0.012,
+            child: Container(
+              height: MediaQuery.of(context).size.height*0.85,
+              margin: EdgeInsets.all(5),
+              child: SingleChildScrollView(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -206,12 +204,17 @@ class _DropOutPostScreenState extends State<DropOutPostScreen> {
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Expanded(
-                                    child: Text(selectedSchoolName,
-                                        style:
-                                        AppTheme.regularTextStyle())),
-                                Icon(Icons.keyboard_arrow_down_sharp,
-                                    size: 30, color: Colors.black54)
+                                Container(
+                                  width: (MediaQuery.of(context).size.width-31)*0.95,
+                                  child: Text(selectedSchoolName,
+                                      style:
+                                      AppTheme.regularTextStyle()),
+                                ),
+                                Container(
+                                  width: (MediaQuery.of(context).size.width-31)*0.05,
+                                  child: Icon(Icons.arrow_forward_ios,
+                                      size: 18, color: Colors.black54),
+                                )
                               ],
                             ),
                           ),
@@ -265,13 +268,17 @@ class _DropOutPostScreenState extends State<DropOutPostScreen> {
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Expanded(
-                                    child: Text(
-                                        selectedReasonForServiceRequest,
-                                        style:
-                                        AppTheme.regularTextStyle())),
-                                Icon(Icons.keyboard_arrow_down_sharp,
-                                    size: 30, color: Colors.black54)
+                                Container(
+                                  width: (MediaQuery.of(context).size.width-31)*0.95,
+                                  child: Text(selectedReasonForServiceRequest,
+                                      style:
+                                      AppTheme.regularTextStyle()),
+                                ),
+                                Container(
+                                  width: (MediaQuery.of(context).size.width-31)*0.05,
+                                  child: Icon(Icons.arrow_forward_ios,
+                                      size: 18, color: Colors.black54),
+                                )
                               ],
                             ),
                           ),
@@ -286,8 +293,7 @@ class _DropOutPostScreenState extends State<DropOutPostScreen> {
                           color: Colors.black45,
                         ),
                       ],
-                    )
-                        : Container(),
+                    ) : Container(),
                     SizedBox(
                       height: 20,
                     ),
@@ -320,7 +326,7 @@ class _DropOutPostScreenState extends State<DropOutPostScreen> {
                                 context, 'enter_last_name'.tr(), Colors.red);
                           } else if (_contactRefredByController.text.isEmpty) {
                             Utils.showToast(context,
-                               'enter_contact_phone'.tr(), Colors.red);
+                                'enter_contact_phone'.tr(), Colors.red);
                           } else if (_firstNameStudentController.text.isEmpty) {
                             Utils.showToast(context,
                                 'enter_student_first_name'.tr(), Colors.red);

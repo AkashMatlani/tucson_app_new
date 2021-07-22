@@ -70,8 +70,7 @@ class _EventScreenState extends State<Event> {
                       Container(
                         margin: EdgeInsets.only(top: 10),
                         child: Text('events'.tr(),
-                            style: AppTheme.regularTextStyle()
-                                .copyWith(fontSize: 18, color: Colors.white)),
+                            style: AppTheme.customTextStyle(MyFont.SSPro_semibold, 18.0, Colors.white)),
                       )
                     ],
                   ),

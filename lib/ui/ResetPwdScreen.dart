@@ -75,7 +75,22 @@ class _ResetPwdScreenState extends State<ResetPwdScreen> {
                 Container(
                   height: MediaQuery.of(context).size.height*0.3,
                   alignment: Alignment.topCenter,
-                  child: Image.asset(MyImage.passwordReset),
+                  child: Stack(
+                    children: [
+                      Image.asset(MyImage.passwordReset),
+                      Positioned(
+                        top: MediaQuery.of(context).size.height*0.04,
+                        child: Padding(
+                          padding: EdgeInsets.all(10),
+                          child: IconButton(
+                              icon: Icon(Icons.arrow_back_ios, color: Colors.white),
+                              onPressed: () {
+                                Utils.backWithNoTransition(context, SignInScreen());
+                              }),
+                        ),
+                      )
+                    ],
+                  ),
                 ),
                 Positioned.fill(
                   top: MediaQuery.of(context).size.height*0.25,

@@ -158,7 +158,12 @@ class _ForgotPwdScreenState extends State<ForgotPwdScreen> {
     _authViewModel.forgotPwdResult(email, (isSuccess, message) {
       Utils.showLoader(false, context);
       if (isSuccess) {
-        Utils.navigateWithClearState(context, ResetPwdScreen(email));
+        Utils.showAlertDialog(context, 'check_mail_for_reset_pwd'.tr(), (success, response){
+          if(success) {
+            Utils.navigateReplaceToScreen(context, SignInScreen());
+          }
+        });
+        //Utils.navigateWithClearState(context, ResetPwdScreen(email));
       } else {
         if(languageCode!.compareTo("en") != 0){
           WebService.translateApiCall(languageCode!, message, (isSuccess, response){

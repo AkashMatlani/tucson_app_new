@@ -122,8 +122,7 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
                         Container(
                           margin: EdgeInsets.only(top: 10),
                           child: Text('mental_health_support'.tr(),
-                              style: AppTheme.regularTextStyle()
-                                  .copyWith(fontSize: 18, color: Colors.white)),
+                              style: AppTheme.customTextStyle(MyFont.SSPro_semibold, 18.0, Colors.white)),
                         )
                       ],
                     ),
@@ -489,6 +488,7 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
       context: context,
       isScrollControlled: true,
       isDismissible: false,
+      enableDrag: false,
       backgroundColor: Colors.transparent,
       builder: (context) => WillPopScope(
         onWillPop: () async {

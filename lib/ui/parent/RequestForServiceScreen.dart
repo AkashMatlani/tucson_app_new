@@ -10,7 +10,7 @@ import 'package:tucson_app/GeneralUtils/PrefsUtils.dart';
 import 'package:tucson_app/GeneralUtils/Utils.dart';
 import 'package:tucson_app/Model/GridListItems.dart';
 import 'package:tucson_app/WebService/WebService.dart';
-import 'package:tucson_app/ui/DropoutPreventionScreen.dart';
+import 'DropoutPreventionScreen.dart';
 import 'package:tucson_app/ui/WebViewEmpty.dart';
 import 'package:tucson_app/ui/student/MentalHealthSupportScreen.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -87,8 +87,7 @@ class _RequestForServiceScreenState extends State<RequestForServiceScreen> {
                       Container(
                         margin: EdgeInsets.only(top: 10),
                         child: Text('request_for_services'.tr(),
-                            style: AppTheme.regularTextStyle()
-                                .copyWith(fontSize: 18, color: Colors.white)),
+                            style: AppTheme.customTextStyle(MyFont.SSPro_semibold, 18.0, Colors.white)),
                       )
                     ],
                   ),

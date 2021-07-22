@@ -87,8 +87,7 @@ class _BlogScreenState extends State<BlogScreen> {
                         Container(
                           margin: EdgeInsets.only(top: 10),
                           child: Text(widget.title,
-                              style: AppTheme.regularTextStyle()
-                                  .copyWith(fontSize: 18, color: Colors.white)),
+                              style: AppTheme.customTextStyle(MyFont.SSPro_semibold, 18.0, Colors.white)),
                         )
                       ],
                     ),

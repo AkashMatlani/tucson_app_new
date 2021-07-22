@@ -1,26 +1,57 @@
+import 'dart:async';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_calendar_carousel/classes/event.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:tucson_app/GeneralUtils/ColorExtension.dart';
 import 'package:tucson_app/GeneralUtils/Constant.dart';
 import 'package:tucson_app/Model/EventForMobileResponse.dart';
 
+
 class EventDetailsScreen extends StatefulWidget {
 
-  EventDetailsScreen(this.sameDayEventList);
-  List<EventForMobileResponse> sameDayEventList;
+  EventDetailsScreen(this.event, this.eventList);
+  Event event;
+  List<EventForMobileResponse> eventList;
 
   @override
   _EventDetailsScreenState createState() => _EventDetailsScreenState();
 }
 
 class _EventDetailsScreenState extends State<EventDetailsScreen> {
+
+  List<EventForMobileResponse> sameDayEventList = [];
+
+
+  @override
+  void initState() {
+    super.initState();
+
+    Timer(Duration(milliseconds: 100), (){
+      String tempDate = DateFormat("yyyy-MM-dd'T'hh:mm:ss").format(widget.event.date);
+      String selectedDate = tempDate.split('T')[0];
+      List<EventForMobileResponse>  tempList = [];
+      for(int i=0; i<widget.eventList.length; i++){
+        String fromDate = widget.eventList[i].fromDateTime.split('T')[0];
+        if(fromDate.compareTo(selectedDate) == 0){
+          tempList.add(widget.eventList[i]);
+        }
+      }
+      setState(() {
+        sameDayEventList = tempList;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        Navigator.of(context).pop();
+        for(int i=0; i< sameDayEventList.length; i++){
+          Navigator.of(context)..pop();
+        }
         return true;
       },
       child: MaterialApp(
@@ -42,14 +73,15 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                             child: IconButton(
                                 icon: Icon(Icons.arrow_back_ios, color: Colors.white),
                                 onPressed: () {
-                                  Navigator.of(context).pop();
+                                  for(int i=0; i< sameDayEventList.length; i++){
+                                    Navigator.of(context)..pop();
+                                  }
                                 }),
                           ),
                           Container(
                             margin: EdgeInsets.only(top: 10),
                             child: Text('event_details'.tr(),
-                                style: AppTheme.regularTextStyle()
-                                    .copyWith(fontSize: 18, color: Colors.white)),
+                                style: AppTheme.customTextStyle(MyFont.SSPro_semibold, 18.0, Colors.white)),
                           )
                         ],
                       ),
@@ -71,13 +103,16 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                 top: MediaQuery.of(context).size.height*0.12,
                 left: MediaQuery.of(context).size.height*0.012,
                 right: MediaQuery.of(context).size.height*0.012,
-                child: ListView.builder(
-                    physics: ScrollPhysics(),
-                    itemCount: widget.sameDayEventList.length,
-                    shrinkWrap: true,
-                    itemBuilder: (BuildContext ctx, int position){
-                      return _listRowItems(ctx, position);
-                    }
+                child: Container(
+                  height: MediaQuery.of(context).size.height*0.88,
+                  child: sameDayEventList.length > 0 ? ListView.builder(
+                      physics: ScrollPhysics(),
+                      itemCount: sameDayEventList.length,
+                      shrinkWrap: true,
+                      itemBuilder: (BuildContext ctx, int position){
+                        return _listRowItems(ctx, position);
+                      }
+                  ) : Container(),
                 ),
               )
             ],
@@ -88,17 +123,17 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
   }
 
   _listRowItems(BuildContext context, int index) {
-    String resFromDate = widget.sameDayEventList[index].fromDateTime.split('T')[0];
+    String resFromDate = sameDayEventList[index].fromDateTime.split('T')[0];
     DateTime utcFromDate = DateTime.parse(resFromDate).toUtc();
     var localFromDate = utcFromDate.toLocal();
     String strUtcFromDate = DateFormat("MM/dd/yyyy").format(localFromDate);
-    String fromDate = strUtcFromDate+" "+widget.sameDayEventList[index].startTime;
+    String fromDate = strUtcFromDate+" "+sameDayEventList[index].startTime;
 
-    String resToDate = widget.sameDayEventList[index].toDateTime.split('T')[0];
+    String resToDate = sameDayEventList[index].toDateTime.split('T')[0];
     DateTime utcToDate = DateTime.parse(resToDate).toUtc();
     var localToDate = utcToDate.toLocal();
     String strUtcToDate = DateFormat("MM/dd/yyyy").format(localToDate);
-    String toDate = strUtcToDate+" "+widget.sameDayEventList[index].endTime;
+    String toDate = strUtcToDate+" "+sameDayEventList[index].endTime;
 
 
     return Container(
@@ -111,15 +146,15 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Text(widget.sameDayEventList[index].eventName, style: AppTheme.customTextStyle(MyFont.SSPro_semibold, 18.0, Color.fromRGBO(0, 0, 0, 1))),
+          Text(sameDayEventList[index].eventName, style: AppTheme.customTextStyle(MyFont.SSPro_semibold, 18.0, Color.fromRGBO(0, 0, 0, 1))),
           SizedBox(height: 5),
           Text(
-            'start_date_time'.tr() +": "+ fromDate,
+            'start_date_time'.tr() +": "+fromDate,
             style: AppTheme.regularTextStyle()
                 .copyWith(fontSize: 16, color: Colors.black54),
           ),
           Text(
-            'end_date_time'.tr() +": "+ toDate,
+            'end_date_time'.tr() +": "+toDate,
             style: AppTheme.regularTextStyle()
                 .copyWith(fontSize: 16, color: Colors.black54),
           ),
@@ -127,7 +162,7 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
           SizedBox(height: 10),
           Text('event_details'.tr()+ ':', style: AppTheme.regularTextStyle().copyWith(fontSize: 16, color: Colors.black54)),
           Html(
-            data: widget.sameDayEventList[index].eventDetail,
+            data: sameDayEventList[index].eventDetail,
             style: {
               "body" : Style(
                   fontFamily: MyFont.SSPro_regular,
