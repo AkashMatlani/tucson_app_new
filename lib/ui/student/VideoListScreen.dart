@@ -13,7 +13,7 @@ import 'package:tucson_app/Model/ContentMasterViewModel.dart';
 import 'package:tucson_app/Model/ContentResponse.dart';
 import 'package:tucson_app/WebService/WebService.dart';
 import 'package:tucson_app/ui/VideoPlayerScreen.dart';
-import 'package:tucson_app/ui/student/SamplePlayer.dart';
+import 'package:tucson_app/ui/student/videoPlayerStuff/SamplePlayer.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
 
