@@ -61,7 +61,7 @@ dependencies:
   extended_masked_text: ^2.2.1
   simple_moment: ^1.1.1
   mime: ^1.0.0
-  timezone: ^0.7.0
+  flutter_linkify: ^5.0.2
   flutter_email_sender: ^5.0.2
   youtube_player_flutter: ^8.0.0
   flick_video_player: ^0.3.1

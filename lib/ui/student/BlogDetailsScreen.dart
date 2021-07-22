@@ -2,7 +2,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:html/dom.dart' as dom;
@@ -85,7 +84,7 @@ class _BlogDetailsScreenState extends State<BlogDetailsScreen> {
     }
     setState(() {
       contentTitle = widget.contentResponse.contentTitle;
-      contentDesc = widget.contentResponse.content;
+      contentDesc = "<div>"+widget.contentResponse.content+"</div>";
     });
     getPrefsData();
   }
@@ -163,24 +162,33 @@ class _BlogDetailsScreenState extends State<BlogDetailsScreen> {
                 height: MediaQuery.of(context).size.height * 0.82,
                 child: SingleChildScrollView(
                   child: Container(
+                    margin: EdgeInsets.fromLTRB(10, 20, 10, 10),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Container(
-                            margin: EdgeInsets.only(top: 30),
+                            margin: EdgeInsets.only(top: 20),
                             height: MediaQuery.of(context).size.height * 0.24,
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(20),
-                                color: Colors.white),
+                                color: Colors.white,
+                                border: Border.all(color: HexColor("#6462AA"), width: 0.3)),
                             alignment: Alignment.center,
                             child: SvgPicture.asset(
                               svgPicture,
                               fit: BoxFit.fitWidth,
-                              height: MediaQuery.of(context).size.height * 0.24,
+                              height: MediaQuery.of(context).size.height * 0.20,
                               width: 400,
-                            )),
-                        SizedBox(height: 20),
+                            )
+                        ),
+                        SizedBox(height: 15),
+                        Text(contentTitle!,
+                            style: AppTheme.customTextStyle(
+                                MyFont.SSPro_semibold,
+                                20.0,
+                                Color.fromRGBO(0, 0, 0, 1))),
+                        SizedBox(height: 5),
                         Text(
                             Utils.convertDate(widget.contentResponse.createdOn,
                                 DateFormat("MMM dd, yyyy")),
@@ -188,18 +196,14 @@ class _BlogDetailsScreenState extends State<BlogDetailsScreen> {
                                 fontSize: 14,
                                 color: Color.fromRGBO(111, 111, 111, 1))),
                         SizedBox(height: 5),
-                        Text(contentTitle!,
-                            style: AppTheme.customTextStyle(
-                                MyFont.SSPro_semibold,
-                                20.0,
-                                Color.fromRGBO(0, 0, 0, 1))),
-                        SizedBox(height: 30),
                         SelectableHtml(
                           data: contentDesc,
                           style: {
                             "body": Style(
                                 fontFamily: MyFont.SSPro_regular,
-                                fontSize: FontSize.medium)
+                                fontSize: FontSize.medium,
+                                color: Colors.black54
+                            )
                           },
                           onLinkTap: (String? url,
                               RenderContext ctx,
@@ -207,6 +211,12 @@ class _BlogDetailsScreenState extends State<BlogDetailsScreen> {
                               dom.Element? element) {
                             _launchURL(url!);
                           },
+                          onAnchorTap: (String? url,
+                              RenderContext ctx,
+                              Map<String, String> attributes,
+                              dom.Element? element) {
+                            _launchURL(url!);
+                          }
                         ),
                         SizedBox(height: 10),
                         imageList.length > 0 ? imageWidget() : Container(),
@@ -379,7 +389,7 @@ class _BlogDetailsScreenState extends State<BlogDetailsScreen> {
       if (isSuccess) {
         setState(() {
           contentTitle = response.toString().split("==)")[0];
-          contentDesc = response.toString().split("==)")[1];
+          contentDesc = "<div>"+response.toString().split("==)")[1]+"</div>";
         });
       } else {
         Utils.showToast(context, "Page Translation Failed", Colors.red);

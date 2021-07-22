@@ -154,43 +154,31 @@ class _BlogScreenState extends State<BlogScreen> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            Padding(
+                padding: EdgeInsets.only(top: 5),
+                child: Text(_contentList[index].contentTitle,
+                    style: AppTheme.customTextStyle(
+                        MyFont.SSPro_bold, 20.0, Color.fromRGBO(0, 0, 0, 1)))),
+            Text(
+              Utils.convertDate(_contentList[index].createdOn,
+                  DateFormat("MMM dd, yyyy")),
+              style: AppTheme.regularTextStyle().copyWith(
+                  fontSize: 14, color: Color.fromRGBO(111, 111, 111, 1)),
+            ),
+            SizedBox(height: 10),
             Container(
-              margin: EdgeInsets.only(top: 30),
               height: MediaQuery.of(context).size.height * 0.24,
               decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20), color: Colors.white),
+                  borderRadius: BorderRadius.circular(20), color: Colors.white, border: Border.all(color: HexColor("#6462AA"), width: 0.3)),
               alignment: Alignment.center,
-              child:
-                  /*ClipRRect(
-                          borderRadius: BorderRadius.circular(10),
-                          child: CachedNetworkImage(
-                            fit: BoxFit.cover,
-                            useOldImageOnUrlChange: false,
-                            imageUrl: getVideoThumbinail(),
-                            placeholder: (context, url) => Container(height: 40, width: 40, alignment: Alignment.center, child: CircularProgressIndicator()),
-                            errorWidget: (context, url, error) => Image.asset(MyImage.videoUrlImage),
-                          ),
-                        )*/
-                  SvgPicture.asset(
+              child: SvgPicture.asset(
                 svgPicture,
                 fit: BoxFit.fitWidth,
-                height: MediaQuery.of(context).size.height * 0.24,
+                height: MediaQuery.of(context).size.height * 0.20,
                 width: 400,
               ),
             ),
-            Padding(
-                padding: EdgeInsets.only(top: 15),
-                child: Text(
-                  Utils.convertDate(_contentList[index].createdOn,
-                      DateFormat("MMM dd, yyyy")),
-                  style: AppTheme.regularTextStyle().copyWith(
-                      fontSize: 14, color: Color.fromRGBO(111, 111, 111, 1)),
-                )),
-            Padding(
-                padding: EdgeInsets.only(top: 5, bottom: 20),
-                child: Text(_contentList[index].contentTitle,
-                    style: AppTheme.customTextStyle(
-                        MyFont.SSPro_bold, 20.0, Color.fromRGBO(0, 0, 0, 1))))
+            SizedBox(height: 20)
           ]),
     );
   }

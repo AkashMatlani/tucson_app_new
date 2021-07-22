@@ -151,13 +151,13 @@
   "search_school" : "Tafuta Shule",
   "no_school" : "Hakuna Shule Iliyopatikana",
   "signout_alter_msg" : "Je! Una uhakika unataka kutoka?",
+  "drop_out_prevention_enroll_form" : "Fomu ya Kujiunga na Kuzuia kuacha",
   "total_day": "Idadi ya siku",
   "no_school_selected": "Hujachagua shule yoyote",
-  "enter_first_name": "Tafadhali ingiza jina la kwanza",
-  "enter_last_name": "Tafadhali ingiza jina la mwisho",
   "enter_contact_phone": "Tafadhali ingiza simu ya mawasiliano",
   "enter_student_first_name": "Tafadhali ingiza jina la kwanza la mwanafunzi",
   "enter_student_last_name": "Tafadhali ingiza jina la mwisho la mwanafunz",
   "enter_tusd_matric_number": "Tafadhali ingiza nambari ya matriki ya tusd",
-  "enter_grade": "Tafadhali ingiza daraja"
+  "enter_grade": "Tafadhali ingiza daraja",
+  "reset_successfully": "Kuweka Nenosiri kwa Ufanisi"
 }

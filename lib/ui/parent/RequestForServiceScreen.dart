@@ -79,7 +79,7 @@ class _RequestForServiceScreenState extends State<RequestForServiceScreen> {
                         margin: EdgeInsets.only(top: 10),
                         child: IconButton(
                             icon:
-                                Icon(Icons.arrow_back_ios, color: Colors.white),
+                            Icon(Icons.arrow_back_ios, color: Colors.white),
                             onPressed: () {
                               Navigator.of(context).pop();
                             }),
@@ -109,16 +109,15 @@ class _RequestForServiceScreenState extends State<RequestForServiceScreen> {
             ),
           ),
           Positioned(
-            top: MediaQuery.of(context).size.height*0.20,
-            left: MediaQuery.of(context).size.height*0.03,
-            right: MediaQuery.of(context).size.height*0.03,
+            top: MediaQuery.of(context).size.height * 0.12,
+            left: MediaQuery.of(context).size.height * 0.03,
+            right: MediaQuery.of(context).size.height * 0.03,
             child: Container(
-              height: MediaQuery.of(context).size.height * 0.8,
+              height: MediaQuery.of(context).size.height * 0.87,
               child: SingleChildScrollView(
                 child: GridView.builder(
                     physics: ScrollPhysics(),
                     shrinkWrap: true,
-                    padding: EdgeInsets.only(bottom: 20),
                     gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
                         maxCrossAxisExtent: 200,
                         childAspectRatio: 2 / 2,
@@ -128,7 +127,6 @@ class _RequestForServiceScreenState extends State<RequestForServiceScreen> {
                     itemBuilder: (BuildContext ctx, index) {
                       return GestureDetector(
                           onTap: () {
-                            print("Clicked");
                             if (index == 0) {
                               getSchoolType();
                             } else if (index == 1) {
@@ -166,12 +164,12 @@ class _RequestForServiceScreenState extends State<RequestForServiceScreen> {
                               clipBehavior: Clip.antiAlias,
                               child: Column(
                                 mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
+                                MainAxisAlignment.spaceAround,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
                                   Padding(
                                       padding: EdgeInsets.only(
-                                          left: 12, top: 10, right: 20),
+                                          left: 20, top: 10, right: 20),
                                       child: SvgPicture.asset(
                                         menuItems[index].svgPicture,
                                         height: 50,
@@ -182,9 +180,9 @@ class _RequestForServiceScreenState extends State<RequestForServiceScreen> {
                                         16.0, 10.0, 16.0, 8.0),
                                     child: Column(
                                       crossAxisAlignment:
-                                          CrossAxisAlignment.center,
+                                      CrossAxisAlignment.center,
                                       mainAxisAlignment:
-                                          MainAxisAlignment.spaceAround,
+                                      MainAxisAlignment.spaceAround,
                                       children: <Widget>[
                                         Text(
                                           menuItems[index].name,

@@ -68,7 +68,7 @@ class _SchoolProgramScreenState extends State<SchoolPrograms> {
                         margin: EdgeInsets.only(top: 10),
                         child: IconButton(
                             icon:
-                                Icon(Icons.arrow_back_ios, color: Colors.white),
+                            Icon(Icons.arrow_back_ios, color: Colors.white),
                             onPressed: () {
                               Navigator.of(context).pop();
                             }),
@@ -98,16 +98,15 @@ class _SchoolProgramScreenState extends State<SchoolPrograms> {
             ),
           ),
           Positioned(
-            top: MediaQuery.of(context).size.height * 0.20,
+            top: MediaQuery.of(context).size.height * 0.12,
             left: MediaQuery.of(context).size.height * 0.03,
             right: MediaQuery.of(context).size.height * 0.03,
             child: Container(
-              height: MediaQuery.of(context).size.height * 0.8,
+              height: MediaQuery.of(context).size.height * 0.87,
               child: SingleChildScrollView(
                 child: GridView.builder(
                     physics: ScrollPhysics(),
                     shrinkWrap: true,
-                    padding: EdgeInsets.only(bottom: 20),
                     gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
                         maxCrossAxisExtent: 200,
                         childAspectRatio: 2 / 2,
@@ -117,58 +116,56 @@ class _SchoolProgramScreenState extends State<SchoolPrograms> {
                     itemBuilder: (BuildContext ctx, index) {
                       return GestureDetector(
                           onTap: () {
-                            setState(() {
-                              if (index == 0) {
-                                var params = {
-                                  "schoolId": schoolId,
-                                  "roleId": 0,
-                                  "contentTypeName": "CatalogofSchools"
-                                };
-                                getWebApiFromUrl(context, params);
-                              } else if (index == 1) {
-                                var params = {
-                                  "schoolId": schoolId,
-                                  "roleId": 0,
-                                  "contentTypeName": "MASSD"
-                                };
-                                getWebApiFromUrl(context, params);
-                              } else if (index == 2) {
-                                var params = {
-                                  "schoolId": schoolId,
-                                  "roleId": 0,
-                                  "contentTypeName": "AASSD"
-                                };
-                                getWebApiFromUrl(context, params);
-                              } else if (index == 3) {
-                                var params = {
-                                  "schoolId": schoolId,
-                                  "roleId": 0,
-                                  "contentTypeName": "NASSD"
-                                };
-                                getWebApiFromUrl(context, params);
-                              } else if (index == 4) {
-                                var params = {
-                                  "schoolId": schoolId,
-                                  "roleId": 0,
-                                  "contentTypeName": "RSSD"
-                                };
-                                getWebApiFromUrl(context, params);
-                              } else if (index == 5) {
-                                var params = {
-                                  "schoolId": schoolId,
-                                  "roleId": 0,
-                                  "contentTypeName": "APSSD"
-                                };
-                                getWebApiFromUrl(context, params);
-                              } else if (index == 6) {
-                                var params = {
-                                  "schoolId": schoolId,
-                                  "roleId": 0,
-                                  "contentTypeName": "FACE"
-                                };
-                                getWebApiFromUrl(context, params);
-                              }
-                            });
+                            if (index == 0) {
+                              var params = {
+                                "schoolId": schoolId,
+                                "roleId": 0,
+                                "contentTypeName": "CatalogofSchools"
+                              };
+                              getWebApiFromUrl(context, params);
+                            } else if (index == 1) {
+                              var params = {
+                                "schoolId": schoolId,
+                                "roleId": 0,
+                                "contentTypeName": "MASSD"
+                              };
+                              getWebApiFromUrl(context, params);
+                            } else if (index == 2) {
+                              var params = {
+                                "schoolId": schoolId,
+                                "roleId": 0,
+                                "contentTypeName": "AASSD"
+                              };
+                              getWebApiFromUrl(context, params);
+                            } else if (index == 3) {
+                              var params = {
+                                "schoolId": schoolId,
+                                "roleId": 0,
+                                "contentTypeName": "NASSD"
+                              };
+                              getWebApiFromUrl(context, params);
+                            } else if (index == 4) {
+                              var params = {
+                                "schoolId": schoolId,
+                                "roleId": 0,
+                                "contentTypeName": "RSSD"
+                              };
+                              getWebApiFromUrl(context, params);
+                            } else if (index == 5) {
+                              var params = {
+                                "schoolId": schoolId,
+                                "roleId": 0,
+                                "contentTypeName": "APSSD"
+                              };
+                              getWebApiFromUrl(context, params);
+                            } else if (index == 6) {
+                              var params = {
+                                "schoolId": schoolId,
+                                "roleId": 0,
+                                "contentTypeName": "FACE"
+                              };
+                              getWebApiFromUrl(context, params);
+                            }
                           },
                           child: Card(
                               shape: RoundedRectangleBorder(
@@ -179,25 +176,25 @@ class _SchoolProgramScreenState extends State<SchoolPrograms> {
                               clipBehavior: Clip.antiAlias,
                               child: Column(
                                 mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
+                                MainAxisAlignment.spaceAround,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
                                   Padding(
-                                      padding:
-                                          EdgeInsets.only(left: 12, top: 10),
+                                      padding: EdgeInsets.only(
+                                          left: 20, top: 10, right: 20),
                                       child: SvgPicture.asset(
                                         menuItems[index].svgPicture,
-                                        height: 60,
-                                        width: 60,
+                                        height: 50,
+                                        width: 50,
                                       )),
                                   Padding(
                                     padding: EdgeInsets.fromLTRB(
                                         16.0, 10.0, 16.0, 8.0),
                                     child: Column(
                                       crossAxisAlignment:
-                                          CrossAxisAlignment.center,
+                                      CrossAxisAlignment.center,
                                       mainAxisAlignment:
-                                          MainAxisAlignment.spaceAround,
+                                      MainAxisAlignment.spaceAround,
                                       children: <Widget>[
                                         Text(
                                           menuItems[index].name,
