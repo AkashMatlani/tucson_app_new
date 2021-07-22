@@ -3,14 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:tucson_app/GeneralUtils/ColorExtension.dart';
 import 'package:tucson_app/GeneralUtils/Constant.dart';
-import 'package:tucson_app/GeneralUtils/LabelStr.dart';
 import 'package:tucson_app/GeneralUtils/PrefsUtils.dart';
 import 'package:tucson_app/GeneralUtils/Utils.dart';
 import 'package:tucson_app/Model/GridListItems.dart';
 import 'package:tucson_app/WebService/WebService.dart';
-import 'package:tucson_app/ui/DisplayWebview.dart';
 import 'package:tucson_app/ui/WebViewEmpty.dart';
 import 'package:url_launcher/url_launcher.dart';
+
 
 class Event extends StatefulWidget {
   @override
@@ -25,8 +24,8 @@ class _EventScreenState extends State<Event> {
         name: 'tusd_calendar'.tr(), svgPicture: MyImage.calenderIcon),
     GridListItems(
         name: 'frc_schedule'.tr(), svgPicture: MyImage.calenderIcon),
-    GridListItems(
-        name: 'parent_university'.tr(), svgPicture: MyImage.universityIcon),
+    /*GridListItems(
+        name: 'parent_university'.tr(), svgPicture: MyImage.universityIcon),*/
   ];
 
   @override
@@ -125,14 +124,14 @@ class _EventScreenState extends State<Event> {
                                 "contentTypeName": "FRCSchedule"
                               };
                               getWebApiFromUrl(context, params);
-                            } else if (index == 2) {
+                            } /*else if (index == 2) {
                               var params = {
                                 "schoolId": schoolId,
                                 "roleId": 0,
                                 "contentTypeName": "parentuniversity"
                               };
                               getWebApiFromUrl(context, params);
-                            }
+                            }*/
                           },
                           child: Card(
                               shape: RoundedRectangleBorder(

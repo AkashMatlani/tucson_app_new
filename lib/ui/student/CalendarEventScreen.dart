@@ -17,17 +17,19 @@ import 'package:tucson_app/GeneralUtils/Utils.dart';
 import 'package:tucson_app/Model/AuthViewModel.dart';
 import 'package:tucson_app/Model/EventForMobileResponse.dart';
 import 'package:tucson_app/WebService/WebService.dart';
+import 'package:tucson_app/ui/student/EventDetailsScreen.dart';
 
 
-class CalendarPage2 extends StatefulWidget {
+class CalendarEventScreen extends StatefulWidget {
   @override
-  _CalendarPage2State createState() => new _CalendarPage2State();
+  _CalendarEventScreenState createState() => new _CalendarEventScreenState();
 }
 
-class _CalendarPage2State extends State<CalendarPage2> {
+class _CalendarEventScreenState extends State<CalendarEventScreen> {
   AuthViewModel _authViewModel = AuthViewModel();
   List<EventForMobileResponse> eventist = [];
   List<EventForMobileResponse> upcommingEventList = [];
+  List<EventForMobileResponse> sameDayEventList = [];
   DateTime selectedDate = DateTime.now();
   DateTime _currentDate = DateTime(2021, 7, 21);
   String _currentMonth = DateFormat.yMMM().format(DateTime(2021, 7, 21));
@@ -69,7 +71,6 @@ class _CalendarPage2State extends State<CalendarPage2> {
   //var len = min(absentDates.length, presentDates.length);
   late double cHeight;
 
-
   @override
   Widget build(BuildContext context) {
     cHeight = MediaQuery.of(context).size.height;
@@ -79,7 +80,7 @@ class _CalendarPage2State extends State<CalendarPage2> {
       onDayPressed: (date, events) {
         this.setState(() => selectedDate = date);
         events.forEach((event) => event.title != null
-            ? bottomMenu(event.title!, event.dot)
+            ? (sameDayEventList.length > 0 ?  Utils.navigateToScreen(context, EventDetailsScreen(sameDayEventList)) : bottomMenu(event.title!, event.dot))
             : Container());
       },
       height: cHeight * 0.54,
@@ -342,6 +343,15 @@ class _CalendarPage2State extends State<CalendarPage2> {
           eventist = _authViewModel.eventForMobileList;
           for (int i = 0; i < eventist.length; i++) {
             selectedDate = DateTime.parse(eventist[i].fromDateTime);
+
+            sameDayEventList = [];
+            for(int j=0; j<eventist.length; j++){
+              var newDate = DateTime.parse(eventist[j].fromDateTime);
+              if(selectedDate.isSameDate(newDate)){
+                sameDayEventList.add(eventist[j]);
+              }
+            }
+
             bool isSuccess = _isUpcommingEvent(eventist[i].fromDateTime);
             if (isSuccess) {
               upcommingEventList.add(eventist[i]);
@@ -479,10 +489,22 @@ class _CalendarPage2State extends State<CalendarPage2> {
                   ),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(20.0, 20, 10, 10),
-                    child: Text(
-                      'start_date_time'.tr() +": "+ eventList[1]  +"\n"+'end_date_time'.tr() +": "+ eventList[2],
-                      style: AppTheme.regularTextStyle()
-                          .copyWith(fontSize: 16, color: Colors.black54),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'start_date_time'.tr() +": "+ eventList[1],
+                          style: AppTheme.regularTextStyle()
+                              .copyWith(fontSize: 16, color: Colors.black54),
+                        ),
+                        SizedBox(height: 7),
+                        Text(
+                          'end_date_time'.tr() +": "+ eventList[2],
+                          style: AppTheme.regularTextStyle()
+                              .copyWith(fontSize: 16, color: Colors.black54),
+                        )
+                      ],
                     ),
                   ),
                   abcd!,
@@ -691,12 +713,11 @@ class _CalendarPage2State extends State<CalendarPage2> {
       Utils.showLoader(false, context);
     });
   }
+}
 
-  List<DateTime> getDaysInBeteween(DateTime startDate, DateTime endDate) {
-    List<DateTime> days = [];
-    for (int i = 0; i <= endDate.difference(startDate).inDays; i++) {
-      days.add(startDate.add(Duration(days: i)));
-    }
-    return days;
+extension DateOnlyCompare on DateTime {
+  bool isSameDate(DateTime other) {
+    return this.year == other.year && this.month == other.month
+        && this.day == other.day;
   }
 }

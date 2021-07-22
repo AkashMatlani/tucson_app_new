@@ -15,8 +15,8 @@ class PrefUtils {
   static const String schoolId = "com.TucsonApp.schoolId";
   static const String yourLanguage = "com.TucsonApp.yourLanguage";
   static const String sortLanguageCode = "com.TucsonApp.sortLanguageCode";
-  static const String mentalHealthpopUpForStudent = "com.TucsonApp.healthPopUpForStudent";
-  static const String mentalHealthpopUpForParent = "com.TucsonApp.healthPopUpForParent";
+  /*static const String mentalHealthpopUpForStudent = "com.TucsonApp.healthPopUpForStudent";
+  static const String mentalHealthpopUpForParent = "com.TucsonApp.healthPopUpForParent";*/
 
 
   static setStringValue(String key, String defaultValue) async {

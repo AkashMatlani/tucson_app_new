@@ -41,22 +41,23 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
   late double blockSizeVertical;
   late String dob;
   late int schoolId;
-  late Geolocator _geolocator;
   late Position _currentPosition;
   bool loadedApiCall = false;
   late var tempvalue;
   late var uint8list = null;
-  late bool isPopUpOpenFirst;
+  //late bool isPopUpOpenFirst;
   String _languageSortCode = "en";
+
 
   //int permissionPopUpCount = 0;
   //var controller = MaskedTextController(mask: '1-800-273-8255', text: '18002738255');
   var controller =
       MaskedTextController(mask: '0-000-000-0000', text: '00000000000');
 
+
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
+  void initState() {
+    super.initState();
     _getPrefsData();
   }
 
@@ -67,13 +68,8 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
     if (schoolId == null) {
       schoolId = 0;
     }
-
-    /*var statusResponse = await Permission.location.status;
-    if (statusResponse.isGranted) {
-      PrefUtils.setBoolValue(PrefUtils.mentalHealthpopUp, false);
-    }*/
-
-    if(widget.fromScreen.compareTo("Student") == 0){
+    bottomPopup(context);
+    /*if(widget.fromScreen.compareTo("Student") == 0){
       isPopUpOpenFirst = await PrefUtils.getValueFor(PrefUtils.mentalHealthpopUpForStudent);
     } else {
       isPopUpOpenFirst = await PrefUtils.getValueFor(PrefUtils.mentalHealthpopUpForParent);
@@ -82,7 +78,7 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
       bottomPopup(context);
     } else {
       _getCurrentLocation();
-    }
+    }*/
   }
 
   @override
@@ -91,7 +87,7 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
     blockSizeVertical = screenHeight / 100;
     return WillPopScope(
       onWillPop: () async {
-        if(widget.fromScreen.compareTo("Student") == 0){
+        if(widget.fromScreen.compareTo("Student") == 0 ){
           Utils.backWithNoTransition(context, StudentDashboardScreen());
         } else {
           Utils.backWithNoTransition(context, RequestForServiceScreen());
@@ -493,243 +489,252 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
       context: context,
       isScrollControlled: true,
       isDismissible: false,
-      enableDrag: false,
       backgroundColor: Colors.transparent,
-      builder: (context) => Container(
-        decoration: new BoxDecoration(
-          color: Colors.white,
-          borderRadius: new BorderRadius.only(
-            topLeft: const Radius.circular(40.0),
-            topRight: const Radius.circular(40.0),
+      builder: (context) => WillPopScope(
+        onWillPop: () async {
+          if(widget.fromScreen.compareTo("Student") == 0 ){
+            Utils.backWithNoTransition(context, StudentDashboardScreen());
+          } else {
+            Utils.backWithNoTransition(context, RequestForServiceScreen());
+          }
+          return true;
+        },
+        child: Container(
+          decoration: new BoxDecoration(
+            color: Colors.white,
+            borderRadius: new BorderRadius.only(
+              topLeft: const Radius.circular(40.0),
+              topRight: const Radius.circular(40.0),
+            ),
           ),
-        ),
-        child: Wrap(
-          children: [
-            Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                /*Padding(
-                padding: const EdgeInsets.fromLTRB(20.0, 40, 10, 10),
-                child: Text(LabelStr.lblHippaStatement,
-                    style: AppTheme.customTextStyle(
-                        MyFont.SSPro_semibold, 18.0, Color.fromRGBO(0, 0, 0, 1))),
-              ),*/
-                Align(
-                  alignment: Alignment.center,
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(20.0, 20, 10, 10),
-                    child: Text('privacy_notice'.tr(),
-                        style: AppTheme.customTextStyle(MyFont.SSPro_bold, 20.0,
-                            Color.fromRGBO(0, 0, 0, 1))),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(20.0, 20, 10, 10),
-                  child: RichText(
-                      text: TextSpan(children: [
-                    TextSpan(
-                      text: 'mental_health_popup_desc'.tr(),
-                      style: AppTheme.regularTextStyle().copyWith(
-                          fontSize: 16, color: Color.fromRGBO(0, 0, 0, 1)),
+          child: Wrap(
+            children: [
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  /*Padding(
+                  padding: const EdgeInsets.fromLTRB(20.0, 40, 10, 10),
+                  child: Text(LabelStr.lblHippaStatement,
+                      style: AppTheme.customTextStyle(
+                          MyFont.SSPro_semibold, 18.0, Color.fromRGBO(0, 0, 0, 1))),
+                ),*/
+                  Align(
+                    alignment: Alignment.center,
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(20.0, 20, 10, 10),
+                      child: Text('privacy_notice'.tr(),
+                          style: AppTheme.customTextStyle(MyFont.SSPro_bold, 20.0,
+                              Color.fromRGBO(0, 0, 0, 1))),
                     ),
-                    TextSpan(
-                        text: 'mental_health_url'.tr(),
-                        style: AppTheme.regularTextStyle()
-                            .copyWith(fontSize: 16, color: Colors.blueAccent),
-                        recognizer: new TapGestureRecognizer()
-                          ..onTap = () {
-                            /*Utils.navigateToScreen(
-                                context, DisplayWebview(LabelStr.lblHippLink));*/
-                            _launchURL(LabelStr.lblHippLink);
-                          }),
-                  ])),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 16),
-                  child: Divider(
-                      thickness: 1, color: Color.fromRGBO(223, 223, 223, 4)),
-                ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(8.0, 2, 2, 0),
-                  child: Row(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(12.0),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            gradient: LinearGradient(
-                              colors: [
-                                HexColor("#6462AA"),
-                                HexColor("#4CA7DA"),
-                                HexColor("#20B69E"),
-                              ],
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(20.0, 20, 10, 10),
+                    child: RichText(
+                        text: TextSpan(children: [
+                      TextSpan(
+                        text: 'mental_health_popup_desc'.tr(),
+                        style: AppTheme.regularTextStyle().copyWith(
+                            fontSize: 16, color: Color.fromRGBO(0, 0, 0, 1)),
+                      ),
+                      TextSpan(
+                          text: 'mental_health_url'.tr(),
+                          style: AppTheme.regularTextStyle()
+                              .copyWith(fontSize: 16, color: Colors.blueAccent),
+                          recognizer: new TapGestureRecognizer()
+                            ..onTap = () {
+                              /*Utils.navigateToScreen(
+                                  context, DisplayWebview(LabelStr.lblHippLink));*/
+                              _launchURL(LabelStr.lblHippLink);
+                            }),
+                    ])),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 16),
+                    child: Divider(
+                        thickness: 1, color: Color.fromRGBO(223, 223, 223, 4)),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(8.0, 2, 2, 0),
+                    child: Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(12.0),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              gradient: LinearGradient(
+                                colors: [
+                                  HexColor("#6462AA"),
+                                  HexColor("#4CA7DA"),
+                                  HexColor("#20B69E"),
+                                ],
+                              ),
                             ),
+                            height: blockSizeVertical * 7,
+                            width: MediaQuery.of(context).size.width * 0.4,
+                            child: TextButton(
+                                child: Text('agree'.tr(),
+                                    style: AppTheme.customTextStyle(
+                                        MyFont.SSPro_bold,
+                                        16.0,
+                                        Color.fromRGBO(255, 255, 255, 1))),
+                                onPressed: () async {
+                                  if (Platform.isIOS) {
+                                    Map<Permission, PermissionStatus> status =
+                                        await [
+                                      Permission.location,
+                                    ].request();
+                                    print("Popup status :: $status");
+
+                                    var statusResponse =
+                                        await Permission.location.status;
+                                    print("Permission status :: $statusResponse");
+
+                                    if (statusResponse.isGranted) {
+                                      Navigator.of(context).pop();
+                                      /*if(widget.fromScreen.compareTo("Student") == 0){
+                                        PrefUtils.setBoolValue(PrefUtils.mentalHealthpopUpForStudent, false);
+                                      } else {
+                                        PrefUtils.setBoolValue(PrefUtils.mentalHealthpopUpForParent, false);
+                                      }*/
+                                      _getCurrentLocation();
+                                    } else if (statusResponse.isDenied ||
+                                        statusResponse.isPermanentlyDenied ||
+                                        statusResponse.isRestricted) {
+                                      /*if(widget.fromScreen.compareTo("Student") == 0){
+                                        PrefUtils.setBoolValue(PrefUtils.mentalHealthpopUpForStudent, true);
+                                      } else {
+                                        PrefUtils.setBoolValue(PrefUtils.mentalHealthpopUpForParent, true);
+                                      }*/
+                                      showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) =>
+                                              CupertinoAlertDialog(
+                                                title: Text('Location Permission'),
+                                                content: Text(
+                                                    'This app Location  access to take location'),
+                                                actions: <Widget>[
+                                                  CupertinoDialogAction(
+                                                      child: Text('Deny'),
+                                                      onPressed: () =>
+                                                      Navigator.of(context)
+                                                        ..pop()
+                                                        ..pop()
+                                                        ..pop()),
+                                                  CupertinoDialogAction(
+                                                      child: Text('Settings'),
+                                                      onPressed: () {
+                                                        Navigator.of(context)
+                                                          ..pop()
+                                                          ..pop()
+                                                          ..pop();
+
+                                                        openAppSettings();
+                                                        //_getCurrentLocation();
+                                                      }),
+                                                ],
+                                              ));
+                                      //Navigator.of(context)..pop()..pop();
+                                    }
+                                  } else {
+                                    Map<Permission, PermissionStatus> status =
+                                        await [
+                                      Permission.location,
+                                    ].request();
+                                    print("Popup status :: $status");
+
+                                    var statusResponse =
+                                        await Permission.location.status;
+                                    print("Permission status :: $statusResponse");
+
+                                    if (statusResponse.isGranted) {
+                                      Navigator.of(context).pop();
+                                      /*if(widget.fromScreen.compareTo("Student") == 0){
+                                        PrefUtils.setBoolValue(PrefUtils.mentalHealthpopUpForStudent, false);
+                                      } else {
+                                        PrefUtils.setBoolValue(PrefUtils.mentalHealthpopUpForParent, false);
+                                      }*/
+                                      _getCurrentLocation();
+                                    } else if (statusResponse.isDenied ||
+                                        statusResponse.isPermanentlyDenied ||
+                                        statusResponse.isRestricted) {
+                                      /*if(widget.fromScreen.compareTo("Student") == 0){
+                                        PrefUtils.setBoolValue(PrefUtils.mentalHealthpopUpForStudent, true);
+                                      } else {
+                                        PrefUtils.setBoolValue(PrefUtils.mentalHealthpopUpForParent, true);
+                                      }*/
+
+                                      /*permissionPopUpCount++;
+                                    if(permissionPopUpCount > 2){
+                                      showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) =>
+                                              CupertinoAlertDialog(
+                                                title: Text('Location Permission'),
+                                                content: Text(
+                                                    'This app Location  access to take location'),
+                                                actions: <Widget>[
+                                                  CupertinoDialogAction(
+                                                      child: Text('Deny'),
+                                                      onPressed: () =>
+                                                      Navigator.of(context)
+                                                        ..pop()
+                                                        ..pop()
+                                                        ..pop()),
+                                                  CupertinoDialogAction(
+                                                      child: Text('Settings'),
+                                                      onPressed: () {
+                                                        Navigator.of(context)
+                                                          ..pop()
+                                                          ..pop()
+                                                          ..pop();
+
+                                                        openAppSettings();
+                                                        //_getCurrentLocation();
+                                                      }),
+                                                ],
+                                              ));
+                                    }*/
+                                      //Navigator.of(context)..pop()..pop();
+                                    }
+                                  }
+                                }),
                           ),
-                          height: blockSizeVertical * 7,
+                        ),
+                        Container(
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: Color.fromRGBO(204, 204, 204, 1)),
+                          height: 50,
                           width: MediaQuery.of(context).size.width * 0.4,
                           child: TextButton(
-                              child: Text('agree'.tr(),
-                                  style: AppTheme.customTextStyle(
-                                      MyFont.SSPro_bold,
-                                      16.0,
-                                      Color.fromRGBO(255, 255, 255, 1))),
-                              onPressed: () async {
-                                if (Platform.isIOS) {
-                                  Map<Permission, PermissionStatus> status =
-                                      await [
-                                    Permission.location,
-                                  ].request();
-                                  print("Popup status :: $status");
-
-                                  var statusResponse =
-                                      await Permission.location.status;
-                                  print("Permission status :: $statusResponse");
-
-                                  if (statusResponse.isGranted) {
-                                    Navigator.of(context).pop();
-                                    if(widget.fromScreen.compareTo("Student") == 0){
-                                      PrefUtils.setBoolValue(PrefUtils.mentalHealthpopUpForStudent, false);
-                                    } else {
-                                      PrefUtils.setBoolValue(PrefUtils.mentalHealthpopUpForParent, false);
-                                    }
-                                    _getCurrentLocation();
-                                  } else if (statusResponse.isDenied ||
-                                      statusResponse.isPermanentlyDenied ||
-                                      statusResponse.isRestricted) {
-                                    if(widget.fromScreen.compareTo("Student") == 0){
-                                      PrefUtils.setBoolValue(PrefUtils.mentalHealthpopUpForStudent, true);
-                                    } else {
-                                      PrefUtils.setBoolValue(PrefUtils.mentalHealthpopUpForParent, true);
-                                    }
-                                    showDialog(
-                                        context: context,
-                                        builder: (BuildContext context) =>
-                                            CupertinoAlertDialog(
-                                              title: Text('Location Permission'),
-                                              content: Text(
-                                                  'This app Location  access to take location'),
-                                              actions: <Widget>[
-                                                CupertinoDialogAction(
-                                                    child: Text('Deny'),
-                                                    onPressed: () =>
-                                                    Navigator.of(context)
-                                                      ..pop()
-                                                      ..pop()
-                                                      ..pop()),
-                                                CupertinoDialogAction(
-                                                    child: Text('Settings'),
-                                                    onPressed: () {
-                                                      Navigator.of(context)
-                                                        ..pop()
-                                                        ..pop()
-                                                        ..pop();
-
-                                                      openAppSettings();
-                                                      //_getCurrentLocation();
-                                                    }),
-                                              ],
-                                            ));
-                                    //Navigator.of(context)..pop()..pop();
-                                  }
-                                } else {
-                                  Map<Permission, PermissionStatus> status =
-                                      await [
-                                    Permission.location,
-                                  ].request();
-                                  print("Popup status :: $status");
-
-                                  var statusResponse =
-                                      await Permission.location.status;
-                                  print("Permission status :: $statusResponse");
-
-                                  if (statusResponse.isGranted) {
-                                    Navigator.of(context).pop();
-                                    if(widget.fromScreen.compareTo("Student") == 0){
-                                      PrefUtils.setBoolValue(PrefUtils.mentalHealthpopUpForStudent, false);
-                                    } else {
-                                      PrefUtils.setBoolValue(PrefUtils.mentalHealthpopUpForParent, false);
-                                    }
-                                    _getCurrentLocation();
-                                  } else if (statusResponse.isDenied ||
-                                      statusResponse.isPermanentlyDenied ||
-                                      statusResponse.isRestricted) {
-                                    if(widget.fromScreen.compareTo("Student") == 0){
-                                      PrefUtils.setBoolValue(PrefUtils.mentalHealthpopUpForStudent, true);
-                                    } else {
-                                      PrefUtils.setBoolValue(PrefUtils.mentalHealthpopUpForParent, true);
-                                    }
-                                    /*permissionPopUpCount++;
-                                  if(permissionPopUpCount > 2){
-                                    showDialog(
-                                        context: context,
-                                        builder: (BuildContext context) =>
-                                            CupertinoAlertDialog(
-                                              title: Text('Location Permission'),
-                                              content: Text(
-                                                  'This app Location  access to take location'),
-                                              actions: <Widget>[
-                                                CupertinoDialogAction(
-                                                    child: Text('Deny'),
-                                                    onPressed: () =>
-                                                    Navigator.of(context)
-                                                      ..pop()
-                                                      ..pop()
-                                                      ..pop()),
-                                                CupertinoDialogAction(
-                                                    child: Text('Settings'),
-                                                    onPressed: () {
-                                                      Navigator.of(context)
-                                                        ..pop()
-                                                        ..pop()
-                                                        ..pop();
-
-                                                      openAppSettings();
-                                                      //_getCurrentLocation();
-                                                    }),
-                                              ],
-                                            ));
-                                  }*/
-                                    //Navigator.of(context)..pop()..pop();
-                                  }
-                                }
-                              }),
-                        ),
-                      ),
-                      Container(
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: Color.fromRGBO(204, 204, 204, 1)),
-                        height: 50,
-                        width: MediaQuery.of(context).size.width * 0.4,
-                        child: TextButton(
-                          child: Text('not_agree'.tr(),
-                              style: AppTheme.customTextStyle(MyFont.SSPro_bold,
-                                  16.0, Color.fromRGBO(255, 255, 255, 1))),
-                          onPressed: () {
-                            if(widget.fromScreen.compareTo("Student") == 0){
-                              PrefUtils.setBoolValue(PrefUtils.mentalHealthpopUpForStudent, true);
-                            } else {
-                              PrefUtils.setBoolValue(PrefUtils.mentalHealthpopUpForParent, true);
-                            }
-
-                            Timer(Duration(milliseconds: 100), (){
-                              if(widget.fromScreen.compareTo("Student") == 0){
-                                Utils.backWithNoTransition(context, StudentDashboardScreen());
+                            child: Text('not_agree'.tr(),
+                                style: AppTheme.customTextStyle(MyFont.SSPro_bold,
+                                    16.0, Color.fromRGBO(255, 255, 255, 1))),
+                            onPressed: () {
+                              /*if(widget.fromScreen.compareTo("Student") == 0){
+                                PrefUtils.setBoolValue(PrefUtils.mentalHealthpopUpForStudent, true);
                               } else {
-                                Utils.backWithNoTransition(context, RequestForServiceScreen());
-                              }
-                            });
-                          },
+                                PrefUtils.setBoolValue(PrefUtils.mentalHealthpopUpForParent, true);
+                              }*/
+                              Timer(Duration(milliseconds: 100), (){
+                                if(widget.fromScreen.compareTo("Student") == 0){
+                                  Utils.backWithNoTransition(context, StudentDashboardScreen());
+                                } else {
+                                  Utils.backWithNoTransition(context, RequestForServiceScreen());
+                                }
+                              });
+                            },
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                )
-              ],
-            )
-          ],
+                      ],
+                    ),
+                  )
+                ],
+              )
+            ],
+          ),
         ),
       ),
     );

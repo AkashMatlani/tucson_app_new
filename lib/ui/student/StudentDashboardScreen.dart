@@ -18,7 +18,7 @@ import 'package:tucson_app/Model/GridListItems.dart';
 import 'package:tucson_app/Model/StaticListItems.dart';
 import 'package:tucson_app/WebService/WebService.dart';
 import 'package:tucson_app/ui/SignInScreen.dart';
-import 'package:tucson_app/ui/student/CalendarPage2.dart';
+import 'package:tucson_app/ui/student/CalendarEventScreen.dart';
 import 'package:tucson_app/ui/student/CoolStuffScreen.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -227,7 +227,7 @@ class _StudentDashboardScreenState extends State<StudentDashboardScreen> {
                                       context, JobOpeningScreen("Student"));
                                 } else if (index == 5) {
                                   Utils.navigateToScreen(
-                                      context, CalendarPage2());
+                                      context, CalendarEventScreen());
                                 } else if (index == 6) {
                                   Utils.navigateToScreen(context, VolunteerOpportunitiesScreen("Student"));
                                 } else if (index == 7) {
@@ -359,13 +359,13 @@ class _StudentDashboardScreenState extends State<StudentDashboardScreen> {
 
   _logoutFromApp(BuildContext context) async {
     Utils.showLoader(true, context);
-    bool mentalPopUpStudent = await PrefUtils.getValueFor(PrefUtils.mentalHealthpopUpForStudent);
-    bool mentalPopUpParent = await PrefUtils.getValueFor(PrefUtils.mentalHealthpopUpForParent);
+    //bool mentalPopUpStudent = await PrefUtils.getValueFor(PrefUtils.mentalHealthpopUpForStudent);
+    //bool mentalPopUpParent = await PrefUtils.getValueFor(PrefUtils.mentalHealthpopUpForParent);
     String langCode = await PrefUtils.getValueFor(PrefUtils.sortLanguageCode);
     String langName = await PrefUtils.getValueFor(PrefUtils.yourLanguage);
     PrefUtils.clearPref();
-    PrefUtils.setBoolValue(PrefUtils.mentalHealthpopUpForStudent, mentalPopUpStudent);
-    PrefUtils.setBoolValue(PrefUtils.mentalHealthpopUpForParent, mentalPopUpParent);
+    //PrefUtils.setBoolValue(PrefUtils.mentalHealthpopUpForStudent, mentalPopUpStudent);
+    //PrefUtils.setBoolValue(PrefUtils.mentalHealthpopUpForParent, mentalPopUpParent);
     PrefUtils.setStringValue(PrefUtils.sortLanguageCode, langCode);
     PrefUtils.setStringValue(PrefUtils.yourLanguage, langName);
     Utils.showLoader(false, context);
