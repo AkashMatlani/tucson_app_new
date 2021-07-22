@@ -24,10 +24,9 @@ import 'package:tucson_app/ui/parent/RequestForServiceScreen.dart';
 import 'package:tucson_app/ui/student/StudentDashboardScreen.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-
 class MentalHealthSupportScreen extends StatefulWidget {
-
   MentalHealthSupportScreen(this.fromScreen);
+
   String fromScreen;
 
   @override
@@ -73,10 +72,12 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
       PrefUtils.setBoolValue(PrefUtils.mentalHealthpopUp, false);
     }*/
 
-    if(widget.fromScreen.compareTo("Student") == 0){
-      isPopUpOpenFirst = await PrefUtils.getValueFor(PrefUtils.mentalHealthpopUpForStudent);
+    if (widget.fromScreen.compareTo("Student") == 0) {
+      isPopUpOpenFirst =
+          await PrefUtils.getValueFor(PrefUtils.mentalHealthpopUpForStudent);
     } else {
-      isPopUpOpenFirst = await PrefUtils.getValueFor(PrefUtils.mentalHealthpopUpForParent);
+      isPopUpOpenFirst =
+          await PrefUtils.getValueFor(PrefUtils.mentalHealthpopUpForParent);
     }
     if (isPopUpOpenFirst == null || isPopUpOpenFirst) {
       bottomPopup(context);
@@ -91,7 +92,7 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
     blockSizeVertical = screenHeight / 100;
     return WillPopScope(
       onWillPop: () async {
-        if(widget.fromScreen.compareTo("Student") == 0){
+        if (widget.fromScreen.compareTo("Student") == 0) {
           Utils.backWithNoTransition(context, StudentDashboardScreen());
         } else {
           Utils.backWithNoTransition(context, RequestForServiceScreen());
@@ -589,35 +590,49 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
 
                                   if (statusResponse.isGranted) {
                                     Navigator.of(context).pop();
-                                    if(widget.fromScreen.compareTo("Student") == 0){
-                                      PrefUtils.setBoolValue(PrefUtils.mentalHealthpopUpForStudent, false);
+                                    if (widget.fromScreen
+                                            .compareTo("Student") ==
+                                        0) {
+                                      PrefUtils.setBoolValue(
+                                          PrefUtils.mentalHealthpopUpForStudent,
+                                          false);
                                     } else {
-                                      PrefUtils.setBoolValue(PrefUtils.mentalHealthpopUpForParent, false);
+                                      PrefUtils.setBoolValue(
+                                          PrefUtils.mentalHealthpopUpForParent,
+                                          false);
                                     }
                                     _getCurrentLocation();
                                   } else if (statusResponse.isDenied ||
                                       statusResponse.isPermanentlyDenied ||
                                       statusResponse.isRestricted) {
-                                    if(widget.fromScreen.compareTo("Student") == 0){
-                                      PrefUtils.setBoolValue(PrefUtils.mentalHealthpopUpForStudent, true);
+                                    if (widget.fromScreen
+                                            .compareTo("Student") ==
+                                        0) {
+                                      PrefUtils.setBoolValue(
+                                          PrefUtils.mentalHealthpopUpForStudent,
+                                          true);
                                     } else {
-                                      PrefUtils.setBoolValue(PrefUtils.mentalHealthpopUpForParent, true);
+                                      PrefUtils.setBoolValue(
+                                          PrefUtils.mentalHealthpopUpForParent,
+                                          true);
                                     }
                                     showDialog(
+                                        barrierDismissible: false,
                                         context: context,
                                         builder: (BuildContext context) =>
                                             CupertinoAlertDialog(
-                                              title: Text('Location Permission'),
+                                              title:
+                                                  Text('Location Permission'),
                                               content: Text(
                                                   'This app Location  access to take location'),
                                               actions: <Widget>[
                                                 CupertinoDialogAction(
                                                     child: Text('Deny'),
                                                     onPressed: () =>
-                                                    Navigator.of(context)
-                                                      ..pop()
-                                                      ..pop()
-                                                      ..pop()),
+                                                        Navigator.of(context)
+                                                          ..pop()
+                                                          ..pop()
+                                                          ..pop()),
                                                 CupertinoDialogAction(
                                                     child: Text('Settings'),
                                                     onPressed: () {
@@ -645,20 +660,32 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
                                   print("Permission status :: $statusResponse");
 
                                   if (statusResponse.isGranted) {
-                                    Navigator.of(context).pop();
-                                    if(widget.fromScreen.compareTo("Student") == 0){
-                                      PrefUtils.setBoolValue(PrefUtils.mentalHealthpopUpForStudent, false);
+                                    // Navigator.of(context).pop();
+                                    if (widget.fromScreen
+                                            .compareTo("Student") ==
+                                        0) {
+                                      PrefUtils.setBoolValue(
+                                          PrefUtils.mentalHealthpopUpForStudent,
+                                          false);
                                     } else {
-                                      PrefUtils.setBoolValue(PrefUtils.mentalHealthpopUpForParent, false);
+                                      PrefUtils.setBoolValue(
+                                          PrefUtils.mentalHealthpopUpForParent,
+                                          false);
                                     }
                                     _getCurrentLocation();
                                   } else if (statusResponse.isDenied ||
                                       statusResponse.isPermanentlyDenied ||
                                       statusResponse.isRestricted) {
-                                    if(widget.fromScreen.compareTo("Student") == 0){
-                                      PrefUtils.setBoolValue(PrefUtils.mentalHealthpopUpForStudent, true);
+                                    if (widget.fromScreen
+                                            .compareTo("Student") ==
+                                        0) {
+                                      PrefUtils.setBoolValue(
+                                          PrefUtils.mentalHealthpopUpForStudent,
+                                          true);
                                     } else {
-                                      PrefUtils.setBoolValue(PrefUtils.mentalHealthpopUpForParent, true);
+                                      PrefUtils.setBoolValue(
+                                          PrefUtils.mentalHealthpopUpForParent,
+                                          true);
                                     }
                                     /*permissionPopUpCount++;
                                   if(permissionPopUpCount > 2){
@@ -708,17 +735,21 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
                               style: AppTheme.customTextStyle(MyFont.SSPro_bold,
                                   16.0, Color.fromRGBO(255, 255, 255, 1))),
                           onPressed: () {
-                            if(widget.fromScreen.compareTo("Student") == 0){
-                              PrefUtils.setBoolValue(PrefUtils.mentalHealthpopUpForStudent, true);
+                            if (widget.fromScreen.compareTo("Student") == 0) {
+                              PrefUtils.setBoolValue(
+                                  PrefUtils.mentalHealthpopUpForStudent, true);
                             } else {
-                              PrefUtils.setBoolValue(PrefUtils.mentalHealthpopUpForParent, true);
+                              PrefUtils.setBoolValue(
+                                  PrefUtils.mentalHealthpopUpForParent, true);
                             }
 
-                            Timer(Duration(milliseconds: 100), (){
-                              if(widget.fromScreen.compareTo("Student") == 0){
-                                Utils.backWithNoTransition(context, StudentDashboardScreen());
+                            Timer(Duration(milliseconds: 100), () {
+                              if (widget.fromScreen.compareTo("Student") == 0) {
+                                Utils.backWithNoTransition(
+                                    context, StudentDashboardScreen());
                               } else {
-                                Utils.backWithNoTransition(context, RequestForServiceScreen());
+                                Utils.backWithNoTransition(
+                                    context, RequestForServiceScreen());
                               }
                             });
                           },
@@ -760,32 +791,94 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
   }
 
   _getCurrentLocation() async {
-    //PrefUtils.setBoolValue(PrefUtils.mentalHealthpopUp, false);
-    isLoading = true;
-    Utils.showLoader(true, context);
-    Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
-        .then((Position position) {
-      _currentPosition = position;
-      if (_currentPosition != null) {
-        print(
-            "${_currentPosition.latitude}, LNG: ${_currentPosition.longitude}");
-        Timer(Duration(milliseconds: 200), () {
-          _mentalHealthSupportApiCall(schoolId);
-        });
-      } else {
+    if (Platform.isIOS) {
+      Timer(Duration(milliseconds: 1000), () async {
+        var statusResponse = await Permission.location.status;
+        var statusResponse1 = await Permission.locationAlways.status;
+        var statusResponse2 = await Permission.locationWhenInUse.status;
+
+
+        print("Permission status :: $statusResponse");
+        print("Permission status1 :: $statusResponse1");
+        print("Permission status2 :: $statusResponse2");
+
+        if (statusResponse.isGranted) {
+          isLoading = true;
+          Utils.showLoader(true, context);
+          Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
+              .then((Position position) {
+            _currentPosition = position;
+            if (_currentPosition != null) {
+              print(
+                  "${_currentPosition.latitude}, LNG: ${_currentPosition.longitude}");
+              Timer(Duration(milliseconds: 200), () {
+                _mentalHealthSupportApiCall(schoolId);
+              });
+            } else {
+              isLoading = false;
+              Utils.showLoader(false, context);
+
+              Utils.showToast(context, "Location Not Found", Colors.red);
+              Timer(Duration(seconds: 2), () {
+                Navigator.of(context).pop();
+              });
+            }
+          }).catchError((e) {
+            isLoading = false;
+            Utils.showLoader(false, context);
+            print(e);
+            Navigator.of(context).pop();
+          });
+        } else {
+          showDialog(
+              barrierDismissible: false,
+              context: context,
+              builder: (BuildContext context) => CupertinoAlertDialog(
+                    title: Text('Location Permission'),
+                    content: Text('This app Location  access to take location'),
+                    actions: <Widget>[
+                      CupertinoDialogAction(
+                          child: Text('Deny'),
+                          onPressed: () => Navigator.of(context)..pop()..pop()),
+                      CupertinoDialogAction(
+                          child: Text('Settings'),
+                          onPressed: () {
+                            Navigator.of(context)..pop()..pop();
+
+                            openAppSettings();
+                          }),
+                    ],
+                  ));
+        }
+      });
+    } else {
+      //PrefUtils.setBoolValue(PrefUtils.mentalHealthpopUp, false);
+      isLoading = true;
+      Utils.showLoader(true, context);
+      Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
+          .then((Position position) {
+        _currentPosition = position;
+        if (_currentPosition != null) {
+          print(
+              "${_currentPosition.latitude}, LNG: ${_currentPosition.longitude}");
+          Timer(Duration(milliseconds: 200), () {
+            _mentalHealthSupportApiCall(schoolId);
+          });
+        } else {
+          isLoading = false;
+          Utils.showLoader(false, context);
+          Utils.showToast(context, "Location Not Found", Colors.red);
+          Timer(Duration(seconds: 2), () {
+            Navigator.of(context).pop();
+          });
+        }
+      }).catchError((e) {
         isLoading = false;
         Utils.showLoader(false, context);
-        Utils.showToast(context, "Location Not Found", Colors.red);
-        Timer(Duration(seconds: 2), () {
-          Navigator.of(context).pop();
-        });
-      }
-    }).catchError((e) {
-      isLoading = false;
-      Utils.showLoader(false, context);
-      print(e);
-      Navigator.of(context).pop();
-    });
+        print(e);
+        Navigator.of(context).pop();
+      });
+    }
   }
 
   void getValuesFromMap(Map map) {
@@ -828,8 +921,9 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
   }
 
   void translateData(message, MaterialColor color) {
-    if(_languageSortCode.compareTo("en") != 0){
-      WebService.translateApiCall(_languageSortCode, message, (isSuccess, message){
+    if (_languageSortCode.compareTo("en") != 0) {
+      WebService.translateApiCall(_languageSortCode, message,
+          (isSuccess, message) {
         Utils.showLoader(false, context);
         if (isSuccess) {
           Utils.showToast(context, message.toString(), color);

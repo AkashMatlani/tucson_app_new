@@ -60,7 +60,9 @@ class _DropOutPostScreenState extends State<DropOutPostScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: Scaffold(
       body: Stack(
         fit: StackFit.expand,
         children: [
@@ -147,8 +149,7 @@ class _DropOutPostScreenState extends State<DropOutPostScreen> {
                       keyboardType: TextInputType.name),
                   SizedBox(height: 10),
                   textFieldFor('contact_phone'.tr(), _contactRefredByController,
-                      textInputAction: TextInputAction.next,
-                      keyboardType: TextInputType.number),
+                      textInputAction: TextInputAction.next, keyboardType: TextInputType.number),
                   SizedBox(height: 40),
                   Text('student_information'.tr(),
                       style: AppTheme.customTextStyle(
@@ -343,7 +344,7 @@ class _DropOutPostScreenState extends State<DropOutPostScreen> {
           )
         ],
       ),
-    );
+    ));
   }
 
   _getSchoolList() {

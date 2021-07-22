@@ -116,7 +116,16 @@ class _CustomDropDownListState extends State<CustomDropDownListTwo> {
                     padding: EdgeInsets.only(top: 20),
                     itemBuilder: (BuildContext context, int position){
                       return ListTile(
-                        title: Text(filterList[position].reason, style: selectPosition == position ? AppTheme.customTextStyle(MyFont.SSPro_bold, 16.0, HexColor("#323643")) :AppTheme.regularTextStyle()),
+                        title: Container(
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              border: Border.all(color: HexColor("#6462AA"), width: 1),
+                              color: position == selectPosition ? HexColor("#e0dfee") : HexColor("#fbfbfb")
+                          ),
+                          padding: EdgeInsets.all(10),
+                          alignment: Alignment.center,
+                          child: Text(filterList[position].reason, style: AppTheme.regularTextStyle().copyWith(fontSize: 18, color: HexColor("#6462AA"))),
+                        ),
                         onTap: (){
                           Navigator.of(context).pop(filterList[position]);
                         },

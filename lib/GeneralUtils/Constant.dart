@@ -112,6 +112,7 @@ class MyImage {
   static const articleThubmail = "assets/images/icons/article.svg";
   static const blogThubmail = "assets/images/icons/blog.svg";
   static const storiesThubmail = "assets/images/icons/stories.svg";
+  static const youTubeThubmail = "assets/images/icons/youtube.svg";
 }
 
 class MyColor {
