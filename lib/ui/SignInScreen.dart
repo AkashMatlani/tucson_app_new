@@ -46,8 +46,8 @@ class _SignInScreenState extends State<SignInScreen> {
     // _emailController.text="pamela.leeper12@yopmail.com";
     // _pwdController.text="12345678";
   //  _emailController.selection = TextSelection.fromPosition(TextPosition(offset: _emailController.text.length));
-    /*_emailController.text="akash.maltani@dashtechinc.com";
-    _pwdController.text="12345678";*/
+    _emailController.text="akash.maltani@dashtechinc.com";
+    _pwdController.text="12345678";
    /* _emailController.text="Test@gmail.com";
     _pwdController.text="12345678";*/
    /*  _emailController.text="pamela.leeper12@yopmail.com";

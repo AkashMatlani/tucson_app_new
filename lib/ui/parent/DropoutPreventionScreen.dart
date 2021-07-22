@@ -34,11 +34,12 @@ class _DropoutPreventionScreenState extends State<DropoutPreventionScreen> {
   late YoutubeMetaData _videoMetaData;
   bool _isPlayerReady = false;
 
-  String youTubeId ="bJTpz1fL4k4";
+  String youTubeId = "bJTpz1fL4k4";
   late PlayerState _playerState;
   final List<String> _ids = [
     'bJTpz1fL4k4',
   ];
+  bool defaultValueDropOut = true;
 
   @override
   void initState() {
@@ -95,7 +96,8 @@ class _DropoutPreventionScreenState extends State<DropoutPreventionScreen> {
                       Container(
                         margin: EdgeInsets.only(top: 10),
                         child: Text('dropout_prevention'.tr(),
-                            style: AppTheme.customTextStyle(MyFont.SSPro_semibold, 18.0, Colors.white)),
+                            style: AppTheme.customTextStyle(
+                                MyFont.SSPro_semibold, 18.0, Colors.white)),
                       )
                     ],
                   ),
@@ -123,13 +125,6 @@ class _DropoutPreventionScreenState extends State<DropoutPreventionScreen> {
               margin: EdgeInsets.all(10),
               child: Column(
                 children: [
-                 // _launchYoutubeVideo("https://youtu.be/bJTpz1fL4k4"),
-                 /* Container(
-                    height: MediaQuery.of(context).size.height * 0.3,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: Colors.blue),
-                  ),*/
                   YoutubePlayer(
                     controller: _controller,
                     showVideoProgressIndicator: true,
@@ -147,23 +142,23 @@ class _DropoutPreventionScreenState extends State<DropoutPreventionScreen> {
                           maxLines: 1,
                         ),
                       ),
-                      IconButton(
+                    /*  IconButton(
                         icon: const Icon(
                           Icons.settings,
                           color: Colors.white,
                           size: 25.0,
                         ),
                         onPressed: () {
-                         // log('Settings Tapped!');
+                          // log('Settings Tapped!');
                         },
-                      ),
+                      ),*/
                     ],
                     onReady: () {
                       _isPlayerReady = true;
                     },
                     onEnded: (data) {
-                      _controller
-                          .load(_ids[(_ids.indexOf(data.videoId) + 1) % _ids.length]);
+                      _controller.load(
+                          _ids[(_ids.indexOf(data.videoId) + 1) % _ids.length]);
                     },
                   ),
                   SizedBox(height: 30),
@@ -180,42 +175,57 @@ class _DropoutPreventionScreenState extends State<DropoutPreventionScreen> {
                     ),
                     height: 50,
                     width: MediaQuery.of(context).size.width,
-                    child: TextButton(
-                      child: Row(
-                        children: [
-                          Expanded(
-                              child: Container(
-                                  margin: EdgeInsets.only(left: 5),
-                                  child: Text(LabelStr.lblContactSpecialist,
-                                      style: AppTheme.customTextStyle(
-                                          MyFont.SSPro_semibold,
-                                          16.0,
-                                          Colors.white)))),
-                          Container(
-                              margin: EdgeInsets.only(right: 5),
-                              child: Icon(Icons.keyboard_arrow_up,
-                                  color: Colors.white, size: 30))
-                        ],
-                      ),
-                      onPressed: () {
-                        print("Call me");
-                      },
+                    child: Row(
+                      children: [
+                        Expanded(
+                            child: Container(
+                                margin: EdgeInsets.only(left: 5),
+                                child: Text(LabelStr.lblContactSpecialist,
+                                    style: AppTheme.customTextStyle(
+                                        MyFont.SSPro_semibold,
+                                        16.0,
+                                        Colors.white)))),
+                        defaultValueDropOut
+                            ? InkWell(
+                                onTap: () {
+                                  defaultValueDropOut = false;
+                                },
+                                child: Visibility(
+                                  visible: defaultValueDropOut,
+                                  child: Container(
+                                      margin: EdgeInsets.only(right: 5),
+                                      child: Icon(Icons.keyboard_arrow_up,
+                                          color: Colors.white, size: 30)),
+                                ),
+                              )
+                            : InkWell(
+                                onTap: () {
+                                  defaultValueDropOut = true;
+                                },
+                                    child: Container(
+                                        margin: EdgeInsets.only(right: 5),
+                                        child: Icon(Icons.keyboard_arrow_down,
+                                            color: Colors.white, size: 30))),
+                      ],
                     ),
                   ),
                   SizedBox(height: 15),
-
-            ConstrainedBox(
-                constraints:BoxConstraints(minHeight: 80,maxHeight: MediaQuery.of(context).size.height*0.30),
-                    child:  ListView.builder(
-                        itemCount: _dropOutModelList.length,
-                        shrinkWrap: true,
-                        physics: ScrollPhysics(),
-                        padding: EdgeInsets.only(top: 20),
-                        itemBuilder:
-                            (BuildContext context, int position) {
-                          return _listRowItem(context, position);
-                        }),
-                  ),
+                  Visibility(
+                      visible: defaultValueDropOut,
+                      child: ConstrainedBox(
+                        constraints: BoxConstraints(
+                            minHeight: 80,
+                            maxHeight:
+                                MediaQuery.of(context).size.height * 0.30),
+                        child: ListView.builder(
+                            itemCount: _dropOutModelList.length,
+                            shrinkWrap: true,
+                            physics: ScrollPhysics(),
+                            padding: EdgeInsets.only(top: 20),
+                            itemBuilder: (BuildContext context, int position) {
+                              return _listRowItem(context, position);
+                            }),
+                      )),
                   SizedBox(height: 20),
                   Container(
                     decoration: BoxDecoration(
@@ -313,13 +323,14 @@ class _DropoutPreventionScreenState extends State<DropoutPreventionScreen> {
                   Expanded(
                       flex: 4,
                       child: Text(_dropOutModelList[position].specialistName,
-                          style: AppTheme.regularTextStyle()
-                              .copyWith(fontFamily: MyFont.SSPro_semibold))),
+                          style: AppTheme.regularTextStyle().copyWith(
+                              fontFamily: MyFont.SSPro_semibold,
+                              fontSize: 14))),
                   Expanded(
                       flex: 6,
                       child: Text(_dropOutModelList[position].specialistEmail,
-                          style: AppTheme.regularTextStyle()
-                              .copyWith(color: Colors.blueAccent)))
+                          style: AppTheme.regularTextStyle().copyWith(
+                              color: Colors.blueAccent, fontSize: 14)))
                 ],
               ),
               SizedBox(height: 5),
@@ -341,17 +352,17 @@ class _DropoutPreventionScreenState extends State<DropoutPreventionScreen> {
 
     try {
       await FlutterEmailSender.send(email);
-     // platformResponse = 'success';
+      // platformResponse = 'success';
     } catch (error) {
-     // platformResponse = error.toString();
+      // platformResponse = error.toString();
     }
 
     if (!mounted) return;
 
-   /* ScaffoldMessenger.of(context).showSnackBar(
-     *//* SnackBar(
+    /* ScaffoldMessenger.of(context).showSnackBar(
+     */ /* SnackBar(
         content: Text(platformResponse),
-      ),*//*
+      ),*/ /*
     );*/
   }
 

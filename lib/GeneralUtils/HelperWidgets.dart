@@ -7,6 +7,7 @@ import 'Constant.dart';
 Widget textFieldFor(String hint,
     TextEditingController controller,
     {TextInputType keyboardType = TextInputType.text,
+
       bool autocorrect = true,
       TextCapitalization textCapitalization = TextCapitalization.sentences,
       bool obscure = false,
@@ -20,10 +21,11 @@ Widget textFieldFor(String hint,
       var inputFormatter,
       onEditingComplete,
       onTap,
-      onSubmit}) {
+      onSubmit,autofocus}) {
   return SizedBox(
     height: 50,
     child: TextField(
+      autofocus: false,
       autocorrect: autocorrect,
       enabled: enabled,
       readOnly: readOnly,
