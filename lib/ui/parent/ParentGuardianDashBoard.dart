@@ -1,5 +1,5 @@
 import 'dart:async';
-
+import 'dart:ui' as ui;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:double_back_to_close/double_back_to_close.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -15,7 +15,6 @@ import 'package:tucson_app/GeneralUtils/Utils.dart';
 import 'package:tucson_app/Model/GridListItems.dart';
 import 'package:tucson_app/Model/StaticListItems.dart';
 import 'package:tucson_app/WebService/WebService.dart';
-import 'package:tucson_app/ui/DisplayWebview.dart';
 import 'package:tucson_app/ui/SignInScreen.dart';
 import 'package:tucson_app/ui/WebViewEmpty.dart';
 import 'package:tucson_app/ui/parent/Event.dart';
@@ -25,6 +24,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 import 'CommunityResources.dart';
 import 'Education.dart';
+
 
 class ParentDashBoardScreen extends StatefulWidget {
   @override
@@ -106,204 +106,218 @@ class _ParentDashBoardScreenState extends State<ParentDashBoardScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: DoubleBack(
-            condition: allowClose,
-            onConditionFail: () {
-              setState(() {
-                allowClose = true;
-              });
-            },
-            // message: "Press back again to exit",
-            child: Stack(
-              children: [
-                Container(
-                  color: HexColor("#6462AA"),
-                  child: Column(
-                    children: [
-                      Container(
-                        height: MediaQuery.of(context).size.height * 0.25,
-                        alignment: Alignment.center,
-                        child: Row(
-                          children: [
-                            Expanded(
-                              child: Padding(
-                                  padding: EdgeInsets.only(left: 20),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
+    return Directionality(
+      textDirection: sortLanguageCode.compareTo("ar") == 0 ? ui.TextDirection.rtl : ui.TextDirection.ltr,
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: Scaffold(
+            body: DoubleBack(
+                condition: allowClose,
+                onConditionFail: () {
+                  setState(() {
+                    allowClose = true;
+                  });
+                },
+                // message: "Press back again to exit",
+                child: Stack(
+                  children: [
+                    Container(
+                      color: HexColor("#6462AA"),
+                      child: Column(
+                        children: [
+                          Container(
+                            height: MediaQuery.of(context).size.height * 0.25,
+                            alignment: Alignment.center,
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  child: Padding(
+                                      padding: EdgeInsets.only(left: 20),
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        children: [
+                                          Text('hi'.tr(),
+                                              style: AppTheme.customTextStyle(
+                                                  MyFont.SSPro_regular,
+                                                  25.0,
+                                                  Colors.white)),
+                                          SizedBox(width: 5),
+                                          Text(firstName,
+                                              style: AppTheme.customTextStyle(
+                                                  MyFont.SSPro_semibold,
+                                                  25.0,
+                                                  Colors.white))
+                                        ],
+                                      )),
+                                ),
+                                Container(
+                                  padding: EdgeInsets.only(right: 10),
+                                  margin: EdgeInsets.only(right: 15),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment: CrossAxisAlignment.center,
                                     children: [
-                                      Text('hi'.tr(),
-                                          style: AppTheme.customTextStyle(
-                                              MyFont.SSPro_regular,
-                                              25.0,
-                                              Colors.white)),
-                                      SizedBox(width: 5),
-                                      Text(firstName,
-                                          style: AppTheme.customTextStyle(
-                                              MyFont.SSPro_semibold,
-                                              25.0,
-                                              Colors.white))
-                                    ],
-                                  )),
-                            ),
-                            Container(
-                              padding: EdgeInsets.only(right: 10),
-                              margin: EdgeInsets.only(right: 15),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  ClipOval(
-                                    child: CachedNetworkImage(
-                                      width: 60,
-                                      height: 60,
-                                      fit: BoxFit.fill,
-                                      imageUrl: userProfile,
-                                      placeholder: (context, url) => new CircularProgressIndicator(),
-                                      errorWidget: (context, url, error) => Icon(Icons.account_circle, color: Colors.white, size: 50),
-                                    ),
-                                  ),
-                                  Stack(
-                                    children: [
-                                      InkWell(
-                                        onTap: (){
-                                          Utils.backWithNoTransition(context, LanguageDropDownList(languageList, "Parent", StaticListItems(name: languageName, value: sortLanguageCode)));
-                                        },
-                                        child: Container(
-                                          padding: EdgeInsets.all(8),
-                                          child: Text(languageName, style: AppTheme.regularTextStyle().copyWith(color: Colors.white)),
+                                      ClipOval(
+                                        child: CachedNetworkImage(
+                                          width: 60,
+                                          height: 60,
+                                          fit: BoxFit.fill,
+                                          imageUrl: userProfile,
+                                          placeholder: (context, url) => new CircularProgressIndicator(),
+                                          errorWidget: (context, url, error) => Icon(Icons.account_circle, color: Colors.white, size: 50),
                                         ),
+                                      ),
+                                      Stack(
+                                        children: [
+                                          InkWell(
+                                            onTap: () async {
+                                              String translaterKey = await PrefUtils.getValueFor(PrefUtils.googleTranslateKey);
+                                              if(translaterKey.isNotEmpty) {
+                                                Utils.backWithNoTransition(context,
+                                                    LanguageDropDownList(
+                                                        languageList, "Parent",
+                                                        StaticListItems(
+                                                            name: languageName,
+                                                            value: sortLanguageCode)));
+                                              }
+                                            },
+                                            child: Container(
+                                              padding: EdgeInsets.all(8),
+                                              child: Text(languageName, style: AppTheme.regularTextStyle().copyWith(color: Colors.white)),
+                                            ),
+                                          )
+                                        ],
                                       )
                                     ],
-                                  )
-                                ],
-                              ),
-                            )
-                          ],
-                        ),
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                          Expanded(
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(50.0),
+                                      topRight: Radius.circular(50.0)),
+                                  color: Colors.white),
+                              height: MediaQuery.of(context).size.height,
+                              width: MediaQuery.of(context).size.width,
+                              padding: EdgeInsets.all(20),
+                            ),
+                          )
+                        ],
                       ),
-                      Expanded(
-                        child: Container(
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(50.0),
-                                  topRight: Radius.circular(50.0)),
-                              color: Colors.white),
-                          height: MediaQuery.of(context).size.height,
-                          width: MediaQuery.of(context).size.width,
-                          padding: EdgeInsets.all(20),
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-                Positioned(
-                  top: MediaQuery.of(context).size.height * 0.2,
-                  left: MediaQuery.of(context).size.width * 0.08,
-                  right: MediaQuery.of(context).size.width * 0.08,
-                  child: Container(
-                    height: MediaQuery.of(context).size.height * 0.8,
-                    child: SingleChildScrollView(
-                      child: GridView.builder(
-                          physics: ScrollPhysics(),
-                          shrinkWrap: true,
-                          padding: EdgeInsets.only(bottom: 20),
-                          gridDelegate:
-                              SliverGridDelegateWithMaxCrossAxisExtent(
-                                  maxCrossAxisExtent: 200,
-                                  childAspectRatio: 2 / 2,
-                                  crossAxisSpacing: 20,
-                                  mainAxisSpacing: 20),
-                          itemCount: menuItems.length,
-                          itemBuilder: (BuildContext ctx, index) {
-                            return GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    if (index == 0) {
-                                      Utils.navigateToScreen(context, Education());
-                                    } else if (index == 1) {
-                                      Utils.navigateToScreen(context, Event());
-                                    } else if (index == 2) {
-                                      Utils.navigateToScreen(context, CommunityResources("Parent"));
-                                    } else if (index == 3) {
-                                      var params = {
-                                        "schoolId": schoolId,
-                                        "roleId": 0,
-                                        "contentTypeName": "SmartChoice"
-                                      };
-                                      getWebApiFromUrl(context, params);
-                                    } else if (index == 4) {
-                                      var params = {
-                                        "schoolId": schoolId,
-                                        "roleId": 0,
-                                        "contentTypeName": "ParentVUE"
-                                      };
-                                      getWebApiFromUrl(context, params);
-                                    } else if (index == 5) {
-                                      Utils.navigateToScreen(context, SchoolPrograms());
-                                    } else if (index == 6) {
-                                      Utils.navigateToScreen(context, RequestForServiceScreen());
-                                    } else if (index == 7) {
-                                      var params = {
-                                        "schoolId": schoolId,
-                                        "roleId": 0,
-                                        "contentTypeName": "Awareity"
-                                      };
-                                      getWebApiFromUrl(context, params);
-                                    } else if (index == 8) {
-                                      Utils.signoutAlert(context, (isSuccess, response){
-                                        if(isSuccess){
-                                          _logoutFromApp(context);
+                    ),
+                    Positioned(
+                      top: MediaQuery.of(context).size.height * 0.2,
+                      left: MediaQuery.of(context).size.width * 0.08,
+                      right: MediaQuery.of(context).size.width * 0.08,
+                      child: Container(
+                        height: MediaQuery.of(context).size.height * 0.8,
+                        child: SingleChildScrollView(
+                          child: GridView.builder(
+                              physics: ScrollPhysics(),
+                              shrinkWrap: true,
+                              padding: EdgeInsets.only(bottom: 20),
+                              gridDelegate:
+                                  SliverGridDelegateWithMaxCrossAxisExtent(
+                                      maxCrossAxisExtent: 200,
+                                      childAspectRatio: 2 / 2,
+                                      crossAxisSpacing: 20,
+                                      mainAxisSpacing: 20),
+                              itemCount: menuItems.length,
+                              itemBuilder: (BuildContext ctx, index) {
+                                return GestureDetector(
+                                    onTap: () {
+                                      setState(() {
+                                        if (index == 0) {
+                                          Utils.navigateToScreen(context, Education());
+                                        } else if (index == 1) {
+                                          Utils.navigateToScreen(context, Event());
+                                        } else if (index == 2) {
+                                          Utils.navigateToScreen(context, CommunityResources("Parent"));
+                                        } else if (index == 3) {
+                                          var params = {
+                                            "schoolId": schoolId,
+                                            "roleId": 0,
+                                            "contentTypeName": "SmartChoice"
+                                          };
+                                          getWebApiFromUrl(context, params);
+                                        } else if (index == 4) {
+                                          var params = {
+                                            "schoolId": schoolId,
+                                            "roleId": 0,
+                                            "contentTypeName": "ParentVUE"
+                                          };
+                                          getWebApiFromUrl(context, params);
+                                        } else if (index == 5) {
+                                          Utils.navigateToScreen(context, SchoolPrograms());
+                                        } else if (index == 6) {
+                                          Utils.navigateToScreen(context, RequestForServiceScreen());
+                                        } else if (index == 7) {
+                                          var params = {
+                                            "schoolId": schoolId,
+                                            "roleId": 0,
+                                            "contentTypeName": "Awareity"
+                                          };
+                                          getWebApiFromUrl(context, params);
+                                        } else if (index == 8) {
+                                          Utils.signoutAlert(context, (isSuccess, response){
+                                            if(isSuccess){
+                                              _logoutFromApp(context);
+                                            }
+                                          });
                                         }
                                       });
-                                    }
-                                  });
-                                },
-                                child: Card(
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(15.0),
-                                    ),
-                                    color: Color.fromRGBO(245, 246, 252, 1),
-                                    elevation: 5,
-                                    clipBehavior: Clip.antiAlias,
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceAround,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: <Widget>[
-                                        Padding(
-                                            padding: EdgeInsets.fromLTRB(
-                                                16.0, 10.0, 16.0, 8.0),
-                                            child: SvgPicture.asset(
-                                                menuItems[index].svgPicture)),
-                                        Padding(
-                                          padding: EdgeInsets.fromLTRB(
-                                              16.0, 10.0, 16.0, 8.0),
-                                          child: Align(
-                                            alignment: Alignment.bottomLeft,
-                                            child: Text(
-                                              menuItems[index].name,
-                                              style: AppTheme.regularTextStyle()
-                                                  .copyWith(
-                                                      color: Colors.black),
-                                            ),
-                                          ),
+                                    },
+                                    child: Card(
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(15.0),
                                         ),
-                                      ],
-                                    )));
-                          }),
+                                        color: Color.fromRGBO(245, 246, 252, 1),
+                                        elevation: 5,
+                                        clipBehavior: Clip.antiAlias,
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceAround,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: <Widget>[
+                                            Padding(
+                                                padding: EdgeInsets.fromLTRB(
+                                                    16.0, 10.0, 16.0, 8.0),
+                                                child: SvgPicture.asset(
+                                                    menuItems[index].svgPicture)),
+                                            Padding(
+                                              padding: EdgeInsets.fromLTRB(
+                                                  16.0, 10.0, 16.0, 8.0),
+                                              child: Align(
+                                                alignment: Alignment.bottomLeft,
+                                                child: Text(
+                                                  menuItems[index].name,
+                                                  style: AppTheme.regularTextStyle()
+                                                      .copyWith(
+                                                          color: Colors.black),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        )));
+                              }),
+                        ),
+                      ),
                     ),
-                  ),
+                  ],
                 ),
-              ],
-            ),
-            waitForSecondBackPress: 5,
-            // default 2
-            textStyle:
-                AppTheme.regularTextStyle().copyWith(color: Colors.white),
-            background: HexColor("#6462AA"),
-            backgroundRadius: 30));
+                waitForSecondBackPress: 5,
+                // default 2
+                textStyle:
+                    AppTheme.regularTextStyle().copyWith(color: Colors.white),
+                background: HexColor("#6462AA"),
+                backgroundRadius: 30)),
+      ),
+    );
   }
 
   getWebApiFromUrl(BuildContext context, Map<String, Object> params) {
@@ -330,6 +344,7 @@ class _ParentDashBoardScreenState extends State<ParentDashBoardScreen> {
     Utils.showLoader(true, context);
     //bool mentalPopUpStudent = await PrefUtils.getValueFor(PrefUtils.mentalHealthpopUpForStudent);
     //bool mentalPopUpParent = await PrefUtils.getValueFor(PrefUtils.mentalHealthpopUpForParent);
+    String apiKey = await PrefUtils.getValueFor(PrefUtils.googleTranslateKey);
     String langCode = await PrefUtils.getValueFor(PrefUtils.sortLanguageCode);
     String langName = await PrefUtils.getValueFor(PrefUtils.yourLanguage);
     PrefUtils.clearPref();
@@ -337,6 +352,7 @@ class _ParentDashBoardScreenState extends State<ParentDashBoardScreen> {
     //PrefUtils.setBoolValue(PrefUtils.mentalHealthpopUpForParent, mentalPopUpParent);
     PrefUtils.setStringValue(PrefUtils.sortLanguageCode, langCode);
     PrefUtils.setStringValue(PrefUtils.yourLanguage, langName);
+    PrefUtils.setStringValue(PrefUtils.googleTranslateKey, apiKey);
     Utils.showLoader(false, context);
     Utils.navigateWithClearState(context, SignInScreen());
   }

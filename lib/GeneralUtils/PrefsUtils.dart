@@ -17,6 +17,7 @@ class PrefUtils {
   static const String sortLanguageCode = "com.TucsonApp.sortLanguageCode";
   /*static const String mentalHealthpopUpForStudent = "com.TucsonApp.healthPopUpForStudent";
   static const String mentalHealthpopUpForParent = "com.TucsonApp.healthPopUpForParent";*/
+  static const String googleTranslateKey = "com.TucsonApp.googleTranslateKey";
 
 
   static setStringValue(String key, String defaultValue) async {
