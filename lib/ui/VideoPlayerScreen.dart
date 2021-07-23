@@ -5,10 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:tucson_app/GeneralUtils/ColorExtension.dart';
 import 'package:tucson_app/GeneralUtils/Constant.dart';
-import 'package:tucson_app/GeneralUtils/Utils.dart';
 import 'package:video_player/video_player.dart';
 import 'package:volume/volume.dart';
 import 'package:wakelock/wakelock.dart';
+
 
 class VideoPlayerScreen extends StatefulWidget {
   VideoPlayerScreen(this.videoUrl);
@@ -196,22 +196,24 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                   margin: EdgeInsets.only(right: 10),
                   child: IconButton(
                       onPressed: () {
-                        if (isPortrait) {
-                          setState(() {
-                            isPortrait = false;
+                        if(_controller.value.isInitialized){
+                          if (isPortrait) {
+                            setState(() {
+                              isPortrait = false;
+                            });
                             SystemChrome.setPreferredOrientations([
                               DeviceOrientation.landscapeLeft,
                               DeviceOrientation.landscapeRight,
                             ]);
-                          });
-                        } else {
-                          setState(() {
-                            isPortrait = true;
+                          } else {
+                            setState(() {
+                              isPortrait = true;
+                            });
                             SystemChrome.setPreferredOrientations([
                               DeviceOrientation.portraitUp,
                               DeviceOrientation.portraitDown,
                             ]);
-                          });
+                          }
                         }
                       },
                       icon: Icon(Icons.screen_rotation,

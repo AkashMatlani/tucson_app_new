@@ -19,9 +19,9 @@ class Utils {
           builder: (BuildContext ctx) {
             return Center(
                 child: SpinKitCircle(
-              color: Colors.black,
-              size: 80,
-            ));
+                  color: Colors.black,
+                  size: 80,
+                ));
           });
     } else {
       Navigator.of(context, rootNavigator: true).pop("");

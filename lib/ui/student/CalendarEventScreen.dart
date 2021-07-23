@@ -426,7 +426,6 @@ class _CalendarEventScreenState extends State<CalendarEventScreen> {
           _translateEventTitleData();
         }
       } else {
-        Utils.showLoader(false, context);
         Utils.showToast(context, message, Colors.red);
       }
     });
@@ -639,7 +638,7 @@ class _CalendarEventScreenState extends State<CalendarEventScreen> {
     String resultArr = titleList.join("=)");
     WebService.translateApiCall(languageCode!, resultArr, (isSuccess, response) {
       if(isSuccess){
-        _translateEventDetailsData(resultArr);
+        _translateEventDetailsData(response);
       } else {
         Utils.showLoader(false, context);
         Utils.showToast(context, "Page Translation Failed", Colors.red);
@@ -655,7 +654,7 @@ class _CalendarEventScreenState extends State<CalendarEventScreen> {
     String resultArr = detailsList.join("=)");
     WebService.translateApiCall(languageCode!, resultArr, (isSuccess, response) {
       if(isSuccess){
-        var resultTitleArr = response.toString().split("==)");
+        var resultTitleArr = titleArr.toString().split("==)");
         var resultDescArr = response.toString().split("==)");
         List<EventForMobileResponse> tempList = [];
         for(int i=0; i<resultTitleArr.length; i++){

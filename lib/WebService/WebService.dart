@@ -4,13 +4,14 @@ import 'dart:io';
 import 'package:http/http.dart';
 import 'package:http/http.dart' as http;
 import 'package:tucson_app/GeneralUtils/LabelStr.dart';
+import 'package:tucson_app/GeneralUtils/PrefsUtils.dart';
 import 'package:tucson_app/GeneralUtils/Utils.dart';
 
 class WebService {
 
-  static const API_KEY = 'AIzaSyDw60U-qsk2dKiDkJ5EwUZMnKbzSyZ7NfM';
   static const baseUrl = "http://35.231.45.54:99/api/";
 
+  static const getTranslateApiKey = "User/GetAPIByName";
   static const userLogin = "User/Login";
   static const changePassword = "User/ChangePassword";
   static const resetPassword = "User/ResetPasswordForMobile";
@@ -156,17 +157,20 @@ class WebService {
   }
 
   static translateApiCall(String language, String data, ResponseCallback callback) async{
-    var url = "https://translation.googleapis.com/language/translate/v2?target=$language&key=$API_KEY&q=$data";
-    var response = await http.get(Uri.parse(url));
-    if (response.statusCode == 200) {
-      var jsValue = json.decode(response.body);
-      var result = jsValue["data"]["translations"][0]["translatedText"];
-      callback(true, result);
-    } else {
-      print("*********** Api Response Error *********************");
-      callback(false, response.body.toString());
-      print("ErrorCode ::${response.statusCode} \n ErrorMessage ::${response.body.toString()}");
-      print("******************************************************");
+    String API_KEY = await PrefUtils.getValueFor(PrefUtils.googleTranslateKey);
+    if(API_KEY.isNotEmpty){
+      var url = "https://translation.googleapis.com/language/translate/v2?target=$language&key=$API_KEY&q=$data";
+      var response = await http.get(Uri.parse(url));
+      if (response.statusCode == 200) {
+        var jsValue = json.decode(response.body);
+        var result = jsValue["data"]["translations"][0]["translatedText"];
+        callback(true, result);
+      } else {
+        print("*********** Api Response Error *********************");
+        callback(false, response.body.toString());
+        print("ErrorCode ::${response.statusCode} \n ErrorMessage ::${response.body.toString()}");
+        print("******************************************************");
+      }
     }
   }
 }

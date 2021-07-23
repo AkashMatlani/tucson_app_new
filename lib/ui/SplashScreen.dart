@@ -8,12 +8,12 @@ import 'package:tucson_app/GeneralUtils/LabelStr.dart';
 import 'package:tucson_app/GeneralUtils/PrefsUtils.dart';
 import 'package:tucson_app/GeneralUtils/Utils.dart';
 import 'package:tucson_app/WebService/WebService.dart';
-import 'package:tucson_app/ui/DonationScreen.dart';
 import 'package:tucson_app/ui/community/CommunityDashboardScreen.dart';
 import 'package:tucson_app/ui/parent/ParentGuardianDashBoard.dart';
 import 'package:tucson_app/ui/student/StudentDashboardScreen.dart';
-
+import 'DonationScreen.dart';
 import 'parent/ParentGuardianDashBoard.dart';
+
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -30,24 +30,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    Timer(Duration(seconds: 2), () {
-      SharedPreferences.getInstance().then((prefs) async {
-        PrefUtils.getUserDataFromPref();
-        if (prefs.containsKey(PrefUtils.isLoggedIn) &&
-            prefs.getBool(PrefUtils.isLoggedIn)!) {
-          String role = prefs.getString(PrefUtils.userRole)!;
-          int userId = prefs.getInt(PrefUtils.userId)!;
-
-          languageCode = prefs.getString(PrefUtils.sortLanguageCode);
-          if(languageCode == null){
-            languageCode = "en";
-          }
-          checkUserStatus(userId, role);
-        } else {
-          Utils.navigateReplaceToScreen(context, DonationScreen());
-        }
-      });
-    });
+    fetchTranslatorApiKey();
   }
 
   @override
@@ -107,5 +90,47 @@ class _SplashScreenState extends State<SplashScreen> {
     } else {
       Utils.showToast(context, message, Colors.red);
     }
+  }
+
+  fetchTranslatorApiKey(){
+    var params = {"APIName": "Translator"};
+    WebService.getAPICall(WebService.getTranslateApiKey, params).then((response){
+      if(response.statusCode == 1){
+        var translateKey = response.body["apiKey"];
+        print("TranslateKey => $translateKey");
+        PrefUtils.setStringValue(PrefUtils.googleTranslateKey, translateKey);
+      } else {
+        PrefUtils.setStringValue(PrefUtils.googleTranslateKey, "");
+        PrefUtils.setStringValue(PrefUtils.sortLanguageCode, "en");
+        PrefUtils.setStringValue(PrefUtils.yourLanguage, "English");
+      }
+      getPrefsData();
+    }).catchError((onError){
+      PrefUtils.setStringValue(PrefUtils.googleTranslateKey, "");
+      PrefUtils.setStringValue(PrefUtils.sortLanguageCode, "en");
+      PrefUtils.setStringValue(PrefUtils.yourLanguage, "English");
+      getPrefsData();
+    });
+  }
+
+  getPrefsData(){
+    Timer(Duration(seconds: 2), () {
+      SharedPreferences.getInstance().then((prefs) async {
+        PrefUtils.getUserDataFromPref();
+        if (prefs.containsKey(PrefUtils.isLoggedIn) &&
+            prefs.getBool(PrefUtils.isLoggedIn)!) {
+          String role = prefs.getString(PrefUtils.userRole)!;
+          int userId = prefs.getInt(PrefUtils.userId)!;
+
+          languageCode = prefs.getString(PrefUtils.sortLanguageCode);
+          if(languageCode == null){
+            languageCode = "en";
+          }
+          checkUserStatus(userId, role);
+        } else {
+          Utils.navigateReplaceToScreen(context, DonationScreen());
+        }
+      });
+    });
   }
 }
