@@ -159,5 +159,6 @@
   "enter_student_last_name": "Tafadhali ingiza jina la mwisho la mwanafunz",
   "enter_tusd_matric_number": "Tafadhali ingiza nambari ya matriki ya tusd",
   "enter_grade": "Tafadhali ingiza daraja",
-  "reset_successfully": "Kuweka Nenosiri kwa Ufanisi"
+  "reset_successfully": "Kuweka Nenosiri kwa Ufanisi",
+  "referred_by": "Inatajwa na:"
 }

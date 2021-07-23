@@ -11,8 +11,8 @@ import 'package:volume/volume.dart';
 import 'package:wakelock/wakelock.dart';
 
 class VideoPlayerScreen extends StatefulWidget {
-
   VideoPlayerScreen(this.videoUrl);
+
   String videoUrl;
 
   @override
@@ -35,7 +35,6 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
 
   Offset _touchPoint = Offset.zero;
   String _currentPositionString = "", _remainingString = "";
-
 
   @override
   void initState() {
@@ -173,194 +172,205 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
       builder: (context, orientation) {
         isPortrait = orientation == Orientation.portrait;
         return Scaffold(
-          backgroundColor: Colors.black,
-          appBar: AppBar(
-            automaticallyImplyLeading: false,
-            actions: [
-              Container(
-                padding: EdgeInsets.all(10),
-                alignment: Alignment.topLeft,
-                child: IconButton(
-                  onPressed: (){
-                    if(_controller.value.isInitialized){
-                      _controller.pause();
-                      Navigator.of(context).pop();
-                    }
-                  },
-                  icon: Icon(Icons.arrow_back_ios, size: 30, color: Colors.white),
-                ),
-              ),
-              Expanded(child: Container()),
-              Container(
-                padding: EdgeInsets.all(10),
-                margin: EdgeInsets.only(right: 10),
-                child: IconButton(
-                    onPressed: (){
-                      if(isPortrait){
-                        setState(() {
-                          isPortrait = false;
-                        });
-                      } else {
-                        setState(() {
-                          isPortrait = true;
-                        });
+            backgroundColor: Colors.black,
+            appBar: AppBar(
+              automaticallyImplyLeading: false,
+              actions: [
+                Container(
+                  padding: EdgeInsets.all(10),
+                  alignment: Alignment.topLeft,
+                  child: IconButton(
+                    onPressed: () {
+                      if (_controller.value.isInitialized) {
+                        _controller.pause();
+                        Navigator.of(context).pop();
                       }
                     },
-                    icon: Icon(Icons.screen_rotation, size: 32, color: Colors.white)
+                    icon: Icon(Icons.arrow_back_ios,
+                        size: 30, color: Colors.white),
+                  ),
                 ),
-              )
-            ],
-            backgroundColor: Colors.transparent,
-          ),
-          body: Stack(
-            fit: isPortrait ? StackFit.loose : StackFit.expand,
-            children: <Widget>[
-              Center(
-                child: _controller.value.isInitialized
-                    ? AspectRatio(
-                        aspectRatio: _controller.value.aspectRatio,
-                        child: VideoPlayer(_controller),
-                      )
-                    : Center(
-                        child: CircularProgressIndicator(
-                          valueColor:
-                              AlwaysStoppedAnimation<Color>(Colors.orange),
-                          backgroundColor: HexColor("#6462AA"),
+                Expanded(child: Container()),
+                Container(
+                  padding: EdgeInsets.all(10),
+                  margin: EdgeInsets.only(right: 10),
+                  child: IconButton(
+                      onPressed: () {
+                        if (isPortrait) {
+                          setState(() {
+                            isPortrait = false;
+                            SystemChrome.setPreferredOrientations([
+                              DeviceOrientation.landscapeLeft,
+                              DeviceOrientation.landscapeRight,
+                            ]);
+                          });
+                        } else {
+                          setState(() {
+                            isPortrait = true;
+                            SystemChrome.setPreferredOrientations([
+                              DeviceOrientation.portraitUp,
+                              DeviceOrientation.portraitDown,
+                            ]);
+                          });
+                        }
+                      },
+                      icon: Icon(Icons.screen_rotation,
+                          size: 32, color: Colors.white)),
+                )
+              ],
+              backgroundColor: Colors.transparent,
+            ),
+            body: Stack(
+              fit: isPortrait ? StackFit.loose : StackFit.expand,
+              children: <Widget>[
+                Center(
+                  child: _controller.value.isInitialized
+                      ? AspectRatio(
+                          aspectRatio: _controller.value.aspectRatio,
+                          child: VideoPlayer(_controller),
+                        )
+                      : Center(
+                          child: CircularProgressIndicator(
+                            valueColor:
+                                AlwaysStoppedAnimation<Color>(Colors.orange),
+                            backgroundColor: HexColor("#6462AA"),
+                          ),
                         ),
-                      ),
-              ),
-              GestureDetector(
-                child: _userTouchedToScreen
-                    ? Container(
-                        margin: EdgeInsets.only(bottom: 5),
-                        alignment: Alignment.bottomCenter,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: <Widget>[
-                            videoProgressBar(),
-                            SizedBox(height: 7),
-                            Row(
-                              children: <Widget>[
-                                SizedBox(width: 10),
-                                Container(
-                                  padding: EdgeInsets.all(6),
-                                  color: Colors.transparent,
-                                  child: Text(_currentPositionString,
-                                      style: AppTheme.customTextStyle(
-                                          MyFont.SSPro_semibold,
-                                          16.0,
-                                          Colors.white)),
-                                ),
-                                Expanded(
-                                  child: Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: <Widget>[
-                                      RaisedButton(
-                                          padding: EdgeInsets.all(6.0),
-                                          color: Colors.transparent,
-                                          textColor: Colors.white,
-                                          onPressed: () {
-                                            setState(() {
+                ),
+                GestureDetector(
+                  child: _userTouchedToScreen
+                      ? Container(
+                          margin: EdgeInsets.only(bottom: 5),
+                          alignment: Alignment.bottomCenter,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: <Widget>[
+                              videoProgressBar(),
+                              SizedBox(height: 7),
+                              Row(
+                                children: <Widget>[
+                                  SizedBox(width: 10),
+                                  Container(
+                                    padding: EdgeInsets.all(6),
+                                    color: Colors.transparent,
+                                    child: Text(_currentPositionString,
+                                        style: AppTheme.customTextStyle(
+                                            MyFont.SSPro_semibold,
+                                            16.0,
+                                            Colors.white)),
+                                  ),
+                                  Expanded(
+                                    child: Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: <Widget>[
+                                        RaisedButton(
+                                            padding: EdgeInsets.all(6.0),
+                                            color: Colors.transparent,
+                                            textColor: Colors.white,
+                                            onPressed: () {
                                               setState(() {
-                                                var backwordDuration =
+                                                setState(() {
+                                                  var backwordDuration =
+                                                      _controller.value.position
+                                                              .inSeconds -
+                                                          skipDuration;
+                                                  if (_controller.value.position
+                                                          .inSeconds >=
+                                                      0) {
+                                                    _controller.seekTo(Duration(
+                                                        seconds:
+                                                            backwordDuration));
+                                                  }
+                                                });
+                                              });
+                                            },
+                                            child: Icon(Icons.fast_rewind,
+                                                size: 25)),
+                                        RaisedButton(
+                                            padding: EdgeInsets.all(6.0),
+                                            color: Colors.transparent,
+                                            textColor: Colors.white,
+                                            onPressed: () {
+                                              setState(() {
+                                                _controller.value.isPlaying
+                                                    ? _controller.pause()
+                                                    : _controller.play();
+                                              });
+                                            },
+                                            child: Icon(
+                                                _controller.value.isPlaying
+                                                    ? Icons.pause
+                                                    : Icons.play_arrow,
+                                                size: 25)),
+                                        RaisedButton(
+                                            padding: EdgeInsets.all(6.0),
+                                            color: Colors.transparent,
+                                            textColor: Colors.white,
+                                            onPressed: () {
+                                              setState(() {
+                                                var remainDuration = _controller
+                                                        .value
+                                                        .duration
+                                                        .inSeconds -
                                                     _controller.value.position
-                                                            .inSeconds -
-                                                        skipDuration;
-                                                if (_controller.value.position
-                                                        .inSeconds >=
-                                                    0) {
-                                                  _controller.seekTo(Duration(
-                                                      seconds:
-                                                          backwordDuration));
+                                                        .inSeconds;
+                                                if (remainDuration >= 1) {
+                                                  if (remainDuration < 9) {
+                                                    var forwordDuration =
+                                                        remainDuration - 1;
+                                                    _controller.seekTo(Duration(
+                                                        seconds:
+                                                            forwordDuration));
+                                                  } else {
+                                                    var forwordDuration =
+                                                        _controller
+                                                                .value
+                                                                .position
+                                                                .inSeconds +
+                                                            skipDuration;
+                                                    _controller.seekTo(Duration(
+                                                        seconds:
+                                                            forwordDuration));
+                                                  }
                                                 }
                                               });
-                                            });
-                                          },
-                                          child: Icon(Icons.fast_rewind,
-                                              size: 25)),
-                                      RaisedButton(
-                                          padding: EdgeInsets.all(6.0),
-                                          color: Colors.transparent,
-                                          textColor: Colors.white,
-                                          onPressed: () {
-                                            setState(() {
-                                              _controller.value.isPlaying
-                                                  ? _controller.pause()
-                                                  : _controller.play();
-                                            });
-                                          },
-                                          child: Icon(
-                                              _controller.value.isPlaying
-                                                  ? Icons.pause
-                                                  : Icons.play_arrow,
-                                              size: 25)),
-                                      RaisedButton(
-                                          padding: EdgeInsets.all(6.0),
-                                          color: Colors.transparent,
-                                          textColor: Colors.white,
-                                          onPressed: () {
-                                            setState(() {
-                                              var remainDuration = _controller
-                                                      .value
-                                                      .duration
-                                                      .inSeconds -
-                                                  _controller
-                                                      .value.position.inSeconds;
-                                              if (remainDuration >= 1) {
-                                                if (remainDuration < 9) {
-                                                  var forwordDuration =
-                                                      remainDuration - 1;
-                                                  _controller.seekTo(Duration(
-                                                      seconds:
-                                                          forwordDuration));
-                                                } else {
-                                                  var forwordDuration =
-                                                      _controller.value.position
-                                                              .inSeconds +
-                                                          skipDuration;
-                                                  _controller.seekTo(Duration(
-                                                      seconds:
-                                                          forwordDuration));
-                                                }
-                                              }
-                                            });
-                                          },
-                                          child: Icon(Icons.fast_forward,
-                                              size: 25))
-                                    ],
+                                            },
+                                            child: Icon(Icons.fast_forward,
+                                                size: 25))
+                                      ],
+                                    ),
                                   ),
-                                ),
-                                Container(
-                                  padding: EdgeInsets.all(6),
-                                  color: Colors.transparent,
-                                  child: Text(_remainingString,
-                                      style: AppTheme.customTextStyle(
-                                          MyFont.SSPro_semibold,
-                                          16.0,
-                                          Colors.white)),
-                                ),
-                                SizedBox(width: 10),
-                              ],
-                            )
-                          ],
-                        ))
-                    : Container(),
-                behavior: HitTestBehavior.translucent,
-                onTapDown: (tapdown) {
-                  setState(() {
-                    _userTouchedToScreen = true;
-                    Future.delayed(Duration(seconds: 5)).then((value) {
-                      _userTouchedToScreen = false;
+                                  Container(
+                                    padding: EdgeInsets.all(6),
+                                    color: Colors.transparent,
+                                    child: Text(_remainingString,
+                                        style: AppTheme.customTextStyle(
+                                            MyFont.SSPro_semibold,
+                                            16.0,
+                                            Colors.white)),
+                                  ),
+                                  SizedBox(width: 10),
+                                ],
+                              )
+                            ],
+                          ))
+                      : Container(),
+                  behavior: HitTestBehavior.translucent,
+                  onTapDown: (tapdown) {
+                    setState(() {
+                      _userTouchedToScreen = true;
+                      Future.delayed(Duration(seconds: 5)).then((value) {
+                        _userTouchedToScreen = false;
+                      });
                     });
-                  });
-                },
-              ),
-            ],
-          )
-        );
+                  },
+                ),
+              ],
+            ));
       },
     );
   }
@@ -392,12 +402,12 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
       _playedValue = _controller.value.position.inMilliseconds / _totalDuration;
     });
 
-    if (_controller.value.position >= _controller.value.duration) {
+    /* if (_controller.value.position >= _controller.value.duration) {
       _controller.seekTo(Duration(seconds: 0));
       Future.delayed(Duration(milliseconds: 400)).then((v) {
         Navigator.of(context).pop();
       });
-    }
+    }*/
   }
 
   String formatDuration(Duration position) {

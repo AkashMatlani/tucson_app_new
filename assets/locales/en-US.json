@@ -168,5 +168,6 @@
   "enter_student_last_name": "Please enter student last name",
   "enter_tusd_matric_number": "Please enter tusd matric number",
   "enter_grade": "Please enter grade",
-  "reset_successfully": "Password Reset Successfully"
+  "reset_successfully": "Password Reset Successfully",
+  "referred_by": "Referred by: "
 }

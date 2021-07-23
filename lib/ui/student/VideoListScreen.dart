@@ -13,6 +13,7 @@ import 'package:tucson_app/Model/ContentMasterViewModel.dart';
 import 'package:tucson_app/Model/ContentResponse.dart';
 import 'package:tucson_app/WebService/WebService.dart';
 import 'package:tucson_app/ui/VideoPlayerScreen.dart';
+import 'package:tucson_app/ui/student/flickerVideoPlayer.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
 
@@ -127,8 +128,10 @@ class _VideoListScreenState extends State<VideoListScreen> {
         if (_videoList[index].objectPath.contains("https://www.youtube.com/")) {
           /* Utils.navigateToScreen(
               context, DisplayWebview(_videoList[index].objectPath));*/
-          _launchYoutubeVideo(_videoList[index].objectPath);
+        //  _launchYoutubeVideo(_videoList[index].objectPath);
+          _launchURLYoutube(_videoList[index].objectPath);
         } else if (
+        _videoList[index].objectPath.contains("avi") ||
             _videoList[index].objectPath.contains("mp4") ||
             _videoList[index].objectPath.contains("mov") ||
             _videoList[index].objectPath.contains("m4a") ||
@@ -137,6 +140,9 @@ class _VideoListScreenState extends State<VideoListScreen> {
             _videoList[index].objectPath.contains("mkv")) {
           Utils.navigateToScreen(
               context, VideoPlayerScreen(_videoList[index].objectPath));
+
+      /*    Utils.navigateToScreen(
+              context, SamplePlayer(_videoList[index].objectPath));*/
         } else {
           /* Utils.navigateToScreen(
               context, DisplayWebview(_videoList[index].objectPath));*/
@@ -161,7 +167,6 @@ class _VideoListScreenState extends State<VideoListScreen> {
                   height: MediaQuery.of(context).size.height * 0.24,
                   width: 400,
                 )):
-            //?Image.network('https://img.youtube.com/vi/6cwnBBAVIwE/0.jpg'):
             Container(
                 margin: EdgeInsets.only(top: 30),
                 height: MediaQuery.of(context).size.height * 0.24,
@@ -188,7 +193,14 @@ class _VideoListScreenState extends State<VideoListScreen> {
                                     image: FileImage(File(data)),
                                     fit: BoxFit.fill)));
                       }
+                      else
+                        {
+                         return  ClipRRect(
+                           borderRadius: BorderRadius.circular(20),
+                           child:Image.asset(MyImage.forgotPassword,fit:BoxFit.fill,width: 400,));
+                        }
                     }
+
                     return Center(
                       child: CircularProgressIndicator(),
                     );
@@ -310,6 +322,27 @@ class _VideoListScreenState extends State<VideoListScreen> {
     }
   }
 
+  _launchURLYoutube(String youtubeUrl) async {
+    if (Platform.isIOS) {
+      if (await canLaunch(youtubeUrl)) {
+        await launch(youtubeUrl, forceSafariVC: false);
+      } else {
+        if (await canLaunch(youtubeUrl)) {
+          await launch(youtubeUrl);
+        } else {
+          throw 'Could not launch $youtubeUrl';
+        }
+      }
+    } else {
+      var url = youtubeUrl;
+      if (await canLaunch(url)) {
+        await launch(url);
+      } else {
+        throw 'Could not launch $youtubeUrl';
+      }
+    }
+  }
+
   void _launchURL(String path) async => await canLaunch(path)
       ? await launch(path)
       : throw 'Could not launch $path';
@@ -322,7 +355,7 @@ class _VideoListScreenState extends State<VideoListScreen> {
       maxHeight: 100,
       maxWidth: 200,
       // specify the height of the thumbnail, let the width auto-scaled to keep the source aspect ratio
-      quality: 50,
+      quality: 100,
     );
 
     return fileName;

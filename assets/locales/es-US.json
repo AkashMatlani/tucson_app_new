@@ -159,5 +159,6 @@
     "enter_student_last_name": "Ingrese el apellido del estudiante",
     "enter_tusd_matric_number": "Ingrese el número de matrícula de tusd",
     "enter_grade": "arrendamiento ingrese el grado",
-    "reset_successfully": "Restablecimiento de contraseña con éxito"
+    "reset_successfully": "Restablecimiento de contraseña con éxito",
+    "referred_by": "Referido por:"
   }

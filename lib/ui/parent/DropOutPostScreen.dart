@@ -427,7 +427,7 @@ class _DropOutPostScreenState extends State<DropOutPostScreen> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Text("Referred by: ",
+                          Text('referred_by'.tr(),
                               style: AppTheme.customTextStyle(MyFont.SSPro_bold,
                                   18.0, MyColor.darkLblTextColor())),
                           SizedBox(height: 20),
@@ -447,7 +447,7 @@ class _DropOutPostScreenState extends State<DropOutPostScreen> {
                             'contact_phone'.tr(),
                             _contactRefredByController,
                             textInputAction: TextInputAction.next,
-                            keyboardType: TextInputType.number,
+                            keyboardType: TextInputType.numberWithOptions(signed: true),
                             autofocus: true,
                             inputFormatter: [
                               LengthLimitingTextInputFormatter(11)
@@ -473,7 +473,7 @@ class _DropOutPostScreenState extends State<DropOutPostScreen> {
                             'tusd_matric_number'.tr(),
                             _tusdMaticNumberController,
                             textInputAction: TextInputAction.next,
-                            keyboardType: TextInputType.number,
+                            keyboardType: TextInputType.numberWithOptions(signed: true),
                             autofocus: true,
                           ),
                           SizedBox(height: 10),

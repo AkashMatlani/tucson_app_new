@@ -159,5 +159,6 @@
   "enter_student_last_name": "Vui lòng nhập họ của sinh viên",
   "enter_tusd_matric_number": "Vui lòng nhập số matric tusd",
   "enter_grade": "Vui lòng nhập điểm",
-  "reset_successfully": "Đặt lại mật khẩu thành công"
+  "reset_successfully": "Đặt lại mật khẩu thành công",
+  "referred_by": "Gọi bằng:"
 }
