@@ -296,7 +296,7 @@ class _CalendarEventScreenState extends State<CalendarEventScreen> {
                       ),
                     ) : Container(),
                     Container(
-                      height: Platform.isIOS?cHeight * 0.26:cHeight *0.28,
+                      height: cHeight *0.28,
                       child: Scrollbar(
                         thickness: 5,
                         child: SingleChildScrollView(

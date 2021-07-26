@@ -106,7 +106,7 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
     blockSizeVertical = screenHeight / 100;
     return WillPopScope(
       onWillPop: () async {
-        if(widget.fromScreen.compareTo("Student") == 0 ){
+        if (widget.fromScreen.compareTo("Student") == 0) {
           Utils.backWithNoTransition(context, StudentDashboardScreen());
         } else {
           Utils.backWithNoTransition(context, RequestForServiceScreen());

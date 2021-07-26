@@ -168,14 +168,14 @@ class _BlogDetailsScreenState extends State<BlogDetailsScreen> {
                       children: [
                         Container(
                             margin: EdgeInsets.only(top: 20),
-                            height: MediaQuery.of(context).size.height * 0.24,
+                            height: MediaQuery.of(context).size.height * 0.22,
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(20)),
                             alignment: Alignment.center,
                             child: SvgPicture.asset(
                               svgPicture,
                               fit: BoxFit.fill,
-                              height: MediaQuery.of(context).size.height * 0.24
+                              height: MediaQuery.of(context).size.height * 0.22
                             )
                         ),
                         SizedBox(height: 15),
