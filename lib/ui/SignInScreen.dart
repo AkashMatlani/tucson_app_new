@@ -10,11 +10,10 @@ import 'package:tucson_app/GeneralUtils/Utils.dart';
 import 'package:tucson_app/Model/AuthViewModel.dart';
 import 'package:tucson_app/WebService/WebService.dart';
 import 'package:tucson_app/ui/ForgotPwdScreen.dart';
+import 'package:tucson_app/ui/SignUpScreen.dart';
 import 'package:tucson_app/ui/community/CommunityDashboardScreen.dart';
+import 'package:tucson_app/ui/parent/ParentGuardianDashBoard.dart';
 import 'package:tucson_app/ui/student/StudentDashboardScreen.dart';
-
-import 'SignUpScreen.dart';
-import 'parent/ParentGuardianDashBoard.dart';
 
 
 class SignInScreen extends StatefulWidget {
@@ -28,6 +27,7 @@ class _SignInScreenState extends State<SignInScreen> {
   var _pwdController = TextEditingController();
   String _languageSortCode = "en";
   String _languageName = "English";
+  String translaterKey = "";
   bool _showPwd = true;
 
   AuthViewModel _authViewModel = AuthViewModel();
@@ -43,10 +43,10 @@ class _SignInScreenState extends State<SignInScreen> {
   void initState() {
     super.initState();
     getSharedPrefsData();
-   /* _emailController.text="pamela.leeper12@yopmail.com";
+ /*   _emailController.text="pamela.leeper12@yopmail.com";
      _pwdController.text="12345678";*/
   //  _emailController.selection = TextSelection.fromPosition(TextPosition(offset: _emailController.text.length));
-/*    _emailController.text="akash.maltani@dashtechinc.com";
+    /*_emailController.text="akash.maltani@dashtechinc.com";
     _pwdController.text="12345678";*/
    /* _emailController.text="Test@gmail.com";
     _pwdController.text="12345678";*/
@@ -55,6 +55,7 @@ class _SignInScreenState extends State<SignInScreen> {
   }
 
   getSharedPrefsData() async {
+    String apiKey = await PrefUtils.getValueFor(PrefUtils.googleTranslateKey);
     var code = await PrefUtils.getValueFor(PrefUtils.sortLanguageCode);
     if(code == null){
       code = "en";
@@ -62,6 +63,7 @@ class _SignInScreenState extends State<SignInScreen> {
     setState(() {
       _languageSortCode = code;
       context.setLocale(Locale(_languageSortCode, 'US'));
+      translaterKey = apiKey;
     });
   }
 
@@ -153,7 +155,7 @@ class _SignInScreenState extends State<SignInScreen> {
                                     value: 'vi'
                                 )
                               ],
-                              onChanged: (value){
+                              onChanged: translaterKey.isNotEmpty ? (value){
                                 setState(() {
                                   _languageSortCode = value.toString();
                                   context.setLocale(Locale(_languageSortCode, 'US'));
@@ -172,7 +174,7 @@ class _SignInScreenState extends State<SignInScreen> {
                                     _languageName = "Vietnamese";;
                                   }
                                 });
-                              },
+                              } : null,
                             ),
                           ),
                           SizedBox(height: 15),

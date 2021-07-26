@@ -1,11 +1,10 @@
 import 'dart:async';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tucson_app/GeneralUtils/Constant.dart';
-import 'package:tucson_app/GeneralUtils/Utils.dart';
 import 'package:tucson_app/Model/SchoolListResponse.dart';
-import 'package:easy_localization/easy_localization.dart';
 
 import 'ColorExtension.dart';
 
