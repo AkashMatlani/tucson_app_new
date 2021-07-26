@@ -31,7 +31,7 @@ class _SignInScreenState extends State<SignInScreen> {
   bool _showPwd = true;
 
   AuthViewModel _authViewModel = AuthViewModel();
-
+  var code;
   void _togglePwd() {
     setState(() {
       _showPwd = !_showPwd;
@@ -43,7 +43,7 @@ class _SignInScreenState extends State<SignInScreen> {
   void initState() {
     super.initState();
     getSharedPrefsData();
- /*   _emailController.text="pamela.leeper12@yopmail.com";
+   /* _emailController.text="pamela.leeper12@yopmail.com";
      _pwdController.text="12345678";*/
   //  _emailController.selection = TextSelection.fromPosition(TextPosition(offset: _emailController.text.length));
     /*_emailController.text="akash.maltani@dashtechinc.com";
@@ -56,7 +56,7 @@ class _SignInScreenState extends State<SignInScreen> {
 
   getSharedPrefsData() async {
     String apiKey = await PrefUtils.getValueFor(PrefUtils.googleTranslateKey);
-    var code = await PrefUtils.getValueFor(PrefUtils.sortLanguageCode);
+    code = await PrefUtils.getValueFor(PrefUtils.sortLanguageCode);
     if(code == null){
       code = "en";
     }
@@ -106,10 +106,14 @@ class _SignInScreenState extends State<SignInScreen> {
                           Text('sign_in'.tr(), style: AppTheme.customTextStyle(MyFont.SSPro_bold, 30.0, MyColor.darkLblTextColor())),
                           SizedBox(height: 20),
                           Text('email'.tr(), style: AppTheme.regularTextStyle().copyWith(fontSize: 14)),
-                          textFieldFor('email'.tr(), _emailController, textInputAction: TextInputAction.next, keyboardType: TextInputType.emailAddress),
+                          textFieldFor('email'.tr(), _emailController, textInputAction: TextInputAction.next, keyboardType: TextInputType.emailAddress,isRtl: _languageSortCode.compareTo("en") == 0
+                              ? false
+                              : true,),
                           SizedBox(height: 10),
                           Text('password'.tr(), style: AppTheme.regularTextStyle().copyWith(fontSize: 14)),
-                          textFieldFor('password'.tr(), _pwdController, textInputAction: TextInputAction.done, keyboardType: TextInputType.text, obscure:_showPwd, suffixIcon: InkWell(onTap:(){_togglePwd();},child: Padding(padding: EdgeInsets.fromLTRB(10, 15, 0, 15), child: SvgPicture.asset(_showPwd ? MyImage.hidePwdIcon : MyImage.viewPwdIcon)))),
+                          textFieldFor('password'.tr(), _pwdController, textInputAction: TextInputAction.done, keyboardType: TextInputType.text, obscure:_showPwd, isRtl: _languageSortCode.compareTo("en") == 0
+                              ? false
+                              : true,suffixIcon: InkWell(onTap:(){_togglePwd();},child: Padding(padding: EdgeInsets.fromLTRB(10, 15, 0, 15), child: SvgPicture.asset(_showPwd ? MyImage.hidePwdIcon : MyImage.viewPwdIcon)))),
                           SizedBox(height: 10),
                           Text('select_language'.tr(), style: AppTheme.regularTextStyle().copyWith(fontSize: 14)),
                           SizedBox(height: 10),

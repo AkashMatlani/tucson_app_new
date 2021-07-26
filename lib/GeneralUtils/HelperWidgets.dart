@@ -1,3 +1,5 @@
+import 'package:auto_direction/auto_direction.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'ColorExtension.dart';
@@ -21,10 +23,12 @@ Widget textFieldFor(String hint,
       var inputFormatter,
       onEditingComplete,
       onTap,
+      bool isRtl=false,
       onSubmit,autofocus}) {
   return SizedBox(
     height: 50,
     child: TextField(
+     textDirection: isRtl?TextDirection.rtl:TextDirection.ltr,
       autofocus: false,
       autocorrect: autocorrect,
       enabled: enabled,
