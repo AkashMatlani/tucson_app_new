@@ -12,20 +12,24 @@ import 'LabelStr.dart';
 class Utils {
 
   static void showLoader(bool show, BuildContext context) {
-    if (show) {
+    if(show){
       showDialog(
           context: context,
           barrierDismissible: false,
           builder: (BuildContext ctx) {
-            return Center(
-                child: SpinKitCircle(
-                  color: Colors.black,
-                  size: 80,
-                ));
-          });
+            return WillPopScope(
+              onWillPop: () async => false,
+              child: Center(
+                  child: SpinKitCircle(
+                    color: Colors.black,
+                    size: 80,
+                  )
+              ),
+            );
+          }
+      );
     } else {
       Navigator.of(context, rootNavigator: true).pop("");
-      //Navigator.of(dialogContext).pop();
     }
   }
 
