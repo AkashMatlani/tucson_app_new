@@ -727,6 +727,7 @@ class _DropOutPostScreenState extends State<DropOutPostScreen> {
         }
       } else {
         Utils.showToast(context, response.message, Colors.red);
+        Utils.showLoader(false, context);
         print(
             "******************** ${response.message} ************************");
       }
@@ -774,7 +775,6 @@ class _DropOutPostScreenState extends State<DropOutPostScreen> {
   }
 
   getWebApiFromUrl(BuildContext context) {
-    Utils.showLoader(true, context);
     var params = {
       "referFirstName": _firstNameRefredByController.text,
       "referLastName": _lastNameRefredByController.text,
@@ -793,7 +793,6 @@ class _DropOutPostScreenState extends State<DropOutPostScreen> {
         if (response.body != null) {
           setState(() {
             isLoading = false;
-            Utils.showLoader(false, context);
             //  _mailForDropDown = [];
             //_schoolList.add(SchoolListResponse(id: 0, name: LabelStr.lblSelectSchool, schoolCategoryId: 0, schoolCategoryName: "",  createdBy: 0,  createdOn: "",  updatedBy: 0,  updatedOn: ""));
             /* for (var data in response.body["messages"]) {

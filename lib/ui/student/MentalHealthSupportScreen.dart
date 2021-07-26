@@ -19,7 +19,6 @@ import 'package:tucson_app/GeneralUtils/PrefsUtils.dart';
 import 'package:tucson_app/GeneralUtils/Utils.dart';
 import 'package:tucson_app/Model/HealthSupportResponse.dart';
 import 'package:tucson_app/WebService/WebService.dart';
-import 'package:tucson_app/ui/VideoPlayerScreen.dart';
 import 'package:tucson_app/ui/parent/RequestForServiceScreen.dart';
 import 'package:tucson_app/ui/student/StudentDashboardScreen.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -45,7 +44,6 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
   late Position _currentPosition;
   bool loadedApiCall = false;
   late var tempvalue;
-  late var uint8list = null;
   //late bool isPopUpOpenFirst;
   String _languageSortCode = "en";
   bool _isPlayerReady = false;

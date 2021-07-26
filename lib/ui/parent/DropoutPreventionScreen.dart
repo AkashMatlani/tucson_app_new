@@ -35,6 +35,7 @@ class _DropoutPreventionScreenState extends State<DropoutPreventionScreen> {
   late YoutubeMetaData _videoMetaData;
   bool _isPlayerReady = false;
   String? languageCode;
+  String youTubeId = "bJTpz1fL4k4";
   late PlayerState _playerState;
   final List<String> _ids = [
     'bJTpz1fL4k4',
@@ -304,12 +305,12 @@ class _DropoutPreventionScreenState extends State<DropoutPreventionScreen> {
                   .add(DropOutPreventionEmailsModel.fromJson(data));
             }
           });
-          if(languageCode!.compareTo("en") != 0){
+      /*    if(languageCode!.compareTo("en") != 0){
          //   translateListData();
           } else {
             Utils.showLoader(false, context);
             isLoading = false;
-          }
+          }*/
         } else {
           isLoading = false;
           Utils.showLoader(false, context);
@@ -412,7 +413,7 @@ class _DropoutPreventionScreenState extends State<DropoutPreventionScreen> {
     }
   }
 
- /* translateListData(){
+/*  translateListData(){
     List<String> nameList=[];
     List<ContentTransactionResponse> tempList =[];
     for(var items in _dropOutModelList){
