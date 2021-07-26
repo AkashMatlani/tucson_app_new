@@ -109,10 +109,17 @@ class MyImage {
   static const splashImage="assets/images/bg_images/launch_image.png";
   static const videoUrlImage = "assets/images/bg_images/default_video_thumb.png";
   static const audioUrlImage = "assets/images/bg_images/default_audio_thumb.jpg";
-  static const articleThubmail = "assets/images/icons/article.svg";
-  static const blogThubmail = "assets/images/icons/blog.svg";
-  static const storiesThubmail = "assets/images/icons/stories.svg";
   static const youTubeThubmail = "assets/images/icons/youtube.svg";
+
+  static const activityIcon = "assets/images/icons/ic_activity.svg";
+  static const articalIcon = "assets/images/icons/ic_artical.svg";
+  static const storyIcon = "assets/images/icons/ic_story.svg";
+  static const blogIcon = "assets/images/icons/ic_blog.svg";
+
+  static const activityThumb = "assets/images/icons/activity_bg.svg";
+  static const articalThumb = "assets/images/icons/artical_bg.svg";
+  static const storyThumb = "assets/images/icons/story_bg.svg";
+  static const blogThumb = "assets/images/icons/blog_bg.svg";
 }
 
 class MyColor {

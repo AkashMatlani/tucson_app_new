@@ -1,24 +1,24 @@
-/// tusdEventId : 26
+/// tusdEventId : 18
 /// schoolId : 0
-/// eventTypeId : 2
-/// eventName : "Back-to-School Sport-Physical Fair"
-/// fromDateTime : "2021-07-25T18:30:00"
-/// toDateTime : "2021-07-30T18:30:00"
-/// eventDetail : "<span style=\"font-family: AvenirNext-DemiBold; font-size: 15px;\">Silbermond is a German female fronted rock and pop band from Bautzen in the district of Saxony. They were formed in 2000, at first under a different name and singing only in English language. In 2001, they changed their name into Silbermond and started to write songs only in German language. Their first album&nbsp;</span><em style=\"font-family: AvenirNext-DemiBold; font-size: 15px;\">Verschwende deine Zeit&nbsp;</em><span style=\"font-family: AvenirNext-DemiBold; font-size: 15px;\">(</span><em style=\"font-family: AvenirNext-DemiBold; font-size: 15px;\">Waste Your Time</em><span style=\"font-family: AvenirNext-DemiBold; font-size: 15px;\">) came out in 2004 and reached double platinum status in Germany and Austria. The rise of Silbermond began the general hype for female fronted rock bands in Germany, that brought them and similar bands like \"Wir sind Helden\" or \"Juli\" big success.</span>"
+/// eventTypeId : 1
+/// eventName : "Demo events for all the  school"
+/// fromDateTime : "2021-07-11T00:00:00"
+/// toDateTime : "2021-07-15T00:00:00"
+/// eventDetail : "<h2>1. Compelling event descriptions</h2><p>The event description is one of the most crucial elements of the event website.</p><p>It needs to be clear, concise, and have a strong CTA to drive attendees to purchase a ticket or secure an RSVP. Don&#8217;t forget to make sure it&#8217;s written well, free of typos and grammar mistakes. Even though writing a few sentences may seem easy, it can still be a tricky task for less experienced writers. If you need a hand, you can always employ the writing help of writing services like&#160;<a href=\"https://www.essaysontime.com.au/\">EssaysOnTime</a>&#160;or Fiverr.<br><br></p><h2>2. Company info and contact information</h2><p>Adding company information and contacts is the idea which makes sense. This way, you will allow potential guests and clients to approach you and ask about the other details of your event, so don&#8217;t make a rookie mistake and forget to provide them with some basic information.</p><div class=\"wp-block-lazyblock-client-type-planners lazyblock-client-type-planners-Z18D4HD\"><a href=\"https://www.socialtables.com/signup/\"><div class=\"cta-block\"><h2>Bring successful</h2></div></a></div>"
 /// freeFields1 : ""
 /// freeFields2 : ""
 /// freeFields3 : ""
 /// freeFields4 : ""
 /// isActive : true
-/// shareMode : true
+/// shareMode : false
 /// createdBy : 0
 /// createdOn : "0001-01-01T00:00:00"
 /// updatedBy : 0
 /// updatedOn : "0001-01-01T00:00:00"
-/// eventTypeName : "Venue/Location"
-/// schoolName : "Doolen Middle School"
-/// startTime : "2:00 AM"
-/// endTime : "9:00 PM"
+/// eventTypeName : "Virtual"
+/// schoolName : null
+/// startTime : "1:30 AM"
+/// endTime : "3:30 AM"
 /// schoolIds : null
 
 class EventForMobileResponse {
@@ -40,7 +40,7 @@ class EventForMobileResponse {
   int? _updatedBy;
   String? _updatedOn;
   String? _eventTypeName;
-  String? _schoolName;
+  dynamic _schoolName;
   String? _startTime;
   String? _endTime;
   dynamic _schoolIds;
@@ -63,7 +63,7 @@ class EventForMobileResponse {
   int get updatedBy => _updatedBy!;
   String get updatedOn => _updatedOn!;
   String get eventTypeName => _eventTypeName!;
-  String get schoolName => _schoolName!;
+  dynamic get schoolName => _schoolName;
   String get startTime => _startTime!;
   String get endTime => _endTime!;
   dynamic get schoolIds => _schoolIds;
@@ -87,7 +87,7 @@ class EventForMobileResponse {
       int? updatedBy,
       String? updatedOn,
       String? eventTypeName,
-      String? schoolName,
+      dynamic schoolName, 
       String? startTime,
       String? endTime,
       dynamic schoolIds}){
@@ -166,4 +166,5 @@ class EventForMobileResponse {
     map["schoolIds"] = _schoolIds;
     return map;
   }
+
 }

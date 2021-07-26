@@ -191,10 +191,10 @@ class _CommunityEventScreenState extends State<CommunityEventScreen> {
     for(var items in _communityEventList){
       nameList.add(items.objectName);
     }
-    String nameStr = nameList.join("==)");
+    String nameStr = nameList.join("===");
     WebService.translateApiCall(languageCode!, nameStr, (isSuccess, response){
       if(isSuccess){
-        List<String> resultArr = response.toString().split("==)");
+        List<String> resultArr = response.toString().split("===");
         for(int i=0; i< resultArr.length; i++){
           tempList.add(ContentTransactionResponse(contentTransactionId: _communityEventList[i].contentTransactionId,
               contentMasterId: _communityEventList[i].contentMasterId,

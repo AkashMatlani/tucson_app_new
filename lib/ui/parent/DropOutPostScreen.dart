@@ -742,11 +742,11 @@ class _DropOutPostScreenState extends State<DropOutPostScreen> {
     for (var data in _schoolList) {
       schoolNameList.add(data.name);
     }
-    String schoolName = schoolNameList.join("==)");
+    String schoolName = schoolNameList.join("===");
     WebService.translateApiCall(languageCode!, schoolName,
         (isSuccess, response) {
       if (isSuccess) {
-        var resultArr = response.toString().split("==)");
+        var resultArr = response.toString().split("===");
         List<SchoolListResponse> tempList = [];
         for (int i = 0; i < resultArr.length; i++) {
           tempList.add(SchoolListResponse(

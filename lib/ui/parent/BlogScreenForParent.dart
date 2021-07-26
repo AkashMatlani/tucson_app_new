@@ -4,21 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:tucson_app/GeneralUtils/ColorExtension.dart';
 import 'package:tucson_app/GeneralUtils/Constant.dart';
-import 'package:tucson_app/GeneralUtils/LabelStr.dart';
 import 'package:tucson_app/GeneralUtils/PrefsUtils.dart';
 import 'package:tucson_app/GeneralUtils/Utils.dart';
 import 'package:tucson_app/Model/ContentMasterViewModel.dart';
 import 'package:tucson_app/Model/ContentResponse.dart';
-import 'package:tucson_app/Model/GridListItems.dart';
 import 'package:tucson_app/WebService/WebService.dart';
-import 'package:tucson_app/ui/VideoPlayerScreen.dart';
 import 'package:tucson_app/ui/student/BlogDetailsScreen.dart';
-import 'package:tucson_app/ui/student/StudentDashboardScreen.dart';
-import 'package:tucson_app/ui/student/VideoListScreen.dart';
 
-
-import '../student/BlogScreen.dart';
-import '../student/VideoForIOS.dart';
 
 class BlogScreenForParent extends StatefulWidget {
 
@@ -34,7 +26,7 @@ class BlogScreenForParent extends StatefulWidget {
 class _BlogScreenForParentState extends State<BlogScreenForParent> {
 
   String? languageCode;
-  String svgPicture = MyImage.articleThubmail;
+  String svgPicture = MyImage.articalIcon;
 
   List<ContentResponse> _elementryList = [];
   List<ContentResponse> _middleHighList = [];
@@ -87,35 +79,44 @@ class _BlogScreenForParentState extends State<BlogScreenForParent> {
         widget.title = 'activity_details'.tr();
         Utils.navigateToScreen(context, BlogDetailsScreen(widget.title, _displayContentList[index]));
       },
-      child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-                padding: EdgeInsets.only(top: 5),
-                child: Text(_displayContentList[index].contentTitle,
-                    style: AppTheme.customTextStyle(
-                        MyFont.SSPro_bold, 20.0, Color.fromRGBO(0, 0, 0, 1)))),
-            Text(
-              Utils.convertDate(_displayContentList[index].createdOn,
-                  DateFormat("MMM dd, yyyy")),
-              style: AppTheme.regularTextStyle().copyWith(
-                  fontSize: 14, color: Color.fromRGBO(111, 111, 111, 1)),
-            ),
-            SizedBox(height: 10),
-            Container(
-              height: MediaQuery.of(context).size.height * 0.24,
-              decoration: BoxDecoration(borderRadius: BorderRadius.circular(20), color: Colors.white, border: Border.all(color: HexColor("#6462AA"), width: 0.3)),
-              alignment: Alignment.center,
-              child: SvgPicture.asset(
-                svgPicture,
-                fit: BoxFit.fitWidth,
-                height: MediaQuery.of(context).size.height * 0.20,
-                width: 400,
+      child: Card(
+        elevation: 1,
+        margin: EdgeInsets.all(5),
+        child: Padding(
+          padding: EdgeInsets.fromLTRB(5, 15, 5, 15),
+          child: Row(
+            children: [
+              Container(
+                margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                child: SvgPicture.asset(svgPicture, height: 50, width: 50),
               ),
-            ),
-            SizedBox(height: 20)
-          ]),
+              Expanded(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(_displayContentList[index].contentTitle, style: AppTheme.customTextStyle(MyFont.SSPro_semibold, 16.0, MyColor.normalTextColor())),
+                    SizedBox(height: 5),
+                    Text(
+                      Utils.convertDate(_displayContentList[index].createdOn,
+                          DateFormat("MMM dd, yyyy")),
+                      style: AppTheme.regularTextStyle().copyWith(
+                          fontSize: 14, color: Color.fromRGBO(111, 111, 111, 1)),
+                    )
+                  ],
+                ),
+              ),
+              Container(
+                height: 50,
+                width: 50,
+                margin: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                padding: EdgeInsets.all(8),
+                child: SvgPicture.asset(MyImage.listForwordIcon),
+              )
+            ],
+          ),
+        ),
+      ),
     );
   }
 
@@ -178,10 +179,10 @@ class _BlogScreenForParentState extends State<BlogScreenForParent> {
     for (var itemName in _displayContentList) {
       blogNameList.add(itemName.contentTitle);
     }
-    String listStr = blogNameList.join("==)");
+    String listStr = blogNameList.join("===");
     WebService.translateApiCall(languageCode!, listStr, (isSuccess, response) {
       if (isSuccess) {
-        List<String> resultArr = response.toString().split("==)");
+        List<String> resultArr = response.toString().split("===");
         for (int i = 0; i < resultArr.length; i++) {
           tempList.add(ContentResponse(
               contentMasterId: _displayContentList[i].contentMasterId,

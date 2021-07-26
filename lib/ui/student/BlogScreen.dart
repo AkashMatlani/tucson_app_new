@@ -35,13 +35,13 @@ class _BlogScreenState extends State<BlogScreen> {
   void initState() {
     super.initState();
     if (widget.title.compareTo('student_blogs'.tr()) == 0 || widget.title.compareTo('blogs'.tr()) == 0 ) {
-      svgPicture = MyImage.blogThubmail;
+      svgPicture = MyImage.blogIcon;
     } else if (widget.title.compareTo('stories'.tr()) == 0) {
-      svgPicture = MyImage.storiesThubmail;
+      svgPicture = MyImage.storyIcon;
     } else if (widget.title.compareTo('articles'.tr()) == 0) {
-      svgPicture = MyImage.articleThubmail;
+      svgPicture = MyImage.articalIcon;
     }else if (widget.title.compareTo('activites'.tr()) == 0) {
-      svgPicture = MyImage.activitesIcon;
+      svgPicture = MyImage.activityIcon;
     }
     _getSchoolId();
   }
@@ -149,36 +149,44 @@ class _BlogScreenState extends State<BlogScreen> {
         Utils.navigateToScreen(
             context, BlogDetailsScreen(widget.title, _contentList[index]));
       },
-      child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-                padding: EdgeInsets.only(top: 5),
-                child: Text(_contentList[index].contentTitle,
-                    style: AppTheme.customTextStyle(
-                        MyFont.SSPro_bold, 20.0, Color.fromRGBO(0, 0, 0, 1)))),
-            Text(
-              Utils.convertDate(_contentList[index].createdOn,
-                  DateFormat("MMM dd, yyyy")),
-              style: AppTheme.regularTextStyle().copyWith(
-                  fontSize: 14, color: Color.fromRGBO(111, 111, 111, 1)),
-            ),
-            SizedBox(height: 10),
-            Container(
-              height: MediaQuery.of(context).size.height * 0.24,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20), color: Colors.white, border: Border.all(color: HexColor("#6462AA"), width: 0.3)),
-              alignment: Alignment.center,
-              child: SvgPicture.asset(
-                svgPicture,
-                fit: BoxFit.fitWidth,
-                height: MediaQuery.of(context).size.height * 0.20,
-                width: 400,
+      child: Card(
+        elevation: 1,
+        margin: EdgeInsets.all(5),
+        child: Padding(
+          padding: EdgeInsets.fromLTRB(5, 15, 5, 15),
+          child: Row(
+            children: [
+              Container(
+                margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                child: SvgPicture.asset(svgPicture, height: 50, width: 50),
               ),
-            ),
-            SizedBox(height: 20)
-          ]),
+              Expanded(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(_contentList[index].contentTitle, style: AppTheme.customTextStyle(MyFont.SSPro_semibold, 16.0, MyColor.normalTextColor())),
+                    SizedBox(height: 5),
+                    Text(
+                      Utils.convertDate(_contentList[index].createdOn,
+                          DateFormat("MMM dd, yyyy")),
+                      style: AppTheme.regularTextStyle().copyWith(
+                          fontSize: 14, color: Color.fromRGBO(111, 111, 111, 1)),
+                    )
+                  ],
+                ),
+              ),
+              Container(
+                height: 50,
+                width: 50,
+                margin: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                padding: EdgeInsets.all(8),
+                child: SvgPicture.asset(MyImage.listForwordIcon),
+              )
+            ],
+          ),
+        ),
+      ),
     );
   }
 
@@ -197,7 +205,6 @@ class _BlogScreenState extends State<BlogScreen> {
   _getContentList(int schoolId) {
     ContentMasterViewModel _contentViewModel = ContentMasterViewModel();
     var params;
-
 
     if (widget.title.compareTo('student_blogs'.tr()) == 0 || widget.title.compareTo('blogs'.tr()) == 0) {
       params = {
@@ -255,10 +262,10 @@ class _BlogScreenState extends State<BlogScreen> {
     for (var itemName in _contentList) {
       blogNameList.add(itemName.contentTitle);
     }
-    String listStr = blogNameList.join("==)");
+    String listStr = blogNameList.join("===");
     WebService.translateApiCall(languageCode!, listStr, (isSuccess, response) {
       if (isSuccess) {
-        List<String> resultArr = response.toString().split("==)");
+        List<String> resultArr = response.toString().split("===");
         for (int i = 0; i < resultArr.length; i++) {
           tempList.add(ContentResponse(
               contentMasterId: _contentList[i].contentMasterId,

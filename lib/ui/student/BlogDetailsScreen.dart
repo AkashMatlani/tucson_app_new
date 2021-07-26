@@ -55,13 +55,13 @@ class _BlogDetailsScreenState extends State<BlogDetailsScreen> {
   void initState() {
     super.initState();
     if (widget.title.compareTo('blog_details'.tr()) == 0) {
-      svgPicture = MyImage.blogThubmail;
+      svgPicture = MyImage.blogThumb;
     } else if (widget.title.compareTo('story_details'.tr()) == 0) {
-      svgPicture = MyImage.storiesThubmail;
+      svgPicture = MyImage.storyThumb;
     } else if (widget.title.compareTo('article_details'.tr()) == 0) {
-      svgPicture = MyImage.articleThubmail;
+      svgPicture = MyImage.articalThumb;
     } else if (widget.title.compareTo('activity_details'.tr()) == 0) {
-      svgPicture = MyImage.articleThubmail;
+      svgPicture = MyImage.activityThumb;
     }
 
     for (var data in widget.contentResponse.contentTransactionTypeJoin) {
@@ -158,10 +158,10 @@ class _BlogDetailsScreenState extends State<BlogDetailsScreen> {
               left: MediaQuery.of(context).size.height * 0.012,
               right: MediaQuery.of(context).size.height * 0.012,
               child: Container(
-                height: MediaQuery.of(context).size.height * 0.82,
+                height: MediaQuery.of(context).size.height * 0.88,
                 child: SingleChildScrollView(
                   child: Container(
-                    margin: EdgeInsets.fromLTRB(10, 20, 10, 10),
+                    margin: EdgeInsets.fromLTRB(10, 5, 10, 10),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -170,15 +170,12 @@ class _BlogDetailsScreenState extends State<BlogDetailsScreen> {
                             margin: EdgeInsets.only(top: 20),
                             height: MediaQuery.of(context).size.height * 0.24,
                             decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(20),
-                                color: Colors.white,
-                                border: Border.all(color: HexColor("#6462AA"), width: 0.3)),
+                                borderRadius: BorderRadius.circular(20)),
                             alignment: Alignment.center,
                             child: SvgPicture.asset(
                               svgPicture,
-                              fit: BoxFit.fitWidth,
-                              height: MediaQuery.of(context).size.height * 0.20,
-                              width: 400,
+                              fit: BoxFit.fill,
+                              height: MediaQuery.of(context).size.height * 0.24
                             )
                         ),
                         SizedBox(height: 15),
@@ -381,14 +378,14 @@ class _BlogDetailsScreenState extends State<BlogDetailsScreen> {
   void _translateData() {
     Utils.showLoader(true, context);
     String inputData = widget.contentResponse.contentTitle +
-        "==)" +
+        "===" +
         widget.contentResponse.content;
     WebService.translateApiCall(languageCode!, inputData,
         (isSuccess, response) {
       if (isSuccess) {
         setState(() {
-          contentTitle = response.toString().split("==)")[0];
-          contentDesc = "<div>"+response.toString().split("==)")[1]+"</div>";
+          contentTitle = response.toString().split("===")[0];
+          contentDesc = "<div>"+response.toString().split("===")[1]+"</div>";
         });
       } else {
         Utils.showToast(context, "Page Translation Failed", Colors.red);
