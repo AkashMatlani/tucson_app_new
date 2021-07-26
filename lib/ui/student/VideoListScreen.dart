@@ -101,20 +101,23 @@ class _VideoListScreenState extends State<VideoListScreen> {
             top: MediaQuery.of(context).size.height * 0.12,
             left: MediaQuery.of(context).size.height * 0.012,
             right: MediaQuery.of(context).size.height * 0.012,
-            child: Container(
-              height: MediaQuery.of(context).size.height * 0.88,
-              child: _videoList.length == 0
-                  ? emptyListView()
-                  : SingleChildScrollView(
-                      child: ListView.builder(
-                          itemCount: _videoList.length,
-                          shrinkWrap: true,
-                          physics: ScrollPhysics(),
-                          padding: EdgeInsets.all(10),
-                          itemBuilder: (BuildContext context, int position) {
-                            return _listRowItems(context, position);
-                          }),
-                    ),
+            child: Scrollbar(
+              thickness: 5,
+              child: Container(
+                height: MediaQuery.of(context).size.height * 0.88,
+                child: _videoList.length == 0
+                    ? emptyListView()
+                    : SingleChildScrollView(
+                        child: ListView.builder(
+                            itemCount: _videoList.length,
+                            shrinkWrap: true,
+                            physics: ScrollPhysics(),
+                            padding: EdgeInsets.all(10),
+                            itemBuilder: (BuildContext context, int position) {
+                              return _listRowItems(context, position);
+                            }),
+                      ),
+              ),
             ),
           )
         ],
@@ -153,10 +156,15 @@ class _VideoListScreenState extends State<VideoListScreen> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            Padding(
+                padding: EdgeInsets.only(top: 5, bottom: 5),
+                child: Text(_videoList[index].objectName,
+                    style: AppTheme.customTextStyle(
+                        MyFont.SSPro_bold, 20.0, Color.fromRGBO(0, 0, 0, 1)))),
             _videoList[index].objectPath.contains("https://www.youtube.com/")
             ?   Container(
-                margin: EdgeInsets.only(top: 30),
-                height: MediaQuery.of(context).size.height * 0.24,
+                margin: EdgeInsets.only(bottom: 10),
+                height: MediaQuery.of(context).size.height * 0.23,
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
                     color: Colors.white),
@@ -164,12 +172,12 @@ class _VideoListScreenState extends State<VideoListScreen> {
                 child: SvgPicture.asset(
                   MyImage.youTubeThubmail,
                   fit: BoxFit.fitWidth,
-                  height: MediaQuery.of(context).size.height * 0.24,
+                  height: MediaQuery.of(context).size.height * 0.22,
                   width: 400,
                 )):
             Container(
-                margin: EdgeInsets.only(top: 30),
-                height: MediaQuery.of(context).size.height * 0.24,
+                margin: EdgeInsets.only(bottom: 10),
+                height: MediaQuery.of(context).size.height * 0.23,
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
                     color: Colors.white),
@@ -185,7 +193,7 @@ class _VideoListScreenState extends State<VideoListScreen> {
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(20),
                                 color: Colors.white),
-                            height: MediaQuery.of(context).size.height * 0.24,
+                            height: MediaQuery.of(context).size.height * 0.22,
                             width: 400,
                             child: ClipRRect(
                                 borderRadius: BorderRadius.circular(20),
@@ -207,11 +215,6 @@ class _VideoListScreenState extends State<VideoListScreen> {
                   },
                   future: getThumbNail(_videoList[index].objectPath),
                 )),
-            Padding(
-                padding: EdgeInsets.only(top: 5, bottom: 20),
-                child: Text(_videoList[index].objectName,
-                    style: AppTheme.customTextStyle(
-                        MyFont.SSPro_bold, 20.0, Color.fromRGBO(0, 0, 0, 1))))
           ]),
     );
   }
@@ -279,10 +282,10 @@ class _VideoListScreenState extends State<VideoListScreen> {
     for (var items in _videoList) {
       nameList.add(items.objectName);
     }
-    String nameStr = nameList.join("==)");
+    String nameStr = nameList.join("===");
     WebService.translateApiCall(languageCode!, nameStr, (isSuccess, response) {
       if (isSuccess) {
-        List<String> resultArr = response.toString().split("==)");
+        List<String> resultArr = response.toString().split("===");
         for (int i = 0; i < resultArr.length; i++) {
           tempList.add(ContentTransactionResponse(
               contentTransactionId: _videoList[i].contentTransactionId,

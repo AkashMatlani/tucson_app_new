@@ -7,7 +7,10 @@ import 'package:flutter_calendar_carousel/classes/event.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:tucson_app/GeneralUtils/ColorExtension.dart';
 import 'package:tucson_app/GeneralUtils/Constant.dart';
+import 'package:tucson_app/GeneralUtils/PrefsUtils.dart';
+import 'package:tucson_app/GeneralUtils/Utils.dart';
 import 'package:tucson_app/Model/EventForMobileResponse.dart';
+import 'package:tucson_app/WebService/WebService.dart';
 
 
 class EventDetailsScreen extends StatefulWidget {
@@ -24,11 +27,9 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
 
   List<EventForMobileResponse> sameDayEventList = [];
 
-
   @override
   void initState() {
     super.initState();
-
     Timer(Duration(milliseconds: 100), (){
       String tempDate = DateFormat("yyyy-MM-dd'T'hh:mm:ss").format(widget.event.date);
       String selectedDate = tempDate.split('T')[0];
@@ -42,7 +43,18 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
       setState(() {
         sameDayEventList = tempList;
       });
+      getLanguageCode();
     });
+  }
+
+  getLanguageCode() async {
+    String languageCode = await PrefUtils.getValueFor(PrefUtils.sortLanguageCode);
+    if(languageCode == null){
+      languageCode = "en";
+    }
+    if(languageCode.compareTo("en") != 0){
+      _translateEventDetails(languageCode);
+    }
   }
 
   @override
@@ -184,5 +196,54 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
       return "0"+count.toString();
     }
     return count.toString();
+  }
+
+  _translateEventDetails(String languageCode){
+    Utils.showLoader(true, context);
+    List<String> detailsList = [];
+    List<EventForMobileResponse> tempList =[];
+    for(var items in sameDayEventList){
+      detailsList.add(items.eventDetail);
+    }
+    String data = tempList.join("===");
+    WebService.translateApiCall(languageCode, data, (isSuccess, response) {
+      if(isSuccess){
+        List<String> responseArray = response.toString().split("===");
+        for(int i=0; i<responseArray.length; i++){
+          tempList.add(EventForMobileResponse(
+              tusdEventId: sameDayEventList[i].tusdEventId,
+              schoolId: sameDayEventList[i].schoolId,
+              eventTypeId: sameDayEventList[i].eventTypeId,
+              eventName: responseArray[i],
+              fromDateTime: sameDayEventList[i].fromDateTime,
+              toDateTime: sameDayEventList[i].toDateTime,
+              eventDetail: sameDayEventList[i].eventDetail,
+              freeFields1: sameDayEventList[i].freeFields1,
+              freeFields2: sameDayEventList[i].freeFields2,
+              freeFields3: sameDayEventList[i].freeFields3,
+              freeFields4: sameDayEventList[i].freeFields4,
+              isActive: sameDayEventList[i].isActive,
+              shareMode: sameDayEventList[i].shareMode,
+              createdBy: sameDayEventList[i].createdBy,
+              createdOn: sameDayEventList[i].createdOn,
+              updatedBy: sameDayEventList[i].updatedBy,
+              updatedOn: sameDayEventList[i].updatedOn,
+              eventTypeName: sameDayEventList[i].eventTypeName,
+              schoolName: sameDayEventList[i].schoolName,
+              startTime: sameDayEventList[i].startTime,
+              endTime: sameDayEventList[i].endTime,
+              schoolIds: sameDayEventList[i].schoolIds
+          ));
+        }
+        if (sameDayEventList.length == tempList.length) {
+          setState(() {
+            sameDayEventList = tempList;
+          });
+        }
+      } else {
+        Utils.showToast(context, "Page Translation Failed", Colors.red);
+      }
+      Utils.showLoader(false, context);
+    });
   }
 }

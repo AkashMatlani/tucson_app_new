@@ -296,7 +296,7 @@ class _CalendarEventScreenState extends State<CalendarEventScreen> {
                       ),
                     ) : Container(),
                     Container(
-                      height: Platform.isIOS?cHeight * 0.24:cHeight *0.26,
+                      height: Platform.isIOS?cHeight * 0.26:cHeight *0.28,
                       child: Scrollbar(
                         thickness: 5,
                         child: SingleChildScrollView(
@@ -557,6 +557,7 @@ class _CalendarEventScreenState extends State<CalendarEventScreen> {
         String toDate = strUtcToDate+" "+upcommingEventList[position].endTime;
 
         var eventDetails = upcommingEventList[position].eventName+"=>"+fromDate+"=>"+toDate;
+        String eventDesc = upcommingEventList[position].eventDetail;
 
         var details = Padding(
           padding: const EdgeInsets.fromLTRB(20.0, 0, 10, 0),
@@ -568,7 +569,7 @@ class _CalendarEventScreenState extends State<CalendarEventScreen> {
               SizedBox(height: 10),
               Text('event_details'.tr()+ ':', style: AppTheme.regularTextStyle().copyWith(fontSize: 16, color: Colors.black54)),
               Html(
-                data: upcommingEventList[position].eventDetail,
+                data: eventDesc,
                 style: {
                   "body" : Style(
                     fontFamily: MyFont.SSPro_regular,
@@ -594,6 +595,7 @@ class _CalendarEventScreenState extends State<CalendarEventScreen> {
         var eventDetails = upcommingEventList[position].eventName+"=>"+fromDate+"=>"+toDate;*/
 
 
+        _translateEventDetails(eventDesc);
         bottomMenu(eventDetails, details);
       },
       child: Container(
@@ -635,46 +637,58 @@ class _CalendarEventScreenState extends State<CalendarEventScreen> {
     for(var event in upcommingEventList){
       titleList.add(event.eventName);
     }
-    String resultArr = titleList.join("=)");
+    String resultArr = titleList.join("===");
     WebService.translateApiCall(languageCode!, resultArr, (isSuccess, response) {
       if(isSuccess) {
-        var resultTitleArr = response.toString().split("==)");
+        var resultTitleArr = response.toString().split("===");
         List<EventForMobileResponse> tempList = [];
         for (int i = 0; i < resultTitleArr.length; i++) {
           tempList.add(EventForMobileResponse(
-              createdOn: upcommingEventList[i].createdOn,
-              createdBy: upcommingEventList[i].createdBy,
-              eventDetail: upcommingEventList[i].eventDetail,
-              eventName: resultTitleArr[i],
-              eventTypeId: upcommingEventList[i].eventTypeId,
-              eventTypeName: upcommingEventList[i].eventTypeName,
-              freeFields1: upcommingEventList[i].freeFields1,
-              freeFields2: upcommingEventList[i].freeFields2,
-              freeFields3: upcommingEventList[i].freeFields3,
-              freeFields4: upcommingEventList[i].freeFields4,
-              fromDateTime: upcommingEventList[i].fromDateTime,
-              isActive: upcommingEventList[i].isActive,
-              schoolId: upcommingEventList[i].schoolId,
-              schoolName: upcommingEventList[i].schoolName,
-              shareMode: upcommingEventList[i].shareMode,
-              toDateTime: upcommingEventList[i].toDateTime,
-              tusdEventId: upcommingEventList[i].tusdEventId,
-              updatedBy: upcommingEventList[i].updatedBy,
-              updatedOn: upcommingEventList[i].updatedOn,
-              startTime: upcommingEventList[i].startTime,
-              endTime: upcommingEventList[i].endTime,
-              schoolIds: upcommingEventList[i].schoolIds));
+            tusdEventId: upcommingEventList[i].tusdEventId,
+            schoolId: upcommingEventList[i].schoolId,
+            eventTypeId: upcommingEventList[i].eventTypeId,
+            eventName: resultTitleArr[i],
+            fromDateTime: upcommingEventList[i].fromDateTime,
+            toDateTime: upcommingEventList[i].toDateTime,
+            eventDetail: upcommingEventList[i].eventDetail,
+            freeFields1: upcommingEventList[i].freeFields1,
+            freeFields2: upcommingEventList[i].freeFields2,
+            freeFields3: upcommingEventList[i].freeFields3,
+            freeFields4: upcommingEventList[i].freeFields4,
+            isActive: upcommingEventList[i].isActive,
+            shareMode: upcommingEventList[i].shareMode,
+            createdBy: upcommingEventList[i].createdBy,
+            createdOn: upcommingEventList[i].createdOn,
+            updatedBy: upcommingEventList[i].updatedBy,
+            updatedOn: upcommingEventList[i].updatedOn,
+            eventTypeName: upcommingEventList[i].eventTypeName,
+            schoolName: upcommingEventList[i].schoolName,
+            startTime: upcommingEventList[i].startTime,
+            endTime: upcommingEventList[i].endTime,
+            schoolIds: upcommingEventList[i].schoolIds
+          ));
         }
         if (upcommingEventList.length == tempList.length) {
           setState(() {
             upcommingEventList = tempList;
           });
-        } else {
-          Utils.showLoader(false, context);
-          Utils.showToast(context, "Page Translation Failed", Colors.red);
         }
+      } else {
+        Utils.showToast(context, "Page Translation Failed", Colors.red);
       }
     });
     Utils.showLoader(false, context);
+  }
+
+  _translateEventDetails(String eventDesc){
+    WebService.translateApiCall(languageCode!, eventDesc, (isSuccess, response) {
+      if(isSuccess){
+        setState(() {
+          eventDesc = response.toString();
+        });
+      } else {
+        Utils.showToast(context, "Page Translation Failed", Colors.red);
+      }
+    });
   }
 }

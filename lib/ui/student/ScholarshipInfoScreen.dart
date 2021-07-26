@@ -203,10 +203,10 @@ class _ScholarshipInfoScreenState extends State<ScholarshipInfoScreen> {
     for(var items in _scholarshipInfoList){
       nameList.add(items.objectName);
     }
-    String nameStr = nameList.join("==)");
+    String nameStr = nameList.join("===");
     WebService.translateApiCall(languageCode!, nameStr, (isSuccess, response){
       if(isSuccess){
-        List<String> resultArr = response.toString().split("==)");
+        List<String> resultArr = response.toString().split("===");
         for(int i=0; i< resultArr.length; i++){
           tempList.add(ContentTransactionResponse(contentTransactionId: _scholarshipInfoList[i].contentTransactionId,
               contentMasterId: _scholarshipInfoList[i].contentMasterId,

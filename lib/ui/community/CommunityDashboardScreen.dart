@@ -138,8 +138,7 @@ class _CommunityDashboardScreenState extends State<CommunityDashboardScreen> {
                                             MyFont.SSPro_regular,
                                             25.0,
                                             Colors.white)),
-                                    SizedBox(width: 5),
-                                    Text(firstName,
+                                    Text(" "+firstName,
                                         style: AppTheme.customTextStyle(
                                             MyFont.SSPro_semibold,
                                             25.0,
