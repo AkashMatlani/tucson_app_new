@@ -23,6 +23,7 @@ import 'package:tucson_app/ui/VideoPlayerScreen.dart';
 import 'package:tucson_app/ui/parent/RequestForServiceScreen.dart';
 import 'package:tucson_app/ui/student/StudentDashboardScreen.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 
 class MentalHealthSupportScreen extends StatefulWidget {
@@ -47,18 +48,38 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
   late var uint8list = null;
   //late bool isPopUpOpenFirst;
   String _languageSortCode = "en";
-
-
-  //int permissionPopUpCount = 0;
-  //var controller = MaskedTextController(mask: '1-800-273-8255', text: '18002738255');
+  bool _isPlayerReady = false;
   var controller =
       MaskedTextController(mask: '0-000-000-0000', text: '00000000000');
-
-
+  late YoutubePlayerController _controller;
+  late TextEditingController _idController;
+  late TextEditingController _seekToController;
+  late YoutubeMetaData _videoMetaData;
+  late PlayerState _playerState;
+  final List<String> _ids = [
+    'LXnxzlB55Vk',
+  ];
   @override
   void initState() {
     super.initState();
     _getPrefsData();
+
+    _controller = YoutubePlayerController(
+      initialVideoId: _ids.first,
+      flags: const YoutubePlayerFlags(
+        mute: false,
+        autoPlay: true,
+        disableDragSeek: false,
+        loop: false,
+        isLive: false,
+        forceHD: false,
+        enableCaption: true,
+      ),
+    )..addListener(listener);
+    _idController = TextEditingController();
+    _seekToController = TextEditingController();
+    _videoMetaData = const YoutubeMetaData();
+    _playerState = PlayerState.unknown;
   }
 
   _getPrefsData() async {
@@ -152,35 +173,47 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
                     : SingleChildScrollView(
                         child: Column(
                           children: [
-                            InkWell(
-                              onTap: () {
-                                if (_supportResponse.supportDocument == null) {
+                               /* if (_supportResponse.supportDocument == null) {
                                   Utils.showToast(
                                       context, LabelStr.lblNoVideo, Colors.red);
                                 } else if (_supportResponse.supportDocument
                                     .contains("https://www.youtube.com/")) {
-                                  /*  Utils.navigateToScreen(
+                                  *//*  Utils.navigateToScreen(
                                       context,
                                       DisplayWebview(
-                                          _supportResponse.supportDocument));*/
+                                          _supportResponse.supportDocument));*//*
                                   _launchURL(_supportResponse.supportDocument);
                                 } else {
                                   Utils.navigateToScreen(
                                       context,
                                       VideoPlayerScreen(
                                           _supportResponse.supportDocument));
-                                }
+                                }*/
+                                YoutubePlayer(
+                                  controller: _controller,
+                                  showVideoProgressIndicator: true,
+                                  progressIndicatorColor: Colors.blueAccent,
+                                  topActions: <Widget>[
+                                    const SizedBox(width: 8.0),
+                                    Expanded(
+                                      child: Text(
+                                        _controller.metadata.title,
+                                        style: const TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 18.0,
+                                        ),
+                                        overflow: TextOverflow.ellipsis,
+                                        maxLines: 1,
+                                      ),
+                                    ),
+                                  ],
+                                  onReady: () {
+                                    _isPlayerReady = true;
+                                  },
+                                  onEnded: (data) {
+                                    _controller.load(
+                                        _ids[(_ids.indexOf(data.videoId) + 1) % _ids.length]);
                               },
-                              child: Container(
-                                margin: EdgeInsets.only(top: 30),
-                                height:
-                                    MediaQuery.of(context).size.height * 0.24,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(20),
-                                    color: Colors.white),
-                                child: Image.asset(MyImage.videoUrlImage,
-                                    fit: BoxFit.fill),
-                              ),
                             ),
                             SizedBox(height: 20),
                             Row(
@@ -961,4 +994,14 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
   void _launchURL(String path) async => await canLaunch(path)
       ? await launch(path)
       : throw 'Could not launch $path';
+
+
+  void listener() {
+    if (_isPlayerReady && mounted && !_controller.value.isFullScreen) {
+      setState(() {
+        _playerState = _controller.value.playerState;
+        _videoMetaData = _controller.metadata;
+      });
+    }
+  }
 }

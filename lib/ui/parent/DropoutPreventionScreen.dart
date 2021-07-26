@@ -8,6 +8,7 @@ import 'package:flutter_email_sender/flutter_email_sender.dart';
 import 'package:tucson_app/GeneralUtils/ColorExtension.dart';
 import 'package:tucson_app/GeneralUtils/Constant.dart';
 import 'package:tucson_app/GeneralUtils/LabelStr.dart';
+import 'package:tucson_app/GeneralUtils/PrefsUtils.dart';
 import 'package:tucson_app/GeneralUtils/Utils.dart';
 import 'package:tucson_app/Model/ContentResponse.dart';
 import 'package:tucson_app/Model/DropOutPreventionEmailsModel.dart';
@@ -33,20 +34,22 @@ class _DropoutPreventionScreenState extends State<DropoutPreventionScreen> {
   late TextEditingController _seekToController;
   late YoutubeMetaData _videoMetaData;
   bool _isPlayerReady = false;
-
-  String youTubeId = "bJTpz1fL4k4";
+  String? languageCode;
   late PlayerState _playerState;
   final List<String> _ids = [
     'bJTpz1fL4k4',
   ];
   bool defaultValueDropOut = true;
 
-  @override
+
+
+/*  @override
   void initState() {
     super.initState();
     Timer(Duration(milliseconds: 200), () {
-      _getSchoolList();
+      _getSchoolId();
     });
+
 
     _controller = YoutubePlayerController(
       initialVideoId: _ids.first,
@@ -64,6 +67,41 @@ class _DropoutPreventionScreenState extends State<DropoutPreventionScreen> {
     _seekToController = TextEditingController();
     _videoMetaData = const YoutubeMetaData();
     _playerState = PlayerState.unknown;
+  }*/
+
+
+  @override
+  void initState() {
+    super.initState();
+    _getSchoolId();
+
+
+
+    _controller = YoutubePlayerController(
+      initialVideoId: _ids.first,
+      flags: const YoutubePlayerFlags(
+        mute: false,
+        autoPlay: true,
+        disableDragSeek: false,
+        loop: false,
+        isLive: false,
+        forceHD: false,
+        enableCaption: true,
+      ),
+    )..addListener(listener);
+    _idController = TextEditingController();
+    _seekToController = TextEditingController();
+    _videoMetaData = const YoutubeMetaData();
+    _playerState = PlayerState.unknown;
+  }
+
+  _getSchoolId() async {
+    int schoolId = await PrefUtils.getValueFor(PrefUtils.schoolId);
+    languageCode = await PrefUtils.getValueFor(PrefUtils.sortLanguageCode);
+    if(schoolId == null){
+      schoolId = 0;
+    }
+    _getSchoolList();
   }
 
   @override
@@ -142,16 +180,6 @@ class _DropoutPreventionScreenState extends State<DropoutPreventionScreen> {
                           maxLines: 1,
                         ),
                       ),
-                    /*  IconButton(
-                        icon: const Icon(
-                          Icons.settings,
-                          color: Colors.white,
-                          size: 25.0,
-                        ),
-                        onPressed: () {
-                          // log('Settings Tapped!');
-                        },
-                      ),*/
                     ],
                     onReady: () {
                       _isPlayerReady = true;
@@ -180,7 +208,7 @@ class _DropoutPreventionScreenState extends State<DropoutPreventionScreen> {
                         Expanded(
                             child: Container(
                                 margin: EdgeInsets.only(left: 5),
-                                child: Text(LabelStr.lblContactSpecialist,
+                                child: Text('contact_specialist'.tr(),
                                     style: AppTheme.customTextStyle(
                                         MyFont.SSPro_semibold,
                                         16.0,
@@ -260,7 +288,7 @@ class _DropoutPreventionScreenState extends State<DropoutPreventionScreen> {
     );
   }
 
-  _getSchoolList() {
+  _getSchoolList()async {
     Utils.showLoader(true, context);
     WebService.getAPICallWithoutParmas(WebService.getAllDropoutSpeciality)
         .then((response) {
@@ -276,6 +304,12 @@ class _DropoutPreventionScreenState extends State<DropoutPreventionScreen> {
                   .add(DropOutPreventionEmailsModel.fromJson(data));
             }
           });
+          if(languageCode!.compareTo("en") != 0){
+         //   translateListData();
+          } else {
+            Utils.showLoader(false, context);
+            isLoading = false;
+          }
         } else {
           isLoading = false;
           Utils.showLoader(false, context);
@@ -367,20 +401,7 @@ class _DropoutPreventionScreenState extends State<DropoutPreventionScreen> {
     );*/
   }
 
-  _launchYoutubeVideo(String _youtubeUrl) async {
-    if (_youtubeUrl != null && _youtubeUrl.isNotEmpty) {
-      if (await canLaunch(_youtubeUrl)) {
-        final bool _nativeAppLaunchSucceeded = await launch(
-          _youtubeUrl,
-          forceSafariVC: false,
-          universalLinksOnly: true,
-        );
-        if (!_nativeAppLaunchSucceeded) {
-          await launch(_youtubeUrl, forceSafariVC: true);
-        }
-      }
-    }
-  }
+
 
   void listener() {
     if (_isPlayerReady && mounted && !_controller.value.isFullScreen) {
@@ -390,4 +411,35 @@ class _DropoutPreventionScreenState extends State<DropoutPreventionScreen> {
       });
     }
   }
+
+ /* translateListData(){
+    List<String> nameList=[];
+    List<ContentTransactionResponse> tempList =[];
+    for(var items in _dropOutModelList){
+      nameList.add(items.specialistEmail);
+    }
+    String nameStr = nameList.join("==)");
+    WebService.translateApiCall(languageCode!, nameStr, (isSuccess, response){
+      if(isSuccess){
+        List<String> resultArr = response.toString().split("==)");
+        for(int i=0; i< resultArr.length; i++){
+          tempList.add(ContentTransactionResponse(contentTransactionId: _dropOutModelList[i].contentTransactionId,
+              contentMasterId: _communityEventList[i].contentMasterId,
+              contentTransTypeId: _communityEventList[i].contentTransTypeId,
+              objectName: resultArr[i],
+              objectPath: _communityEventList[i].objectPath,
+              contentTransTypeName: _communityEventList[i].contentTransTypeName));
+        }
+        if(_communityEventList.length == tempList.length){
+          setState(() {
+            _communityEventList = tempList;
+          });
+        }
+      } else {
+        Utils.showToast(context, "Page Translation Failed", Colors.red);
+      }
+      isLoading = false;
+      Utils.showLoader(false, context);
+    });
+  }*/
 }

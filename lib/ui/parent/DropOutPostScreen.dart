@@ -801,8 +801,9 @@ class _DropOutPostScreenState extends State<DropOutPostScreen> {
             }*/
 
             // response.body[0]["messages"][0]["messageText"];
+
             Utils.showToast(context,
-                response.body["messages"][0]["messageText"], Colors.black45);
+                response.body["messages"][0]["messageText"],Colors.green);
           });
         }
       } else {
@@ -812,4 +813,6 @@ class _DropOutPostScreenState extends State<DropOutPostScreen> {
       Utils.showLoader(false, context);
     });
   }
+
+
 }

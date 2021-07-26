@@ -169,5 +169,6 @@
   "enter_tusd_matric_number": "Please enter tusd matric number",
   "enter_grade": "Please enter grade",
   "reset_successfully": "Password Reset Successfully",
-  "referred_by": "Referred by: "
+  "referred_by": "Referred by: ",
+  "contact_specialist": "Contact Your Specialist"
 }
