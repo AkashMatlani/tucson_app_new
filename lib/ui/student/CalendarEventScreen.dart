@@ -632,74 +632,49 @@ class _CalendarEventScreenState extends State<CalendarEventScreen> {
   _translateEventTitleData(){
     Utils.showLoader(true, context);
     List<String> titleList = [];
-    for(var event in eventist){
+    for(var event in upcommingEventList){
       titleList.add(event.eventName);
     }
     String resultArr = titleList.join("=)");
     WebService.translateApiCall(languageCode!, resultArr, (isSuccess, response) {
-      if(isSuccess){
-        _translateEventDetailsData(response);
-      } else {
-        Utils.showLoader(false, context);
-        Utils.showToast(context, "Page Translation Failed", Colors.red);
-      }
-    });
-  }
-
-  _translateEventDetailsData(String titleArr) {
-    List<String> detailsList = [];
-    for(var event in eventist){
-      detailsList.add(event.eventDetail);
-    }
-    String resultArr = detailsList.join("=)");
-    WebService.translateApiCall(languageCode!, resultArr, (isSuccess, response) {
-      if(isSuccess){
-        var resultTitleArr = titleArr.toString().split("==)");
-        var resultDescArr = response.toString().split("==)");
+      if(isSuccess) {
+        var resultTitleArr = response.toString().split("==)");
         List<EventForMobileResponse> tempList = [];
-        for(int i=0; i<resultTitleArr.length; i++){
+        for (int i = 0; i < resultTitleArr.length; i++) {
           tempList.add(EventForMobileResponse(
-              createdOn: eventist[i].createdOn,
-              createdBy: eventist[i].createdBy,
-              eventDetail: resultDescArr[i],
+              createdOn: upcommingEventList[i].createdOn,
+              createdBy: upcommingEventList[i].createdBy,
+              eventDetail: upcommingEventList[i].eventDetail,
               eventName: resultTitleArr[i],
-              eventTypeId: eventist[i].eventTypeId,
-              eventTypeName: eventist[i].eventTypeName,
-              freeFields1: eventist[i].freeFields1,
-              freeFields2: eventist[i].freeFields2,
-              freeFields3: eventist[i].freeFields3,
-              freeFields4: eventist[i].freeFields4,
-              fromDateTime: eventist[i].fromDateTime,
-              isActive: eventist[i].isActive,
-              schoolId: eventist[i].schoolId,
-              schoolName: eventist[i].schoolName,
-              shareMode: eventist[i].shareMode,
-              toDateTime: eventist[i].toDateTime,
-              tusdEventId: eventist[i].tusdEventId,
-              updatedBy: eventist[i].updatedBy,
-              updatedOn: eventist[i].updatedOn,
-              startTime: eventist[i].startTime,
-              endTime: eventist[i].endTime,
-              schoolIds: eventist[i].schoolIds));
+              eventTypeId: upcommingEventList[i].eventTypeId,
+              eventTypeName: upcommingEventList[i].eventTypeName,
+              freeFields1: upcommingEventList[i].freeFields1,
+              freeFields2: upcommingEventList[i].freeFields2,
+              freeFields3: upcommingEventList[i].freeFields3,
+              freeFields4: upcommingEventList[i].freeFields4,
+              fromDateTime: upcommingEventList[i].fromDateTime,
+              isActive: upcommingEventList[i].isActive,
+              schoolId: upcommingEventList[i].schoolId,
+              schoolName: upcommingEventList[i].schoolName,
+              shareMode: upcommingEventList[i].shareMode,
+              toDateTime: upcommingEventList[i].toDateTime,
+              tusdEventId: upcommingEventList[i].tusdEventId,
+              updatedBy: upcommingEventList[i].updatedBy,
+              updatedOn: upcommingEventList[i].updatedOn,
+              startTime: upcommingEventList[i].startTime,
+              endTime: upcommingEventList[i].endTime,
+              schoolIds: upcommingEventList[i].schoolIds));
         }
-        if(eventist.length == tempList.length){
+        if (upcommingEventList.length == tempList.length) {
           setState(() {
-            eventist = tempList;
-
-            List<EventForMobileResponse> tempUpcommingList = [];
-            for (int i = 0; i < eventist.length; i++) {
-              bool isSuccess = _isUpcommingEvent(eventist[i].fromDateTime);
-              if (isSuccess) {
-                tempUpcommingList.add(eventist[i]);
-              }
-            }
-            upcommingEventList = tempUpcommingList;
+            upcommingEventList = tempList;
           });
+        } else {
+          Utils.showLoader(false, context);
+          Utils.showToast(context, "Page Translation Failed", Colors.red);
         }
-      } else {
-        Utils.showToast(context, "Page Translation Failed", Colors.red);
       }
-      Utils.showLoader(false, context);
     });
+    Utils.showLoader(false, context);
   }
 }
