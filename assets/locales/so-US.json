@@ -161,5 +161,7 @@
   "enter_grade": "Fadlan qor darajada",
   "reset_successfully": "Dib u Dejinta Sirta Si Guul leh",
   "referred_by": "Waxaa tixraacay:",
-  "contact_specialist": "La xiriir Khabiirkaaga"
+  "contact_specialist": "La xiriir Khabiirkaaga",
+  "select_reason_for_service_request" : "Sababta Codsiga Adeegga",
+  "grade" : "Fasalka"
 }

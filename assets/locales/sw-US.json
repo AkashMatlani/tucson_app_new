@@ -161,5 +161,7 @@
   "enter_grade": "Tafadhali ingiza daraja",
   "reset_successfully": "Kuweka Nenosiri kwa Ufanisi",
   "referred_by": "Inatajwa na:",
-  "contact_specialist": "Wasiliana na Mtaalam wako"
+  "contact_specialist": "Wasiliana na Mtaalam wako",
+  "select_reason_for_service_request" : "Sababu ya Ombi la Huduma",
+  "grade" : "Daraja"
 }

@@ -161,5 +161,7 @@
   "enter_grade": "الرجاء إدخال الدرجة",
   "reset_successfully": "إعادة تعيين كلمة المرور بنجاح",
   "referred_by": "نسب من قبل:",
-  "contact_specialist": "اتصل بأخصائيك"
+  "contact_specialist": "اتصل بأخصائيك",
+  "select_reason_for_service_request" : "سبب طلب الخدمة",
+  "grade" : "رتبة"
 }

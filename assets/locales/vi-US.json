@@ -161,5 +161,9 @@
   "enter_grade": "Vui lòng nhập điểm",
   "reset_successfully": "Đặt lại mật khẩu thành công",
   "referred_by": "Gọi bằng:",
-  "contact_specialist": "Liên hệ với chuyên gia của bạn"
+  "contact_specialist": "Liên hệ với chuyên gia của bạn",
+  "student_information" : "Thông tin học sinh:",
+  "contact_phone" : "Điện thoại liên hệ",
+  "select_reason_for_service_request" : "Lý do Yêu cầu Dịch vụ Reques",
+  "grade" : "Lớp"
 }

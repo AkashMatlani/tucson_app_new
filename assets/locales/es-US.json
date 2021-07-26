@@ -161,5 +161,7 @@
     "enter_grade": "arrendamiento ingrese el grado",
     "reset_successfully": "Restablecimiento de contraseña con éxito",
     "referred_by": "Referido por:",
-    "contact_specialist": "Comuníquese con su especialista"
-  }
+    "contact_specialist": "Comuníquese con su especialista",
+    "select_reason_for_service_request" : "Motivo de la solicitud de servicio",
+    "grade" : "Calificación"
+}
