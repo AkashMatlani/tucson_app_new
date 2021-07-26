@@ -28,7 +28,6 @@ class _SignInScreenState extends State<SignInScreen> {
   var _pwdController = TextEditingController();
   String _languageSortCode = "en";
   String _languageName = "English";
-  String translaterKey = "";
   bool _showPwd = true;
 
   AuthViewModel _authViewModel = AuthViewModel();
@@ -44,11 +43,11 @@ class _SignInScreenState extends State<SignInScreen> {
   void initState() {
     super.initState();
     getSharedPrefsData();
- /*   _emailController.text="pamela.leeper12@yopmail.com";
+   /* _emailController.text="pamela.leeper12@yopmail.com";
      _pwdController.text="12345678";*/
   //  _emailController.selection = TextSelection.fromPosition(TextPosition(offset: _emailController.text.length));
-    _emailController.text="akash.maltani@dashtechinc.com";
-    _pwdController.text="12345678";
+/*    _emailController.text="akash.maltani@dashtechinc.com";
+    _pwdController.text="12345678";*/
    /* _emailController.text="Test@gmail.com";
     _pwdController.text="12345678";*/
    /*  _emailController.text="pamela.leeper12@yopmail.com";
@@ -56,7 +55,6 @@ class _SignInScreenState extends State<SignInScreen> {
   }
 
   getSharedPrefsData() async {
-    String apiKey = await PrefUtils.getValueFor(PrefUtils.googleTranslateKey);
     var code = await PrefUtils.getValueFor(PrefUtils.sortLanguageCode);
     if(code == null){
       code = "en";
@@ -64,7 +62,6 @@ class _SignInScreenState extends State<SignInScreen> {
     setState(() {
       _languageSortCode = code;
       context.setLocale(Locale(_languageSortCode, 'US'));
-      translaterKey = apiKey;
     });
   }
 
@@ -156,7 +153,7 @@ class _SignInScreenState extends State<SignInScreen> {
                                     value: 'vi'
                                 )
                               ],
-                              onChanged: translaterKey.isNotEmpty ? (value){
+                              onChanged: (value){
                                 setState(() {
                                   _languageSortCode = value.toString();
                                   context.setLocale(Locale(_languageSortCode, 'US'));
@@ -175,7 +172,7 @@ class _SignInScreenState extends State<SignInScreen> {
                                     _languageName = "Vietnamese";;
                                   }
                                 });
-                              } : null,
+                              },
                             ),
                           ),
                           SizedBox(height: 15),
