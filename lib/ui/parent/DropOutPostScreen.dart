@@ -36,8 +36,6 @@ class _DropOutPostScreenState extends State<DropOutPostScreen> {
       'select_reason_for_service_request'.tr();
   String? languageCode;
 
-  //List<MailForDropOut> _mailForDropDown = [];
-  bool isLoading = true;
   int schoolId = 0;
   int reasonRequest = 0;
   bool isHTML = false;
@@ -53,305 +51,11 @@ class _DropOutPostScreenState extends State<DropOutPostScreen> {
     if (languageCode == null) {
       languageCode = "en";
     }
-    Timer(Duration(milliseconds: 100), () => _getSchoolList());
-    _getAllReason();
+    Timer(Duration(milliseconds: 100), (){
+      _getSchoolList();
+      _getAllReason();
+    });
   }
-
-/*  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: Scaffold(
-      body: Stack(
-        fit: StackFit.expand,
-        children: [
-          Container(
-            color: HexColor("#6462AA"),
-            child: Column(
-              children: [
-                Container(
-                  margin: EdgeInsets.fromLTRB(
-                      0,
-                      MediaQuery
-                          .of(context)
-                          .size
-                          .height * 0.03,
-                      0,
-                      MediaQuery
-                          .of(context)
-                          .size
-                          .height * 0.03),
-                  child: Row(
-                    children: [
-                      Container(
-                        margin: EdgeInsets.only(top: 10),
-                        child: IconButton(
-                            icon:
-                            Icon(Icons.arrow_back_ios, color: Colors.white),
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            }),
-                      ),
-                      Container(
-                        margin: EdgeInsets.only(top: 10),
-                        child: Text('drop_out_prevention_enroll_form'.tr(),
-                            style: AppTheme.customTextStyle(MyFont.SSPro_semibold, 18.0, Colors.white)),
-                      )
-                    ],
-                  ),
-                ),
-                Expanded(
-                  child: Container(
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(30.0),
-                            topRight: Radius.circular(30.0)),
-                        color: HexColor("FAFAFA")),
-                    height: MediaQuery
-                        .of(context)
-                        .size
-                        .height,
-                    width: MediaQuery
-                        .of(context)
-                        .size
-                        .width,
-                    padding: EdgeInsets.all(10),
-                  ),
-                )
-              ],
-            ),
-          ),
-          Positioned(
-            top: MediaQuery.of(context).size.height*0.15,
-            left: MediaQuery.of(context).size.height*0.012,
-            right: MediaQuery.of(context).size.height*0.012,
-            child: Container(
-              height: MediaQuery.of(context).size.height*0.85,
-              margin: EdgeInsets.all(5),
-              child: SingleChildScrollView(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text("Referred by: ",
-                        style: AppTheme.customTextStyle(
-                            MyFont.SSPro_bold, 18.0, MyColor.darkLblTextColor())),
-                    SizedBox(height: 20),
-                    textFieldFor('first_name'.tr(), _firstNameRefredByController,
-                        textInputAction: TextInputAction.next,
-                        keyboardType: TextInputType.name, autofocus: true ),
-                    SizedBox(height: 10),
-                    textFieldFor('last_name'.tr(), _lastNameRefredByController,
-                        textInputAction: TextInputAction.next,
-                        keyboardType: TextInputType.name,autofocus: true),
-                    SizedBox(height: 10),
-                    textFieldFor('contact_phone'.tr(), _contactRefredByController,
-                        textInputAction: TextInputAction.next, keyboardType: TextInputType.number,autofocus: true),
-                    SizedBox(height: 40),
-                    Text('student_information'.tr(),
-                        style: AppTheme.customTextStyle(
-                            MyFont.SSPro_bold, 18.0, MyColor.darkLblTextColor())),
-                    textFieldFor('first_name'.tr(), _firstNameStudentController,
-                        textInputAction: TextInputAction.next,
-                        keyboardType: TextInputType.name,autofocus: true),
-                    SizedBox(height: 10),
-                    textFieldFor('last_name'.tr(), _lastNameStudentController,
-                        textInputAction: TextInputAction.next,
-                        keyboardType: TextInputType.name,autofocus: true),
-                    SizedBox(height: 10),
-                    textFieldFor(
-                        'tusd_matric_number'.tr(), _tusdMaticNumberController,
-                        textInputAction: TextInputAction.next,
-                        keyboardType: TextInputType.name,autofocus: true),
-                    SizedBox(height: 10),
-                    textFieldFor('grade'.tr(), _gradeController,
-                        textInputAction: TextInputAction.next,
-                        keyboardType: TextInputType.name,autofocus: true),
-                    SizedBox(height: 10),
-                    (_schoolList.isNotEmpty && _schoolList.length > 0)
-                        ? Column(
-                      children: [
-                        SizedBox(height: 10),
-                        Container(
-                          child: InkWell(
-                            onTap: () {
-                              //Utils.backWithNoTransition(context, CustomDropDownList(selectedSchoolName, _selectedSchool, _schoolList));
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          CustomDropDownList(
-                                              selectedSchoolName,
-                                              _selectedSchool,
-                                              _schoolList))).then((value) {
-                                if (value == null) {
-                                  setState(() {
-                                    selectedSchoolName =
-                                        'select_school'.tr();
-                                  });
-                                } else {
-                                  setState(() {
-                                    _selectedSchool = value;
-                                    selectedSchoolName =
-                                        _selectedSchool.name;
-                                  });
-                                }
-                              });
-                            },
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Container(
-                                  width: (MediaQuery.of(context).size.width-31)*0.95,
-                                  child: Text(selectedSchoolName,
-                                      style:
-                                      AppTheme.regularTextStyle()),
-                                ),
-                                Container(
-                                  width: (MediaQuery.of(context).size.width-31)*0.05,
-                                  child: Icon(Icons.arrow_forward_ios,
-                                      size: 18, color: Colors.black54),
-                                )
-                              ],
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: 10),
-                        Container(
-                          height: 1.3,
-                          width: MediaQuery
-                              .of(context)
-                              .size
-                              .width,
-                          color: Colors.black45,
-                        ),
-                      ],
-                    )
-                        : Container(),
-                    SizedBox(height: 20),
-                    (_allReasonList.isNotEmpty && _allReasonList.length > 0)
-                        ? Column(
-                      children: [
-                        SizedBox(height: 10),
-                        Container(
-                          child: InkWell(
-                            onTap: () {
-                              //Utils.backWithNoTransition(context, CustomDropDownList(selectedSchoolName, _selectedSchool, _schoolList));
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          CustomDropDownListTwo(
-                                              selectedReasonForServiceRequest,
-                                              getAllReasonModel,
-                                              _allReasonList))).then(
-                                      (value) {
-                                    if (value == null) {
-                                      setState(() {
-                                        selectedReasonForServiceRequest =
-                                            'select_reason_for_service_request'
-                                                .tr();
-                                      });
-                                    } else {
-                                      setState(() {
-                                        getAllReasonModel = value;
-                                        selectedReasonForServiceRequest =
-                                            getAllReasonModel.reason;
-                                      });
-                                    }
-                                  });
-                            },
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Container(
-                                  width: (MediaQuery.of(context).size.width-31)*0.95,
-                                  child: Text(selectedReasonForServiceRequest,
-                                      style:
-                                      AppTheme.regularTextStyle()),
-                                ),
-                                Container(
-                                  width: (MediaQuery.of(context).size.width-31)*0.05,
-                                  child: Icon(Icons.arrow_forward_ios,
-                                      size: 18, color: Colors.black54),
-                                )
-                              ],
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: 10),
-                        Container(
-                          height: 1.3,
-                          width: MediaQuery
-                              .of(context)
-                              .size
-                              .width,
-                          color: Colors.black45,
-                        ),
-                      ],
-                    ) : Container(),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        gradient: LinearGradient(
-                          colors: [
-                            HexColor("#6462AA"),
-                            HexColor("#4CA7DA"),
-                            HexColor("#20B69E"),
-                          ],
-                        ),
-                      ),
-                      height: 50,
-                      width: MediaQuery
-                          .of(context)
-                          .size
-                          .width,
-                      child: TextButton(
-                        child: Text('submit'.tr(),
-                            style: AppTheme.customTextStyle(
-                                MyFont.SSPro_regular, 16.0, Colors.white)),
-                        onPressed: () {
-                          if (_firstNameRefredByController.text.isEmpty) {
-                            Utils.showToast(
-                                context, 'enter_first_name'.tr(), Colors.red);
-                          } else if (_lastNameRefredByController.text.isEmpty) {
-                            Utils.showToast(
-                                context, 'enter_last_name'.tr(), Colors.red);
-                          } else if (_contactRefredByController.text.isEmpty) {
-                            Utils.showToast(context,
-                                'enter_contact_phone'.tr(), Colors.red);
-                          } else if (_firstNameStudentController.text.isEmpty) {
-                            Utils.showToast(context,
-                                'enter_student_first_name'.tr(), Colors.red);
-                          } else if (_lastNameStudentController.text.isEmpty) {
-                            Utils.showToast(context,
-                                'enter_student_last_name'.tr(), Colors.red);
-                          } else if (_lastNameStudentController.text.isEmpty) {
-                            Utils.showToast(context,
-                                'enter_tusd_matric_number'.tr(), Colors.red);
-                          } else if (_gradeController.text.isEmpty) {
-                            Utils.showToast(
-                                context, 'enter_grade'.tr(), Colors.red);
-                          } else {
-                            getWebApiFromUrl(context);
-                          }
-                        },
-                      ),
-                    )
-                  ],
-                ),
-              ),
-            ),
-          )
-        ],
-      ),
-    ));
-  }*/
 
   @override
   Widget build(BuildContext context) {
@@ -687,16 +391,16 @@ class _DropOutPostScreenState extends State<DropOutPostScreen> {
             }
             _selectedSchool = _schoolList[0];
             if (languageCode!.compareTo("en") != 0) {
-              _translateData();
+              _translateSchoolListData();
             } else {
               Utils.showLoader(false, context);
             }
           });
         }
       } else {
+        Utils.showLoader(false, context);
         Utils.showToast(context, response.message, Colors.red);
-        print(
-            "******************** ${response.message} ************************");
+        print("******************** ${response.message} ************************");
       }
     }).catchError((error) {
       Utils.showLoader(false, context);
@@ -706,9 +410,7 @@ class _DropOutPostScreenState extends State<DropOutPostScreen> {
   }
 
   _getAllReason() {
-    Utils.showLoader(true, context);
-    WebService.getAPICallWithoutParmas(WebService.getAllReason)
-        .then((response) {
+    WebService.getAPICallWithoutParmas(WebService.getAllReason).then((response) {
       if (response.statusCode == 1) {
         if (response.body != null) {
           _allReasonList = [];
@@ -719,33 +421,27 @@ class _DropOutPostScreenState extends State<DropOutPostScreen> {
             }
             getAllReasonModel = _allReasonList[0];
             if (languageCode!.compareTo("en") != 0) {
-              _translateData();
-            } else {
-              Utils.showLoader(false, context);
+              _translateReasonData();
             }
           });
         }
       } else {
         Utils.showToast(context, response.message, Colors.red);
-        Utils.showLoader(false, context);
-        print(
-            "******************** ${response.message} ************************");
+        print("******************** ${response.message} ************************");
       }
     }).catchError((error) {
-      Utils.showLoader(false, context);
       print(error);
       Utils.showToast(context, 'check_connectivity'.tr(), Colors.red);
     });
   }
 
-  void _translateData() {
+  void _translateSchoolListData() {
     List<String> schoolNameList = [];
     for (var data in _schoolList) {
       schoolNameList.add(data.name);
     }
     String schoolName = schoolNameList.join("===");
-    WebService.translateApiCall(languageCode!, schoolName,
-        (isSuccess, response) {
+    WebService.translateApiCall(languageCode!, schoolName, (isSuccess, response) {
       if (isSuccess) {
         var resultArr = response.toString().split("===");
         List<SchoolListResponse> tempList = [];
@@ -774,6 +470,35 @@ class _DropOutPostScreenState extends State<DropOutPostScreen> {
     });
   }
 
+  _translateReasonData(){
+    List<String> reasonNameList = [];
+    for (var data in _allReasonList) {
+      reasonNameList.add(data.reason);
+    }
+    String reasonName = reasonNameList.join("===");
+    WebService.translateApiCall(languageCode!, reasonName, (isSuccess, response) {
+      if (isSuccess) {
+        var resultArr = response.toString().split("===");
+        List<GetAllReasonModel> tempList = [];
+        for (int i = 0; i < resultArr.length; i++) {
+          tempList.add(GetAllReasonModel(
+            id: _allReasonList[i].id,
+            reason: resultArr[i]
+          ));
+        }
+
+        if (_allReasonList.length == tempList.length) {
+          setState(() {
+            _allReasonList = tempList;
+            getAllReasonModel = _allReasonList[0];
+          });
+        }
+      } else {
+        Utils.showToast(context, "Page Translation Failed", Colors.red);
+      }
+    });
+  }
+
   getWebApiFromUrl(BuildContext context) {
     var params = {
       "referFirstName": _firstNameRefredByController.text,
@@ -786,24 +511,13 @@ class _DropOutPostScreenState extends State<DropOutPostScreen> {
       "school": _selectedSchool.name,
       "reason": getAllReasonModel.reason
     };
-    WebService.postAPICall(WebService.sendDropOutPrevantionEmail, params)
-        .then((response) {
+    Utils.showLoader(true, context);
+    WebService.postAPICall(WebService.sendDropOutPrevantionEmail, params).then((response) {
       Utils.showLoader(false, context);
       if (response.statusCode == 1) {
         if (response.body != null) {
-          setState(() {
-            isLoading = false;
-            //  _mailForDropDown = [];
-            //_schoolList.add(SchoolListResponse(id: 0, name: LabelStr.lblSelectSchool, schoolCategoryId: 0, schoolCategoryName: "",  createdBy: 0,  createdOn: "",  updatedBy: 0,  updatedOn: ""));
-            /* for (var data in response.body["messages"]) {
-              _mailForDropDown.add(MailForDropOut.fromJson(data));
-            }*/
-
-            // response.body[0]["messages"][0]["messageText"];
-
-            Utils.showToast(context,
-                response.body["messages"][0]["messageText"],Colors.green);
-          });
+          Utils.showToast(context,
+              response.body["messages"][0]["messageText"],Colors.green);
         }
       } else {
         Utils.showToast(context, response.message, Colors.red);
@@ -812,6 +526,4 @@ class _DropOutPostScreenState extends State<DropOutPostScreen> {
       Utils.showLoader(false, context);
     });
   }
-
-
 }

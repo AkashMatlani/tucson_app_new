@@ -448,15 +448,14 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
           });
           getSUpportNotifierMail(
               _currentPosition.latitude, _currentPosition.longitude);
-          // mailSend();
-          //_launchURL("akash.maltani@dashtechinc.com","test mail from flutter","Testtstststststststststst");
-          //sendMail();
         });
       }
     }).catchError((onError) {
       Utils.showLoader(false, context);
-      isLoading = false;
-      loadedApiCall = true;
+      setState(() {
+        isLoading = false;
+        loadedApiCall = true;
+      });
       Utils.showToast(context, 'check_connectivity'.tr(), Colors.red);
     });
   }
