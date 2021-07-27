@@ -49,11 +49,14 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
   }
 
   getLanguageCode() async {
-    languageCode = await PrefUtils.getValueFor(PrefUtils.sortLanguageCode);
-    if (languageCode == null) {
+    String languageCode = await PrefUtils.getValueFor(PrefUtils.sortLanguageCode);
+    if(languageCode == null){
       languageCode = "en";
     }
-    if (languageCode.compareTo("en") != 0) {
+    if(languageCode.compareTo("en") != 0){
+      if(languageCode.compareTo("sr") == 0){
+        languageCode = "so";
+      }
       _translateEventDetails(languageCode);
     }
   }

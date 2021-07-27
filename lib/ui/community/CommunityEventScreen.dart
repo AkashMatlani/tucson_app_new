@@ -206,13 +206,16 @@ class _CommunityEventScreenState extends State<CommunityEventScreen> {
       if (isSuccess) {
         setState(() {
           _communityEventList = [];
-          for (var data in _contentViewModel.contentList) {
-            for (var listData in data.contentTransactionTypeJoin) {
+          for(var data in _contentViewModel.contentList){
+            for(var listData in data.contentTransactionTypeJoin){
               _communityEventList.add(listData);
             }
           }
         });
-        if (languageCode!.compareTo("en") != 0) {
+        if(languageCode!.compareTo("en") != 0){
+          if(languageCode!.compareTo("sr") == 0){
+            languageCode = "so";
+          }
           translateListData();
         } else {
           Utils.showLoader(false, context);

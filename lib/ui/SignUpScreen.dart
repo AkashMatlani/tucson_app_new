@@ -319,6 +319,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
             }
             _selectedSchool = _schoolList[0];
             if(languageCode!.compareTo("en") != 0){
+              if(languageCode!.compareTo("sr") == 0){
+                languageCode = "so";
+              }
               _translateData();
             } else{
               Utils.showLoader(false, context);
@@ -413,6 +416,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
         });
       } else {
         if(languageCode!.compareTo("en") != 0) {
+          if(languageCode!.compareTo("sr") == 0){
+            languageCode = "so";
+          }
           WebService.translateApiCall(
               languageCode!, message, (isSuccess, response) {
             if (isSuccess) {

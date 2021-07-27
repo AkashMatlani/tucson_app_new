@@ -1,4 +1,4 @@
-import 'dart:io';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -153,6 +153,9 @@ class _DonationScreenState extends State<DonationScreen> {
   }
 
   translateDonationData(){
+    if(languageCode!.compareTo("sr") == 0){
+      languageCode = "so";
+    }
     WebService.translateApiCall(languageCode!, donationDetails.content!, (isSuccess, response){
       if(isSuccess){
         setState(() {

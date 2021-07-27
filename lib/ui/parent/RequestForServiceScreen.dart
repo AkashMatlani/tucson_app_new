@@ -279,7 +279,10 @@ class _RequestForServiceScreenState extends State<RequestForServiceScreen> {
   }
 
   translateData(String message, MaterialColor color){
-    if(_languageSortCode.compareTo("en") == 1){
+    if(_languageSortCode.compareTo("en") != 0){
+      if(_languageSortCode.compareTo("sr") == 0){
+        _languageSortCode = "so";
+      }
       WebService.translateApiCall(_languageSortCode, message, (isSuccess, response){
         if(isSuccess){
           Utils.showToast(context, response.toString(), color);

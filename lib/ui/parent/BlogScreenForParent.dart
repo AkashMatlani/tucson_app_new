@@ -142,7 +142,6 @@ class _BlogScreenForParentState extends State<BlogScreenForParent> {
 
     Utils.showLoader(true, context);
     _contentViewModel.getContentList(context, params, "Parent", (isSuccess, message) {
-      Utils.showLoader(false, context);
       if (isSuccess) {
         setState(() {
           List<ContentResponse> _contentList = [];
@@ -163,9 +162,30 @@ class _BlogScreenForParentState extends State<BlogScreenForParent> {
           } else {
             _displayContentList = _middleHighList;
           }
-          isLoading = false;
+          if(_displayContentList.length > 0){
+            if(languageCode!.compareTo("en") != 0) {
+              if(languageCode!.compareTo("sr") == 0){
+                languageCode = "so";
+              }
+              translateListData();
+            } else {
+              setState(() {
+                isLoading = false;
+              });
+              Utils.showLoader(false, context);
+            }
+          } else {
+            setState(() {
+              _elementryList = [];
+              _middleHighList=[];
+              _displayContentList=[];
+              isLoading = false;
+            });
+            Utils.showLoader(false, context);
+          }
         });
       } else {
+        Utils.showLoader(false, context);
         setState(() {
           _elementryList = [];
           _middleHighList=[];
@@ -207,7 +227,8 @@ class _BlogScreenForParentState extends State<BlogScreenForParent> {
       } else {
         Utils.showToast(context, "Page Translation Failed", Colors.red);
       }
+      isLoading = false;
+      Utils.showLoader(false, context);
     });
-    Utils.showLoader(false, context);
   }
 }

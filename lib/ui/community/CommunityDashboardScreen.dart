@@ -58,7 +58,7 @@ class _CommunityDashboardScreenState extends State<CommunityDashboardScreen> {
   List<StaticListItems> languageList = [
     StaticListItems(name: "English", value: "en"),
     StaticListItems(name: "Arabic", value: "ar"),
-    StaticListItems(name: "Somali", value: "so"),
+    StaticListItems(name: "Somali", value: "sr"),
     StaticListItems(name: "Spanish", value: "es"),
     StaticListItems(name: "Swahili", value: "sw"),
     StaticListItems(name: "Vietnamese", value: "vi")
@@ -80,7 +80,7 @@ class _CommunityDashboardScreenState extends State<CommunityDashboardScreen> {
             schoolId = 0;
           }
 
-          if (firstName.isNotEmpty && sortLanguageCode.compareTo("en") == 1) {
+          if (firstName.isNotEmpty && sortLanguageCode.compareTo("en") != 0) {
             _getFirstName();
           }
         });
@@ -89,6 +89,9 @@ class _CommunityDashboardScreenState extends State<CommunityDashboardScreen> {
   }
 
   _getFirstName() {
+    if(sortLanguageCode.compareTo("sr") == 0){
+      sortLanguageCode = "so";
+    }
     WebService.translateApiCall(sortLanguageCode, firstName,
             (isSuccess, response) {
           if (isSuccess) {

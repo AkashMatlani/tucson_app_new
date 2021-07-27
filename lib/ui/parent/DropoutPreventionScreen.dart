@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
@@ -7,16 +6,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_email_sender/flutter_email_sender.dart';
 import 'package:tucson_app/GeneralUtils/ColorExtension.dart';
 import 'package:tucson_app/GeneralUtils/Constant.dart';
-import 'package:tucson_app/GeneralUtils/LabelStr.dart';
 import 'package:tucson_app/GeneralUtils/PrefsUtils.dart';
 import 'package:tucson_app/GeneralUtils/Utils.dart';
-import 'package:tucson_app/Model/ContentResponse.dart';
 import 'package:tucson_app/Model/DropOutPreventionEmailsModel.dart';
-import 'package:tucson_app/Model/SchoolListResponse.dart';
 import 'package:tucson_app/WebService/WebService.dart';
-import 'package:http/http.dart' as http;
 import 'package:tucson_app/ui/parent/DropOutPostScreen.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import 'dart:ui' as ui;
 class DropoutPreventionScreen extends StatefulWidget {
@@ -43,40 +37,10 @@ class _DropoutPreventionScreenState extends State<DropoutPreventionScreen> {
   bool defaultValueDropOut = true;
 
 
-
-/*  @override
-  void initState() {
-    super.initState();
-    Timer(Duration(milliseconds: 200), () {
-      _getSchoolId();
-    });
-
-
-    _controller = YoutubePlayerController(
-      initialVideoId: _ids.first,
-      flags: const YoutubePlayerFlags(
-        mute: false,
-        autoPlay: true,
-        disableDragSeek: false,
-        loop: false,
-        isLive: false,
-        forceHD: false,
-        enableCaption: true,
-      ),
-    )..addListener(listener);
-    _idController = TextEditingController();
-    _seekToController = TextEditingController();
-    _videoMetaData = const YoutubeMetaData();
-    _playerState = PlayerState.unknown;
-  }*/
-
-
   @override
   void initState() {
     super.initState();
     _getSchoolId();
-
-
 
     _controller = YoutubePlayerController(
       initialVideoId: _ids.first,
@@ -310,12 +274,6 @@ class _DropoutPreventionScreenState extends State<DropoutPreventionScreen> {
                   .add(DropOutPreventionEmailsModel.fromJson(data));
             }
           });
-      /*    if(languageCode!.compareTo("en") != 0){
-         //   translateListData();
-          } else {
-            Utils.showLoader(false, context);
-            isLoading = false;
-          }*/
         } else {
           isLoading = false;
           Utils.showLoader(false, context);
@@ -399,12 +357,6 @@ class _DropoutPreventionScreenState extends State<DropoutPreventionScreen> {
     }
 
     if (!mounted) return;
-
-    /* ScaffoldMessenger.of(context).showSnackBar(
-     */ /* SnackBar(
-        content: Text(platformResponse),
-      ),*/ /*
-    );*/
   }
 
 
@@ -417,35 +369,4 @@ class _DropoutPreventionScreenState extends State<DropoutPreventionScreen> {
       });
     }
   }
-
-/*  translateListData(){
-    List<String> nameList=[];
-    List<ContentTransactionResponse> tempList =[];
-    for(var items in _dropOutModelList){
-      nameList.add(items.specialistEmail);
-    }
-    String nameStr = nameList.join("==)");
-    WebService.translateApiCall(languageCode!, nameStr, (isSuccess, response){
-      if(isSuccess){
-        List<String> resultArr = response.toString().split("==)");
-        for(int i=0; i< resultArr.length; i++){
-          tempList.add(ContentTransactionResponse(contentTransactionId: _dropOutModelList[i].contentTransactionId,
-              contentMasterId: _communityEventList[i].contentMasterId,
-              contentTransTypeId: _communityEventList[i].contentTransTypeId,
-              objectName: resultArr[i],
-              objectPath: _communityEventList[i].objectPath,
-              contentTransTypeName: _communityEventList[i].contentTransTypeName));
-        }
-        if(_communityEventList.length == tempList.length){
-          setState(() {
-            _communityEventList = tempList;
-          });
-        }
-      } else {
-        Utils.showToast(context, "Page Translation Failed", Colors.red);
-      }
-      isLoading = false;
-      Utils.showLoader(false, context);
-    });
-  }*/
 }

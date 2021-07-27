@@ -68,7 +68,7 @@ class _StudentDashboardScreenState extends State<StudentDashboardScreen> {
   List<StaticListItems> languageList = [
     StaticListItems(name: "English", value: "en"),
     StaticListItems(name: "Arabic", value: "ar"),
-    StaticListItems(name: "Somali", value: "so"),
+    StaticListItems(name: "Somali", value: "sr"),
     StaticListItems(name: "Spanish", value: "es"),
     StaticListItems(name: "Swahili", value: "sw"),
     StaticListItems(name: "Vietnamese", value: "vi")
@@ -352,6 +352,9 @@ class _StudentDashboardScreenState extends State<StudentDashboardScreen> {
 
   translateData(String text, bool isUserName) {
     if(sortLanguageCode.compareTo("en") != 0) {
+      if(sortLanguageCode.compareTo("sr") == 0){
+        sortLanguageCode = "so";
+      }
       WebService.translateApiCall(sortLanguageCode, text, (isSuccess, response) {
         if (isSuccess) {
           if(isUserName) {

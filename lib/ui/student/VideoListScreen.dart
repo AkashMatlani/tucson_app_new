@@ -264,6 +264,9 @@ class _VideoListScreenState extends State<VideoListScreen> {
         });
 
         if (languageCode!.compareTo("en") != 0) {
+          if(languageCode!.compareTo("sr") == 0){
+            languageCode = "so";
+          }
           translateListData();
         } else {
           Utils.showLoader(false, context);

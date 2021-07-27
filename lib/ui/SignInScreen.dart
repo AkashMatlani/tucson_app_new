@@ -148,7 +148,7 @@ class _SignInScreenState extends State<SignInScreen> {
                                 ),
                                 DropdownMenuItem(
                                     child: Text('Somali'),
-                                    value: 'so'
+                                    value: 'sr'
                                 ),
                                 DropdownMenuItem(
                                     child: Text('Spanish'),
@@ -172,7 +172,7 @@ class _SignInScreenState extends State<SignInScreen> {
                                     _languageName = "English";
                                   } else if(_languageSortCode.compareTo("ar") == 0){
                                     _languageName = "Arabic";
-                                  } else if(_languageSortCode.compareTo("so") == 0){
+                                  } else if(_languageSortCode.compareTo("sr") == 0){
                                     _languageName = "Somali";
                                   } else if(_languageSortCode.compareTo("es") == 0){
                                     _languageName = "Spanish";
@@ -271,7 +271,10 @@ class _SignInScreenState extends State<SignInScreen> {
         PrefUtils.setStringValue(PrefUtils.sortLanguageCode, _languageSortCode);
         _getUserType();
       } else {
-        if(_languageSortCode.compareTo("en") == 1){
+        if(_languageSortCode.compareTo("en") != 0){
+          if(_languageSortCode.compareTo("sr") == 0){
+            _languageSortCode = "so";
+          }
           WebService.translateApiCall(_languageSortCode, message, (isSuccess, response){
             if(isSuccess){
               Utils.showToast(context, response.toString(), Colors.red);

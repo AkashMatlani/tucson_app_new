@@ -95,6 +95,9 @@ class _BlogDetailsScreenState extends State<BlogDetailsScreen> {
       languageCode = "en";
     }
     if (languageCode!.compareTo("en") != 0) {
+      if(languageCode!.compareTo("sr") == 0){
+        languageCode = "so";
+      }
       _translateData();
     }
   }
