@@ -423,6 +423,9 @@ class _CalendarEventScreenState extends State<CalendarEventScreen> {
           }
         });
         if(languageCode!.compareTo("en") != 0){
+          if(languageCode!.compareTo("sr") == 0){
+            languageCode = "so";
+          }
           _translateEventTitleData();
         }
       } else {
@@ -594,8 +597,12 @@ class _CalendarEventScreenState extends State<CalendarEventScreen> {
 
         var eventDetails = upcommingEventList[position].eventName+"=>"+fromDate+"=>"+toDate;*/
 
-
-        _translateEventDetails(eventDesc);
+        if(languageCode!.compareTo("en") != 0){
+          if(languageCode!.compareTo("sr") == 0){
+            languageCode = "so";
+          }
+          _translateEventDetails(eventDesc);
+        }
         bottomMenu(eventDetails, details);
       },
       child: Container(

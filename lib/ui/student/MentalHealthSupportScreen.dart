@@ -356,7 +356,7 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
                                     Text('prevention_lifeline'.tr(),
                                         style: AppTheme.customTextStyle(
                                             MyFont.SSPro_regular,
-                                            16.0,
+                                            15.0,
                                             Colors.white))
                                   ],
                                 ),
@@ -400,7 +400,7 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
                                     Text('prevention_lifeline'.tr(),
                                         style: AppTheme.customTextStyle(
                                             MyFont.SSPro_regular,
-                                            16.0,
+                                            15.0,
                                             Colors.white))
                                   ],
                                 ),
@@ -972,6 +972,9 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
 
   void translateData(message, MaterialColor color) {
     if(_languageSortCode.compareTo("en") != 0){
+      if(_languageSortCode.compareTo("sr") == 0){
+        _languageSortCode = "so";
+      }
       WebService.translateApiCall(_languageSortCode, message, (isSuccess, message){
         Utils.showLoader(false, context);
         if (isSuccess) {

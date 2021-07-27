@@ -164,6 +164,9 @@ class _EducationalWebsiteScreenState extends State<EducationalWebsiteScreen> {
           }
         });
         if(languageCode!.compareTo("en") != 0){
+          if(languageCode!.compareTo("sr") == 0){
+            languageCode = "so";
+          }
           translateListData();
         } else {
           Utils.showLoader(false, context);

@@ -166,6 +166,9 @@ class _ForgotPwdScreenState extends State<ForgotPwdScreen> {
         //Utils.navigateWithClearState(context, ResetPwdScreen(email));
       } else {
         if(languageCode!.compareTo("en") != 0){
+          if(languageCode!.compareTo("sr") == 0){
+            languageCode = "so";
+          }
           WebService.translateApiCall(languageCode!, message, (isSuccess, response){
             if(isSuccess){
               Utils.showToast(context, response.toString(), Colors.red);

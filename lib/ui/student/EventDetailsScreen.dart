@@ -53,6 +53,9 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
       languageCode = "en";
     }
     if(languageCode.compareTo("en") != 0){
+      if(languageCode.compareTo("sr") == 0){
+        languageCode = "so";
+      }
       _translateEventDetails(languageCode);
     }
   }

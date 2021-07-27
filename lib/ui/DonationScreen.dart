@@ -1,4 +1,4 @@
-import 'dart:io';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -10,11 +10,8 @@ import 'package:tucson_app/GeneralUtils/PrefsUtils.dart';
 import 'package:tucson_app/GeneralUtils/Utils.dart';
 import 'package:tucson_app/Model/DonationResponse.dart';
 import 'package:tucson_app/WebService/WebService.dart';
-import 'package:tucson_app/ui/DisplayWebview.dart';
 import 'package:tucson_app/ui/SignInScreen.dart';
-import 'package:tucson_app/ui/community/CommunityDashboardScreen.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:webview_flutter/webview_flutter.dart';
 
 
 
@@ -155,6 +152,9 @@ class _DonationScreenState extends State<DonationScreen> {
   }
 
   translateDonationData(){
+    if(languageCode!.compareTo("sr") == 0){
+      languageCode = "so";
+    }
     WebService.translateApiCall(languageCode!, donationDetails.content!, (isSuccess, response){
       if(isSuccess){
         setState(() {

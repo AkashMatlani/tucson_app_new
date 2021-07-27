@@ -61,7 +61,7 @@ void main() async {
         supportedLocales: [
           Locale('en', 'US'),
           Locale('ar', 'US'),
-          Locale('so', 'US'),
+          Locale('sr', 'US'),
           Locale('es', 'US'),
           Locale('sw', 'US'),
           Locale('vi', 'US')

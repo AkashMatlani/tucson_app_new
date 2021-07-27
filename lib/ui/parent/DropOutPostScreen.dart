@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -34,7 +35,7 @@ class _DropOutPostScreenState extends State<DropOutPostScreen> {
   String selectedSchoolName = 'select_school'.tr();
   String selectedReasonForServiceRequest =
       'select_reason_for_service_request'.tr();
-  String? languageCode;
+  String languageCode = "en";
 
   int schoolId = 0;
   int reasonRequest = 0;
@@ -48,9 +49,7 @@ class _DropOutPostScreenState extends State<DropOutPostScreen> {
 
   getSharedPrefsData() async {
     languageCode = await PrefUtils.getValueFor(PrefUtils.sortLanguageCode);
-    if (languageCode == null) {
-      languageCode = "en";
-    }
+
     Timer(Duration(milliseconds: 100), (){
       _getSchoolList();
       _getAllReason();
@@ -390,7 +389,10 @@ class _DropOutPostScreenState extends State<DropOutPostScreen> {
               _schoolList.add(SchoolListResponse.fromJson(data));
             }
             _selectedSchool = _schoolList[0];
-            if (languageCode!.compareTo("en") != 0) {
+            if (languageCode.compareTo("en") != 0) {
+              if(languageCode.compareTo("sr") == 0){
+                languageCode = "so";
+              }
               _translateSchoolListData();
             } else {
               Utils.showLoader(false, context);
@@ -420,7 +422,10 @@ class _DropOutPostScreenState extends State<DropOutPostScreen> {
               _allReasonList.add(GetAllReasonModel.fromJson(data));
             }
             getAllReasonModel = _allReasonList[0];
-            if (languageCode!.compareTo("en") != 0) {
+            if (languageCode.compareTo("en") != 0) {
+              if(languageCode.compareTo("sr") == 0){
+                languageCode = "so";
+              }
               _translateReasonData();
             }
           });
@@ -441,7 +446,7 @@ class _DropOutPostScreenState extends State<DropOutPostScreen> {
       schoolNameList.add(data.name);
     }
     String schoolName = schoolNameList.join("===");
-    WebService.translateApiCall(languageCode!, schoolName, (isSuccess, response) {
+    WebService.translateApiCall(languageCode, schoolName, (isSuccess, response) {
       if (isSuccess) {
         var resultArr = response.toString().split("===");
         List<SchoolListResponse> tempList = [];
@@ -476,7 +481,7 @@ class _DropOutPostScreenState extends State<DropOutPostScreen> {
       reasonNameList.add(data.reason);
     }
     String reasonName = reasonNameList.join("===");
-    WebService.translateApiCall(languageCode!, reasonName, (isSuccess, response) {
+    WebService.translateApiCall(languageCode, reasonName, (isSuccess, response) {
       if (isSuccess) {
         var resultArr = response.toString().split("===");
         List<GetAllReasonModel> tempList = [];
@@ -516,11 +521,33 @@ class _DropOutPostScreenState extends State<DropOutPostScreen> {
       Utils.showLoader(false, context);
       if (response.statusCode == 1) {
         if (response.body != null) {
-          Utils.showToast(context,
-              response.body["messages"][0]["messageText"],Colors.green);
+          String message = response.body["messages"][0]["messageText"];
+          if(languageCode.compareTo("en") != 0){
+            if(languageCode.compareTo("sr") == 0){
+              languageCode = "so";
+            }
+            WebService.translateApiCall(languageCode, message, (isSuccess, response) {
+              if(isSuccess){
+                Utils.showToast(context, response.toString(), Colors.green);
+              }
+            });
+          } else {
+            Utils.showToast(context, message, Colors.green);
+          }
         }
       } else {
-        Utils.showToast(context, response.message, Colors.red);
+        if(languageCode.compareTo("en") != 0){
+          if(languageCode.compareTo("sr") == 0){
+            languageCode = "so";
+          }
+          WebService.translateApiCall(languageCode, response.message, (isSuccess, response) {
+            if(isSuccess){
+              Utils.showToast(context, response.toString(), Colors.red);
+            }
+          });
+        } else {
+          Utils.showToast(context, response.message, Colors.red);
+        }
       }
     }).catchError((error) {
       Utils.showLoader(false, context);
