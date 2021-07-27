@@ -231,11 +231,11 @@ class _ParentDashBoardScreenState extends State<ParentDashBoardScreen> {
                                     onTap: () {
                                       setState(() {
                                         if (index == 0) {
-                                          Utils.navigateToScreen(context, Education());
+                                          Utils.navigateToScreen(context, Education(sortLanguageCode));
                                         } else if (index == 1) {
-                                          Utils.navigateToScreen(context, Event());
+                                          Utils.navigateToScreen(context, Event(sortLanguageCode));
                                         } else if (index == 2) {
-                                          Utils.navigateToScreen(context, CommunityResources("Parent"));
+                                          Utils.navigateToScreen(context, CommunityResources("Parent",sortLanguageCode));
                                         } else if (index == 3) {
                                           var params = {
                                             "schoolId": schoolId,
@@ -251,7 +251,7 @@ class _ParentDashBoardScreenState extends State<ParentDashBoardScreen> {
                                           };
                                           getWebApiFromUrl(context, params);
                                         } else if (index == 5) {
-                                          Utils.navigateToScreen(context, SchoolPrograms());
+                                          Utils.navigateToScreen(context, SchoolPrograms(sortLanguageCode));
                                         } else if (index == 6) {
                                           Utils.navigateToScreen(context, RequestForServiceScreen());
                                         } else if (index == 7) {

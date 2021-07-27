@@ -10,13 +10,14 @@ import 'package:tucson_app/WebService/WebService.dart';
 import 'package:tucson_app/ui/WebViewEmpty.dart';
 import 'package:tucson_app/ui/student/ScholarshipInfoScreen.dart';
 import 'package:url_launcher/url_launcher.dart';
-
+import 'dart:ui' as ui;
 
 class CommunityResources extends StatefulWidget {
 
   String fromScreen;
-  CommunityResources(this.fromScreen);
+  CommunityResources(this.fromScreen,this.sortLanguageCode);
 
+  String sortLanguageCode;
   @override
   _CommunityResourcesScreenState createState() =>
       _CommunityResourcesScreenState();
@@ -64,7 +65,10 @@ class _CommunityResourcesScreenState extends State<CommunityResources> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return  Directionality(
+        textDirection: widget.sortLanguageCode.compareTo("ar") == 0
+        ? ui.TextDirection.rtl
+        : ui.TextDirection.ltr, child:Scaffold(
       body: Stack(
         fit: StackFit.expand,
         children: [
@@ -229,7 +233,7 @@ class _CommunityResourcesScreenState extends State<CommunityResources> {
           )
         ],
       ),
-    );
+    ));
   }
 
   getWebApiFromUrl(BuildContext context, Map<String, Object> params) {

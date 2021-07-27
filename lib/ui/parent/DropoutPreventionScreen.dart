@@ -18,7 +18,7 @@ import 'package:http/http.dart' as http;
 import 'package:tucson_app/ui/parent/DropOutPostScreen.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
-
+import 'dart:ui' as ui;
 class DropoutPreventionScreen extends StatefulWidget {
   @override
   _DropoutPreventionScreenState createState() =>
@@ -107,7 +107,12 @@ class _DropoutPreventionScreenState extends State<DropoutPreventionScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: Directionality(
+        textDirection: languageCode?.compareTo("ar") == 0
+        ? ui.TextDirection.rtl
+        : ui.TextDirection.ltr, child: Scaffold(
       body: Stack(
         fit: StackFit.expand,
         children: [
@@ -286,7 +291,7 @@ class _DropoutPreventionScreenState extends State<DropoutPreventionScreen> {
           )
         ],
       ),
-    );
+    )));
   }
 
   _getSchoolList()async {

@@ -11,7 +11,7 @@ import 'package:tucson_app/Model/ContentResponse.dart';
 import 'package:tucson_app/WebService/WebService.dart';
 import 'package:tucson_app/ui/DisplayWebview.dart';
 import 'package:url_launcher/url_launcher.dart';
-
+import 'dart:ui' as ui;
 
 class CommunityEventScreen extends StatefulWidget {
 
@@ -34,7 +34,7 @@ class _CommunityEventScreenState extends State<CommunityEventScreen> {
   _getSchoolId() async {
     int schoolId = await PrefUtils.getValueFor(PrefUtils.schoolId);
     languageCode = await PrefUtils.getValueFor(PrefUtils.sortLanguageCode);
-    if(schoolId == null){
+    if (schoolId == null) {
       schoolId = 0;
     }
     _getCommunityEventList(schoolId);
@@ -43,76 +43,110 @@ class _CommunityEventScreenState extends State<CommunityEventScreen> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        body: Stack(
-          children: [
-            Container(
-              color: HexColor("#6462AA"),
-              child: Column(
-                children: [
-                  Container(
-                    margin: EdgeInsets.fromLTRB(0, MediaQuery.of(context).size.height*0.03, 0, MediaQuery.of(context).size.height*0.03),
-                    height: MediaQuery.of(context).size.height*0.06,
-                    child: Row(
-                      children: [
-                        Container(
-                          margin: EdgeInsets.only(top: 10),
-                          child: IconButton(
-                              icon: Icon(Icons.arrow_back_ios, color: Colors.white),
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              }),
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(top: 10),
-                          child: Text('commmunity_events'.tr(),
-                              style: AppTheme.customTextStyle(MyFont.SSPro_semibold, 18.0, Colors.white)),
-                        )
-                      ],
+        debugShowCheckedModeBanner: false,
+        home: Directionality(
+          textDirection: languageCode?.compareTo("ar") == 0
+              ? ui.TextDirection.rtl
+              : ui.TextDirection.ltr, child: Scaffold(
+          body: Stack(
+            children: [
+              Container(
+                color: HexColor("#6462AA"),
+                child: Column(
+                  children: [
+                    Container(
+                      margin: EdgeInsets.fromLTRB(0, MediaQuery
+                          .of(context)
+                          .size
+                          .height * 0.03, 0, MediaQuery
+                          .of(context)
+                          .size
+                          .height * 0.03),
+                      height: MediaQuery
+                          .of(context)
+                          .size
+                          .height * 0.06,
+                      child: Row(
+                        children: [
+                          Container(
+                            margin: EdgeInsets.only(top: 10),
+                            child: IconButton(
+                                icon: Icon(
+                                    Icons.arrow_back_ios, color: Colors.white),
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                }),
+                          ),
+                          Container(
+                            margin: EdgeInsets.only(top: 10),
+                            child: Text('commmunity_events'.tr(),
+                                style: AppTheme.customTextStyle(
+                                    MyFont.SSPro_semibold, 18.0, Colors.white)),
+                          )
+                        ],
+                      ),
                     ),
-                  ),
-                  Container(
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(30.0),
-                            topRight: Radius.circular(30.0)),
-                        color: HexColor("FAFAFA")),
-                    height: MediaQuery.of(context).size.height*0.88,
-                    width: MediaQuery.of(context).size.width,
-                    padding: EdgeInsets.all(10),
-                  )
-                ],
-              ),
-            ),
-            Positioned(
-              top: MediaQuery.of(context).size.height*0.12,
-              left: MediaQuery.of(context).size.height*0.012,
-              right: MediaQuery.of(context).size.height*0.012,
-              child: Container(
-                height: MediaQuery.of(context).size.height*0.88,
-                child: _communityEventList.length == 0 ? emptyListView() : SingleChildScrollView(
-                  child:  ListView.builder(
-                      itemCount: _communityEventList.length,
-                      shrinkWrap: true,
-                      physics: ScrollPhysics(),
-                      padding: EdgeInsets.only(top: 20),
-                      itemBuilder: (BuildContext context, int position){
-                        return _listRowItem(context, position);
-                      }),
+                    Container(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(30.0),
+                              topRight: Radius.circular(30.0)),
+                          color: HexColor("FAFAFA")),
+                      height: MediaQuery
+                          .of(context)
+                          .size
+                          .height * 0.88,
+                      width: MediaQuery
+                          .of(context)
+                          .size
+                          .width,
+                      padding: EdgeInsets.all(10),
+                    )
+                  ],
                 ),
               ),
-            )
-          ],
+              Positioned(
+                top: MediaQuery
+                    .of(context)
+                    .size
+                    .height * 0.12,
+                left: MediaQuery
+                    .of(context)
+                    .size
+                    .height * 0.012,
+                right: MediaQuery
+                    .of(context)
+                    .size
+                    .height * 0.012,
+                child: Container(
+                  height: MediaQuery
+                      .of(context)
+                      .size
+                      .height * 0.88,
+                  child: _communityEventList.length == 0
+                      ? emptyListView()
+                      : SingleChildScrollView(
+                    child: ListView.builder(
+                        itemCount: _communityEventList.length,
+                        shrinkWrap: true,
+                        physics: ScrollPhysics(),
+                        padding: EdgeInsets.only(top: 20),
+                        itemBuilder: (BuildContext context, int position) {
+                          return _listRowItem(context, position);
+                        }),
+                  ),
+                ),
+              )
+            ],
+          ),
         ),
-      ),
-    );
+        ));
   }
 
   _listRowItem(BuildContext context, int position) {
     return InkWell(
-      onTap: (){
-       // Utils.navigateToScreen(context, DisplayWebview(_communityEventList[position].objectPath));
+      onTap: () {
+        // Utils.navigateToScreen(context, DisplayWebview(_communityEventList[position].objectPath));
         _launchURL(_communityEventList[position].objectPath);
       },
       child: Card(
@@ -124,10 +158,12 @@ class _CommunityEventScreenState extends State<CommunityEventScreen> {
             children: [
               Card(
                 margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                child: Padding(padding:EdgeInsets.all(10),child: SvgPicture.asset(MyImage.dummyIcon)),
+                child: Padding(padding: EdgeInsets.all(10),
+                    child: SvgPicture.asset(MyImage.dummyIcon)),
               ),
               Expanded(
-                child: Text(_communityEventList[position].objectName, style: AppTheme.regularTextStyle()),
+                child: Text(_communityEventList[position].objectName,
+                    style: AppTheme.regularTextStyle()),
               ),
               Container(
                 height: 50,
@@ -146,8 +182,14 @@ class _CommunityEventScreenState extends State<CommunityEventScreen> {
   emptyListView() {
     return Container(
       alignment: Alignment.center,
-      height: MediaQuery.of(context).size.height*0.88,
-      child: isLoading ? Container() : Text('no'.tr()+" "+'commmunity_events'.tr()+" "+'found'.tr(), style: AppTheme.regularTextStyle().copyWith(fontSize: 18, color: Colors.red)),
+      height: MediaQuery
+          .of(context)
+          .size
+          .height * 0.88,
+      child: isLoading ? Container() : Text(
+          'no'.tr() + " " + 'commmunity_events'.tr() + " " + 'found'.tr(),
+          style: AppTheme.regularTextStyle().copyWith(
+              fontSize: 18, color: Colors.red)),
     );
   }
 
@@ -159,17 +201,18 @@ class _CommunityEventScreenState extends State<CommunityEventScreen> {
       "contentTypeName": "CommunityEvents"
     };
     Utils.showLoader(true, context);
-    _contentViewModel.getContentList(context, params, "Community", (isSuccess, message){
-      if(isSuccess){
+    _contentViewModel.getContentList(
+        context, params, "Community", (isSuccess, message) {
+      if (isSuccess) {
         setState(() {
           _communityEventList = [];
-          for(var data in _contentViewModel.contentList){
-            for(var listData in data.contentTransactionTypeJoin){
+          for (var data in _contentViewModel.contentList) {
+            for (var listData in data.contentTransactionTypeJoin) {
               _communityEventList.add(listData);
             }
           }
         });
-        if(languageCode!.compareTo("en") != 0){
+        if (languageCode!.compareTo("en") != 0) {
           translateListData();
         } else {
           Utils.showLoader(false, context);
@@ -185,25 +228,27 @@ class _CommunityEventScreenState extends State<CommunityEventScreen> {
     });
   }
 
-  translateListData(){
-    List<String> nameList=[];
-    List<ContentTransactionResponse> tempList =[];
-    for(var items in _communityEventList){
+  translateListData() {
+    List<String> nameList = [];
+    List<ContentTransactionResponse> tempList = [];
+    for (var items in _communityEventList) {
       nameList.add(items.objectName);
     }
     String nameStr = nameList.join("===");
-    WebService.translateApiCall(languageCode!, nameStr, (isSuccess, response){
-      if(isSuccess){
+    WebService.translateApiCall(languageCode!, nameStr, (isSuccess, response) {
+      if (isSuccess) {
         List<String> resultArr = response.toString().split("===");
-        for(int i=0; i< resultArr.length; i++){
-          tempList.add(ContentTransactionResponse(contentTransactionId: _communityEventList[i].contentTransactionId,
+        for (int i = 0; i < resultArr.length; i++) {
+          tempList.add(ContentTransactionResponse(
+              contentTransactionId: _communityEventList[i].contentTransactionId,
               contentMasterId: _communityEventList[i].contentMasterId,
               contentTransTypeId: _communityEventList[i].contentTransTypeId,
               objectName: resultArr[i],
               objectPath: _communityEventList[i].objectPath,
-              contentTransTypeName: _communityEventList[i].contentTransTypeName));
+              contentTransTypeName: _communityEventList[i]
+                  .contentTransTypeName));
         }
-        if(_communityEventList.length == tempList.length){
+        if (_communityEventList.length == tempList.length) {
           setState(() {
             _communityEventList = tempList;
           });
@@ -217,5 +262,7 @@ class _CommunityEventScreenState extends State<CommunityEventScreen> {
   }
 
   void _launchURL(String path) async =>
-      await canLaunch(path) ? await launch(path) : throw 'Could not launch $path';
+      await canLaunch(path)
+          ? await launch(path)
+          : throw 'Could not launch $path';
 }

@@ -12,7 +12,7 @@ import 'package:tucson_app/GeneralUtils/Utils.dart';
 import 'package:tucson_app/Model/AuthViewModel.dart';
 import 'package:tucson_app/WebService/WebService.dart';
 import 'package:tucson_app/ui/SignInScreen.dart';
-
+import 'dart:ui' as ui;
 
 class ResetPwdScreen extends StatefulWidget {
 
@@ -63,7 +63,11 @@ class _ResetPwdScreenState extends State<ResetPwdScreen> {
       onWillPop: ()=> Utils.backWithNoTransition(context, SignInScreen()),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: Scaffold(
+        home:  Directionality(
+      textDirection: languageCode?.compareTo("ar") == 0
+          ? ui.TextDirection.rtl
+          : ui.TextDirection.ltr,
+      child: Scaffold(
           resizeToAvoidBottomInset: false,
           body: Container(
             decoration: BoxDecoration(
@@ -113,9 +117,13 @@ class _ResetPwdScreenState extends State<ResetPwdScreen> {
                           Text('reset_password'.tr(), style: AppTheme.customTextStyle(MyFont.SSPro_bold, 30.0, MyColor.darkLblTextColor())),
                           SizedBox(height: 20),
                           Text('new_password'.tr(), style: AppTheme.regularTextStyle().copyWith(fontSize: 14)),
-                          textFieldFor('new_password'.tr(), _newPwdController, textInputAction: TextInputAction.next, keyboardType: TextInputType.text, obscure:_showNewPwd, suffixIcon: InkWell(onTap:(){_toggleNewPwd();},child: Padding(padding: EdgeInsets.fromLTRB(10, 15, 0, 15), child: SvgPicture.asset(MyImage.viewPwdIcon)))),
+                          textFieldFor('new_password'.tr(), _newPwdController, textInputAction: TextInputAction.next, keyboardType: TextInputType.text, obscure:_showNewPwd, isRtl: languageCode?.compareTo("ar") == 0
+                              ? true
+                              : false,suffixIcon: InkWell(onTap:(){_toggleNewPwd();},child: Padding(padding: EdgeInsets.fromLTRB(10, 15, 0, 15), child: SvgPicture.asset(MyImage.viewPwdIcon)))),
                           SizedBox(height: 10),Text('confirm_password'.tr(), style: AppTheme.regularTextStyle().copyWith(fontSize: 14)),
-                          textFieldFor('confirm_password'.tr(), _confPwdController, textInputAction: TextInputAction.next, keyboardType: TextInputType.text, obscure:_showConfPwd, suffixIcon: InkWell(onTap:(){_toggleConfPwd();},child: Padding(padding: EdgeInsets.fromLTRB(10, 15, 0, 15), child: SvgPicture.asset(MyImage.viewPwdIcon)))),
+                          textFieldFor('confirm_password'.tr(), _confPwdController, textInputAction: TextInputAction.next, keyboardType: TextInputType.text, obscure:_showConfPwd, isRtl: languageCode?.compareTo("ar") == 0
+                              ? true
+                              : false,suffixIcon: InkWell(onTap:(){_toggleConfPwd();},child: Padding(padding: EdgeInsets.fromLTRB(10, 15, 0, 15), child: SvgPicture.asset(MyImage.viewPwdIcon)))),
                           SizedBox(height: 20),
                           Container(
                             decoration: BoxDecoration(
@@ -148,7 +156,7 @@ class _ResetPwdScreenState extends State<ResetPwdScreen> {
           ),
         ),
       ),
-    );
+    ));
   }
 
   resetYourPwd(BuildContext context) {

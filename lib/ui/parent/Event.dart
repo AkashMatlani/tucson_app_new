@@ -9,9 +9,11 @@ import 'package:tucson_app/Model/GridListItems.dart';
 import 'package:tucson_app/WebService/WebService.dart';
 import 'package:tucson_app/ui/WebViewEmpty.dart';
 import 'package:url_launcher/url_launcher.dart';
-
+import 'dart:ui' as ui;
 
 class Event extends StatefulWidget {
+  Event(this.sortLanguageCode);
+  String sortLanguageCode;
   @override
   _EventScreenState createState() => _EventScreenState();
 }
@@ -42,7 +44,12 @@ class _EventScreenState extends State<Event> {
   }
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: Directionality(
+        textDirection: widget.sortLanguageCode.compareTo("ar") == 0
+        ? ui.TextDirection.rtl
+        : ui.TextDirection.ltr, child:Scaffold(
       body: Stack(
         fit: StackFit.expand,
         children: [
@@ -177,7 +184,7 @@ class _EventScreenState extends State<Event> {
           )
         ],
       ),
-    );
+    )));
   }
 
   getWebApiFromUrl(BuildContext context, Map<String, Object?> params) {

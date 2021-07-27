@@ -4,12 +4,13 @@ import 'package:tucson_app/GeneralUtils/ColorExtension.dart';
 import 'package:tucson_app/GeneralUtils/Constant.dart';
 import 'package:tucson_app/ui/student/ElementaryStuff.dart';
 import 'package:tucson_app/ui/student/MiddleHighStuff.dart';
-
+import 'dart:ui' as ui;
 
 class CoolStuffScreen extends StatefulWidget {
-  CoolStuffScreen(this.schoolCategory);
+  CoolStuffScreen(this.schoolCategory, this.sortLanguageCode);
 
   String schoolCategory;
+  String sortLanguageCode;
 
   @override
   _CoolStuffScreenScreenState createState() => _CoolStuffScreenScreenState();
@@ -64,7 +65,9 @@ class _CoolStuffScreenScreenState extends State<CoolStuffScreen>
     var tabHeight = MediaQuery.of(context).size.height * 0.06;
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Scaffold(
+      home: Directionality(
+    textDirection: widget.sortLanguageCode.compareTo("ar") == 0 ? ui.TextDirection.rtl : ui.TextDirection.ltr,
+    child:  Scaffold(
         body: Stack(
           fit: StackFit.expand,
           children: [
@@ -170,8 +173,8 @@ class _CoolStuffScreenScreenState extends State<CoolStuffScreen>
                             physics: widget.schoolCategory.compareTo("K-8") ==0 ? ScrollPhysics() : NeverScrollableScrollPhysics(),
                             controller: _tabController,
                             children: <Widget>[
-                              ElementaryStuff(),
-                              MiddleHighStuff()
+                              ElementaryStuff(widget.sortLanguageCode),
+                              MiddleHighStuff(widget.sortLanguageCode)
                             ],
                           ),
                         )
@@ -183,6 +186,6 @@ class _CoolStuffScreenScreenState extends State<CoolStuffScreen>
           ],
         ),
       ),
-    );
+    ));
   }
 }

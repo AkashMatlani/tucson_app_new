@@ -5,12 +5,13 @@ import 'package:tucson_app/GeneralUtils/Constant.dart';
 import 'BlogScreenForParent.dart';
 
 import '../../GeneralUtils/ColorExtension.dart';
-
+import 'dart:ui' as ui;
 
 class ActivitesScreen extends StatefulWidget {
 
-  ActivitesScreen(this.schoolCategory);
+  ActivitesScreen(this.schoolCategory, this.sortLanguageCode);
   String schoolCategory;
+  String sortLanguageCode;
 
   @override
   _ActivitesScreenState createState() => _ActivitesScreenState();
@@ -71,7 +72,10 @@ class _ActivitesScreenState extends State<ActivitesScreen>
     var tabHeight = MediaQuery.of(context).size.height * 0.06;
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Scaffold(
+      home: Directionality(
+    textDirection: widget.sortLanguageCode.compareTo("ar") == 0
+        ? ui.TextDirection.rtl
+        : ui.TextDirection.ltr, child: Scaffold(
         body: Stack(
           fit: StackFit.expand,
           children: [
@@ -197,6 +201,6 @@ class _ActivitesScreenState extends State<ActivitesScreen>
           ],
         ),
       ),
-    );
+    ));
   }
 }

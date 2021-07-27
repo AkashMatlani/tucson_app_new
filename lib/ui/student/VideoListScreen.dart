@@ -13,10 +13,9 @@ import 'package:tucson_app/Model/ContentMasterViewModel.dart';
 import 'package:tucson_app/Model/ContentResponse.dart';
 import 'package:tucson_app/WebService/WebService.dart';
 import 'package:tucson_app/ui/VideoPlayerScreen.dart';
-import 'package:tucson_app/ui/student/flickerVideoPlayer.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
-
+import 'dart:ui' as ui;
 class VideoListScreen extends StatefulWidget {
   VideoListScreen(this.title, this.fromScreen);
 
@@ -51,7 +50,11 @@ class _VideoListScreenState extends State<VideoListScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return  MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: Directionality(
+        textDirection: languageCode?.compareTo("ar") == 0 ? ui.TextDirection.rtl : ui.TextDirection.ltr,
+    child: Scaffold(
       body: Stack(
         children: [
           Container(
@@ -122,7 +125,7 @@ class _VideoListScreenState extends State<VideoListScreen> {
           )
         ],
       ),
-    );
+    )));
   }
 
   _listRowItems(BuildContext context, int index) {

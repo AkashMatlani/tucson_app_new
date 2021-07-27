@@ -10,13 +10,9 @@ import 'package:tucson_app/GeneralUtils/PrefsUtils.dart';
 import 'package:tucson_app/GeneralUtils/Utils.dart';
 import 'package:tucson_app/Model/DonationResponse.dart';
 import 'package:tucson_app/WebService/WebService.dart';
-import 'package:tucson_app/ui/DisplayWebview.dart';
 import 'package:tucson_app/ui/SignInScreen.dart';
-import 'package:tucson_app/ui/community/CommunityDashboardScreen.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:webview_flutter/webview_flutter.dart';
-
-
+import 'dart:ui' as ui;
 
 class DonationScreen extends StatefulWidget {
 
@@ -53,7 +49,9 @@ class _DonationScreenState extends State<DonationScreen> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Scaffold(
+      home: Directionality(
+    textDirection: languageCode?.compareTo("ar") == 0 ? ui.TextDirection.rtl : ui.TextDirection.ltr,
+    child:Scaffold(
         body: SingleChildScrollView(
           child: Container(
             margin: EdgeInsets.all(20),
@@ -128,7 +126,7 @@ class _DonationScreenState extends State<DonationScreen> {
           ),
         ),
       ),
-    );
+    ));
   }
 
   void getDonationAPICall() {

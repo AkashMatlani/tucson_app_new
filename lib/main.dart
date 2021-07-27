@@ -93,10 +93,8 @@ class _MyAppState extends State<MyApp> {
         theme: ThemeData(
           primarySwatch: Colors.deepPurple,
         ),
-        home: Directionality(
-            textDirection: widget.languageCode.compareTo("en") == 0
-                ? ui.TextDirection.ltr
-                : ui.TextDirection.rtl,
+        home:Directionality(
+            textDirection: widget.languageCode.compareTo("ar") == 0 ? ui.TextDirection.rtl : ui.TextDirection.ltr,
             child: (widget.role.isEmpty || widget.role == null)
                 ? DonationScreen()
                 : widget.role.compareTo("Student") == 0

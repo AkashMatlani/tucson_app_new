@@ -11,7 +11,7 @@ import 'package:tucson_app/Model/ContentResponse.dart';
 import 'package:tucson_app/WebService/WebService.dart';
 import 'package:tucson_app/ui/DisplayWebview.dart';
 import 'package:url_launcher/url_launcher.dart';
-
+import 'dart:ui' as ui;
 class JobOpeningScreen extends StatefulWidget {
 
   String fromScreen;
@@ -46,7 +46,11 @@ class _JobOpeningScreenState extends State<JobOpeningScreen> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Scaffold(
+      home: Directionality(
+    textDirection: languageCode?.compareTo("ar") == 0
+        ? ui.TextDirection.rtl
+        : ui.TextDirection.ltr,
+    child: Scaffold(
         body: Stack(
           children: [
             Container(
@@ -108,7 +112,7 @@ class _JobOpeningScreenState extends State<JobOpeningScreen> {
           ],
         ),
       ),
-    );
+    ));
   }
 
   _listRowItem(BuildContext context, int position) {

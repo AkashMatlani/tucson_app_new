@@ -16,7 +16,7 @@ import 'package:tucson_app/Model/AuthViewModel.dart';
 import 'package:tucson_app/Model/SchoolListResponse.dart';
 import 'package:tucson_app/WebService/WebService.dart';
 import 'package:tucson_app/ui/SignInScreen.dart';
-
+import 'dart:ui' as ui;
 
 class SignUpScreen extends StatefulWidget {
 
@@ -80,7 +80,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Scaffold(
+      home:  Directionality(
+        textDirection: languageCode?.compareTo("ar") == 0
+        ? ui.TextDirection.rtl
+        : ui.TextDirection.ltr,
+    child: Scaffold(
         body: Container(
           decoration: BoxDecoration(
               image: DecorationImage(image: AssetImage(MyImage.splashBg), fit: BoxFit.fill)
@@ -162,17 +166,23 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           ),
                           SizedBox(height: 10),
                           Text('first_name'.tr(), style: AppTheme.regularTextStyle().copyWith(fontSize: 14)),
-                          textFieldFor('first_name'.tr(), _fnameController, textInputAction: TextInputAction.next, keyboardType: TextInputType.text),
+                          textFieldFor('first_name'.tr(), _fnameController, textInputAction: TextInputAction.next, keyboardType: TextInputType.text,isRtl: languageCode?.compareTo("ar") == 0
+                              ? true
+                              : false,),
                           SizedBox(height: 10),
                           Text('last_name'.tr(), style: AppTheme.regularTextStyle().copyWith(fontSize: 14)),
-                          textFieldFor('last_name'.tr(), _lnameController, textInputAction: TextInputAction.next, keyboardType: TextInputType.text),
+                          textFieldFor('last_name'.tr(), _lnameController, textInputAction: TextInputAction.next, keyboardType: TextInputType.text,isRtl: languageCode?.compareTo("ar") == 0
+                              ? true
+                              : false,),
                           SizedBox(height: 10),
                           _userType.compareTo(LabelStr.lblStudent)==0 ? Column(
                             mainAxisAlignment:MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                             Text('date_of_birth'.tr(), style: AppTheme.regularTextStyle().copyWith(fontSize: 14)),
-                            textFieldFor('select_dob'.tr(), _dobController, readOnly: true, onTap:(){_selectDate(context);}, suffixIcon: InkWell(onTap:(){_selectDate(context);},child: Icon(Icons.calendar_today_outlined, size: 24))),
+                            textFieldFor('select_dob'.tr(), _dobController, readOnly: true, onTap:(){_selectDate(context);}, isRtl: languageCode?.compareTo("ar") == 0
+                                ? true
+                                : false,suffixIcon: InkWell(onTap:(){_selectDate(context);},child: Icon(Icons.calendar_today_outlined, size: 24))),
                             SizedBox(height: 10)
                           ]) : Container(),
                           _userType.compareTo(LabelStr.lblParentGuardian)==0 ? Column(
@@ -180,12 +190,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text('zip_code'.tr(), style: AppTheme.regularTextStyle().copyWith(fontSize: 14)),
-                              textFieldFor('zip_code'.tr(), _zipController, textInputAction: TextInputAction.next, keyboardType: TextInputType.number),
+                              textFieldFor('zip_code'.tr(), _zipController, textInputAction: TextInputAction.next, keyboardType: TextInputType.number,isRtl: languageCode?.compareTo("ar") == 0
+                                  ? true
+                                  : false,),
                               SizedBox(height: 10),
                             ],
                           ) : Container(),
                           Text(_userType.compareTo(LabelStr.lblStudent)==0?'tusd_email'.tr():'email'.tr(), style: AppTheme.regularTextStyle().copyWith(fontSize: 14)),
-                          textFieldFor(_userType.compareTo(LabelStr.lblStudent)==0?'tusd_email'.tr():'email'.tr(), _emailController, textInputAction: TextInputAction.next, keyboardType: TextInputType.emailAddress),
+                          textFieldFor(_userType.compareTo(LabelStr.lblStudent)==0?'tusd_email'.tr():'email'.tr(), _emailController, textInputAction: TextInputAction.next, keyboardType: TextInputType.emailAddress,isRtl: languageCode?.compareTo("ar") == 0
+                              ? true
+                              : false,),
                           SizedBox(height: 10),
                           Text('school_name'.tr(), style: AppTheme.regularTextStyle().copyWith(fontSize: 14)),
                           (_schoolList.isNotEmpty && _schoolList.length > 0) ? Column(
@@ -228,10 +242,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           ) : Container(),
                           SizedBox(height: 10),
                           Text('password'.tr(), style: AppTheme.regularTextStyle().copyWith(fontSize: 14)),
-                          textFieldFor('password'.tr(), _pwdController, textInputAction: TextInputAction.done, keyboardType: TextInputType.text, obscure:_showPwd, suffixIcon: InkWell(onTap:(){_togglePwd();},child: Padding(padding: EdgeInsets.fromLTRB(10, 15, 0, 15), child: SvgPicture.asset(_showPwd ? MyImage.hidePwdIcon : MyImage.viewPwdIcon)))),
+                          textFieldFor('password'.tr(), _pwdController, textInputAction: TextInputAction.done, keyboardType: TextInputType.text, obscure:_showPwd, isRtl: languageCode?.compareTo("ar") == 0
+                              ? true
+                              : false,suffixIcon: InkWell(onTap:(){_togglePwd();},child: Padding(padding: EdgeInsets.fromLTRB(10, 15, 0, 15), child: SvgPicture.asset(_showPwd ? MyImage.hidePwdIcon : MyImage.viewPwdIcon)))),
                           SizedBox(height: 10),
                           Text('confirm_password'.tr(), style: AppTheme.regularTextStyle().copyWith(fontSize: 14)),
-                          textFieldFor('confirm_password'.tr(), _confPwdController, textInputAction: TextInputAction.done, keyboardType: TextInputType.text, obscure:_showConfPwd, suffixIcon: InkWell(onTap:(){_toggleConfPwd();},child: Padding(padding: EdgeInsets.fromLTRB(10, 15, 0, 15), child: SvgPicture.asset(_showConfPwd ? MyImage.hidePwdIcon : MyImage.viewPwdIcon)))),
+                          textFieldFor('confirm_password'.tr(), _confPwdController, textInputAction: TextInputAction.done, keyboardType: TextInputType.text, obscure:_showConfPwd, isRtl: languageCode?.compareTo("ar") == 0
+                              ? true
+                              : false,suffixIcon: InkWell(onTap:(){_toggleConfPwd();},child: Padding(padding: EdgeInsets.fromLTRB(10, 15, 0, 15), child: SvgPicture.asset(_showConfPwd ? MyImage.hidePwdIcon : MyImage.viewPwdIcon)))),
                           SizedBox(height: 30),
                           Container(
                             decoration: BoxDecoration(
@@ -285,7 +303,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
           ),
         ),
       ),
-    );
+    ));
   }
 
   _getSchoolList(){

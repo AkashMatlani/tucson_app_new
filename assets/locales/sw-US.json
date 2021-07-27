@@ -163,5 +163,8 @@
   "referred_by": "Inatajwa na:",
   "contact_specialist": "Wasiliana na Mtaalam wako",
   "select_reason_for_service_request" : "Sababu ya Ombi la Huduma",
-  "grade" : "Daraja"
+  "grade" : "Daraja",
+  "student_information" : "Habari ya Wanafunzi:",
+  "contact_phone" : "Wasiliana na Simu",
+  "tusd_matric_number" : "Nambari ya Matric ya TUSD"
 }

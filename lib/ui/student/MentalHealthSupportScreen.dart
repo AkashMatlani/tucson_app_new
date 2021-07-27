@@ -23,7 +23,7 @@ import 'package:tucson_app/ui/parent/RequestForServiceScreen.dart';
 import 'package:tucson_app/ui/student/StudentDashboardScreen.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
-
+import 'dart:ui' as ui;
 
 class MentalHealthSupportScreen extends StatefulWidget {
 
@@ -113,6 +113,8 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
         }
         return true;
       },
+      child: Directionality(
+      textDirection: _languageSortCode.compareTo("ar") == 0 ? ui.TextDirection.rtl : ui.TextDirection.ltr,
       child: Scaffold(
         body: Stack(
           children: [
@@ -421,7 +423,7 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
           ],
         ),
       ),
-    );
+      ));
   }
 
   emptyListView() {

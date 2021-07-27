@@ -103,11 +103,11 @@ class _CommunityDashboardScreenState extends State<CommunityDashboardScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Directionality(
-      textDirection: sortLanguageCode.compareTo("ar") == 0 ? ui.TextDirection.rtl : ui.TextDirection.ltr,
-      child: MaterialApp(
+    return MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: Scaffold(
+        home: Directionality(
+          textDirection: sortLanguageCode.compareTo("ar") == 0 ? ui.TextDirection.rtl : ui.TextDirection.ltr,
+          child: Scaffold(
             body: DoubleBack(
           condition: allowClose,
           onConditionFail: () {
@@ -235,7 +235,7 @@ class _CommunityDashboardScreenState extends State<CommunityDashboardScreen> {
                                     };
                                     getWebApiFromUrl(context, params);
                                   } else if (index == 1) {
-                                    Utils.navigateToScreen(context, PostJobsScreen());
+                                    Utils.navigateToScreen(context, PostJobsScreen(sortLanguageCode));
                                   } else if (index == 2) {
                                     Utils.navigateToScreen(context, CommunityEventScreen());
                                   } else if (index == 3) {
@@ -249,7 +249,7 @@ class _CommunityDashboardScreenState extends State<CommunityDashboardScreen> {
                                     };
                                     getWebApiFromUrl(context, params);
                                   } else if (index == 5) {
-                                    Utils.navigateToScreen(context, CommunityResources("Community"));
+                                    Utils.navigateToScreen(context, CommunityResources("Community",sortLanguageCode));
                                   } else if (index == 6) {
                                     var params = {
                                       "schoolId": schoolId,

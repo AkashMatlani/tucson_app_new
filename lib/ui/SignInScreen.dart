@@ -14,7 +14,7 @@ import 'package:tucson_app/ui/SignUpScreen.dart';
 import 'package:tucson_app/ui/community/CommunityDashboardScreen.dart';
 import 'package:tucson_app/ui/parent/ParentGuardianDashBoard.dart';
 import 'package:tucson_app/ui/student/StudentDashboardScreen.dart';
-
+import 'dart:ui' as ui;
 
 class SignInScreen extends StatefulWidget {
   @override
@@ -43,10 +43,10 @@ class _SignInScreenState extends State<SignInScreen> {
   void initState() {
     super.initState();
     getSharedPrefsData();
-   /* _emailController.text="pamela.leeper12@yopmail.com";
-     _pwdController.text="12345678";*/
+    _emailController.text="pamela.leeper12@yopmail.com";
+     _pwdController.text="12345678";
   //  _emailController.selection = TextSelection.fromPosition(TextPosition(offset: _emailController.text.length));
-    /*_emailController.text="akash.maltani@dashtechinc.com";
+/*    _emailController.text="akash.maltani@dashtechinc.com";
     _pwdController.text="12345678";*/
    /* _emailController.text="Test@gmail.com";
     _pwdController.text="12345678";*/
@@ -71,7 +71,11 @@ class _SignInScreenState extends State<SignInScreen> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Scaffold(
+      home:  Directionality(
+    textDirection: _languageSortCode.compareTo("ar") == 0
+        ? ui.TextDirection.rtl
+        : ui.TextDirection.ltr,
+    child:Scaffold(
         body: Container(
           decoration: BoxDecoration(
               image: DecorationImage(image: AssetImage(MyImage.splashBg), fit: BoxFit.fill)
@@ -106,14 +110,14 @@ class _SignInScreenState extends State<SignInScreen> {
                           Text('sign_in'.tr(), style: AppTheme.customTextStyle(MyFont.SSPro_bold, 30.0, MyColor.darkLblTextColor())),
                           SizedBox(height: 20),
                           Text('email'.tr(), style: AppTheme.regularTextStyle().copyWith(fontSize: 14)),
-                          textFieldFor('email'.tr(), _emailController, textInputAction: TextInputAction.next, keyboardType: TextInputType.emailAddress,isRtl: _languageSortCode.compareTo("en") == 0
-                              ? false
-                              : true,),
+                          textFieldFor('email'.tr(), _emailController, textInputAction: TextInputAction.next, keyboardType: TextInputType.emailAddress,isRtl: _languageSortCode.compareTo("ar") == 0
+                              ? true
+                              : false,),
                           SizedBox(height: 10),
                           Text('password'.tr(), style: AppTheme.regularTextStyle().copyWith(fontSize: 14)),
-                          textFieldFor('password'.tr(), _pwdController, textInputAction: TextInputAction.done, keyboardType: TextInputType.text, obscure:_showPwd, isRtl: _languageSortCode.compareTo("en") == 0
-                              ? false
-                              : true,suffixIcon: InkWell(onTap:(){_togglePwd();},child: Padding(padding: EdgeInsets.fromLTRB(10, 15, 0, 15), child: SvgPicture.asset(_showPwd ? MyImage.hidePwdIcon : MyImage.viewPwdIcon)))),
+                          textFieldFor('password'.tr(), _pwdController, textInputAction: TextInputAction.done, keyboardType: TextInputType.text, obscure:_showPwd, isRtl: _languageSortCode.compareTo("ar") == 0
+                              ? true
+                              : false,suffixIcon: InkWell(onTap:(){_togglePwd();},child: Padding(padding: EdgeInsets.fromLTRB(10, 15, 0, 15), child: SvgPicture.asset(_showPwd ? MyImage.hidePwdIcon : MyImage.viewPwdIcon)))),
                           SizedBox(height: 10),
                           Text('select_language'.tr(), style: AppTheme.regularTextStyle().copyWith(fontSize: 14)),
                           SizedBox(height: 10),
@@ -252,7 +256,7 @@ class _SignInScreenState extends State<SignInScreen> {
           ),
         ),
       ),
-    );
+    ));
   }
 
   _signIn(BuildContext context) async {

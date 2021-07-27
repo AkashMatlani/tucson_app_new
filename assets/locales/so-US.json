@@ -163,5 +163,8 @@
   "referred_by": "Waxaa tixraacay:",
   "contact_specialist": "La xiriir Khabiirkaaga",
   "select_reason_for_service_request" : "Sababta Codsiga Adeegga",
-  "grade" : "Fasalka"
+  "grade" : "Fasalka",
+  "student_information" : "Macluumaadka Ardayga:",
+  "contact_phone" : "Telefoonka Kala Xiriir",
+  "tusd_matric_number" : "TUSD Matric Number"
 }

@@ -13,6 +13,7 @@ import 'package:tucson_app/GeneralUtils/Utils.dart';
 import 'package:tucson_app/Model/GetAllReasonModel.dart';
 import 'package:tucson_app/Model/SchoolListResponse.dart';
 import 'package:tucson_app/WebService/WebService.dart';
+import 'dart:ui' as ui;
 
 class DropOutPostScreen extends StatefulWidget {
   @override
@@ -61,7 +62,11 @@ class _DropOutPostScreenState extends State<DropOutPostScreen> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Scaffold(
+      home:  Directionality(
+    textDirection: languageCode?.compareTo("ar") == 0
+        ? ui.TextDirection.rtl
+        : ui.TextDirection.ltr,
+    child:Scaffold(
         body: Container(
           decoration: BoxDecoration(
               image: DecorationImage(
@@ -139,13 +144,17 @@ class _DropOutPostScreenState extends State<DropOutPostScreen> {
                               'first_name'.tr(), _firstNameRefredByController,
                               textInputAction: TextInputAction.next,
                               keyboardType: TextInputType.name,
-                              autofocus: true),
+                              autofocus: true,isRtl: languageCode?.compareTo("ar") == 0
+                              ? true
+                              : false,),
                           SizedBox(height: 10),
                           textFieldFor(
                               'last_name'.tr(), _lastNameRefredByController,
                               textInputAction: TextInputAction.next,
                               keyboardType: TextInputType.name,
-                              autofocus: true),
+                              autofocus: true, isRtl: languageCode?.compareTo("ar") == 0
+                              ? true
+                              : false,),
                           SizedBox(height: 10),
                           textFieldFor(
                             'contact_phone'.tr(),
@@ -156,6 +165,9 @@ class _DropOutPostScreenState extends State<DropOutPostScreen> {
                             inputFormatter: [
                               LengthLimitingTextInputFormatter(11)
                             ],
+                            isRtl: languageCode?.compareTo("ar") == 0
+                                ? true
+                                : false,
                           ),
                           SizedBox(height: 40),
                           Text('student_information'.tr(),
@@ -165,13 +177,17 @@ class _DropOutPostScreenState extends State<DropOutPostScreen> {
                               'first_name'.tr(), _firstNameStudentController,
                               textInputAction: TextInputAction.next,
                               keyboardType: TextInputType.name,
-                              autofocus: true),
+                              autofocus: true,isRtl: languageCode?.compareTo("ar") == 0
+                              ? true
+                              : false,),
                           SizedBox(height: 10),
                           textFieldFor(
                               'last_name'.tr(), _lastNameStudentController,
                               textInputAction: TextInputAction.next,
                               keyboardType: TextInputType.name,
-                              autofocus: true),
+                              autofocus: true,isRtl: languageCode?.compareTo("ar") == 0
+                              ? true
+                              : false,),
                           SizedBox(height: 10),
                           textFieldFor(
                             'tusd_matric_number'.tr(),
@@ -179,12 +195,18 @@ class _DropOutPostScreenState extends State<DropOutPostScreen> {
                             textInputAction: TextInputAction.next,
                             keyboardType: TextInputType.numberWithOptions(signed: true),
                             autofocus: true,
+                            isRtl: languageCode?.compareTo("ar") == 0
+                                ? true
+                                : false,
                           ),
                           SizedBox(height: 10),
                           textFieldFor('grade'.tr(), _gradeController,
                               textInputAction: TextInputAction.next,
                               keyboardType: TextInputType.name,
-                              autofocus: true),
+                              autofocus: true,
+                            isRtl: languageCode?.compareTo("ar") == 0
+                                ? true
+                                : false,),
                           SizedBox(height: 10),
                           (_schoolList.isNotEmpty && _schoolList.length > 0)
                               ? Column(
@@ -375,7 +397,7 @@ class _DropOutPostScreenState extends State<DropOutPostScreen> {
           ),
         ),
       ),
-    );
+    ));
   }
 
   _getSchoolList() {

@@ -9,8 +9,11 @@ import 'GeneralUtils/Constant.dart';
 import 'GeneralUtils/HelperWidgets.dart';
 import 'GeneralUtils/LabelStr.dart';
 import 'GeneralUtils/Utils.dart';
-
+import 'dart:ui' as ui;
 class PostJobsScreen extends StatefulWidget {
+  PostJobsScreen(this.sortLanguageCode);
+  String sortLanguageCode;
+
   @override
   _PostJobsScreenState createState() => _PostJobsScreenState();
 }
@@ -33,7 +36,13 @@ class _PostJobsScreenState extends State<PostJobsScreen> {
 
   @override
   Widget build(BuildContext context) {
-   return  Scaffold(
+   return  MaterialApp(
+       debugShowCheckedModeBanner: false,
+       home:  Directionality(
+       textDirection: widget.sortLanguageCode.compareTo("ar") == 0
+       ? ui.TextDirection.rtl
+       : ui.TextDirection.ltr,
+    child: Scaffold(
      body: Stack(
        fit: StackFit.expand,
        children: [
@@ -124,25 +133,39 @@ class _PostJobsScreenState extends State<PostJobsScreen> {
                    ),
                    SizedBox(height: 20),
                    Text("Label2", style: AppTheme.regularTextStyle().copyWith(fontSize: 14)),
-                   textFieldFor("label2", _label2Controller, textInputAction: TextInputAction.next, keyboardType: TextInputType.text),
+                   textFieldFor("label2", _label2Controller, textInputAction: TextInputAction.next, keyboardType: TextInputType.text,isRtl: widget.sortLanguageCode.compareTo("ar") == 0
+                       ? true
+                       : false,),
                    SizedBox(height: 20),
                    Text("Label3", style: AppTheme.regularTextStyle().copyWith(fontSize: 14)),
-                   textFieldFor("label3", _label3Controller, textInputAction: TextInputAction.next, keyboardType: TextInputType.text),
+                   textFieldFor("label3", _label3Controller, textInputAction: TextInputAction.next, keyboardType: TextInputType.text,isRtl: widget.sortLanguageCode.compareTo("ar") == 0
+                       ? true
+                       : false,),
                    SizedBox(height: 20),
                    Text(LabelStr.lbldob, style: AppTheme.regularTextStyle().copyWith(fontSize: 14)),
-                   textFieldFor(LabelStr.lbldob, _label4Controller, readOnly: true, suffixIcon: InkWell(onTap:(){_selectDate(context);},child: Icon(Icons.calendar_today_outlined, size: 24))),
+                   textFieldFor(LabelStr.lbldob, _label4Controller, readOnly: true, isRtl: widget.sortLanguageCode.compareTo("ar") == 0
+                       ? true
+                       : false,suffixIcon: InkWell(onTap:(){_selectDate(context);},child: Icon(Icons.calendar_today_outlined, size: 24))),
                    SizedBox(height: 20),
                    Text("Label4", style: AppTheme.regularTextStyle().copyWith(fontSize: 14)),
-                   textFieldFor("label4", _label5Controller, textInputAction: TextInputAction.next, keyboardType: TextInputType.text),
+                   textFieldFor("label4", _label5Controller, textInputAction: TextInputAction.next, keyboardType: TextInputType.text,isRtl: widget.sortLanguageCode.compareTo("ar") == 0
+                       ? true
+                       : false,),
                    SizedBox(height: 20),
                    Text("Label5", style: AppTheme.regularTextStyle().copyWith(fontSize: 14)),
-                   textFieldFor("label5", _label6Controller, textInputAction: TextInputAction.next, keyboardType: TextInputType.text),
+                   textFieldFor("label5", _label6Controller, textInputAction: TextInputAction.next, keyboardType: TextInputType.text,isRtl: widget.sortLanguageCode.compareTo("ar") == 0
+                       ? true
+                       : false,),
                    SizedBox(height: 20),
                    Text(LabelStr.lblPassword, style: AppTheme.regularTextStyle().copyWith(fontSize: 14)),
-                   textFieldFor(LabelStr.lblPassword, _label7Controller, textInputAction: TextInputAction.next, keyboardType: TextInputType.text, obscure:_showPwd, suffixIcon: InkWell(onTap:(){_togglePwd();},child: Padding(padding: EdgeInsets.fromLTRB(10, 15, 0, 15), child: SvgPicture.asset(MyImage.viewPwdIcon)))),
+                   textFieldFor(LabelStr.lblPassword, _label7Controller, textInputAction: TextInputAction.next, keyboardType: TextInputType.text, obscure:_showPwd, isRtl: widget.sortLanguageCode.compareTo("ar") == 0
+                       ? true
+                       : false,suffixIcon: InkWell(onTap:(){_togglePwd();},child: Padding(padding: EdgeInsets.fromLTRB(10, 15, 0, 15), child: SvgPicture.asset(MyImage.viewPwdIcon)))),
                    SizedBox(height: 20),
                    Text(LabelStr.lblConfirmPwd, style: AppTheme.regularTextStyle().copyWith(fontSize: 14)),
-                   textFieldFor(LabelStr.lblConfirmPwd, _label8Controller, textInputAction: TextInputAction.done, keyboardType: TextInputType.text, obscure:_showConfPwd, suffixIcon: InkWell(onTap:(){_toggleConfPwd();},child: Padding(padding: EdgeInsets.fromLTRB(10, 15, 0, 15), child: SvgPicture.asset(MyImage.viewPwdIcon)))),
+                   textFieldFor(LabelStr.lblConfirmPwd, _label8Controller, textInputAction: TextInputAction.done, keyboardType: TextInputType.text, obscure:_showConfPwd, isRtl: widget.sortLanguageCode.compareTo("ar") == 0
+                       ? true
+                       : false,suffixIcon: InkWell(onTap:(){_toggleConfPwd();},child: Padding(padding: EdgeInsets.fromLTRB(10, 15, 0, 15), child: SvgPicture.asset(MyImage.viewPwdIcon)))),
                    SizedBox(height: 30),
                    Container(
                      decoration: BoxDecoration(
@@ -172,7 +195,7 @@ class _PostJobsScreenState extends State<PostJobsScreen> {
          )
        ],
      ),
-   );
+   )));
   }
 
   void _togglePwd() {

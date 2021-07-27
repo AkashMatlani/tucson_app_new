@@ -16,7 +16,7 @@ import 'package:tucson_app/ui/AudioPlayerScreen.dart';
 import 'package:tucson_app/ui/ImageViewerScreen.dart';
 import 'package:tucson_app/ui/VideoPlayerScreen.dart';
 import 'package:url_launcher/url_launcher.dart';
-
+import 'dart:ui' as ui;
 import '../DocumentViewerScreen.dart';
 
 class BlogDetailsScreen extends StatefulWidget {
@@ -107,7 +107,9 @@ class _BlogDetailsScreenState extends State<BlogDetailsScreen> {
     blockSizeHorizontal = screenWeight / 100;
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Scaffold(
+      home: Directionality(
+    textDirection: languageCode?.compareTo("ar") == 0 ? ui.TextDirection.rtl : ui.TextDirection.ltr,
+    child:Scaffold(
         body: Stack(
           children: [
             Container(
@@ -229,7 +231,7 @@ class _BlogDetailsScreenState extends State<BlogDetailsScreen> {
           ],
         ),
       ),
-    );
+    ));
   }
 
   imageWidget() {

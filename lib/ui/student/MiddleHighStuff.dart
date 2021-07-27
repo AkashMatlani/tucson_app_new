@@ -11,8 +11,10 @@ import 'package:tucson_app/ui/VideoPlayerScreen.dart';
 import 'BlogScreen.dart';
 import 'VideoForIOS.dart';
 import 'VideoListScreen.dart';
-
+import 'dart:ui' as ui;
 class MiddleHighStuff extends StatefulWidget {
+  MiddleHighStuff(this.sortLanguageCode);
+  String sortLanguageCode;
   @override
   _MiddleHighStuffState createState() => _MiddleHighStuffState();
 }
@@ -35,7 +37,9 @@ class _MiddleHighStuffState extends State<MiddleHighStuff> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Scaffold(
+      home:  Directionality(
+        textDirection: widget.sortLanguageCode.compareTo("ar") == 0 ? ui.TextDirection.rtl : ui.TextDirection.ltr,
+    child: Scaffold(
         body: Container(
           height: MediaQuery.of(context).size.height,
           child: SingleChildScrollView(
@@ -105,6 +109,6 @@ class _MiddleHighStuffState extends State<MiddleHighStuff> {
           ),
         ),
       ),
-    );
+    ));
   }
 }

@@ -7,7 +7,6 @@ import 'package:tucson_app/GeneralUtils/Utils.dart';
 import 'package:tucson_app/Model/ContentResponse.dart';
 import 'package:tucson_app/Model/GridListItems.dart';
 import '../student/BlogDetailsScreen.dart';
-
 class ActivityElementary extends StatefulWidget {
   @override
   _ActivityElementaryState createState() => _ActivityElementaryState();

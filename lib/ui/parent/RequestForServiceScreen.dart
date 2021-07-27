@@ -14,7 +14,7 @@ import 'DropoutPreventionScreen.dart';
 import 'package:tucson_app/ui/WebViewEmpty.dart';
 import 'package:tucson_app/ui/student/MentalHealthSupportScreen.dart';
 import 'package:url_launcher/url_launcher.dart';
-
+import 'dart:ui' as ui;
 class RequestForServiceScreen extends StatefulWidget {
   @override
   _RequestForServiceScreenState createState() =>
@@ -59,7 +59,11 @@ class _RequestForServiceScreenState extends State<RequestForServiceScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return  MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: Directionality(
+        textDirection: _languageSortCode.compareTo("ar") == 0 ? ui.TextDirection.rtl : ui.TextDirection.ltr,
+    child: Scaffold(
       body: Stack(
         fit: StackFit.expand,
         children: [
@@ -199,7 +203,7 @@ class _RequestForServiceScreenState extends State<RequestForServiceScreen> {
           )
         ],
       ),
-    );
+    )));
   }
 
   getWebApiFromUrl(BuildContext context, Map<String, Object> params) {

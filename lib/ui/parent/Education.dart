@@ -13,11 +13,14 @@ import 'package:tucson_app/WebService/WebService.dart';
 import 'package:tucson_app/ui/EducationalWebsiteScreen.dart';
 import 'package:tucson_app/ui/student/BlogScreen.dart';
 import 'package:tucson_app/ui/student/VideoListScreen.dart';
-
+import 'dart:ui' as ui;
 import 'ActivitesScreen.dart';
 
 
 class Education extends StatefulWidget {
+  Education(this.sortLanguageCode);
+
+  String sortLanguageCode;
   @override
   _EducationScreenState createState() => _EducationScreenState();
 }
@@ -58,7 +61,12 @@ class _EducationScreenState extends State<Education> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: Directionality(
+        textDirection: widget.sortLanguageCode.compareTo("ar") == 0
+        ? ui.TextDirection.rtl
+        : ui.TextDirection.ltr, child: Scaffold(
       body: Stack(
         fit: StackFit.expand,
         children: [
@@ -133,7 +141,7 @@ class _EducationScreenState extends State<Education> {
                             }
                             else if (index == 2) {
                               // Utils.navigateToScreen(context, BlogScreen('activites'.tr(),"Parent"));
-                              Utils.navigateToScreen(context, ActivitesScreen(schoolCategory!));
+                              Utils.navigateToScreen(context, ActivitesScreen(schoolCategory!,widget.sortLanguageCode));
                             }
                             else if (index == 3) {
                               Utils.navigateToScreen(context, BlogScreen('articles'.tr(),"Parent"));
@@ -187,7 +195,7 @@ class _EducationScreenState extends State<Education> {
           )
         ],
       ),
-    );
+    )));
   }
 
    void getSchoolType() {

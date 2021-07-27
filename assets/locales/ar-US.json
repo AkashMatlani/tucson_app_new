@@ -163,5 +163,8 @@
   "referred_by": "نسب من قبل:",
   "contact_specialist": "اتصل بأخصائيك",
   "select_reason_for_service_request" : "سبب طلب الخدمة",
-  "grade" : "رتبة"
+  "grade" : "رتبة",
+  "student_information" : "بيانات الطالب:",
+  "contact_phone" : "هاتف الاتصال",
+  "tusd_matric_number" : "رقم المصفوفة TUSD"
 }

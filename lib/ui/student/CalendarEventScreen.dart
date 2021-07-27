@@ -18,7 +18,7 @@ import 'package:tucson_app/Model/AuthViewModel.dart';
 import 'package:tucson_app/Model/EventForMobileResponse.dart';
 import 'package:tucson_app/WebService/WebService.dart';
 import 'package:tucson_app/ui/student/EventDetailsScreen.dart';
-
+import 'dart:ui' as ui;
 
 class CalendarEventScreen extends StatefulWidget {
   @override
@@ -114,7 +114,9 @@ class _CalendarEventScreenState extends State<CalendarEventScreen> {
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Scaffold(
+      home: Directionality(
+    textDirection: languageCode?.compareTo("ar") == 0 ? ui.TextDirection.rtl : ui.TextDirection.ltr,
+    child: Scaffold(
         body: Stack(fit: StackFit.expand, children: [
           Container(
             color: HexColor("#6462AA"),
@@ -317,7 +319,7 @@ class _CalendarEventScreenState extends State<CalendarEventScreen> {
               )),
         ]),
       ),
-    );
+    ));
   }
 
   Widget markerRepresent(Color color, String data) {

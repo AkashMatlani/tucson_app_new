@@ -163,5 +163,8 @@
     "referred_by": "Referido por:",
     "contact_specialist": "Comuníquese con su especialista",
     "select_reason_for_service_request" : "Motivo de la solicitud de servicio",
-    "grade" : "Calificación"
+    "grade" : "Calificación",
+    "student_information" : "Información del estudiante:",
+    "contact_phone" : "teléfono de contacto",
+    "tusd_matric_number" : "Número de matrícula de TUSD"
 }

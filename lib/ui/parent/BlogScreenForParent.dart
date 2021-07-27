@@ -10,7 +10,7 @@ import 'package:tucson_app/Model/ContentMasterViewModel.dart';
 import 'package:tucson_app/Model/ContentResponse.dart';
 import 'package:tucson_app/WebService/WebService.dart';
 import 'package:tucson_app/ui/student/BlogDetailsScreen.dart';
-
+import 'dart:ui' as ui;
 
 class BlogScreenForParent extends StatefulWidget {
 
@@ -53,7 +53,10 @@ class _BlogScreenForParentState extends State<BlogScreenForParent> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Scaffold(
+      home: Directionality(
+    textDirection: languageCode?.compareTo("ar") == 0
+        ? ui.TextDirection.rtl
+        : ui.TextDirection.ltr, child: Scaffold(
         body: Container(
           height: MediaQuery.of(context).size.height,
           child: _displayContentList.length == 0
@@ -70,7 +73,7 @@ class _BlogScreenForParentState extends State<BlogScreenForParent> {
           ),
         ),
       ),
-    );
+    ));
   }
 
   _listRowItems(BuildContext ctx, int index) {

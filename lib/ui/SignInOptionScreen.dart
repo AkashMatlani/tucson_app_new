@@ -1,13 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:tucson_app/GeneralUtils/ColorExtension.dart';
 import 'package:tucson_app/GeneralUtils/Constant.dart';
 import 'package:tucson_app/GeneralUtils/LabelStr.dart';
 import 'package:tucson_app/GeneralUtils/Utils.dart';
 import 'package:tucson_app/ui/SignInScreen.dart';
-import 'package:tucson_app/ui/parent/ParentGuardianDashBoard.dart';
-import 'package:tucson_app/ui/student/StudentDashboardScreen.dart';
 
 class SignInOptionScreen extends StatefulWidget {
   @override

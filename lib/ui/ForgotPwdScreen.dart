@@ -10,9 +10,8 @@ import 'package:tucson_app/GeneralUtils/PrefsUtils.dart';
 import 'package:tucson_app/GeneralUtils/Utils.dart';
 import 'package:tucson_app/Model/AuthViewModel.dart';
 import 'package:tucson_app/WebService/WebService.dart';
-import 'package:tucson_app/ui/ResetPwdScreen.dart';
 import 'package:tucson_app/ui/SignInScreen.dart';
-
+import 'dart:ui' as ui;
 
 class ForgotPwdScreen extends StatefulWidget {
 
@@ -45,7 +44,11 @@ class _ForgotPwdScreenState extends State<ForgotPwdScreen> {
       onWillPop: () => Utils.backWithNoTransition(context, SignInScreen()),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: Scaffold(
+        home:  Directionality(
+      textDirection: languageCode?.compareTo("ar") == 0
+          ? ui.TextDirection.rtl
+          : ui.TextDirection.ltr,
+      child: Scaffold(
           body: Container(
             decoration: BoxDecoration(
                 image: DecorationImage(
@@ -109,7 +112,9 @@ class _ForgotPwdScreenState extends State<ForgotPwdScreen> {
                                     fontSize: 14)),
                             textFieldFor('email'.tr(), _emailController,
                                 textInputAction: TextInputAction.done,
-                                keyboardType: TextInputType.emailAddress),
+                                keyboardType: TextInputType.emailAddress,isRtl: languageCode?.compareTo("ar") == 0
+                                  ? true
+                                  : false,),
                             SizedBox(height: 20),
                             Container(
                               decoration: BoxDecoration(
@@ -149,7 +154,7 @@ class _ForgotPwdScreenState extends State<ForgotPwdScreen> {
           ),
         ),
       ),
-    );
+    ));
   }
 
   _forgotPassword(BuildContext context) {

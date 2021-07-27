@@ -339,7 +339,7 @@ class _StudentDashboardScreenState extends State<StudentDashboardScreen> {
             Utils.showToast(context, 'school_not_support'.tr(), Colors.red);
           }
         } else {
-          Utils.navigateToScreen(context, CoolStuffScreen(schoolCategory!));
+          Utils.navigateToScreen(context, CoolStuffScreen(schoolCategory!,sortLanguageCode));
         }
       } else {
         translateData(response.message, false);

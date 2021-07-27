@@ -13,7 +13,7 @@ import 'package:tucson_app/WebService/WebService.dart';
 import 'BlogDetailsScreen.dart';
 
 import '../../GeneralUtils/ColorExtension.dart';
-
+import 'dart:ui' as ui;
 
 class BlogScreen extends StatefulWidget {
   BlogScreen(this.title, this.fromScreen);
@@ -59,7 +59,9 @@ class _BlogScreenState extends State<BlogScreen> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Scaffold(
+      home: Directionality(
+    textDirection: languageCode?.compareTo("ar") == 0 ? ui.TextDirection.rtl : ui.TextDirection.ltr,
+    child: Scaffold(
         body: Stack(
           children: [
             Container(
@@ -128,7 +130,7 @@ class _BlogScreenState extends State<BlogScreen> {
           ],
         ),
       ),
-    );
+    ));
   }
 
   _listRowItems(BuildContext context, int index) {
