@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+import 'package:html_unescape/html_unescape.dart';
 import 'package:http/http.dart';
 import 'package:http/http.dart' as http;
 import 'package:tucson_app/GeneralUtils/LabelStr.dart';
@@ -160,11 +161,18 @@ class WebService {
     String API_KEY = await PrefUtils.getValueFor(PrefUtils.googleTranslateKey);
     if(API_KEY.isNotEmpty){
       var url = "https://translation.googleapis.com/language/translate/v2?target=$language&key=$API_KEY&q=$data";
-      var response = await http.get(Uri.parse(url));
+      var headers = {
+        //"Content-Type": 'text/html'
+        "Content-Type": 'application/json'
+      };
+      var response = await http.get(Uri.parse(url), headers: headers);
       if (response.statusCode == 200) {
         var jsValue = json.decode(response.body);
-        var result = jsValue["data"]["translations"][0]["translatedText"];
-        callback(true, result);
+        var responseList = jsValue["data"]["translations"] as List;
+        var responseRow = responseList.first;
+        var resultStr = responseRow["translatedText"];
+        var formattedResult = HtmlUnescape().convert(resultStr);
+        callback(true, formattedResult);
       } else {
         print("*********** Api Response Error *********************");
         callback(false, response.body.toString());

@@ -5,7 +5,6 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:intl/intl.dart';
 import 'package:toast/toast.dart';
 import 'package:tucson_app/GeneralUtils/Constant.dart';
-
 import 'LabelStr.dart';
 
 

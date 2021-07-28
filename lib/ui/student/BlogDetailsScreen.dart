@@ -1,7 +1,10 @@
+import 'dart:ui' as ui;
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:html/dom.dart' as dom;
@@ -16,8 +19,9 @@ import 'package:tucson_app/ui/AudioPlayerScreen.dart';
 import 'package:tucson_app/ui/ImageViewerScreen.dart';
 import 'package:tucson_app/ui/VideoPlayerScreen.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'dart:ui' as ui;
 import '../DocumentViewerScreen.dart';
+
+
 
 class BlogDetailsScreen extends StatefulWidget {
   BlogDetailsScreen(this.title, this.contentResponse);
@@ -84,7 +88,8 @@ class _BlogDetailsScreenState extends State<BlogDetailsScreen> {
     }
     setState(() {
       contentTitle = widget.contentResponse.contentTitle;
-      contentDesc = "<div>" + widget.contentResponse.content + "</div>";
+      contentDesc = widget.contentResponse.content;
+      //contentDesc = "<div>"+widget.contentResponse.content+"</div>";
     });
     getPrefsData();
   }
@@ -222,7 +227,8 @@ class _BlogDetailsScreenState extends State<BlogDetailsScreen> {
                                       Map<String, String> attributes,
                                       dom.Element? element) {
                                     _launchURL(url!);
-                                  }),
+                                  }
+                              ),
                               SizedBox(height: 10),
                               imageList.length > 0
                                   ? imageWidget()
@@ -397,8 +403,8 @@ class _BlogDetailsScreenState extends State<BlogDetailsScreen> {
       if (isSuccess) {
         setState(() {
           contentTitle = response.toString().split("===")[0];
-          contentDesc =
-              "<div>" + response.toString().split("===")[1] + "</div>";
+          contentDesc = response.toString().split("===")[1];
+          //contentDesc = "<div>"+response.toString().split("===")[1]+"</div>";
         });
       } else {
         Utils.showToast(context, "Page Translation Failed", Colors.red);

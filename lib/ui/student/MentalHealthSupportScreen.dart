@@ -244,12 +244,12 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
                                           children: <Widget>[
                                             Padding(
                                                 padding: EdgeInsets.fromLTRB(
-                                                    12.0, 12.0, 12.0, 8.0),
+                                                    12.0, 8.0, 12.0, 8.0),
                                                 child: SvgPicture.asset(
                                                     MyImage.healthSupportIcon)),
                                             Padding(
                                               padding: EdgeInsets.fromLTRB(
-                                                  12.0, 12.0, 12.0, 8.0),
+                                                  12.0, 8.0, 12.0, 8.0),
                                               child: Column(
                                                 crossAxisAlignment:
                                                     CrossAxisAlignment.center,
@@ -299,13 +299,13 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
                                           children: <Widget>[
                                             Padding(
                                                 padding: EdgeInsets.fromLTRB(
-                                                    12.0, 12.0, 12.0, 8.0),
+                                                    12.0, 8.0, 12.0, 8.0),
                                                 child: SvgPicture.asset(
                                                     MyImage.userChatIcon)),
                                             SizedBox(height: 5),
                                             Padding(
                                               padding: EdgeInsets.fromLTRB(
-                                                  12.0, 12.0, 12.0, 8.0),
+                                                  12.0, 8.0, 12.0, 8.0),
                                               child: Column(
                                                 crossAxisAlignment:
                                                     CrossAxisAlignment.center,

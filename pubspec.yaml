@@ -66,6 +66,7 @@ dependencies:
   youtube_player_flutter: ^8.0.0
   flick_video_player: ^0.3.1
   cupertino_back_gesture: ^0.1.0
+  html_unescape: ^2.0.0
 
 
 dev_dependencies:

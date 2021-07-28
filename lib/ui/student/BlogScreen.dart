@@ -285,11 +285,13 @@ class _BlogScreenState extends State<BlogScreen> {
             _contentList = tempList;
           });
         }
+        isLoading = false;
+        Utils.showLoader(false, context);
       } else {
         Utils.showToast(context, "Page Translation Failed", Colors.red);
+        isLoading = false;
+        Utils.showLoader(false, context);
       }
     });
-    isLoading = false;
-    Utils.showLoader(false, context);
   }
 }
