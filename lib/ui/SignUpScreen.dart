@@ -78,9 +78,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home:  Directionality(
+    return  Directionality(
         textDirection: languageCode?.compareTo("ar") == 0
         ? ui.TextDirection.rtl
         : ui.TextDirection.ltr,
@@ -303,7 +301,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
           ),
         ),
       ),
-    ));
+    );
   }
 
   _getSchoolList(){

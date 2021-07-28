@@ -38,7 +38,7 @@ class _EducationalWebsiteScreenState extends State<EducationalWebsiteScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return  MaterialApp(
+    return MaterialApp(
         debugShowCheckedModeBanner: false,
         home: Directionality(
         textDirection: languageCode?.compareTo("ar") == 0 ? ui.TextDirection.rtl : ui.TextDirection.ltr,

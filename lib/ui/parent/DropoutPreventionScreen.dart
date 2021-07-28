@@ -13,6 +13,7 @@ import 'package:tucson_app/WebService/WebService.dart';
 import 'package:tucson_app/ui/parent/DropOutPostScreen.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import 'dart:ui' as ui;
+
 class DropoutPreventionScreen extends StatefulWidget {
   @override
   _DropoutPreventionScreenState createState() =>
@@ -29,13 +30,11 @@ class _DropoutPreventionScreenState extends State<DropoutPreventionScreen> {
   late YoutubeMetaData _videoMetaData;
   bool _isPlayerReady = false;
   String? languageCode;
-  String youTubeId = "bJTpz1fL4k4";
   late PlayerState _playerState;
   final List<String> _ids = [
     'bJTpz1fL4k4',
   ];
   bool defaultValueDropOut = true;
-
 
   @override
   void initState() {
@@ -63,7 +62,7 @@ class _DropoutPreventionScreenState extends State<DropoutPreventionScreen> {
   _getSchoolId() async {
     int schoolId = await PrefUtils.getValueFor(PrefUtils.schoolId);
     languageCode = await PrefUtils.getValueFor(PrefUtils.sortLanguageCode);
-    if(schoolId == null){
+    if (schoolId == null) {
       schoolId = 0;
     }
     _getSchoolList();
@@ -71,194 +70,204 @@ class _DropoutPreventionScreenState extends State<DropoutPreventionScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: Directionality(
-        textDirection: languageCode?.compareTo("ar") == 0
-        ? ui.TextDirection.rtl
-        : ui.TextDirection.ltr, child: Scaffold(
-      body: Stack(
-        fit: StackFit.expand,
-        children: [
-          Container(
-            color: HexColor("#6462AA"),
-            child: Column(
-              children: [
-                Container(
-                  margin: EdgeInsets.fromLTRB(
-                      0,
-                      MediaQuery.of(context).size.height * 0.03,
-                      0,
-                      MediaQuery.of(context).size.height * 0.03),
-                  child: Row(
-                    children: [
-                      Container(
-                        margin: EdgeInsets.only(top: 10),
-                        child: IconButton(
-                            icon:
-                                Icon(Icons.arrow_back_ios, color: Colors.white),
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            }),
-                      ),
-                      Container(
-                        margin: EdgeInsets.only(top: 10),
-                        child: Text('dropout_prevention'.tr(),
-                            style: AppTheme.customTextStyle(
-                                MyFont.SSPro_semibold, 18.0, Colors.white)),
-                      )
-                    ],
-                  ),
-                ),
-                Expanded(
-                  child: Container(
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(30.0),
-                            topRight: Radius.circular(30.0)),
-                        color: HexColor("FAFAFA")),
-                    height: MediaQuery.of(context).size.height,
-                    width: MediaQuery.of(context).size.width,
-                    padding: EdgeInsets.all(10),
-                  ),
-                )
-              ],
-            ),
-          ),
-          Positioned(
-            top: MediaQuery.of(context).size.height * 0.15,
-            left: 15,
-            right: 15,
-            child: Container(
-              margin: EdgeInsets.all(10),
-              child: Column(
+    return Directionality(
+            textDirection: languageCode?.compareTo("ar") == 0
+                ? ui.TextDirection.rtl
+                : ui.TextDirection.ltr,
+            child: Scaffold(
+              body: Stack(
+                fit: StackFit.expand,
                 children: [
-                  YoutubePlayer(
-                    controller: _controller,
-                    showVideoProgressIndicator: true,
-                    progressIndicatorColor: Colors.blueAccent,
-                    topActions: <Widget>[
-                      const SizedBox(width: 8.0),
-                      Expanded(
-                        child: Text(
-                          _controller.metadata.title,
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 18.0,
-                          ),
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 1,
-                        ),
-                      ),
-                    ],
-                    onReady: () {
-                      _isPlayerReady = true;
-                    },
-                    onEnded: (data) {
-                      _controller.load(
-                          _ids[(_ids.indexOf(data.videoId) + 1) % _ids.length]);
-                    },
-                  ),
-                  SizedBox(height: 30),
                   Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      gradient: LinearGradient(
-                        colors: [
-                          HexColor("#6462AA"),
-                          HexColor("#4CA7DA"),
-                          HexColor("#20B69E"),
-                        ],
-                      ),
-                    ),
-                    height: 50,
-                    width: MediaQuery.of(context).size.width,
-                    child: Row(
+                    color: HexColor("#6462AA"),
+                    child: Column(
                       children: [
-                        Expanded(
-                            child: Container(
-                                margin: EdgeInsets.only(left: 5),
-                                child: Text('contact_specialist'.tr(),
+                        Container(
+                          margin: EdgeInsets.fromLTRB(
+                              0,
+                              MediaQuery.of(context).size.height * 0.03,
+                              0,
+                              MediaQuery.of(context).size.height * 0.03),
+                          child: Row(
+                            children: [
+                              Container(
+                                margin: EdgeInsets.only(top: 10),
+                                child: IconButton(
+                                    icon: Icon(Icons.arrow_back_ios,
+                                        color: Colors.white),
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    }),
+                              ),
+                              Container(
+                                margin: EdgeInsets.only(top: 10),
+                                child: Text('dropout_prevention'.tr(),
                                     style: AppTheme.customTextStyle(
                                         MyFont.SSPro_semibold,
-                                        16.0,
-                                        Colors.white)))),
-                        defaultValueDropOut
-                            ? InkWell(
-                                onTap: () {
-                                  defaultValueDropOut = false;
-                                },
-                                child: Visibility(
-                                  visible: defaultValueDropOut,
-                                  child: Container(
-                                      margin: EdgeInsets.only(right: 5),
-                                      child: Icon(Icons.keyboard_arrow_up,
-                                          color: Colors.white, size: 30)),
-                                ),
+                                        18.0,
+                                        Colors.white)),
                               )
-                            : InkWell(
-                                onTap: () {
-                                  defaultValueDropOut = true;
-                                },
-                                    child: Container(
-                                        margin: EdgeInsets.only(right: 5),
-                                        child: Icon(Icons.keyboard_arrow_down,
-                                            color: Colors.white, size: 30))),
+                            ],
+                          ),
+                        ),
+                        Expanded(
+                          child: Container(
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(30.0),
+                                    topRight: Radius.circular(30.0)),
+                                color: HexColor("FAFAFA")),
+                            height: MediaQuery.of(context).size.height,
+                            width: MediaQuery.of(context).size.width,
+                            padding: EdgeInsets.all(10),
+                          ),
+                        )
                       ],
                     ),
                   ),
-                  SizedBox(height: 15),
-                  Visibility(
-                      visible: defaultValueDropOut,
-                      child: ConstrainedBox(
-                        constraints: BoxConstraints(
-                            minHeight: 80,
-                            maxHeight:
-                                MediaQuery.of(context).size.height * 0.30),
-                        child: ListView.builder(
-                            itemCount: _dropOutModelList.length,
-                            shrinkWrap: true,
-                            physics: ScrollPhysics(),
-                            padding: EdgeInsets.only(top: 20),
-                            itemBuilder: (BuildContext context, int position) {
-                              return _listRowItem(context, position);
-                            }),
-                      )),
-                  SizedBox(height: 20),
-                  Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      gradient: LinearGradient(
-                        colors: [
-                          HexColor("#6462AA"),
-                          HexColor("#4CA7DA"),
-                          HexColor("#20B69E"),
+                  Positioned(
+                    top: MediaQuery.of(context).size.height * 0.15,
+                    left: 15,
+                    right: 15,
+                    child: Container(
+                      margin: EdgeInsets.all(10),
+                      child: Column(
+                        children: [
+                          YoutubePlayer(
+                            controller: _controller,
+                            showVideoProgressIndicator: true,
+                            progressIndicatorColor: Colors.blueAccent,
+                            topActions: <Widget>[
+                              const SizedBox(width: 8.0),
+                              Expanded(
+                                child: Text(
+                                  _controller.metadata.title,
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 18.0,
+                                  ),
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 1,
+                                ),
+                              ),
+                            ],
+                            onReady: () {
+                              _isPlayerReady = true;
+                            },
+                            onEnded: (data) {
+                              _controller.load(_ids[
+                                  (_ids.indexOf(data.videoId) + 1) %
+                                      _ids.length]);
+                            },
+                          ),
+                          SizedBox(height: 30),
+                          Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              gradient: LinearGradient(
+                                colors: [
+                                  HexColor("#6462AA"),
+                                  HexColor("#4CA7DA"),
+                                  HexColor("#20B69E"),
+                                ],
+                              ),
+                            ),
+                            height: 50,
+                            width: MediaQuery.of(context).size.width,
+                            child: Row(
+                              children: [
+                                Expanded(
+                                    child: Container(
+                                        margin: EdgeInsets.only(left: 5),
+                                        child: Text('contact_specialist'.tr(),
+                                            style: AppTheme.customTextStyle(
+                                                MyFont.SSPro_semibold,
+                                                16.0,
+                                                Colors.white)))),
+                                defaultValueDropOut
+                                    ? InkWell(
+                                        onTap: () {
+                                          defaultValueDropOut = false;
+                                        },
+                                        child: Visibility(
+                                          visible: defaultValueDropOut,
+                                          child: Container(
+                                              margin: EdgeInsets.only(right: 5),
+                                              child: Icon(
+                                                  Icons.keyboard_arrow_up,
+                                                  color: Colors.white,
+                                                  size: 30)),
+                                        ),
+                                      )
+                                    : InkWell(
+                                        onTap: () {
+                                          defaultValueDropOut = true;
+                                        },
+                                        child: Container(
+                                            margin: EdgeInsets.only(right: 5),
+                                            child: Icon(
+                                                Icons.keyboard_arrow_down,
+                                                color: Colors.white,
+                                                size: 30))),
+                              ],
+                            ),
+                          ),
+                          SizedBox(height: 15),
+                          Visibility(
+                              visible: defaultValueDropOut,
+                              child: ConstrainedBox(
+                                constraints: BoxConstraints(
+                                    minHeight: 80,
+                                    maxHeight:
+                                        MediaQuery.of(context).size.height *
+                                            0.30),
+                                child: ListView.builder(
+                                    itemCount: _dropOutModelList.length,
+                                    shrinkWrap: true,
+                                    physics: ScrollPhysics(),
+                                    padding: EdgeInsets.only(top: 20),
+                                    itemBuilder:
+                                        (BuildContext context, int position) {
+                                      return _listRowItem(context, position);
+                                    }),
+                              )),
+                          SizedBox(height: 20),
+                          Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              gradient: LinearGradient(
+                                colors: [
+                                  HexColor("#6462AA"),
+                                  HexColor("#4CA7DA"),
+                                  HexColor("#20B69E"),
+                                ],
+                              ),
+                            ),
+                            height: 50,
+                            width: MediaQuery.of(context).size.width,
+                            child: TextButton(
+                              child: Text('enroll'.tr(),
+                                  style: AppTheme.customTextStyle(
+                                      MyFont.SSPro_regular,
+                                      16.0,
+                                      Colors.white)),
+                              onPressed: () {
+                                _controller.pause();
+                                Utils.navigateToScreen(
+                                    context, DropOutPostScreen());
+                              },
+                            ),
+                          ),
                         ],
                       ),
                     ),
-                    height: 50,
-                    width: MediaQuery.of(context).size.width,
-                    child: TextButton(
-                      child: Text('enroll'.tr(),
-                          style: AppTheme.customTextStyle(
-                              MyFont.SSPro_regular, 16.0, Colors.white)),
-                      onPressed: () {
-                        _controller.pause();
-                        _controller.dispose();
-                        Utils.backWithNoTransition(context, DropOutPostScreen());
-                      },
-                    ),
-                  ),
+                  )
                 ],
               ),
-            ),
-          )
-        ],
-      ),
-    )));
+            ));
   }
 
-  _getSchoolList()async {
+  _getSchoolList() async {
     Utils.showLoader(true, context);
     WebService.getAPICallWithoutParmas(WebService.getAllDropoutSpeciality)
         .then((response) {
@@ -358,8 +367,6 @@ class _DropoutPreventionScreenState extends State<DropoutPreventionScreen> {
 
     if (!mounted) return;
   }
-
-
 
   void listener() {
     if (_isPlayerReady && mounted && !_controller.value.isFullScreen) {

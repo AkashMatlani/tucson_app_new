@@ -59,7 +59,7 @@ class _PostJobsScreenState extends State<PostJobsScreen> {
                        child: IconButton(
                            icon: Icon(Icons.arrow_back_ios, color: Colors.white),
                            onPressed: () {
-                             Navigator.of(context).pop();
+                             Navigator.pop(context);
                            }),
                      ),
                      Container(

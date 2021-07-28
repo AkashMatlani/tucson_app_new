@@ -61,9 +61,7 @@ class _EducationScreenState extends State<Education> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: Directionality(
+    return Directionality(
         textDirection: widget.sortLanguageCode.compareTo("ar") == 0
         ? ui.TextDirection.rtl
         : ui.TextDirection.ltr, child: Scaffold(
@@ -88,7 +86,7 @@ class _EducationScreenState extends State<Education> {
                             icon:
                             Icon(Icons.arrow_back_ios, color: Colors.white),
                             onPressed: () {
-                              Navigator.of(context).pop();
+                              Navigator.pop(context);
                             }),
                       ),
                       Container(
@@ -195,7 +193,7 @@ class _EducationScreenState extends State<Education> {
           )
         ],
       ),
-    )));
+    ));
   }
 
    void getSchoolType() {

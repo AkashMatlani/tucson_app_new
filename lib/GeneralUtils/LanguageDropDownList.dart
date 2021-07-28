@@ -102,13 +102,14 @@ class _LanguageDropDownListState extends State<LanguageDropDownList> {
  }
 
  backToPrevPage(){
-   Timer(Duration(milliseconds: 50), (){
+   Timer(Duration(milliseconds: 50), () async {
+     String langCode = await PrefUtils.getValueFor(PrefUtils.sortLanguageCode);
      if(widget.fromScreen.compareTo("Student") == 0){
-       Utils.backWithNoTransition(context, StudentDashboardScreen());
+       Utils.backWithNoTransition(context, StudentDashboardScreen(langCode));
      } else if(widget.fromScreen.compareTo("Parent") == 0){
-       Utils.backWithNoTransition(context, ParentDashBoardScreen());
+       Utils.backWithNoTransition(context, ParentDashBoardScreen(langCode));
      } else if(widget.fromScreen.compareTo("Community") == 0){
-       Utils.backWithNoTransition(context, CommunityDashboardScreen());
+       Utils.backWithNoTransition(context, CommunityDashboardScreen(langCode));
      }
    });
  }

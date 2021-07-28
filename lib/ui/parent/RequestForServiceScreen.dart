@@ -16,6 +16,8 @@ import 'package:tucson_app/ui/student/MentalHealthSupportScreen.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'dart:ui' as ui;
 class RequestForServiceScreen extends StatefulWidget {
+  RequestForServiceScreen(this.sortLanguageCodel);
+  String sortLanguageCodel;
   @override
   _RequestForServiceScreenState createState() =>
       _RequestForServiceScreenState();
@@ -50,19 +52,18 @@ class _RequestForServiceScreenState extends State<RequestForServiceScreen> {
   }
 
   _getSchoolId() async {
-    schoolId = await PrefUtils.getValueFor(PrefUtils.schoolId);
     _languageSortCode = await PrefUtils.getValueFor(PrefUtils.sortLanguageCode);
-    if (schoolId == null) {
-      schoolId = 0;
-    }
+    schoolId = await PrefUtils.getValueFor(PrefUtils.schoolId);
+      if (schoolId == null) {
+        schoolId = 0;
+      }
+
   }
 
   @override
   Widget build(BuildContext context) {
-    return  MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: Directionality(
-        textDirection: _languageSortCode.compareTo("ar") == 0 ? ui.TextDirection.rtl : ui.TextDirection.ltr,
+    return  Directionality(
+        textDirection: widget.sortLanguageCodel.compareTo("ar") == 0 ? ui.TextDirection.rtl : ui.TextDirection.ltr,
     child: Scaffold(
       body: Stack(
         fit: StackFit.expand,
@@ -85,7 +86,7 @@ class _RequestForServiceScreenState extends State<RequestForServiceScreen> {
                             icon:
                             Icon(Icons.arrow_back_ios, color: Colors.white),
                             onPressed: () {
-                              Navigator.of(context).pop();
+                              Navigator.pop(context);
                             }),
                       ),
                       Container(
@@ -203,7 +204,7 @@ class _RequestForServiceScreenState extends State<RequestForServiceScreen> {
           )
         ],
       ),
-    )));
+    ));
   }
 
   getWebApiFromUrl(BuildContext context, Map<String, Object> params) {

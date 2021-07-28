@@ -25,7 +25,7 @@ class EventDetailsScreen extends StatefulWidget {
 
 class _EventDetailsScreenState extends State<EventDetailsScreen> {
   List<EventForMobileResponse> sameDayEventList = [];
-  late String languageCode;
+   String? languageCode;
 
   @override
   void initState() {
@@ -70,10 +70,8 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
           }
           return true;
         },
-        child: MaterialApp(
-          debugShowCheckedModeBanner: false,
-          home: Directionality(
-            textDirection: languageCode.compareTo("ar") == 0
+        child: Directionality(
+            textDirection: languageCode?.compareTo("ar") == 0
                 ? ui.TextDirection.rtl
                 : ui.TextDirection.ltr,
             child: Scaffold(
@@ -150,7 +148,7 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
               ),
             ),
           ),
-        ));
+        );
   }
 
   _listRowItems(BuildContext context, int index) {

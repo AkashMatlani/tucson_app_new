@@ -34,7 +34,7 @@ class _ArticlesScreenState extends State<ArticlesScreen> {
                         child: IconButton(
                             icon: Icon(Icons.arrow_back_ios, color: Colors.white),
                             onPressed: () {
-                              Navigator.of(context).pop();
+                              Navigator.pop(context);
                             }),
                       ),
                       Container(

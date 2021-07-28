@@ -112,9 +112,7 @@ class _CalendarEventScreenState extends State<CalendarEventScreen> {
       },
     );
 
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Directionality(
+    return  Directionality(
     textDirection: languageCode?.compareTo("ar") == 0 ? ui.TextDirection.rtl : ui.TextDirection.ltr,
     child: Scaffold(
         body: Stack(fit: StackFit.expand, children: [
@@ -135,7 +133,7 @@ class _CalendarEventScreenState extends State<CalendarEventScreen> {
                         child: IconButton(
                             icon: Icon(Icons.arrow_back_ios, color: Colors.white),
                             onPressed: () {
-                              Navigator.of(context).pop();
+                              Navigator.pop(context);
                             }),
                       ),
                       Container(
@@ -319,7 +317,7 @@ class _CalendarEventScreenState extends State<CalendarEventScreen> {
               )),
         ]),
       ),
-    ));
+    );
   }
 
   Widget markerRepresent(Color color, String data) {

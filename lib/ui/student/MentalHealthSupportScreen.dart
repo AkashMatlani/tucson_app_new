@@ -107,9 +107,9 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
     return WillPopScope(
       onWillPop: () async {
         if (widget.fromScreen.compareTo("Student") == 0) {
-          Utils.backWithNoTransition(context, StudentDashboardScreen());
+          Utils.backWithNoTransition(context, StudentDashboardScreen(_languageSortCode));
         } else {
-          Utils.backWithNoTransition(context, RequestForServiceScreen());
+          Utils.backWithNoTransition(context, RequestForServiceScreen(_languageSortCode));
         }
         return true;
       },
@@ -137,7 +137,7 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
                               icon: Icon(Icons.arrow_back_ios,
                                   color: Colors.white),
                               onPressed: () {
-                                Navigator.of(context).pop();
+                                Navigator.pop(context);
                               }),
                         ),
                         Container(
@@ -525,9 +525,9 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
       builder: (context) => WillPopScope(
         onWillPop: () async {
           if(widget.fromScreen.compareTo("Student") == 0 ){
-            Utils.backWithNoTransition(context, StudentDashboardScreen());
+            Utils.backWithNoTransition(context, StudentDashboardScreen(_languageSortCode));
           } else {
-            Utils.backWithNoTransition(context, RequestForServiceScreen());
+            Utils.backWithNoTransition(context, RequestForServiceScreen(_languageSortCode));
           }
           return true;
         },
@@ -767,9 +767,9 @@ class _MentalHealthSupportScreenState extends State<MentalHealthSupportScreen> {
                               }*/
                               Timer(Duration(milliseconds: 100), (){
                                 if(widget.fromScreen.compareTo("Student") == 0){
-                                  Utils.backWithNoTransition(context, StudentDashboardScreen());
+                                  Utils.backWithNoTransition(context, StudentDashboardScreen(_languageSortCode));
                                 } else {
-                                  Utils.backWithNoTransition(context, RequestForServiceScreen());
+                                  Utils.backWithNoTransition(context, RequestForServiceScreen(_languageSortCode));
                                 }
                               });
                             },

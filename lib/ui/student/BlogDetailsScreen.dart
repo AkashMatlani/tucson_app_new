@@ -84,7 +84,7 @@ class _BlogDetailsScreenState extends State<BlogDetailsScreen> {
     }
     setState(() {
       contentTitle = widget.contentResponse.contentTitle;
-      contentDesc = "<div>"+widget.contentResponse.content+"</div>";
+      contentDesc = "<div>" + widget.contentResponse.content + "</div>";
     });
     getPrefsData();
   }
@@ -95,7 +95,7 @@ class _BlogDetailsScreenState extends State<BlogDetailsScreen> {
       languageCode = "en";
     }
     if (languageCode!.compareTo("en") != 0) {
-      if(languageCode!.compareTo("sr") == 0){
+      if (languageCode!.compareTo("sr") == 0) {
         languageCode = "so";
       }
       _translateData();
@@ -108,133 +108,140 @@ class _BlogDetailsScreenState extends State<BlogDetailsScreen> {
     screenWeight = MediaQuery.of(context).size.width;
     blockSizeVertical = screenHeight / 100;
     blockSizeHorizontal = screenWeight / 100;
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Directionality(
-    textDirection: languageCode?.compareTo("ar") == 0 ? ui.TextDirection.rtl : ui.TextDirection.ltr,
-    child:Scaffold(
-        body: Stack(
-          children: [
-            Container(
-              color: HexColor("#6462AA"),
-              child: Column(
+    return  Directionality(
+            textDirection: languageCode?.compareTo("ar") == 0
+                ? ui.TextDirection.rtl
+                : ui.TextDirection.ltr,
+            child: Scaffold(
+              body: Stack(
                 children: [
                   Container(
-                    margin: EdgeInsets.fromLTRB(
-                        0,
-                        MediaQuery.of(context).size.height * 0.03,
-                        0,
-                        MediaQuery.of(context).size.height * 0.03),
-                    height: MediaQuery.of(context).size.height * 0.06,
-                    child: Row(
+                    color: HexColor("#6462AA"),
+                    child: Column(
                       children: [
                         Container(
-                          margin: EdgeInsets.only(top: 10),
-                          child: IconButton(
-                              icon: Icon(Icons.arrow_back_ios,
-                                  color: Colors.white),
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              }),
+                          margin: EdgeInsets.fromLTRB(
+                              0,
+                              MediaQuery.of(context).size.height * 0.03,
+                              0,
+                              MediaQuery.of(context).size.height * 0.03),
+                          height: MediaQuery.of(context).size.height * 0.06,
+                          child: Row(
+                            children: [
+                              Container(
+                                margin: EdgeInsets.only(top: 10),
+                                child: IconButton(
+                                    icon: Icon(Icons.arrow_back_ios,
+                                        color: Colors.white),
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    }),
+                              ),
+                              Container(
+                                margin: EdgeInsets.only(top: 10),
+                                child: Text(widget.title,
+                                    style: AppTheme.customTextStyle(
+                                        MyFont.SSPro_semibold,
+                                        18.0,
+                                        Colors.white)),
+                              )
+                            ],
+                          ),
                         ),
                         Container(
-                          margin: EdgeInsets.only(top: 10),
-                          child: Text(widget.title,
-                              style: AppTheme.customTextStyle(MyFont.SSPro_semibold, 18.0, Colors.white)),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(30.0),
+                                  topRight: Radius.circular(30.0)),
+                              color: HexColor("FAFAFA")),
+                          height: MediaQuery.of(context).size.height * 0.88,
+                          width: MediaQuery.of(context).size.width,
+                          padding: EdgeInsets.all(10),
                         )
                       ],
                     ),
                   ),
-                  Container(
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(30.0),
-                            topRight: Radius.circular(30.0)),
-                        color: HexColor("FAFAFA")),
-                    height: MediaQuery.of(context).size.height * 0.88,
-                    width: MediaQuery.of(context).size.width,
-                    padding: EdgeInsets.all(10),
+                  Positioned(
+                    top: MediaQuery.of(context).size.height * 0.12,
+                    left: MediaQuery.of(context).size.height * 0.012,
+                    right: MediaQuery.of(context).size.height * 0.012,
+                    child: Container(
+                      height: MediaQuery.of(context).size.height * 0.88,
+                      child: SingleChildScrollView(
+                        child: Container(
+                          margin: EdgeInsets.fromLTRB(10, 5, 10, 10),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                  margin: EdgeInsets.only(top: 20),
+                                  height: MediaQuery.of(context).size.height *
+                                      0.22,
+                                  decoration: BoxDecoration(
+                                      borderRadius:
+                                          BorderRadius.circular(20)),
+                                  alignment: Alignment.center,
+                                  child: SvgPicture.asset(svgPicture,
+                                      fit: BoxFit.fill,
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.22)),
+                              SizedBox(height: 15),
+                              Text(contentTitle!,
+                                  style: AppTheme.customTextStyle(
+                                      MyFont.SSPro_semibold,
+                                      20.0,
+                                      Color.fromRGBO(0, 0, 0, 1))),
+                              SizedBox(height: 5),
+                              Text(
+                                  Utils.convertDate(
+                                      widget.contentResponse.createdOn,
+                                      DateFormat("MMM dd, yyyy")),
+                                  style: AppTheme.regularTextStyle().copyWith(
+                                      fontSize: 14,
+                                      color:
+                                          Color.fromRGBO(111, 111, 111, 1))),
+                              SizedBox(height: 5),
+                              SelectableHtml(
+                                  data: contentDesc,
+                                  style: {
+                                    "body": Style(
+                                        fontFamily: MyFont.SSPro_regular,
+                                        fontSize: FontSize.medium,
+                                        color: Colors.black54)
+                                  },
+                                  onLinkTap: (String? url,
+                                      RenderContext ctx,
+                                      Map<String, String> attributes,
+                                      dom.Element? element) {
+                                    _launchURL(url!);
+                                  },
+                                  onAnchorTap: (String? url,
+                                      RenderContext ctx,
+                                      Map<String, String> attributes,
+                                      dom.Element? element) {
+                                    _launchURL(url!);
+                                  }),
+                              SizedBox(height: 10),
+                              imageList.length > 0
+                                  ? imageWidget()
+                                  : Container(),
+                              // doclink.length > 0 ? docWidget() : Container(),
+                              videoList.length > 0
+                                  ? videoWidget()
+                                  : Container(),
+                              //audioList.length > 0 ? audioWidget() : Container(),
+                              webList.length > 0 ? webWidget() : Container(),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
                   )
                 ],
               ),
-            ),
-            Positioned(
-              top: MediaQuery.of(context).size.height * 0.12,
-              left: MediaQuery.of(context).size.height * 0.012,
-              right: MediaQuery.of(context).size.height * 0.012,
-              child: Container(
-                height: MediaQuery.of(context).size.height * 0.88,
-                child: SingleChildScrollView(
-                  child: Container(
-                    margin: EdgeInsets.fromLTRB(10, 5, 10, 10),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                            margin: EdgeInsets.only(top: 20),
-                            height: MediaQuery.of(context).size.height * 0.22,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(20)),
-                            alignment: Alignment.center,
-                            child: SvgPicture.asset(
-                              svgPicture,
-                              fit: BoxFit.fill,
-                              height: MediaQuery.of(context).size.height * 0.22
-                            )
-                        ),
-                        SizedBox(height: 15),
-                        Text(contentTitle!,
-                            style: AppTheme.customTextStyle(
-                                MyFont.SSPro_semibold,
-                                20.0,
-                                Color.fromRGBO(0, 0, 0, 1))),
-                        SizedBox(height: 5),
-                        Text(
-                            Utils.convertDate(widget.contentResponse.createdOn,
-                                DateFormat("MMM dd, yyyy")),
-                            style: AppTheme.regularTextStyle().copyWith(
-                                fontSize: 14,
-                                color: Color.fromRGBO(111, 111, 111, 1))),
-                        SizedBox(height: 5),
-                        SelectableHtml(
-                          data: contentDesc,
-                          style: {
-                            "body": Style(
-                                fontFamily: MyFont.SSPro_regular,
-                                fontSize: FontSize.medium,
-                                color: Colors.black54
-                            )
-                          },
-                          onLinkTap: (String? url,
-                              RenderContext ctx,
-                              Map<String, String> attributes,
-                              dom.Element? element) {
-                            _launchURL(url!);
-                          },
-                          onAnchorTap: (String? url,
-                              RenderContext ctx,
-                              Map<String, String> attributes,
-                              dom.Element? element) {
-                            _launchURL(url!);
-                          }
-                        ),
-                        SizedBox(height: 10),
-                        imageList.length > 0 ? imageWidget() : Container(),
-                        // doclink.length > 0 ? docWidget() : Container(),
-                        videoList.length > 0 ? videoWidget() : Container(),
-                        //audioList.length > 0 ? audioWidget() : Container(),
-                        webList.length > 0 ? webWidget() : Container(),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            )
-          ],
-        ),
-      ),
-    ));
+            ));
   }
 
   imageWidget() {
@@ -390,7 +397,8 @@ class _BlogDetailsScreenState extends State<BlogDetailsScreen> {
       if (isSuccess) {
         setState(() {
           contentTitle = response.toString().split("===")[0];
-          contentDesc = "<div>"+response.toString().split("===")[1]+"</div>";
+          contentDesc =
+              "<div>" + response.toString().split("===")[1] + "</div>";
         });
       } else {
         Utils.showToast(context, "Page Translation Failed", Colors.red);
@@ -465,11 +473,11 @@ class _BlogDetailsScreenState extends State<BlogDetailsScreen> {
         _launchURL(webList[position]);
       },
       child: Container(
-        margin: EdgeInsets.only(bottom: 10),
+          margin: EdgeInsets.only(bottom: 10),
           child: Text(
-        webList[position],
-        style: TextStyle(color: Colors.blueAccent),
-      )),
+            webList[position],
+            style: TextStyle(color: Colors.blueAccent),
+          )),
     );
   }
 

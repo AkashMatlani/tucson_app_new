@@ -43,10 +43,10 @@ class _SignInScreenState extends State<SignInScreen> {
   void initState() {
     super.initState();
     getSharedPrefsData();
-    _emailController.text="pamela.leeper12@yopmail.com";
-     _pwdController.text="12345678";
+ /*   _emailController.text="pamela.leeper12@yopmail.com";
+     _pwdController.text="12345678";*/
   //  _emailController.selection = TextSelection.fromPosition(TextPosition(offset: _emailController.text.length));
-/*    _emailController.text="akash.maltani@dashtechinc.com";
+  /*  _emailController.text="akash.maltani@dashtechinc.com";
     _pwdController.text="12345678";*/
    /* _emailController.text="Test@gmail.com";
     _pwdController.text="12345678";*/
@@ -293,11 +293,11 @@ class _SignInScreenState extends State<SignInScreen> {
   _getUserType() async{
     String role = await PrefUtils.getValueFor(PrefUtils.userRole);
     if(role.compareTo(LabelStr.lblStudent) == 0){
-      Utils.navigateWithClearState(context, StudentDashboardScreen());
+      Utils.navigateWithClearState(context, StudentDashboardScreen(_languageSortCode));
     } else if(role.compareTo(LabelStr.lblCommunity) == 0){
-      Utils.navigateWithClearState(context, CommunityDashboardScreen());
+      Utils.navigateWithClearState(context, CommunityDashboardScreen(_languageSortCode));
     } else {
-      Utils.navigateWithClearState(context, ParentDashBoardScreen());
+      Utils.navigateWithClearState(context, ParentDashBoardScreen(_languageSortCode));
     }
   }
 }

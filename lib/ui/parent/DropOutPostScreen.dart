@@ -59,10 +59,8 @@ class _DropOutPostScreenState extends State<DropOutPostScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home:  Directionality(
-    textDirection: languageCode?.compareTo("ar") == 0
+    return Directionality(
+    textDirection: languageCode.compareTo("ar") == 0
         ? ui.TextDirection.rtl
         : ui.TextDirection.ltr,
     child:Scaffold(
@@ -91,14 +89,16 @@ class _DropOutPostScreenState extends State<DropOutPostScreen> {
                                 icon: Icon(Icons.arrow_back_ios,
                                     color: Colors.white),
                                 onPressed: () {
-                                  Navigator.of(context).pop();
+                                  Navigator.pop(context);
                                 }),
                           ),
-                          Container(
-                            margin: EdgeInsets.only(top: 10),
-                            child: Text('drop_out_prevention_enroll_form'.tr(),
-                                style: AppTheme.customTextStyle(
-                                    MyFont.SSPro_semibold, 18.0, Colors.white)),
+                          Expanded(
+                            child: Container(
+                              margin: EdgeInsets.only(top: 10),
+                              child: Text('drop_out_prevention_enroll_form'.tr(),
+                                  style: AppTheme.customTextStyle(
+                                      MyFont.SSPro_semibold, 18.0, Colors.white)),
+                            ),
                           )
                         ],
                       ),
@@ -138,12 +138,11 @@ class _DropOutPostScreenState extends State<DropOutPostScreen> {
                           Text('referred_by'.tr(),
                               style: AppTheme.customTextStyle(MyFont.SSPro_bold,
                                   18.0, MyColor.darkLblTextColor())),
-                          SizedBox(height: 20),
                           textFieldFor(
                               'first_name'.tr(), _firstNameRefredByController,
                               textInputAction: TextInputAction.next,
                               keyboardType: TextInputType.name,
-                              autofocus: true,isRtl: languageCode?.compareTo("ar") == 0
+                              autofocus: true,isRtl: languageCode.compareTo("ar") == 0
                               ? true
                               : false,),
                           SizedBox(height: 10),
@@ -151,7 +150,7 @@ class _DropOutPostScreenState extends State<DropOutPostScreen> {
                               'last_name'.tr(), _lastNameRefredByController,
                               textInputAction: TextInputAction.next,
                               keyboardType: TextInputType.name,
-                              autofocus: true, isRtl: languageCode?.compareTo("ar") == 0
+                              autofocus: true, isRtl: languageCode.compareTo("ar") == 0
                               ? true
                               : false,),
                           SizedBox(height: 10),
@@ -164,11 +163,11 @@ class _DropOutPostScreenState extends State<DropOutPostScreen> {
                             inputFormatter: [
                               LengthLimitingTextInputFormatter(11)
                             ],
-                            isRtl: languageCode?.compareTo("ar") == 0
+                            isRtl: languageCode.compareTo("ar") == 0
                                 ? true
                                 : false,
                           ),
-                          SizedBox(height: 40),
+                          SizedBox(height: 30),
                           Text('student_information'.tr(),
                               style: AppTheme.customTextStyle(MyFont.SSPro_bold,
                                   18.0, MyColor.darkLblTextColor())),
@@ -176,7 +175,7 @@ class _DropOutPostScreenState extends State<DropOutPostScreen> {
                               'first_name'.tr(), _firstNameStudentController,
                               textInputAction: TextInputAction.next,
                               keyboardType: TextInputType.name,
-                              autofocus: true,isRtl: languageCode?.compareTo("ar") == 0
+                              autofocus: true,isRtl: languageCode.compareTo("ar") == 0
                               ? true
                               : false,),
                           SizedBox(height: 10),
@@ -184,7 +183,7 @@ class _DropOutPostScreenState extends State<DropOutPostScreen> {
                               'last_name'.tr(), _lastNameStudentController,
                               textInputAction: TextInputAction.next,
                               keyboardType: TextInputType.name,
-                              autofocus: true,isRtl: languageCode?.compareTo("ar") == 0
+                              autofocus: true,isRtl: languageCode.compareTo("ar") == 0
                               ? true
                               : false,),
                           SizedBox(height: 10),
@@ -194,7 +193,7 @@ class _DropOutPostScreenState extends State<DropOutPostScreen> {
                             textInputAction: TextInputAction.next,
                             keyboardType: TextInputType.numberWithOptions(signed: true),
                             autofocus: true,
-                            isRtl: languageCode?.compareTo("ar") == 0
+                            isRtl: languageCode.compareTo("ar") == 0
                                 ? true
                                 : false,
                           ),
@@ -203,7 +202,7 @@ class _DropOutPostScreenState extends State<DropOutPostScreen> {
                               textInputAction: TextInputAction.next,
                               keyboardType: TextInputType.name,
                               autofocus: true,
-                            isRtl: languageCode?.compareTo("ar") == 0
+                            isRtl: languageCode.compareTo("ar") == 0
                                 ? true
                                 : false,),
                           SizedBox(height: 10),
@@ -396,7 +395,7 @@ class _DropOutPostScreenState extends State<DropOutPostScreen> {
           ),
         ),
       ),
-    ));
+    );
   }
 
   _getSchoolList() {

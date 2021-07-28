@@ -29,14 +29,14 @@ class Utils {
           }
       );
     } else {
-      Navigator.of(context, rootNavigator: true).pop("");
+      Navigator.pop(context);
     }
   }
 
   static Future<dynamic> navigateToScreen(
       BuildContext context, Widget screen) async {
     var value = await Navigator.push(
-        context, MaterialPageRoute(builder: (context) => screen));
+        context, CupertinoPageRoute(builder: (context) => screen));
     return value;
   }
 
@@ -55,7 +55,7 @@ class Utils {
   static navigateWithClearState(BuildContext context, Widget screen) {
     Navigator.pushAndRemoveUntil(
       context,
-      MaterialPageRoute(
+      CupertinoPageRoute(
         builder: (BuildContext context) => screen),
       (route) => false,
     );

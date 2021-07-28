@@ -35,9 +35,7 @@ class _MiddleHighStuffState extends State<MiddleHighStuff> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home:  Directionality(
+    return  Directionality(
         textDirection: widget.sortLanguageCode.compareTo("ar") == 0 ? ui.TextDirection.rtl : ui.TextDirection.ltr,
     child: Scaffold(
         body: Container(
@@ -109,6 +107,6 @@ class _MiddleHighStuffState extends State<MiddleHighStuff> {
           ),
         ),
       ),
-    ));
+    );
   }
 }

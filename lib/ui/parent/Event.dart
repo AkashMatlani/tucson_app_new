@@ -44,9 +44,7 @@ class _EventScreenState extends State<Event> {
   }
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: Directionality(
+    return Directionality(
         textDirection: widget.sortLanguageCode.compareTo("ar") == 0
         ? ui.TextDirection.rtl
         : ui.TextDirection.ltr, child:Scaffold(
@@ -71,7 +69,7 @@ class _EventScreenState extends State<Event> {
                             icon:
                             Icon(Icons.arrow_back_ios, color: Colors.white),
                             onPressed: () {
-                              Navigator.of(context).pop();
+                              Navigator.pop(context);
                             }),
                       ),
                       Container(
@@ -184,7 +182,7 @@ class _EventScreenState extends State<Event> {
           )
         ],
       ),
-    )));
+    ));
   }
 
   getWebApiFromUrl(BuildContext context, Map<String, Object?> params) {

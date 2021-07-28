@@ -31,6 +31,9 @@ import 'VolunteerOpportunitiesScreen.dart';
 
 
 class StudentDashboardScreen extends StatefulWidget {
+  StudentDashboardScreen([this.languageCode]);
+
+  String? languageCode;
   @override
   _StudentDashboardScreenState createState() => _StudentDashboardScreenState();
 }
@@ -100,11 +103,8 @@ class _StudentDashboardScreenState extends State<StudentDashboardScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Directionality(
-      textDirection: sortLanguageCode.compareTo("ar") == 0 ? ui.TextDirection.rtl : ui.TextDirection.ltr,
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: Scaffold(
+     return Directionality(
+          textDirection: widget.languageCode?.compareTo("ar") == 0 ? ui.TextDirection.rtl : ui.TextDirection.ltr,child:Scaffold(
             body: DoubleBack(
           condition: allowClose,
           onConditionFail: () {
@@ -299,8 +299,8 @@ class _StudentDashboardScreenState extends State<StudentDashboardScreen> {
           background: HexColor("#6462AA"),
           backgroundRadius: 30,
         )),
-      ),
-    );
+      );
+
   }
 
   getWebApiFromUrl(BuildContext context, Map<String, Object> params) {
@@ -339,7 +339,9 @@ class _StudentDashboardScreenState extends State<StudentDashboardScreen> {
             Utils.showToast(context, 'school_not_support'.tr(), Colors.red);
           }
         } else {
-          Utils.navigateToScreen(context, CoolStuffScreen(schoolCategory!,sortLanguageCode));
+         // Utils.navigateToScreen(context, CoolStuffScreen(schoolCategory!,sortLanguageCode));
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => CoolStuffScreen(schoolCategory!,sortLanguageCode)));
         }
       } else {
         translateData(response.message, false);

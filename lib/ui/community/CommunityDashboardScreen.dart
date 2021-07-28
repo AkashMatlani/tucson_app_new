@@ -26,6 +26,9 @@ import 'CommunityEventScreen.dart';
 
 
 class CommunityDashboardScreen extends StatefulWidget {
+  CommunityDashboardScreen([this.languageCode]);
+
+  String? languageCode;
   @override
   _CommunityDashboardScreenState createState() =>
       _CommunityDashboardScreenState();
@@ -106,10 +109,8 @@ class _CommunityDashboardScreenState extends State<CommunityDashboardScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: Directionality(
-          textDirection: sortLanguageCode.compareTo("ar") == 0 ? ui.TextDirection.rtl : ui.TextDirection.ltr,
+    return Directionality(
+          textDirection: widget.languageCode?.compareTo("ar") == 0 ? ui.TextDirection.rtl : ui.TextDirection.ltr,
           child: Scaffold(
             body: DoubleBack(
           condition: allowClose,
@@ -237,9 +238,9 @@ class _CommunityDashboardScreenState extends State<CommunityDashboardScreen> {
                                       "contentTypeName": "TUSDCalendar"
                                     };
                                     getWebApiFromUrl(context, params);
-                                  } else if (index == 1) {
+                                  } /*else if (index == 1) {
                                     Utils.navigateToScreen(context, PostJobsScreen(sortLanguageCode));
-                                  } else if (index == 2) {
+                                  } */else if (index == 2) {
                                     Utils.navigateToScreen(context, CommunityEventScreen());
                                   } else if (index == 3) {
                                     Utils.navigateToScreen(context,
@@ -312,8 +313,7 @@ class _CommunityDashboardScreenState extends State<CommunityDashboardScreen> {
           background: HexColor("#6462AA"),
           backgroundRadius: 30,
         )),
-      ),
-    );
+      );
   }
 
   getWebApiFromUrl(BuildContext context, Map<String, Object?> params) {

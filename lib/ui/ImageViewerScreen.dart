@@ -17,6 +17,7 @@ class _ImageViewerScreenState extends State<ImageViewerScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+
         backgroundColor:  HexColor("#6462AA"),
         iconTheme: IconThemeData(color: Colors.white),
         elevation: 0.0,

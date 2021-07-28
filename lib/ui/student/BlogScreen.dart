@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 import 'package:tucson_app/GeneralUtils/Constant.dart';
-import 'package:tucson_app/GeneralUtils/LabelStr.dart';
 import 'package:tucson_app/GeneralUtils/PrefsUtils.dart';
 import 'package:tucson_app/GeneralUtils/Utils.dart';
 import 'package:tucson_app/Model/ContentMasterViewModel.dart';
@@ -57,9 +56,7 @@ class _BlogScreenState extends State<BlogScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Directionality(
+    return  Directionality(
     textDirection: languageCode?.compareTo("ar") == 0 ? ui.TextDirection.rtl : ui.TextDirection.ltr,
     child: Scaffold(
         body: Stack(
@@ -83,7 +80,7 @@ class _BlogScreenState extends State<BlogScreen> {
                               icon: Icon(Icons.arrow_back_ios,
                                   color: Colors.white),
                               onPressed: () {
-                                Navigator.of(context).pop();
+                                Navigator.pop(context);
                               }),
                         ),
                         Container(
@@ -129,8 +126,7 @@ class _BlogScreenState extends State<BlogScreen> {
             )
           ],
         ),
-      ),
-    ));
+      ));
   }
 
   _listRowItems(BuildContext context, int index) {
@@ -147,9 +143,9 @@ class _BlogScreenState extends State<BlogScreen> {
         }else if (widget.title.compareTo('activites'.tr()) == 0) {
           widget.title = 'activity_details'.tr();
         }
-
         Utils.navigateToScreen(
             context, BlogDetailsScreen(widget.title, _contentList[index]));
+
       },
       child: Card(
         elevation: 1,

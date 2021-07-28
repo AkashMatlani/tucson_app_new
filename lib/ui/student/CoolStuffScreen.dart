@@ -63,9 +63,7 @@ class _CoolStuffScreenScreenState extends State<CoolStuffScreen>
   @override
   Widget build(BuildContext context) {
     var tabHeight = MediaQuery.of(context).size.height * 0.06;
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Directionality(
+    return  Directionality(
     textDirection: widget.sortLanguageCode.compareTo("ar") == 0 ? ui.TextDirection.rtl : ui.TextDirection.ltr,
     child:  Scaffold(
         body: Stack(
@@ -85,7 +83,7 @@ class _CoolStuffScreenScreenState extends State<CoolStuffScreen>
                           child: IconButton(
                               icon: Icon(Icons.arrow_back_ios, color: Colors.white),
                               onPressed: () {
-                                Navigator.of(context).pop();
+                              Navigator.pop(context);
                               }),
                         ),
                         Container(
@@ -186,6 +184,6 @@ class _CoolStuffScreenScreenState extends State<CoolStuffScreen>
           ],
         ),
       ),
-    ));
+    );
   }
 }

@@ -27,6 +27,10 @@ import 'Education.dart';
 
 
 class ParentDashBoardScreen extends StatefulWidget {
+
+  ParentDashBoardScreen([this.languageCode]);
+
+  String? languageCode;
   @override
   _ParentDashBoardScreenState createState() => _ParentDashBoardScreenState();
 }
@@ -109,11 +113,9 @@ class _ParentDashBoardScreenState extends State<ParentDashBoardScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Directionality(
-      textDirection: sortLanguageCode.compareTo("ar") == 0 ? ui.TextDirection.rtl : ui.TextDirection.ltr,
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: Scaffold(
+   return  Directionality(
+          textDirection: widget.languageCode?.compareTo("ar") == 0 ? ui.TextDirection.rtl : ui.TextDirection.ltr,
+          child:  Scaffold(
             body: DoubleBack(
                 condition: allowClose,
                 onConditionFail: () {
@@ -256,7 +258,7 @@ class _ParentDashBoardScreenState extends State<ParentDashBoardScreen> {
                                         } else if (index == 5) {
                                           Utils.navigateToScreen(context, SchoolPrograms(sortLanguageCode));
                                         } else if (index == 6) {
-                                          Utils.navigateToScreen(context, RequestForServiceScreen());
+                                          Utils.navigateToScreen(context, RequestForServiceScreen(sortLanguageCode));
                                         } else if (index == 7) {
                                           var params = {
                                             "schoolId": schoolId,
@@ -318,8 +320,7 @@ class _ParentDashBoardScreenState extends State<ParentDashBoardScreen> {
                     AppTheme.regularTextStyle().copyWith(color: Colors.white),
                 background: HexColor("#6462AA"),
                 backgroundRadius: 30)),
-      ),
-    );
+      );
   }
 
   getWebApiFromUrl(BuildContext context, Map<String, Object> params) {

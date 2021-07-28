@@ -2,6 +2,7 @@
 import 'dart:convert';
 import 'dart:ui' as ui;
 
+import 'package:cupertino_back_gesture/cupertino_back_gesture.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -84,24 +85,37 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'app_name'.tr(),
-        localizationsDelegates: context.localizationDelegates,
-        supportedLocales: context.supportedLocales,
-        locale: context.locale,
-        theme: ThemeData(
-          primarySwatch: Colors.deepPurple,
-        ),
-        home:Directionality(
-            textDirection: widget.languageCode.compareTo("ar") == 0 ? ui.TextDirection.rtl : ui.TextDirection.ltr,
-            child: (widget.role.isEmpty || widget.role == null)
-                ? DonationScreen()
-                : widget.role.compareTo("Student") == 0
-                    ? StudentDashboardScreen()
-                    : widget.role.compareTo("Community") == 0
-                        ? CommunityDashboardScreen()
-                        : ParentDashBoardScreen()));
+    return BackGestureWidthTheme(
+        backGestureWidth: BackGestureWidth.fraction(1 / 2),
+        child: MaterialApp(
+            debugShowCheckedModeBanner: false,
+            title: 'app_name'.tr(),
+            localizationsDelegates: context.localizationDelegates,
+            supportedLocales: context.supportedLocales,
+            locale: context.locale,
+            theme: ThemeData(
+                primarySwatch: Colors.deepPurple,
+                pageTransitionsTheme: PageTransitionsTheme(
+                  builders: {
+                    // for Android - default page transition
+                    TargetPlatform.android: FadeUpwardsPageTransitionsBuilder(),
+
+                    // for iOS - one which considers ancestor BackGestureWidthTheme
+                    TargetPlatform.iOS:
+                        CupertinoPageTransitionsBuilderCustomBackGestureWidth(),
+                  },
+                )),
+            home: Directionality(
+                textDirection: widget.languageCode.compareTo("ar") == 0
+                    ? ui.TextDirection.rtl
+                    : ui.TextDirection.ltr,
+                child: (widget.role.isEmpty || widget.role == null)
+                    ? DonationScreen()
+                    : widget.role.compareTo("Student") == 0
+                        ? StudentDashboardScreen(widget.languageCode)
+                        : widget.role.compareTo("Community") == 0
+                            ? CommunityDashboardScreen(widget.languageCode)
+                            : ParentDashBoardScreen(widget.languageCode))));
   }
 }
 
