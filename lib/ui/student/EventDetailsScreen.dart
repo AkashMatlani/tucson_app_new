@@ -4,6 +4,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_calendar_carousel/classes/event.dart';
+import 'package:flutter_calendar_carousel/classes/event_list.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:tucson_app/GeneralUtils/ColorExtension.dart';
 import 'package:tucson_app/GeneralUtils/Constant.dart';
@@ -65,7 +66,7 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
   Widget build(BuildContext context) {
     return WillPopScope(
         onWillPop: () async {
-          for (int i = 0; i < sameDayEventList.length; i++) {
+          for(int i=0; i<sameDayEventList.length; i++){
             Navigator.of(context)..pop();
           }
           return true;
@@ -96,9 +97,7 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                                     icon: Icon(Icons.arrow_back_ios,
                                         color: Colors.white),
                                     onPressed: () {
-                                      for (int i = 0;
-                                          i < sameDayEventList.length;
-                                          i++) {
+                                      for(int i=0; i<sameDayEventList.length; i++){
                                         Navigator.of(context)..pop();
                                       }
                                     }),

@@ -26,9 +26,10 @@ class CalendarEventScreen extends StatefulWidget {
 }
 
 class _CalendarEventScreenState extends State<CalendarEventScreen> {
-  AuthViewModel _authViewModel = AuthViewModel();
-  List<EventForMobileResponse> eventist = [];
+
+  List<EventForMobileResponse> eventList = [];
   List<EventForMobileResponse> upcommingEventList = [];
+
   DateTime selectedDate = DateTime.now();
   DateTime _currentDate = DateTime(2021, 7, 21);
   String _currentMonth = DateFormat.yMMM().format(DateTime(2021, 7, 21));
@@ -201,18 +202,19 @@ class _CalendarEventScreenState extends State<CalendarEventScreen> {
                                               .format(_targetDateTime);
                                         });
 
-                                        if(eventist.isNotEmpty && eventist.length > 0){
+                                        if(eventList.isNotEmpty && eventList.length > 0){
                                           List<EventForMobileResponse> tempList = [];
-                                          for (int i = 0; i < eventist.length; i++) {
-                                            bool isSuccess = _isUpcommingEvent(eventist[i].fromDateTime);
+                                          for (int i = 0; i < eventList.length; i++) {
+                                            bool isSuccess = _isUpcommingEvent(eventList[i].fromDateTime);
                                             if (isSuccess) {
-                                              tempList.add(eventist[i]);
+                                              tempList.add(eventList[i]);
                                             }
                                           }
                                           setState(() {
                                             upcommingEventList = [];
                                             upcommingEventList.addAll(tempList);
                                           });
+                                          setEventInCalendarView();
                                         }
                                       },
                                     ),
@@ -239,18 +241,19 @@ class _CalendarEventScreenState extends State<CalendarEventScreen> {
                                               .format(_targetDateTime);
                                         });
 
-                                        if(eventist.isNotEmpty && eventist.length > 0){
+                                        if(eventList.isNotEmpty && eventList.length > 0){
                                           List<EventForMobileResponse> tempList = [];
-                                          for (int i = 0; i < eventist.length; i++) {
-                                            bool isSuccess = _isUpcommingEvent(eventist[i].fromDateTime);
+                                          for (int i = 0; i < eventList.length; i++) {
+                                            bool isSuccess = _isUpcommingEvent(eventList[i].fromDateTime);
                                             if (isSuccess) {
-                                              tempList.add(eventist[i]);
+                                              tempList.add(eventList[i]);
                                             }
                                           }
                                           setState(() {
                                             upcommingEventList = [];
                                             upcommingEventList.addAll(tempList);
                                           });
+                                          setEventInCalendarView();
                                         }
                                       },
                                     )
@@ -333,94 +336,21 @@ class _CalendarEventScreenState extends State<CalendarEventScreen> {
   }
 
   void _getEventDetail(int schoolId) {
+    AuthViewModel _authViewModel = AuthViewModel();
     Utils.showLoader(true, context);
     _authViewModel.getAllEventForMobile(schoolId.toString(), (isSuccess, message) {
      Utils.showLoader(false, context);
       if (isSuccess) {
         setState(() {
-          eventist = _authViewModel.eventForMobileList;
-          for (int i = 0; i < eventist.length; i++) {
-            selectedDate = DateTime.parse(eventist[i].fromDateTime);
-
-            bool isSuccess = _isUpcommingEvent(eventist[i].fromDateTime);
+          eventList = _authViewModel.eventForMobileList;
+          for (int i = 0; i < eventList.length; i++) {
+            selectedDate = DateTime.parse(eventList[i].fromDateTime);
+            bool isSuccess = _isUpcommingEvent(eventList[i].fromDateTime);
             if (isSuccess) {
-              upcommingEventList.add(eventist[i]);
+              upcommingEventList.add(eventList[i]);
             }
-            DateTime utcFromDate = DateTime.parse(eventist[i].fromDateTime.split('T')[0]).toUtc();
-            //DateTime utcFromDate = DateTime.parse(eventist[i].fromDateTime).toUtc();
-            final convertLocal = utcFromDate.toLocal();
-            String date = DateFormat("yyyy,MM,dd").format(convertLocal);
-            var dateInFormatText = date.split(",");
-            setState(() {
-              var currentDate = DateTime.now();
-              var eventDate = DateTime.parse(eventist[i].fromDateTime);
-              if(currentDate.isBefore(eventDate)){
-                /*DateTime utcFromDate = DateTime.parse(eventist[i].fromDateTime).toUtc();
-                var localFromDate = utcFromDate.toLocal();
-                String strUtcFromDate = DateFormat("yyyy-MM-dd'T'hh:mm:ss").format(localFromDate);
-                var fromDate = Utils.convertDate(strUtcFromDate, DateFormat("MM/dd/yyyy"))+" "+eventist[i].startTime;
-
-                DateTime utcToDate = DateTime.parse(eventist[i].toDateTime).toUtc();
-                var localToDate = utcToDate.toLocal();
-                String strUtcToDate = DateFormat("yyyy-MM-dd'T'hh:mm:ss").format(localToDate);
-                var toDate = Utils.convertDate(strUtcToDate, DateFormat("MM/dd/yyyy"))+" "+eventist[i].endTime;
-
-                var eventDetails = eventist[i].eventName+"=>"+fromDate+"=>"+toDate;*/
-
-                String resFromDate = eventist[i].fromDateTime.split('T')[0];
-                DateTime utcFromDate = DateTime.parse(resFromDate).toUtc();
-                var localFromDate = utcFromDate.toLocal();
-                String strUtcFromDate = DateFormat("MM/dd/yyyy").format(localFromDate);
-                String fromDate = strUtcFromDate+" "+eventist[i].startTime;
-
-                String resToDate = eventist[i].toDateTime.split('T')[0];
-                DateTime utcToDate = DateTime.parse(resToDate).toUtc();
-                var localToDate = utcToDate.toLocal();
-                String strUtcToDate = DateFormat("MM/dd/yyyy").format(localToDate);
-                String toDate = strUtcToDate+" "+eventist[i].endTime;
-
-                var eventDetails = eventist[i].eventName+"=>"+fromDate+"=>"+toDate;
-
-                _markedDateMap.add(
-                  DateTime(
-                      int.parse(dateInFormatText[0]),
-                      int.parse(dateInFormatText[1]),
-                      int.parse(dateInFormatText[2])),
-                  new Event(
-                      date: new DateTime(
-                          int.parse(dateInFormatText[0]),
-                          int.parse(dateInFormatText[1]),
-                          int.parse(dateInFormatText[2])),
-                      title: eventDetails,
-                      icon: _presentIcon(
-                        dateInFormatText[2],
-                      ),
-                      dot: Padding(
-                        padding: const EdgeInsets.fromLTRB(20.0, 0, 10, 0),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text('total_day'.tr()+ ': '+getDayCount(localFromDate, localToDate), style: AppTheme.regularTextStyle().copyWith(fontSize: 16, color: Colors.black54)),
-                            SizedBox(height: 10),
-                            Text('event_details'.tr()+ ':', style: AppTheme.regularTextStyle().copyWith(fontSize: 16, color: Colors.black54)),
-                            Html(
-                              data: eventist[i].eventDetail,
-                              style: {
-                                "body" : Style(
-                                  fontFamily: MyFont.SSPro_regular,
-                                  fontSize: FontSize.medium,
-                                  color: Colors.black54
-                                )
-                              },
-                            ),
-                          ],
-                        ),
-                      )),
-                );
-              }
-            });
           }
+          setEventInCalendarView();
         });
         if(languageCode!.compareTo("en") != 0){
           if(languageCode!.compareTo("sr") == 0){
@@ -433,6 +363,99 @@ class _CalendarEventScreenState extends State<CalendarEventScreen> {
       }
     });
   }
+
+  setEventInCalendarView(){
+    setState(() {
+      for (int j = 0; j < upcommingEventList.length; j++) {
+        DateTime utcFromDate = DateTime.parse(upcommingEventList[j].fromDateTime.split('T')[0]).toUtc();
+        final localFromDate = utcFromDate.toLocal();
+        String fromLocalDate = DateFormat("yyyy-MM-dd").format(localFromDate);
+
+        DateTime utcToDate = DateTime.parse(upcommingEventList[j].toDateTime.split('T')[0]).toUtc();
+        final localToDate = utcToDate.toLocal();
+        String toLocaldate = DateFormat("yyyy-MM-dd").format(localToDate);
+
+        List<String> eventDateList = getDaysInBeteween(fromLocalDate, toLocaldate);
+
+        String strUtcFromDate = DateFormat("MM/dd/yyyy").format(localFromDate);
+        String fromDate = strUtcFromDate+" "+upcommingEventList[j].startTime;
+
+        String strUtcToDate = DateFormat("MM/dd/yyyy").format(localToDate);
+        String toDate = strUtcToDate+" "+upcommingEventList[j].endTime;
+
+        String date1 = DateFormat("yyyy,MM,dd").format(localFromDate);
+        var dateInFormatText1 = date1.split(",");
+
+        for(int k=0; k<eventDateList.length; k++){
+          var dateInFormatText = eventDateList[k].split(",");
+          var eventDetails;
+          if(dateInFormatText[0].compareTo(dateInFormatText1[0])== 0 &&
+              dateInFormatText[1].compareTo(dateInFormatText1[1])== 0 &&
+              dateInFormatText[2].compareTo(dateInFormatText1[2])== 0){
+            eventDetails = upcommingEventList[j].eventName+"=>"+fromDate+"=>"+toDate;
+          } else {
+            eventDetails = null;
+          }
+          _markedDateMap.add(
+            DateTime(
+                int.parse(dateInFormatText[0]),
+                int.parse(dateInFormatText[1]),
+                int.parse(dateInFormatText[2])),
+            Event(
+                date: new DateTime(
+                    int.parse(dateInFormatText[0]),
+                    int.parse(dateInFormatText[1]),
+                    int.parse(dateInFormatText[2])),
+                title: eventDetails,
+                icon: _presentIcon(
+                  dateInFormatText[2],
+                ),
+                dot: Padding(
+                  padding: const EdgeInsets.fromLTRB(20.0, 0, 10, 0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('total_day'.tr()+ ': '+getDayCount(localFromDate, localToDate), style: AppTheme.regularTextStyle().copyWith(fontSize: 16, color: Colors.black54)),
+                      SizedBox(height: 10),
+                      Text('event_details'.tr()+ ':', style: AppTheme.regularTextStyle().copyWith(fontSize: 16, color: Colors.black54)),
+                      Html(
+                        data: upcommingEventList[j].eventDetail,
+                        style: {
+                          "body" : Style(
+                              fontFamily: MyFont.SSPro_regular,
+                              fontSize: FontSize.medium,
+                              color: Colors.black54
+                          )
+                        },
+                      ),
+                    ],
+                  ),
+                )),
+          );
+        }
+      }
+    });
+  }
+
+  List<String> getDaysInBeteween(String fromDate, String toDate) {
+
+    var startDate = DateTime.parse(fromDate);
+    var endDate = DateTime.parse(toDate);
+
+    List<String> days = [];
+    for (int i = 0; i <= endDate.difference(startDate).inDays; i++) {
+      DateTime date = startDate.add(Duration(days: i));
+      String strDate = DateFormat("yyyy-MM-dd'T'hh:mm:ss").format(date);
+      DateTime newDate = DateTime.parse(strDate);
+      String formattedDate = DateFormat("yyyy,MM,dd").format(newDate);
+
+      days.add(formattedDate);
+      print('Days ====${days[i]}');
+    }
+    return days;
+  }
+
 
   _isUpcommingEvent(String fromDateTime) {
     String calMonth = _currentMonth.substring(0, 3);
