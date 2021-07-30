@@ -30,6 +30,22 @@ class _CustomDropDownListState extends State<CustomDropDownList> {
   @override
   void initState() {
     super.initState();
+    List<SchoolListResponse> tempList = [];
+    for(var i=0; i<widget.schoolList.length; i++){
+      if(widget.schoolList[i].name.contains("N/A")){
+        tempList.add(SchoolListResponse(id: widget.schoolList[i].id,
+            schoolCategoryId: widget.schoolList[i].schoolCategoryId,
+            schoolCategoryName: widget.schoolList[i].schoolCategoryName,
+            name: widget.schoolList[i].name.substring(0, 3),
+            createdBy: widget.schoolList[i].createdBy,
+            createdOn: widget.schoolList[i].createdOn,
+            updatedBy: widget.schoolList[i].updatedBy,
+            updatedOn: widget.schoolList[i].updatedOn));
+      } else {
+        tempList.add(widget.schoolList[i]);
+      }
+    }
+    widget.schoolList = tempList;
     filterList.addAll(widget.schoolList);
     setState(() {
       if(widget.schoolName.compareTo('select_school'.tr()) == 0){

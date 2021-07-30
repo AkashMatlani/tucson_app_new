@@ -171,8 +171,8 @@ class WebService {
         var responseList = jsValue["data"]["translations"] as List;
         var responseRow = responseList.first;
         var resultStr = responseRow["translatedText"];
-        var formattedResult = HtmlUnescape().convert(resultStr);
-        callback(true, formattedResult);
+        //var formattedResult = HtmlUnescape().convert(resultStr);
+        callback(true, resultStr);
       } else {
         print("*********** Api Response Error *********************");
         callback(false, response.body.toString());
