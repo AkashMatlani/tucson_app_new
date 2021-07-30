@@ -35,6 +35,7 @@ class _CalendarEventScreenState extends State<CalendarEventScreen> {
   String _currentMonth = DateFormat.yMMM().format(DateTime(2021, 7, 21));
   DateTime _targetDateTime = DateTime(2021, 7, 21);
   String? languageCode;
+  bool rootNavigator = false;
 
   @override
   void initState() {
@@ -200,6 +201,8 @@ class _CalendarEventScreenState extends State<CalendarEventScreen> {
                                               _targetDateTime.month - 1);
                                           _currentMonth = DateFormat.yMMM()
                                               .format(_targetDateTime);
+
+
                                         });
 
                                         if(eventList.isNotEmpty && eventList.length > 0){
@@ -321,6 +324,10 @@ class _CalendarEventScreenState extends State<CalendarEventScreen> {
         ]),
       ),
     );
+  }
+
+  gotoNext(){
+    Navigator.of(context).popUntil((route) => route.isFirst);
   }
 
   Widget markerRepresent(Color color, String data) {
