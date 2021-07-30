@@ -4,7 +4,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_calendar_carousel/classes/event.dart';
-import 'package:flutter_calendar_carousel/classes/event_list.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:tucson_app/GeneralUtils/ColorExtension.dart';
 import 'package:tucson_app/GeneralUtils/Constant.dart';
@@ -13,6 +12,8 @@ import 'package:tucson_app/GeneralUtils/Utils.dart';
 import 'package:tucson_app/Model/EventForMobileResponse.dart';
 import 'package:tucson_app/WebService/WebService.dart';
 import 'dart:ui' as ui;
+
+import 'package:tucson_app/ui/student/CalendarEventScreen.dart';
 
 class EventDetailsScreen extends StatefulWidget {
   EventDetailsScreen(this.event, this.eventList);
@@ -66,9 +67,10 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
   Widget build(BuildContext context) {
     return WillPopScope(
         onWillPop: () async {
-          for(int i=0; i<sameDayEventList.length; i++){
+          Utils.backWithNoTransition(context, CalendarEventScreen());
+          /*for(int i=0; i<sameDayEventList.length; i++){
             Navigator.of(context)..pop();
-          }
+          }*/
           return true;
         },
         child: Directionality(
@@ -97,9 +99,10 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
                                     icon: Icon(Icons.arrow_back_ios,
                                         color: Colors.white),
                                     onPressed: () {
-                                      for(int i=0; i<sameDayEventList.length; i++){
+                                     /* for(int i=0; i<sameDayEventList.length; i++){
                                         Navigator.of(context)..pop();
-                                      }
+                                      }*/
+                                      Utils.backWithNoTransition(context, CalendarEventScreen());
                                     }),
                               ),
                               Container(

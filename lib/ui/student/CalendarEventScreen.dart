@@ -80,7 +80,7 @@ class _CalendarEventScreenState extends State<CalendarEventScreen> {
       onDayPressed: (date, events) {
         this.setState(() => selectedDate = date);
         events.forEach((event) => event.title != null
-            ? Utils.navigateToScreen(context, EventDetailsScreen(event, upcommingEventList))
+            ? Utils.navigateReplaceToScreen(context, EventDetailsScreen(event, upcommingEventList))
             : Container());
       },
       height: Platform.isIOS?cHeight * 0.40:cHeight *0.50,
