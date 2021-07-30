@@ -68,7 +68,8 @@ class _CommunityResourcesScreenState extends State<CommunityResources> {
     return  Directionality(
         textDirection: widget.sortLanguageCode.compareTo("ar") == 0
         ? ui.TextDirection.rtl
-        : ui.TextDirection.ltr, child:Scaffold(
+        : ui.TextDirection.ltr,
+        child:Scaffold(
       body: Stack(
         fit: StackFit.expand,
         children: [

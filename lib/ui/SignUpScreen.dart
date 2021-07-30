@@ -409,7 +409,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
         }
         Utils.showAlertDialog(context, message, (success, response){
           if(success) {
-            Utils.navigateReplaceToScreen(context, SignInScreen());
+            Timer(Duration(milliseconds: 200), (){
+              Utils.backWithNoTransition(context, SignInScreen());
+            });
           }
         });
       } else {

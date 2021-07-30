@@ -422,13 +422,28 @@ class _BlogDetailsScreenState extends State<BlogDetailsScreen> {
         child: Container(
           height: screenWeight - 40 / 3,
           width: screenWeight - 40 / 3,
-          decoration: new BoxDecoration(
+         child: CachedNetworkImage(
+            imageUrl: imageList[position],
+            imageBuilder: (context, imageProvider) => Container(
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                image: DecorationImage(
+                    image: imageProvider,
+                    fit: BoxFit.cover,
+                   ),
+              ),
+            ),
+            placeholder: (context, url) =>  Center(child: SizedBox(width: 30, height: 30,child:CircularProgressIndicator())),
+            errorWidget: (context, url, error) => Center(child: SizedBox(width: 30, height: 10,child:Icon(Icons.error))),
+          ),
+         /* decoration: new BoxDecoration(
             shape: BoxShape.circle,
             image: new DecorationImage(
               fit: BoxFit.fill,
               image: new CachedNetworkImageProvider(imageList[position]),
             ),
-          ),
+          ),*/
+
         ));
   }
 
