@@ -1,5 +1,4 @@
 Hola, I'm Akash Matlani 
-Hello programmer Welcome to my profile wakatime Profile Followers Open Source Love Connect on LinkedIn
 
 🔭 Checkout my work Here
 👨🏽‍💻 I’m currently working on improving my tech skills.
