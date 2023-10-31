@@ -1,16 +1,12 @@
-# tucson_app
+Hola, I'm Akash Matlani 
+Hello programmer Welcome to my profile wakatime Profile Followers Open Source Love Connect on LinkedIn
 
-A new Flutter application.
+🔭 Checkout my work Here
+👨🏽‍💻 I’m currently working on improving my tech skills.
+🌱 I’m currently learning Go, Python, and Node JS.
+💬 Ask me about Flutter or any tech-related stuff.
+I do freelancing, DM me if you are interested in hiring.
+I Love  Dart & Flutter.
+I'm looking to collaborate.
+💬 Ask me about anything, I am happy to help.
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
